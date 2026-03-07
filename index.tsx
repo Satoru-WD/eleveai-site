@@ -226,6 +226,18 @@ const Navbar = ({ onHome }: { onHome: () => void }) => {
   const closeMenu = () => setIsMobileMenuOpen(false);
   const handleHomeClick = () => { onHome(); closeMenu(); };
 
+  const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
+    e.preventDefault();
+    onHome();
+    closeMenu();
+    setTimeout(() => {
+      const element = document.getElementById(id);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    }, 100);
+  };
+
   return (
     <motion.nav
       initial={{ y: -100 }}
@@ -239,9 +251,9 @@ const Navbar = ({ onHome }: { onHome: () => void }) => {
         </div>
 
         <div className="hidden md:flex items-center gap-8 text-sm font-medium text-gray-400">
-          <a href="#beneficios" onClick={onHome} className="hover:text-white transition-colors">Benefícios</a>
-          <a href="#solucoes" onClick={onHome} className="hover:text-white transition-colors">Soluções</a>
-          <a href="#faq" onClick={onHome} className="hover:text-white transition-colors">FAQ</a>
+          <a href="#beneficios" onClick={(e) => scrollToSection(e, 'beneficios')} className="hover:text-white transition-colors">Benefícios</a>
+          <a href="#solucoes" onClick={(e) => scrollToSection(e, 'solucoes')} className="hover:text-white transition-colors">Soluções</a>
+          <a href="#faq" onClick={(e) => scrollToSection(e, 'faq')} className="hover:text-white transition-colors">FAQ</a>
         </div>
 
         <div className="flex items-center gap-4">
@@ -275,9 +287,9 @@ const Navbar = ({ onHome }: { onHome: () => void }) => {
             className="md:hidden bg-[#0A0A0B]/95 backdrop-blur-xl border-t border-white/5 overflow-hidden"
           >
             <div className="flex flex-col p-6 gap-6">
-              <a href="#beneficios" onClick={() => { onHome(); closeMenu(); }} className="text-gray-300 hover:text-white text-lg font-medium">Benefícios</a>
-              <a href="#solucoes" onClick={() => { onHome(); closeMenu(); }} className="text-gray-300 hover:text-white text-lg font-medium">Soluções</a>
-              <a href="#faq" onClick={() => { onHome(); closeMenu(); }} className="text-gray-300 hover:text-white text-lg font-medium">FAQ</a>
+              <a href="#beneficios" onClick={(e) => scrollToSection(e, 'beneficios')} className="text-gray-300 hover:text-white text-lg font-medium">Benefícios</a>
+              <a href="#solucoes" onClick={(e) => scrollToSection(e, 'solucoes')} className="text-gray-300 hover:text-white text-lg font-medium">Soluções</a>
+              <a href="#faq" onClick={(e) => scrollToSection(e, 'faq')} className="text-gray-300 hover:text-white text-lg font-medium">FAQ</a>
               <a
                 href={WHATSAPP_URL}
                 target="_blank"
@@ -825,10 +837,11 @@ const Footer = ({ onPrivacy, onTerms, onHome }: { onPrivacy: () => void, onTerms
   return (
     <footer className="relative bg-[#050506] pt-24 pb-12 overflow-hidden">
       {/* Decorative Top Border */}
-      <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#B988BF] to-transparent opacity-100 shadow-[0_0_20px_#B988BF]" />
+      <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-transparent via-[#B988BF] to-transparent shadow-[0_0_30px_rgba(185,136,191,0.8)]" />
+      <div className="absolute top-0 left-0 right-0 h-[1px] bg-[#B988BF] opacity-50" />
 
       {/* Background Glow */}
-      <div className="absolute top-0 left-1/4 w-96 h-96 bg-[#B988BF]/20 rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-2xl h-80 bg-[#B988BF]/30 sm:bg-[#B988BF]/20 rounded-full blur-[100px] sm:blur-[120px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12 mb-16">
@@ -876,7 +889,7 @@ const Footer = ({ onPrivacy, onTerms, onHome }: { onPrivacy: () => void, onTerms
           </div>
 
           <div className="md:col-span-3">
-            <h4 className="text-white font-bold mb-6 text-lg tracking-tight text-right md:text-left">Atendimento</h4>
+            <h4 className="text-white font-bold mb-6 text-lg tracking-tight text-left">Atendimento</h4>
             <ul className="space-y-4 text-gray-500 text-sm">
               <li className="flex justify-between border-b border-white/5 pb-2">
                 <span>Segunda a Sexta</span> <span className="text-gray-300">09h - 17h</span>
@@ -884,7 +897,7 @@ const Footer = ({ onPrivacy, onTerms, onHome }: { onPrivacy: () => void, onTerms
               <li className="flex justify-between border-b border-white/5 pb-2">
                 <span>Sábados</span> <span className="text-gray-300">09h - 12h</span>
               </li>
-              <li className="flex items-center gap-2 text-[#EEC6A2] font-semibold pt-2 justify-end md:justify-start">
+              <li className="flex items-center gap-2 text-[#EEC6A2] font-semibold pt-2 justify-start">
                 <span className="relative flex h-2 w-2">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
                   <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
