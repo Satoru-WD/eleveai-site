@@ -246,8 +246,8 @@ const Navbar = ({ onHome }: { onHome: () => void }) => {
         }`}
     >
       <div className="max-w-7xl mx-auto flex justify-between items-center relative z-10">
-        <div className="flex items-center gap-2 cursor-pointer" onClick={handleHomeClick}>
-          <img src="/logo.png" alt="EleveAI - Agência de Marketing Digital e Automação para Clínicas" className="h-16 md:h-20 w-auto object-contain" />
+        <div className="flex items-center gap-2 cursor-pointer pt-2" onClick={handleHomeClick}>
+          <img src="/logo.png" alt="EleveAI - Agência de Marketing" className="h-32 md:h-40 w-auto object-contain scale-[1.75] origin-left" />
         </div>
 
         <div className="hidden md:flex items-center gap-8 text-sm font-medium text-gray-400">
@@ -846,15 +846,15 @@ const Footer = ({ onPrivacy, onTerms, onHome }: { onPrivacy: () => void, onTerms
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12 mb-16">
           <div className="md:col-span-5">
-            <div className="flex items-center gap-2 mb-8 cursor-pointer group" onClick={onHome}>
+            <div className="flex items-center gap-2 mb-8 cursor-pointer group pt-4" onClick={onHome}>
               <img
                 src="/logo.png"
                 alt="EleveAI - Marketing Estratégico"
-                className="h-12 w-auto object-contain grayscale opacity-80 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500"
+                className="h-28 sm:h-40 w-auto object-contain grayscale opacity-80 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500 scale-[1.5] origin-left"
                 loading="lazy"
                 decoding="async"
-                width="150"
-                height="50"
+                width="250"
+                height="100"
               />
             </div>
             <p className="text-gray-400 mb-8 leading-relaxed max-w-sm">
@@ -971,10 +971,12 @@ const Preloader = ({ onComplete }: { onComplete: () => void }) => {
         initial={{ scale: 0.8, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
-        className="relative mb-8"
+        className="relative mb-8 flex items-center justify-center p-8"
       >
-        <div className="w-32 h-32 rounded-full bg-[#68259A]/20 blur-2xl absolute inset-0 animate-pulse"></div>
-        <img src="/logo.png" alt="EleveAI Carregando" className="h-24 w-auto relative z-10" />
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+          <div className="w-64 h-64 rounded-full bg-[#68259A]/30 blur-[40px] animate-pulse"></div>
+        </div>
+        <img src="/logo.png" alt="EleveAI Carregando" className="h-48 sm:h-64 w-auto relative z-10 scale-[1.5]" />
       </motion.div>
 
       <motion.div
