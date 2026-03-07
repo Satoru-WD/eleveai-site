@@ -275,9 +275,9 @@ const Navbar = ({ onHome }: { onHome: () => void }) => {
             className="md:hidden bg-[#0A0A0B]/95 backdrop-blur-xl border-t border-white/5 overflow-hidden"
           >
             <div className="flex flex-col p-6 gap-6">
-              <a href="#beneficios" onClick={closeMenu} className="text-gray-300 hover:text-white text-lg font-medium">Benefícios</a>
-              <a href="#solucoes" onClick={closeMenu} className="text-gray-300 hover:text-white text-lg font-medium">Soluções</a>
-              <a href="#faq" onClick={closeMenu} className="text-gray-300 hover:text-white text-lg font-medium">FAQ</a>
+              <a href="#beneficios" onClick={() => { onHome(); closeMenu(); }} className="text-gray-300 hover:text-white text-lg font-medium">Benefícios</a>
+              <a href="#solucoes" onClick={() => { onHome(); closeMenu(); }} className="text-gray-300 hover:text-white text-lg font-medium">Soluções</a>
+              <a href="#faq" onClick={() => { onHome(); closeMenu(); }} className="text-gray-300 hover:text-white text-lg font-medium">FAQ</a>
               <a
                 href={WHATSAPP_URL}
                 target="_blank"
@@ -825,10 +825,10 @@ const Footer = ({ onPrivacy, onTerms, onHome }: { onPrivacy: () => void, onTerms
   return (
     <footer className="relative bg-[#050506] pt-24 pb-12 overflow-hidden">
       {/* Decorative Top Border */}
-      <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[#68259A] to-transparent opacity-50" />
+      <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#B988BF] to-transparent opacity-100 shadow-[0_0_20px_#B988BF]" />
 
       {/* Background Glow */}
-      <div className="absolute top-0 left-1/4 w-96 h-96 bg-[#68259A]/10 rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute top-0 left-1/4 w-96 h-96 bg-[#B988BF]/20 rounded-full blur-[100px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12 mb-16">
