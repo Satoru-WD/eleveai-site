@@ -57,10 +57,24 @@ const WhatsAppIcon = ({ size = 24, className = "" }: { size?: number, className?
 
 // --- Components ---
 
-const FormModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }) => {
+const DiagnosticModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }) => {
+  const [step, setStep] = useState(1);
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success'>('idle');
+  const [answers, setAnswers] = useState<Record<string, string>>({});
 
   if (!isOpen) return null;
+
+  const totalSteps = 5;
+  const progress = (step / totalSteps) * 100;
+
+  const handleNext = (questionIndex: string, answer: string) => {
+    setAnswers(prev => ({ ...prev, [questionIndex]: answer }));
+    if (step < totalSteps) {
+      setStep(prev => prev + 1);
+    } else {
+      setStep(6);
+    }
+  };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -68,6 +82,10 @@ const FormModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }
     
     const form = e.currentTarget;
     const formData = new FormData(form);
+    
+    Object.entries(answers).forEach(([key, value]) => {
+      formData.append(key, value);
+    });
 
     fetch('https://formsubmit.co/ajax/satorukubota01@gmail.com', {
       method: 'POST',
@@ -91,6 +109,34 @@ const FormModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }
     });
   };
 
+  const questions = [
+    {
+      id: "Q1_Investe_Aquisicao",
+      title: "Seu negócio já investe em aquisição de clientes online?",
+      options: ["Sim", "Ainda não", "De forma inconsistente"]
+    },
+    {
+      id: "Q2_Processo_Transformacao",
+      title: "Hoje sua empresa possui um processo estruturado para transformar visitantes em clientes?",
+      options: ["Sim", "Parcialmente", "Não"]
+    },
+    {
+      id: "Q3_Automacao_Relacionamento",
+      title: "Existe automação no relacionamento com clientes ou vendas?",
+      options: ["Sim", "Apenas ferramentas isoladas", "Não"]
+    },
+    {
+      id: "Q4_Objetivo_Atual",
+      title: "Qual é o principal objetivo do negócio hoje?",
+      options: ["Gerar mais clientes", "Melhorar conversão", "Estruturar presença digital", "Escalar vendas"]
+    },
+    {
+      id: "Q5_Faturamento",
+      title: "Qual o faturamento médio mensal da empresa?",
+      options: ["Até 10 mil", "10 mil a 50 mil", "50 mil a 100 mil", "Acima de 100 mil"]
+    }
+  ];
+
   return (
     <AnimatePresence>
       <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
@@ -103,7 +149,7 @@ const FormModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }
           initial={{ opacity: 0, scale: 0.95, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: 20 }}
-          className="relative w-full max-w-md glass rounded-[2rem] border-white/10 p-6 md:p-8 shadow-2xl z-10"
+          className="relative w-full max-w-lg glass rounded-[2rem] border-white/10 p-6 md:p-10 shadow-2xl z-10"
         >
           <button 
             onClick={onClose}
@@ -117,8 +163,8 @@ const FormModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }
               <div className="w-16 h-16 bg-green-500/20 text-green-500 rounded-full flex items-center justify-center mx-auto mb-6">
                 <CheckCircle2 size={32} />
               </div>
-              <h3 className="text-2xl font-bold text-white mb-2">Solicitação Recebida</h3>
-              <p className="text-gray-400">Nossa equipe estratégica analisará seu perfil e entrará em contato em breve.</p>
+              <h3 className="text-2xl font-bold text-white mb-2">Análise Solicitada</h3>
+              <p className="text-gray-400">Nossa equipe estratégica analisará seu negócio e entrará em contato em breve.</p>
               <button 
                 onClick={onClose}
                 className="mt-8 w-full py-3 bg-white/5 hover:bg-white/10 text-white rounded-xl font-medium transition-colors"
@@ -126,15 +172,55 @@ const FormModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }
                 Fechar
               </button>
             </div>
-          ) : (
+          ) : step <= 5 ? (
             <>
-              <div className="text-center mb-8">
-                <h3 className="text-xl md:text-2xl font-bold text-white mb-2">Raio-X Estratégico</h3>
-                <p className="text-sm text-gray-400">Descubra as alavancas de crescimento do seu negócio.</p>
+              <div className="mb-8">
+                <div className="flex justify-between items-end mb-2">
+                  <h3 className="text-lg md:text-xl font-bold text-white">Antes de sair, veja como está a geração de clientes do seu negócio.</h3>
+                </div>
+                <div className="flex justify-between items-end mb-2">
+                  <span className="text-xs text-gray-400">Leva menos de 30 segundos.</span>
+                  <span className="text-xs text-[#B988BF] font-semibold">Pergunta {step} de 5</span>
+                </div>
+                <div className="w-full bg-white/10 h-1.5 rounded-full overflow-hidden">
+                  <div 
+                    className="bg-gradient-to-r from-[#68259A] to-[#B988BF] h-full transition-all duration-500 ease-out"
+                    style={{ width: `${progress}%` }}
+                  />
+                </div>
+                <div className="mt-1 text-right text-[10px] text-gray-500 font-medium">{progress}% concluído</div>
               </div>
 
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <input type="hidden" name="_subject" value="Novo contato do site - Raio X" />
+              <div className="mb-8">
+                <h4 className="text-xl md:text-2xl font-semibold text-white leading-snug">
+                  {questions[step - 1].title}
+                </h4>
+              </div>
+
+              <div className="space-y-3">
+                {questions[step - 1].options.map((option, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => handleNext(questions[step - 1].id, option)}
+                    className="w-full text-left px-5 py-4 rounded-xl border border-white/10 hover:border-[#B988BF] hover:bg-[#68259A]/10 text-gray-300 hover:text-white transition-all font-medium"
+                  >
+                    {option}
+                  </button>
+                ))}
+              </div>
+            </>
+          ) : (
+            <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="text-center">
+              <div className="w-16 h-16 bg-[#68259A]/20 text-[#B988BF] rounded-full flex items-center justify-center mx-auto mb-6">
+                <BarChart3 size={32} />
+              </div>
+              <h3 className="text-xl md:text-2xl font-bold text-white mb-4">Análise Finalizada</h3>
+              <p className="text-gray-400 text-sm md:text-base mb-8 leading-relaxed">
+                Seu negócio ainda depende de ações isoladas para gerar novos clientes. Com a estrutura correta, é possível transformar aquisição de clientes em um processo previsível.
+              </p>
+              
+              <form onSubmit={handleSubmit} className="space-y-4 text-left">
+                <input type="hidden" name="_subject" value="Novo Diagnóstico de Negócio - EleveAI" />
                 <input type="hidden" name="_captcha" value="false" />
                 <input type="hidden" name="_template" value="table" />
                 
@@ -144,24 +230,8 @@ const FormModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }
                 </div>
                 
                 <div>
-                  <label className="block text-xs font-semibold text-gray-400 mb-1.5 ml-1">E-mail</label>
-                  <input required type="email" name="Email" className="w-full bg-[#0A0A0B]/50 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#B988BF] transition-colors" placeholder="seu@email.com" />
-                </div>
-                
-                <div>
                   <label className="block text-xs font-semibold text-gray-400 mb-1.5 ml-1">WhatsApp</label>
                   <input required type="tel" name="WhatsApp" className="w-full bg-[#0A0A0B]/50 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#B988BF] transition-colors" placeholder="(00) 00000-0000" />
-                </div>
-                
-                <div>
-                  <label className="block text-xs font-semibold text-gray-400 mb-1.5 ml-1">Motivo do contato</label>
-                  <select required name="Motivo" defaultValue="" className="w-full bg-[#0A0A0B]/50 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#B988BF] transition-colors appearance-none [&>option]:text-gray-900">
-                    <option value="" disabled>Selecione uma opção</option>
-                    <option value="Quero escalar minhas vendas">Quero escalar minhas vendas</option>
-                    <option value="Preciso estruturar meu comercial">Preciso estruturar meu processo comercial</option>
-                    <option value="Melhorar meu posicionamento">Melhorar meu posicionamento</option>
-                    <option value="Outros">Outros</option>
-                  </select>
                 </div>
 
                 <button 
@@ -169,11 +239,12 @@ const FormModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }
                   disabled={status === 'submitting'}
                   className="w-full mt-4 py-4 bg-[#68259A] hover:bg-[#72578C] text-white rounded-xl font-bold transition-all shadow-lg flex items-center justify-center gap-2 disabled:opacity-50"
                 >
-                  {status === 'submitting' ? 'Enviando...' : 'Solicitar Raio-X Gratuito'}
+                  {status === 'submitting' ? 'Enviando...' : 'Receber análise estratégica'}
                   {status !== 'submitting' && <ArrowRight size={18} />}
                 </button>
+                <p className="text-center text-xs text-gray-500 mt-2">Sem compromisso.</p>
               </form>
-            </>
+            </motion.div>
           )}
         </motion.div>
       </div>
@@ -214,97 +285,132 @@ const TypingEffect = ({ texts }: { texts: string[] }) => {
 };
 
 const Navbar = ({ onHome }: { onHome: () => void }) => {
-  const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 50);
+    const handleScroll = () => setIsScrolled(window.scrollY > 20);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   const closeMenu = () => setIsMobileMenuOpen(false);
-  const handleHomeClick = () => { onHome(); closeMenu(); };
+  const handleHomeClick = () => {
+    onHome();
+    closeMenu();
+    setTimeout(() => window.scrollTo({ top: 0, behavior: 'smooth' }), 50);
+  };
 
-  const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
-    e.preventDefault();
+  const scrollToSection = (id: string) => {
     onHome();
     closeMenu();
     setTimeout(() => {
-      const element = document.getElementById(id);
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
-      }
+      document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
     }, 100);
   };
 
+  const navLinks = [
+    { label: 'Home', action: handleHomeClick },
+    { label: 'Sistema', id: 'sistema' },
+    { label: 'Soluções', id: 'diagnostico' },
+    { label: 'FAQ', id: 'faq' },
+  ];
+
   return (
-    <motion.nav
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 px-6 py-4 ${isScrolled ? 'bg-[#0A0A0B]/80 backdrop-blur-lg border-b border-white/10' : 'bg-transparent'
+    <>
+      <motion.nav
+        initial={{ y: -100 }}
+        animate={{ y: 0 }}
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 px-6 py-3 ${
+          isScrolled ? 'bg-[#0A0A0B]/90 backdrop-blur-lg border-b border-white/10 shadow-lg' : 'bg-transparent'
         }`}
-    >
-      <div className="max-w-7xl mx-auto flex justify-between items-center relative z-10">
-        <div className="flex items-center gap-2 cursor-pointer pt-1" onClick={handleHomeClick}>
-          <img src="/logo.png" alt="EleveAI - Agência de Marketing" className="h-20 md:h-28 w-auto object-contain scale-125 origin-left" />
+      >
+        <div className="max-w-7xl mx-auto flex justify-between items-center relative z-10">
+          {/* Logo */}
+          <div className="flex items-center cursor-pointer" onClick={handleHomeClick}>
+            <img 
+              src="/logo.png" 
+              alt="EleveAI" 
+              className="h-[7rem] md:h-[9rem] w-auto object-contain transition-all scale-[1.3] origin-left" 
+            />
+          </div>
+
+          {/* Desktop Nav Links */}
+          <div className="hidden md:flex items-center gap-8 text-sm font-medium text-gray-400">
+            <button onClick={handleHomeClick} className="hover:text-white transition-colors">Home</button>
+            <button onClick={() => scrollToSection('sistema')} className="hover:text-white transition-colors">Sistema</button>
+            <button onClick={() => scrollToSection('diagnostico')} className="hover:text-white transition-colors">Soluções</button>
+            <button onClick={() => scrollToSection('faq')} className="hover:text-white transition-colors">FAQ</button>
+          </div>
+
+          {/* Mobile Menu Button */}
+          <div className="flex items-center md:hidden">
+            <button
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="text-white p-2"
+            >
+              {isMobileMenuOpen ? <Plus className="rotate-45" size={32} /> : <Menu size={32} />}
+            </button>
+          </div>
         </div>
+      </motion.nav>
 
-        <div className="hidden md:flex items-center gap-8 text-sm font-medium text-gray-400">
-          <a href="#beneficios" onClick={(e) => scrollToSection(e, 'beneficios')} className="hover:text-white transition-colors">Benefícios</a>
-          <a href="#solucoes" onClick={(e) => scrollToSection(e, 'solucoes')} className="hover:text-white transition-colors">Soluções</a>
-          <a href="#faq" onClick={(e) => scrollToSection(e, 'faq')} className="hover:text-white transition-colors">FAQ</a>
-        </div>
-
-        <div className="flex items-center gap-4">
-          <a
-            href={WHATSAPP_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={trackWhatsAppClick}
-            className="hidden sm:flex bg-[#68259A] hover:bg-[#72578C] text-white px-5 py-2.5 rounded-full text-sm font-semibold transition-all hover:shadow-[0_0_15px_rgba(104,37,154,0.4)] items-center gap-2"
-          >
-            Iniciar
-            <ArrowRight size={16} />
-          </a>
-
-          <button
-            className="md:hidden text-white p-2"
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          >
-            {isMobileMenuOpen ? <Plus className="rotate-45" size={28} /> : <Menu size={28} />}
-          </button>
-        </div>
-      </div>
-
-      {/* Mobile Menu */}
+      {/* ====== FULLSCREEN OVERLAY MENU (Mobile Only) ====== */}
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-[#0A0A0B]/95 backdrop-blur-xl border-t border-white/5 overflow-hidden"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 z-40 bg-[#0A0A0B]/95 backdrop-blur-2xl flex flex-col items-center justify-center md:hidden"
           >
-            <div className="flex flex-col p-6 gap-6">
-              <a href="#beneficios" onClick={(e) => scrollToSection(e, 'beneficios')} className="text-gray-300 hover:text-white text-lg font-medium">Benefícios</a>
-              <a href="#solucoes" onClick={(e) => scrollToSection(e, 'solucoes')} className="text-gray-300 hover:text-white text-lg font-medium">Soluções</a>
-              <a href="#faq" onClick={(e) => scrollToSection(e, 'faq')} className="text-gray-300 hover:text-white text-lg font-medium">FAQ</a>
-              <a
+            {/* Close button */}
+            <button
+              onClick={closeMenu}
+              className="absolute top-6 right-6 text-gray-400 hover:text-white transition-colors p-2"
+            >
+              <Plus className="rotate-45" size={32} />
+            </button>
+
+            <nav className="flex flex-col items-center gap-8">
+              {navLinks.map((link, i) => (
+                <motion.button
+                  key={link.label}
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 20 }}
+                  transition={{ delay: i * 0.07 }}
+                  onClick={link.action ?? (() => scrollToSection(link.id!))}
+                  className="text-2xl font-extrabold text-white/60 hover:text-white transition-colors tracking-tight"
+                >
+                  {link.label}
+                </motion.button>
+              ))}
+
+              {/* WhatsApp CTA */}
+              <motion.a
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0 }}
+                transition={{ delay: navLinks.length * 0.07 }}
                 href={WHATSAPP_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-[#68259A] text-white px-6 py-4 rounded-2xl text-center font-bold flex items-center justify-center gap-2"
-                onClick={(e) => { trackWhatsAppClick(); closeMenu(); }}
+                onClick={closeMenu}
+                className="mt-4 flex items-center gap-3 bg-[#68259A] hover:bg-[#7a2cb3] text-white px-8 py-4 rounded-full font-bold text-lg transition-all shadow-[0_10px_30px_rgba(104,37,154,0.35)] hover:shadow-[0_10px_40px_rgba(104,37,154,0.5)]"
               >
-                Iniciar
-                <ArrowRight size={18} />
-              </a>
-            </div>
+                Falar no WhatsApp
+                <ArrowRight size={20} />
+              </motion.a>
+            </nav>
+
+            {/* Decorative glow */}
+            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-80 h-40 bg-[#68259A]/20 blur-[80px] rounded-full pointer-events-none" />
           </motion.div>
         )}
       </AnimatePresence>
-    </motion.nav>
+    </>
   );
 };
 
@@ -322,27 +428,42 @@ const Hero = ({ onOpenModal }: { onOpenModal: () => void }) => {
           transition={{ duration: 0.8 }}
           className="text-center md:text-left flex flex-col items-center md:items-start"
         >
-          <div className="inline-block px-4 py-1.5 rounded-full glass border-white/10 text-[#EEC6A2] text-xs font-bold uppercase tracking-widest mb-6">
-            Consultoria Estratégica de Crescimento
+          <div className="inline-block px-4 py-1.5 rounded-full glass border-[#B988BF]/30 text-[#B988BF] text-xs font-bold uppercase tracking-widest mb-6">
+            Empresas que crescem não dependem da sorte. Elas constroem um sistema de clientes.
           </div>
-          <h1 className="text-3xl sm:text-4xl md:text-7xl font-extrabold text-white leading-[1.1] mb-6">
-            Arquitetura Estratégica de <br />
-            <TypingEffect texts={["Crescimento", "Escala", "Previsibilidade"]} />
+          <h1 className="text-3xl sm:text-4xl md:text-[3.5rem] font-extrabold text-white leading-tight mb-6">
+            Transformamos seu negócio em um <span className="text-gradient">sistema previsível</span> de geração de clientes.
           </h1>
           <p className="text-gray-400 text-sm sm:text-base md:text-xl max-w-lg mb-8 leading-relaxed">
-            Estruturamos posicionamento, aquisição e automação para transformar o crescimento do seu negócio em um sistema mais inteligente e previsível.
+            Estruturamos posicionamento, aquisição e automação para que sua empresa seja encontrada, desejada e escolhida.
           </p>
-          <div className="flex flex-col items-center md:items-start gap-3">
+          
+          <div className="flex flex-wrap gap-3 justify-center md:justify-start mb-10">
+            <span className="px-4 py-1.5 rounded-full bg-[#68259A]/10 border border-[#68259A]/30 text-xs font-bold text-gray-300">Posicionamento</span>
+            <span className="px-4 py-1.5 rounded-full bg-[#B988BF]/10 border border-[#B988BF]/30 text-xs font-bold text-gray-300">Aquisição</span>
+            <span className="px-4 py-1.5 rounded-full bg-[#EEC6A2]/10 border border-[#EEC6A2]/30 text-xs font-bold text-gray-300">Conversão</span>
+            <span className="px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs font-bold text-gray-300">Automação</span>
+          </div>
+
+          <div className="flex flex-col sm:flex-row items-center md:items-start gap-4 w-full sm:w-auto">
             <motion.button
               onClick={onOpenModal}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="px-8 py-4 md:px-10 md:py-5 bg-[#68259A] text-white rounded-2xl font-bold text-base md:text-lg text-center shadow-[0_10px_30px_rgba(104,37,154,0.3)] hover:shadow-[0_10px_40px_rgba(104,37,154,0.5)] transition-all flex items-center justify-center gap-3 w-full sm:w-auto"
+              className="px-8 py-4 md:px-10 md:py-5 bg-[#68259A] text-white rounded-2xl font-bold text-base md:text-lg text-center shadow-[0_10px_30px_rgba(104,37,154,0.3)] hover:shadow-[0_10px_40px_rgba(104,37,154,0.5)] transition-all flex items-center justify-center w-full sm:w-auto"
             >
-              Ver o Raio-X do Meu Negócio
-              <ArrowRight size={22} className="text-white" />
+              Ver diagnóstico do meu negócio
             </motion.button>
-            <span className="text-xs text-gray-500 font-medium max-w-[280px] md:max-w-md text-center md:text-left">Uma análise inicial para revelar gargalos, oportunidades e pontos de alavancagem do seu crescimento.</span>
+            <motion.a
+              href={WHATSAPP_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              whileHover={{ scale: 1.05, backgroundColor: "rgba(255,255,255,0.05)" }}
+              whileTap={{ scale: 0.95 }}
+              className="px-8 py-4 md:px-10 md:py-5 glass border-white/10 text-white rounded-2xl font-bold text-base md:text-lg text-center hover:border-white/30 transition-all flex items-center justify-center w-full sm:w-auto"
+            >
+              Entender como funciona
+            </motion.a>
           </div>
         </motion.div>
 
@@ -355,14 +476,13 @@ const Hero = ({ onOpenModal }: { onOpenModal: () => void }) => {
             <div className="relative z-10 rounded-[1.5rem] md:rounded-[3rem] overflow-hidden glass border-white/10 shadow-[0_0_50px_rgba(104,37,154,0.3)]">
             <img
               src="/strategic-funnel-pt.png"
-              alt="Estratégia de Funil de Vendas: Atração, Conversão e Retenção"
+              alt="Sistema Previsível de Geração de Clientes"
               className="w-full h-auto brightness-50 hover:brightness-100 transition-all duration-700"
               width="600"
               height="400"
               fetchPriority="high"
             />
           </div>
-          {/* Overlay UI elements */}
           <motion.div
             animate={{ y: [0, -10, 0] }}
             transition={{ repeat: Infinity, duration: 4 }}
@@ -376,10 +496,265 @@ const Hero = ({ onOpenModal }: { onOpenModal: () => void }) => {
               </div>
             </div>
           </motion.div>
-          {/* Glowing backlights */}
           <div className="absolute -top-10 -right-10 w-40 h-40 bg-[#68259A] rounded-full blur-[80px] opacity-40"></div>
           <div className="absolute -bottom-10 -left-10 w-40 h-40 bg-[#B988BF] rounded-full blur-[80px] opacity-40"></div>
         </motion.div>
+      </div>
+    </section>
+  );
+};
+
+const EmpresasNotaveis = () => {
+  return (
+    <section className="py-24 relative px-6 overflow-hidden">
+      <div className="max-w-4xl mx-auto text-center relative z-10">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="glass p-8 md:p-12 rounded-[2rem] border-white/5"
+        >
+          <h2 className="text-2xl sm:text-3xl md:text-5xl font-extrabold text-white mb-6 leading-tight">
+            Empresas comuns disputam atenção. <br className="hidden md:block"/>
+            <span className="text-gradient">Empresas notáveis são procuradas.</span>
+          </h2>
+          <p className="text-gray-400 text-base md:text-xl leading-relaxed">
+            Se o seu negócio parece igual a todos os outros, o cliente escolhe pelo preço. 
+            Negócios que constroem presença e autoridade deixam de disputar atenção e passam a ser procurados.
+            Essa é a diferença entre correr atrás de clientes e construir um sistema que atrai clientes.
+          </p>
+        </motion.div>
+      </div>
+    </section>
+  );
+};
+
+const GoogleSearchMockup = ({ onOpenModal }: { onOpenModal: () => void }) => {
+  const [searchTerm, setSearchTerm] = useState('');
+
+  const scrollTo = (id: string) => {
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const phoneLinks = [
+    { label: '01. Sistema de Clientes', sub: 'Como construir previsibilidade', id: 'sistema', color: '#B988BF' },
+    { label: '02. Raio-X do Negócio', sub: 'Diagnóstico estratégico', id: 'diagnostico', color: '#EEC6A2' },
+    { label: '03. Por que EleveAI', sub: 'Nossa diferença metodológica', id: 'porque', color: '#B988BF' },
+    { label: '04. FAQ', sub: 'Dúvidas frequentes', id: 'faq', color: '#EEC6A2' },
+  ];
+
+  return (
+    <section className="py-24 relative px-6 overflow-hidden bg-[#0A0A0B]">
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#68259A]/10 via-[#0A0A0B] to-[#0A0A0B] pointer-events-none" />
+      
+      <div className="max-w-4xl mx-auto text-center relative z-10 mb-16">
+        <h2 className="text-2xl sm:text-3xl md:text-5xl font-extrabold text-white mb-6 mt-4">
+          Seu cliente já está procurando. <br className="hidden md:block"/><span className="text-gradient">A pergunta é: ele encontra você?</span>
+        </h2>
+        <p className="text-gray-400 text-sm sm:text-base md:text-lg">
+          Todos os dias pessoas pesquisam exatamente pelo que sua empresa vende.<br className="hidden md:block"/> Quem aparece primeiro leva o cliente.
+        </p>
+      </div>
+
+      <div className="max-w-6xl mx-auto relative z-10 grid md:grid-cols-2 gap-12 items-center">
+        {/* Left: Google Search Mockup */}
+        <div>
+          <div className="mb-4 relative">
+            <input 
+              type="text" 
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              placeholder="Digite o nome do seu negócio"
+              className="w-full bg-[#202124] border border-[#5f6368] rounded-full px-6 py-4 text-white text-base focus:outline-none focus:border-[#8ab4f8] focus:bg-[#303134] transition-all"
+            />
+            <div className="absolute right-4 top-1/2 -translate-y-1/2 text-[#9aa0a6]">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path d="M15.5 14H14.71L14.43 13.73C15.41 12.59 16 11.11 16 9.5C16 5.91 13.09 3 9.5 3C5.91 3 3 5.91 3 9.5C3 13.09 5.91 16 9.5 16C11.11 16 12.59 15.41 13.73 14.43L14 14.71V15.5L19 20.49L20.49 19L15.5 14ZM9.5 14C7.01 14 5 11.99 5 9.5C5 7.01 7.01 5 9.5 5C11.99 5 14 7.01 14 9.5C14 11.99 11.99 14 9.5 14Z" fill="currentColor"/>
+              </svg>
+            </div>
+          </div>
+
+          <AnimatePresence>
+            {searchTerm && (
+              <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                className="bg-[#202124] rounded-2xl p-6 border border-[#3c4043] shadow-2xl text-left"
+              >
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="text-[13px] font-bold text-white">Patrocinado</span>
+                </div>
+                <div className="flex items-center gap-3 mb-2">
+                  <div className="w-8 h-8 rounded-full bg-[#1A73E8] flex items-center justify-center text-white font-bold text-sm">
+                    {searchTerm.charAt(0).toUpperCase()}
+                  </div>
+                  <div>
+                    <div className="text-[#bdc1c6] text-[11px]">{`https://www.${searchTerm.toLowerCase().replace(/\s/g, '')}.com.br`}</div>
+                    <div className="text-[#8ab4f8] text-[17px] font-medium hover:underline cursor-pointer line-clamp-1">{searchTerm} | Estrutura de Vendas</div>
+                  </div>
+                </div>
+                <div className="text-[#bdc1c6] text-[13px] leading-snug">
+                  Não dependa mais da sorte. A <span className="font-bold">{searchTerm}</span> constrói sistemas de atração e conversão previsíveis.
+                </div>
+                <div className="grid grid-cols-2 gap-3 mt-4 pt-4 border-t border-[#3c4043]">
+                  <div className="text-[#8ab4f8] text-[13px] hover:underline cursor-pointer" onClick={onOpenModal}>Diagnóstico Gratuito</div>
+                  <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="text-[#8ab4f8] text-[13px] hover:underline">Fale com Especialista</a>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+
+          <motion.button
+            onClick={onOpenModal}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="mt-8 px-8 py-4 w-full bg-[#68259A] text-white rounded-2xl font-bold text-base shadow-[0_10px_30px_rgba(104,37,154,0.3)] hover:shadow-[0_10px_40px_rgba(104,37,154,0.5)] transition-all flex items-center justify-center gap-3"
+          >
+            Quero aplicar isso no meu negócio
+            <ArrowRight size={20} />
+          </motion.button>
+        </div>
+
+        {/* Right: Phone Mockup */}
+        <div className="flex justify-center">
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="relative w-[260px] sm:w-[300px]"
+          >
+            {/* Phone shell */}
+            <div className="relative bg-[#111] rounded-[3rem] border-[6px] border-[#2a2a2a] shadow-[0_30px_80px_rgba(0,0,0,0.7)] overflow-hidden">
+              {/* Status bar */}
+              <div className="flex justify-between items-center px-6 pt-4 pb-2">
+                <span className="text-[10px] text-gray-500 font-bold">9:41</span>
+                <div className="w-16 h-4 bg-[#1a1a1a] rounded-full mx-auto" />
+                <div className="flex gap-1 items-center">
+                  <div className="w-1 h-1 rounded-full bg-gray-500" />
+                  <div className="w-1 h-1.5 rounded-full bg-gray-500" />
+                  <div className="w-1 h-2 rounded-full bg-gray-400" />
+                  <div className="w-1 h-2.5 rounded-full bg-white" />
+                </div>
+              </div>
+
+              {/* App header */}
+              <div className="px-5 pt-3 pb-4 bg-gradient-to-b from-[#68259A]/20 to-transparent">
+                <p className="text-[9px] text-gray-500 uppercase tracking-widest">EleveAI</p>
+                <p className="text-white font-extrabold text-[15px] leading-tight mt-0.5">Seu sistema de<br/>crescimento</p>
+              </div>
+
+              {/* Menu items */}
+              <div className="px-4 pb-6 flex flex-col gap-3">
+                {phoneLinks.map((link, i) => (
+                  <motion.button
+                    key={i}
+                    onClick={() => scrollTo(link.id)}
+                    whileHover={{ scale: 1.02, x: 4 }}
+                    whileTap={{ scale: 0.97 }}
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: i * 0.1 }}
+                    className="w-full text-left bg-white/5 hover:bg-[#68259A]/20 border border-white/5 hover:border-[#68259A]/40 rounded-2xl px-4 py-3 transition-all group"
+                  >
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <p className="text-[11px] font-bold text-white group-hover:text-[#B988BF] transition-colors">{link.label}</p>
+                        <p className="text-[9px] text-gray-500 mt-0.5">{link.sub}</p>
+                      </div>
+                      <ArrowRight size={12} className="text-gray-600 group-hover:text-[#B988BF] transition-colors" />
+                    </div>
+                  </motion.button>
+                ))}
+
+                <motion.button
+                  onClick={onOpenModal}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.97 }}
+                  className="w-full mt-1 bg-[#68259A] text-white rounded-2xl px-4 py-3 text-[11px] font-black flex items-center justify-between shadow-[0_6px_20px_rgba(104,37,154,0.4)]"
+                >
+                  Iniciar Diagnóstico
+                  <ArrowRight size={12} />
+                </motion.button>
+              </div>
+
+              {/* Home bar */}
+              <div className="flex justify-center pb-4">
+                <div className="w-24 h-1 bg-white/20 rounded-full" />
+              </div>
+            </div>
+
+            {/* Glow */}
+            <div className="absolute -bottom-10 left-1/2 -translate-x-1/2 w-40 h-20 bg-[#68259A]/30 blur-[40px] rounded-full pointer-events-none" />
+
+            {/* Floating badge */}
+            <motion.div
+              animate={{ y: [0, -8, 0] }}
+              transition={{ repeat: Infinity, duration: 3 }}
+              className="absolute -right-8 top-20 glass px-3 py-2 rounded-xl border-white/10 text-xs font-bold text-white shadow-xl"
+            >
+              <span className="text-green-400">●</span> Online
+            </motion.div>
+          </motion.div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const SistemaDeClientes = () => {
+  return (
+    <section id="sistema" className="py-24 relative px-6 overflow-hidden scroll-mt-24">
+      <div className="max-w-7xl mx-auto relative z-10">
+        <div className="text-center mb-16">
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-2xl sm:text-3xl md:text-5xl font-extrabold text-white mb-6"
+          >
+            Clientes não aparecem por acaso.
+          </motion.h2>
+          <p className="text-gray-400 max-w-2xl mx-auto text-sm sm:text-base md:text-xl">
+            Empresas que crescem constroem um sistema.
+          </p>
+        </div>
+
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <motion.div whileHover={{ y: -10 }} className="glass p-8 rounded-[2rem] border-white/5 hover:border-[#68259A]/40 transition-all flex flex-col items-center text-center">
+            <div className="w-14 h-14 rounded-2xl bg-[#68259A]/10 flex items-center justify-center mb-6 text-[#B988BF]">
+              <Star size={28} />
+            </div>
+            <h3 className="text-xl font-bold text-white mb-2">Posicionamento forte</h3>
+            <p className="text-sm text-gray-400">Ser lembrado antes de ser comparado.</p>
+          </motion.div>
+
+          <motion.div whileHover={{ y: -10 }} className="glass p-8 rounded-[2rem] border-white/5 hover:border-[#68259A]/40 transition-all flex flex-col items-center text-center">
+            <div className="w-14 h-14 rounded-2xl bg-[#EEC6A2]/10 flex items-center justify-center mb-6 text-[#EEC6A2]">
+              <Target size={28} />
+            </div>
+            <h3 className="text-xl font-bold text-white mb-2">Aquisição inteligente</h3>
+            <p className="text-sm text-gray-400">Ser encontrado por quem já está procurando.</p>
+          </motion.div>
+
+          <motion.div whileHover={{ y: -10 }} className="glass p-8 rounded-[2rem] border-white/5 hover:border-[#68259A]/40 transition-all flex flex-col items-center text-center">
+            <div className="w-14 h-14 rounded-2xl bg-[#68259A]/10 flex items-center justify-center mb-6 text-[#B988BF]">
+              <BarChart3 size={28} />
+            </div>
+            <h3 className="text-xl font-bold text-white mb-2">Conversão estruturada</h3>
+            <p className="text-sm text-gray-400">Transformar interesse em clientes.</p>
+          </motion.div>
+
+          <motion.div whileHover={{ y: -10 }} className="glass p-8 rounded-[2rem] border-white/5 hover:border-[#68259A]/40 transition-all flex flex-col items-center text-center">
+            <div className="w-14 h-14 rounded-2xl bg-[#EEC6A2]/10 flex items-center justify-center mb-6 text-[#EEC6A2]">
+              <Cpu size={28} />
+            </div>
+            <h3 className="text-xl font-bold text-white mb-2">Automação</h3>
+            <p className="text-sm text-gray-400">Criar consistência no crescimento.</p>
+          </motion.div>
+        </div>
       </div>
     </section>
   );
@@ -629,56 +1004,58 @@ const ProductPresentation = () => {
   );
 };
 
-const SocialProof = () => {
-  const statements = [
-    {
-      title: "Maturidade Digital",
-      text: "Negócios que automatizam sua aquisição e atendimento reduzem o ciclo de venda e elevam drasticamente a conversão de leads.",
-      author: "Estudo de Mercado EleveAI"
-    },
-    {
-      title: "Eficiência Operacional",
-      text: "A reestruturação estratégica não é apenas sobre vender mais, é sobre gastar menos tempo com processos que não geram escala para a empresa.",
-      author: "Diagnóstico Estratégico"
-    },
-    {
-      title: "Autoridade de Marca",
-      text: "O posicionamento digital correto permite que negócios cobrem o preço justo por suas soluções, saindo definitivamente da guerra de preços.",
-      author: "Análise Competitiva"
-    }
-  ];
-
+const PorQueEleveAI = () => {
   return (
-    <section className="py-24 px-6 overflow-hidden">
+    <section className="py-24 px-6 overflow-hidden bg-gradient-to-b from-transparent to-[#0A0A0B]/50">
       <div className="max-w-7xl mx-auto">
-        <div className="mb-16">
-          <h2 className="text-xl sm:text-2xl md:text-5xl font-extrabold text-white mb-6">Por que a EleveAI é <span className="text-gradient">Indispensável?</span></h2>
-          <p className="text-gray-400 text-sm sm:text-base md:text-lg max-w-2xl">Não oferecemos apenas marketing. Oferecemos uma nova arquitetura de negócios para a sua empresa.</p>
+        <div className="mb-16 text-center md:text-left">
+          <h2 className="text-2xl sm:text-3xl md:text-5xl font-extrabold text-white mb-6">
+            O que torna a <span className="text-gradient">EleveAI diferente.</span>
+          </h2>
+          <p className="text-gray-400 text-sm sm:text-base md:text-xl max-w-2xl">
+            Não focamos em ações isoladas. Construímos a estrutura que permite que seu negócio seja encontrado, desejado e escolhido.
+          </p>
         </div>
 
-        <div className="flex gap-6 overflow-x-auto pb-8 custom-scrollbar snap-x">
-          {statements.map((s, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, x: 50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.2 }}
-              className="min-w-[300px] md:min-w-[400px] glass p-10 rounded-[2.5rem] border-white/5 snap-center flex flex-col justify-between"
-            >
-              <div>
-                <div className="flex gap-1 text-[#EEC6A2] mb-6">
-                  {[1, 2, 3, 4, 5].map(star => <Star key={star} size={16} fill="currentColor" />)}
-                </div>
-                <h4 className="text-xl font-bold text-white mb-4">{s.title}</h4>
-                <p className="text-gray-400 italic leading-relaxed">"{s.text}"</p>
-              </div>
-              <div className="mt-8 pt-6 border-t border-white/10 flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-[#68259A] to-[#B988BF]" />
-                <span className="text-sm font-bold text-gray-300 uppercase tracking-tighter">{s.author}</span>
-              </div>
-            </motion.div>
-          ))}
+        <div className="grid md:grid-cols-3 gap-6">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="glass p-8 md:p-10 rounded-[2.5rem] border-white/5 hover:border-[#68259A]/30 transition-all group"
+          >
+            <div className="w-14 h-14 rounded-2xl bg-[#68259A]/10 flex items-center justify-center mb-8 group-hover:scale-110 transition-transform">
+              <Star className="text-[#B988BF]" size={28} />
+            </div>
+            <h4 className="text-xl md:text-2xl font-bold text-white mb-4">Clareza de posicionamento</h4>
+            <p className="text-gray-400 leading-relaxed text-sm md:text-base">Mostramos o valor único do seu negócio para que o preço deixe de ser a única variável na decisão do cliente.</p>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="glass p-8 md:p-10 rounded-[2.5rem] border-white/5 hover:border-[#EEC6A2]/30 transition-all group"
+          >
+            <div className="w-14 h-14 rounded-2xl bg-[#EEC6A2]/10 flex items-center justify-center mb-8 group-hover:scale-110 transition-transform">
+              <Target className="text-[#EEC6A2]" size={28} />
+            </div>
+            <h4 className="text-xl md:text-2xl font-bold text-white mb-4">Aquisição estruturada de clientes</h4>
+            <p className="text-gray-400 leading-relaxed text-sm md:text-base">Desenhamos campanhas que trazem não apenas cliques, mas oportunidades reais e qualificadas de venda todos os dias.</p>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="glass p-8 md:p-10 rounded-[2.5rem] border-white/5 hover:border-[#68259A]/30 transition-all group"
+          >
+            <div className="w-14 h-14 rounded-2xl bg-[#68259A]/10 flex items-center justify-center mb-8 group-hover:scale-110 transition-transform">
+              <Cpu className="text-[#B988BF]" size={28} />
+            </div>
+            <h4 className="text-xl md:text-2xl font-bold text-white mb-4">Processos automatizados de crescimento</h4>
+            <p className="text-gray-400 leading-relaxed text-sm md:text-base">Implementamos sistemas que organizam seu relacionamento com o cliente, triplicando as chances de fechamento sem aumentar a carga da equipe.</p>
+          </motion.div>
         </div>
       </div>
     </section>
@@ -756,20 +1133,28 @@ const FAQ = () => {
 
   const faqs = [
     {
-      question: "Como funciona o processo da EleveAI?",
-      answer: "Iniciamos com um Diagnóstico Completo: avaliamos sua autoridade digital (Instagram, Google) e seus processos internos. Desenhamos então um plano híbrido: estratégias de conteúdo para atrair e automação inteligente para converter."
+      question: "Quanto tempo leva para estruturar esse sistema?",
+      answer: "A implantação do sistema primário costuma levar entre 15 e 30 dias, dependendo do estágio atual do seu negócio. Nesse período, já criamos as fundações para que sua empresa comece a ser encontrada."
     },
     {
-      question: "A EleveAI cuida da minha imagem nas redes sociais?",
-      answer: "Sim. Não fazemos apenas 'posts', construímos autoridade. Criamos identidade visual premium e roteiros estratégicos que posicionam seu negócio como referência, atraindo clientes que valorizam qualidade, não apenas menor preço."
+      question: "Preciso já investir em anúncios?",
+      answer: "Recomendamos um orçamento inicial para acelerar a aquisição de clientes. Porém, durante o diagnóstico, orientaremos o montante ideal, sempre focando no retorno sobre o investimento (ROI) e na previsibilidade."
     },
     {
-      question: "Para quem somos indicados?",
-      answer: "Para negócios que desejam profissionalizar e escalar suas vendas. Se o seu marketing não reflete a excelência do que você entrega, ou se sua equipe perde muito tempo com curiosos, nossa metodologia é a solução exata."
+      question: "Isso serve para empresas pequenas?",
+      answer: "Com certeza. Nossos sistemas são desenhados para dar escala a negócios de todos os tamanhos, permitindo que as pequenas empresas se posicionem com o mesmo profissionalismo de líderes de mercado."
     },
     {
-      question: "A automação substitui o atendimento humano?",
-      answer: "Jamais. Ela potencializa. Enquanto nossa tecnologia cuida da atração e triagem inicial 24/7, sua equipe comercial foca em negociações estratégicas e em um fechamento mais consultivo e assertivo."
+      question: "Preciso ter equipe interna?",
+      answer: "Não. Nós estruturamos a automação e o funil de aquisição de forma que você ou um pequeno time consiga lidar apenas com os fechamentos de alto valor."
+    },
+    {
+      question: "Como funciona a implantação?",
+      answer: "Mapeamos seu cenário no Raio-X inicial, desenhamos a arquitetura ideal e em seguida nossa equipe técnica assume a construção da estrutura de atração, conversão e automação."
+    },
+    {
+      question: "O contato é sem compromisso?",
+      answer: "Sim. O diagnóstico inicial é isento de custos e focado em apresentar os gargalos do seu crescimento estrutural."
     }
   ];
 
@@ -795,7 +1180,7 @@ const FAQ = () => {
   );
 };
 
-const FinalCTA = () => {
+const FinalCTA = ({ onOpenModal }: { onOpenModal: () => void }) => {
   return (
     <section className="py-24 px-6 relative overflow-hidden">
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#68259A]/20 rounded-full blur-[120px] pointer-events-none" />
@@ -806,27 +1191,23 @@ const FinalCTA = () => {
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
         >
-          <h2 className="text-2xl sm:text-3xl md:text-6xl font-extrabold text-white mb-8">
-            Acelere seu Crescimento <br />
-            <span className="text-gradient">hoje mesmo.</span>
+          <h2 className="text-2xl sm:text-3xl md:text-5xl font-extrabold text-white mb-8 leading-tight">
+            Seu negócio precisa de <span className="text-gradient">mais esforço</span> ou de <br className="hidden md:block"/> <span className="text-gradient">mais estrutura?</span>
           </h2>
 
           <p className="text-gray-400 text-sm sm:text-base md:text-xl max-w-2xl mx-auto mb-12">
-            O futuro da sua empresa não depende da sorte, depende de arquitetura estratégica. Fale conosco e entenda nossas soluções de posicionamento e escala para o seu negócio.
+            Empresas que crescem constroem sistemas de geração de clientes. Solicite seu diagnóstico e descubra como criar previsibilidade de vendas.
           </p>
-          <motion.a
+          <motion.button
+            onClick={onOpenModal}
             whileHover={{ scale: 1.05, boxShadow: "0 20px 40px rgba(104,37,154,0.4)" }}
             whileTap={{ scale: 0.95 }}
-            href={WHATSAPP_URL}
-            onClick={trackWhatsAppClick}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-3 md:gap-4 bg-white text-[#68259A] px-6 py-3 md:px-12 md:py-6 rounded-full font-black text-base md:text-xl shadow-2xl transition-all"
+            className="inline-flex items-center gap-3 md:gap-4 bg-[#68259A] text-white px-8 py-4 md:px-12 md:py-5 rounded-full font-black text-base md:text-xl shadow-[0_10px_30px_rgba(104,37,154,0.3)] hover:shadow-[0_10px_40px_rgba(104,37,154,0.5)] transition-all"
           >
-            Conversar Agora
-            <WhatsAppIcon size={20} className="text-[#68259A] scale-100 md:scale-110" />
-          </motion.a>
-          <p className="mt-8 text-sm text-gray-500 font-medium">Atendimento imediato e estratégico disponível 24/7</p>
+            Receber análise estratégica
+            <ArrowRight size={22} className="text-white" />
+          </motion.button>
+          <p className="mt-8 text-sm text-gray-500 font-medium">Sem compromisso.</p>
         </motion.div>
       </div>
     </section>
@@ -846,11 +1227,11 @@ const Footer = ({ onPrivacy, onTerms, onHome }: { onPrivacy: () => void, onTerms
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12 mb-16">
           <div className="md:col-span-5">
-            <div className="flex items-center gap-2 mb-8 cursor-pointer group pt-2" onClick={onHome}>
+            <div className="flex justify-center md:justify-start items-center gap-2 mb-8 cursor-pointer group pt-2" onClick={onHome}>
               <img
                 src="/logo.png"
                 alt="EleveAI - Marketing Estratégico"
-                className="h-16 sm:h-24 w-auto object-contain grayscale opacity-80 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500 scale-125 origin-left"
+                className="h-20 sm:h-32 w-auto object-contain grayscale opacity-80 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500 scale-150 origin-center md:origin-left"
                 loading="lazy"
                 decoding="async"
                 width="150"
@@ -976,7 +1357,7 @@ const Preloader = ({ onComplete }: { onComplete: () => void }) => {
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
           <div className="w-64 h-64 rounded-full bg-[#68259A]/30 blur-[40px] animate-pulse"></div>
         </div>
-        <img src="/logo.png" alt="EleveAI Carregando" className="h-32 w-auto relative z-10 scale-125" />
+        <img src="/logo.png" alt="EleveAI Carregando" className="h-48 w-auto relative z-10 scale-150" />
       </motion.div>
 
       <motion.div
@@ -1141,7 +1522,7 @@ const CookieConsent = () => {
 
 const RaioXSection = ({ onOpenModal }: { onOpenModal: () => void }) => {
   return (
-    <section className="py-24 relative px-6 overflow-hidden">
+    <section id="diagnostico" className="py-24 relative px-6 overflow-hidden scroll-mt-24">
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="text-center mb-16">
           <motion.h2
@@ -1213,14 +1594,38 @@ const App = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
-    // Check if user has already seen or closed the modal this session
+    // Only start popup triggers after preloader finishes
+    if (loading) return;
+
     const hasSeenModal = sessionStorage.getItem('eleveai-modal-closed');
-    if (!hasSeenModal && !loading) {
-      const timer = setTimeout(() => {
+    const hasSubmitted = sessionStorage.getItem('eleveai-modal-submitted');
+    if (hasSeenModal || hasSubmitted) return;
+
+    // 20-second timer trigger
+    const timer = setTimeout(() => {
+      setIsModalOpen(true);
+    }, 20000);
+
+    // 50% scroll trigger
+    const handleScroll = () => {
+      const scrolled = window.scrollY || document.documentElement.scrollTop;
+      const maxScroll = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      if (maxScroll <= 0) return;
+      const scrollPercent = (scrolled / maxScroll) * 100;
+
+      if (scrollPercent >= 50) {
         setIsModalOpen(true);
-      }, 8000);
-      return () => clearTimeout(timer);
-    }
+        window.removeEventListener('scroll', handleScroll);
+        clearTimeout(timer);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener('scroll', handleScroll);
+    };
   }, [loading]);
 
   const handleOpenModal = () => {
@@ -1238,7 +1643,7 @@ const App = () => {
         {loading && <Preloader onComplete={() => setLoading(false)} />}
       </AnimatePresence>
 
-      <FormModal isOpen={isModalOpen} onClose={handleCloseModal} />
+      <DiagnosticModal isOpen={isModalOpen} onClose={handleCloseModal} />
 
       {!loading && (
         <motion.div
@@ -1251,13 +1656,13 @@ const App = () => {
             {currentPage === 'home' && (
               <>
                 <Hero onOpenModal={handleOpenModal} />
+                <EmpresasNotaveis />
+                <GoogleSearchMockup onOpenModal={handleOpenModal} />
+                <SistemaDeClientes />
                 <RaioXSection onOpenModal={handleOpenModal} />
-                <Benefits />
-                <ProductPresentation />
-                <SocialProof />
-                <InfiniteTicker />
+                <PorQueEleveAI />
                 <FAQ />
-                <FinalCTA />
+                <FinalCTA onOpenModal={handleOpenModal} />
               </>
             )}
             {currentPage === 'privacy' && <PrivacyPolicy onBack={() => setCurrentPage('home')} />}
