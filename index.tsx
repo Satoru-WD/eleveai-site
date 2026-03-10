@@ -453,16 +453,6 @@ const Hero = ({ onOpenModal }: { onOpenModal: () => void }) => {
             >
               Ver diagnóstico do meu negócio
             </motion.button>
-            <motion.a
-              href={WHATSAPP_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              whileHover={{ scale: 1.05, backgroundColor: "rgba(255,255,255,0.05)" }}
-              whileTap={{ scale: 0.95 }}
-              className="px-8 py-4 md:px-10 md:py-5 glass border-white/10 text-white rounded-2xl font-bold text-base md:text-lg text-center hover:border-white/30 transition-all flex items-center justify-center w-full sm:w-auto"
-            >
-              Entender como funciona
-            </motion.a>
           </div>
         </motion.div>
 
@@ -734,7 +724,7 @@ const SistemaDeClientes = () => {
             <div className="w-14 h-14 rounded-2xl bg-[#EEC6A2]/10 flex items-center justify-center mb-6 text-[#EEC6A2]">
               <Target size={28} />
             </div>
-            <h3 className="text-xl font-bold text-white mb-2">Aquisição inteligente</h3>
+            <h3 className="text-xl font-bold text-white mb-2">Captação inteligente</h3>
             <p className="text-sm text-gray-400">Ser encontrado por quem já está procurando.</p>
           </motion.div>
 
@@ -742,7 +732,7 @@ const SistemaDeClientes = () => {
             <div className="w-14 h-14 rounded-2xl bg-[#68259A]/10 flex items-center justify-center mb-6 text-[#B988BF]">
               <BarChart3 size={28} />
             </div>
-            <h3 className="text-xl font-bold text-white mb-2">Conversão estruturada</h3>
+            <h3 className="text-xl font-bold text-white mb-2">Engajamento direcionado</h3>
             <p className="text-sm text-gray-400">Transformar interesse em clientes.</p>
           </motion.div>
 
@@ -1039,7 +1029,7 @@ const PorQueEleveAI = () => {
             <div className="w-14 h-14 rounded-2xl bg-[#EEC6A2]/10 flex items-center justify-center mb-8 group-hover:scale-110 transition-transform">
               <Target className="text-[#EEC6A2]" size={28} />
             </div>
-            <h4 className="text-xl md:text-2xl font-bold text-white mb-4">Aquisição estruturada de clientes</h4>
+            <h4 className="text-xl md:text-2xl font-bold text-white mb-4">Estratégia de atração de clientes</h4>
             <p className="text-gray-400 leading-relaxed text-sm md:text-base">Desenhamos campanhas que trazem não apenas cliques, mas oportunidades reais e qualificadas de venda todos os dias.</p>
           </motion.div>
 
@@ -1491,16 +1481,11 @@ const RaioXSection = ({ onOpenModal }: { onOpenModal: () => void }) => {
     <section id="diagnostico" className="py-24 relative px-6 overflow-hidden scroll-mt-24">
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="text-center mb-16">
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-2xl sm:text-3xl md:text-5xl font-extrabold text-white mb-6"
-          >
-            Raio-X Estratégico de <span className="text-gradient">Crescimento</span>
-          </motion.h2>
-          <p className="text-gray-400 max-w-2xl mx-auto text-sm sm:text-base md:text-lg">
-            Negócios não têm apenas problema de marketing. Têm problema de estrutura de crescimento.
+          <h2 className="text-3xl md:text-5xl font-extrabold text-white mb-6 tracking-tight">
+            Raio-X Estratégico de <span className="text-gradient hover-glow">Mercado</span>
+          </h2>
+          <p className="text-gray-400 max-w-2xl mx-auto text-sm md:text-lg leading-relaxed">
+            Seu desafio não é apenas atrair cliques. É construir uma base sólida de vendas.
           </p>
         </div>
 
@@ -1509,7 +1494,7 @@ const RaioXSection = ({ onOpenModal }: { onOpenModal: () => void }) => {
             <div className="w-14 h-14 rounded-2xl bg-[#68259A]/10 flex items-center justify-center mb-6">
               <Target className="text-[#B988BF]" size={28} />
             </div>
-            <h3 className="text-xl font-bold text-white mb-4">1. Aquisição</h3>
+            <h3 className="text-xl font-bold text-white mb-4">1. Visibilidade</h3>
             <p className="text-sm text-gray-400 leading-relaxed">Negócios que até geram visitas, mas não atraem as oportunidades certas para vendas de alto ticket.</p>
           </motion.div>
 
@@ -1517,7 +1502,7 @@ const RaioXSection = ({ onOpenModal }: { onOpenModal: () => void }) => {
             <div className="w-14 h-14 rounded-2xl bg-[#EEC6A2]/10 flex items-center justify-center mb-6">
               <TrendingUp className="text-[#EEC6A2]" size={28} />
             </div>
-            <h3 className="text-xl font-bold text-white mb-4">2. Conversão</h3>
+            <h3 className="text-xl font-bold text-white mb-4">2. Fechamento</h3>
             <p className="text-sm text-gray-400 leading-relaxed">Negócios que recebem contatos, mas não transformam o interesse em um avanço comercial previsível.</p>
           </motion.div>
 
@@ -1559,8 +1544,13 @@ const App = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
+    // Prevent browser from restoring previous scroll position
+    if ('scrollRestoration' in history) {
+      history.scrollRestoration = 'manual';
+    }
     // Ensure the site always goes to home position (top) on load
     window.scrollTo(0, 0);
+    setTimeout(() => window.scrollTo(0, 0), 100);
   }, []);
 
   useEffect(() => {
