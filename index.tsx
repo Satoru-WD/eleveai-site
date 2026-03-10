@@ -79,34 +79,34 @@ const DiagnosticModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setStatus('submitting');
-    
+
     const form = e.currentTarget;
     const formData = new FormData(form);
-    
+
     Object.entries(answers).forEach(([key, value]) => {
       formData.append(key, value);
     });
 
     fetch('https://formsubmit.co/ajax/satorukubota01@gmail.com', {
       method: 'POST',
-      headers: { 
+      headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json'
       },
       body: JSON.stringify(Object.fromEntries(formData))
     })
-    .then(response => response.json())
-    .then(data => {
-      setStatus('success');
-      if (typeof window !== 'undefined' && (window as any).fbq) {
-        (window as any).fbq('track', 'Lead');
-      }
-    })
-    .catch(error => {
-      console.error(error);
-      setStatus('idle');
-      alert("Houve um erro ao enviar. Tente novamente ou chame no WhatsApp.");
-    });
+      .then(response => response.json())
+      .then(data => {
+        setStatus('success');
+        if (typeof window !== 'undefined' && (window as any).fbq) {
+          (window as any).fbq('track', 'Lead');
+        }
+      })
+      .catch(error => {
+        console.error(error);
+        setStatus('idle');
+        alert("Houve um erro ao enviar. Tente novamente ou chame no WhatsApp.");
+      });
   };
 
   const questions = [
@@ -140,18 +140,18 @@ const DiagnosticModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => 
   return (
     <AnimatePresence>
       <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-          className="absolute inset-0 bg-[#0A0A0B]/80 backdrop-blur-sm" 
-          onClick={onClose} 
+          className="absolute inset-0 bg-[#0A0A0B]/80 backdrop-blur-sm"
+          onClick={onClose}
         />
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, scale: 0.95, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: 20 }}
           className="relative w-full max-w-lg glass rounded-[2rem] border-white/10 p-6 md:p-10 shadow-2xl z-10"
         >
-          <button 
+          <button
             onClick={onClose}
             className="absolute top-4 right-4 p-2 text-gray-400 hover:text-white transition-colors rounded-full hover:bg-white/5"
           >
@@ -165,7 +165,7 @@ const DiagnosticModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => 
               </div>
               <h3 className="text-2xl font-bold text-white mb-2">Análise Solicitada</h3>
               <p className="text-gray-400">Nossa equipe estratégica analisará seu negócio e entrará em contato em breve.</p>
-              <button 
+              <button
                 onClick={onClose}
                 className="mt-8 w-full py-3 bg-white/5 hover:bg-white/10 text-white rounded-xl font-medium transition-colors"
               >
@@ -183,7 +183,7 @@ const DiagnosticModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => 
                   <span className="text-xs text-[#B988BF] font-semibold">Pergunta {step} de 5</span>
                 </div>
                 <div className="w-full bg-white/10 h-1.5 rounded-full overflow-hidden">
-                  <div 
+                  <div
                     className="bg-gradient-to-r from-[#68259A] to-[#B988BF] h-full transition-all duration-500 ease-out"
                     style={{ width: `${progress}%` }}
                   />
@@ -218,24 +218,24 @@ const DiagnosticModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => 
               <p className="text-gray-400 text-sm md:text-base mb-8 leading-relaxed">
                 Seu negócio ainda depende de ações isoladas para gerar novos clientes. Com a estrutura correta, é possível transformar aquisição de clientes em um processo previsível.
               </p>
-              
+
               <form onSubmit={handleSubmit} className="space-y-4 text-left">
                 <input type="hidden" name="_subject" value="Novo Diagnóstico de Negócio - EleveAI" />
                 <input type="hidden" name="_captcha" value="false" />
                 <input type="hidden" name="_template" value="table" />
-                
+
                 <div>
                   <label className="block text-xs font-semibold text-gray-400 mb-1.5 ml-1">Nome</label>
                   <input required type="text" name="Nome" className="w-full bg-[#0A0A0B]/50 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#B988BF] transition-colors" placeholder="Seu nome completo" />
                 </div>
-                
+
                 <div>
                   <label className="block text-xs font-semibold text-gray-400 mb-1.5 ml-1">WhatsApp</label>
                   <input required type="tel" name="WhatsApp" className="w-full bg-[#0A0A0B]/50 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#B988BF] transition-colors" placeholder="(00) 00000-0000" />
                 </div>
 
-                <button 
-                  type="submit" 
+                <button
+                  type="submit"
                   disabled={status === 'submitting'}
                   className="w-full mt-4 py-4 bg-[#68259A] hover:bg-[#72578C] text-white rounded-xl font-bold transition-all shadow-lg flex items-center justify-center gap-2 disabled:opacity-50"
                 >
@@ -321,17 +321,16 @@ const Navbar = ({ onHome }: { onHome: () => void }) => {
       <motion.nav
         initial={{ y: -100 }}
         animate={{ y: 0 }}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 px-6 py-3 ${
-          isScrolled ? 'bg-[#0A0A0B]/90 backdrop-blur-lg border-b border-white/10 shadow-lg' : 'bg-transparent'
-        }`}
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 px-6 py-3 ${isScrolled ? 'bg-[#0A0A0B]/90 backdrop-blur-lg border-b border-white/10 shadow-lg' : 'bg-transparent'
+          }`}
       >
         <div className="max-w-7xl mx-auto flex justify-between items-center relative z-10">
           {/* Logo */}
           <div className="flex items-center cursor-pointer" onClick={handleHomeClick}>
-            <img 
-              src="/logo.png" 
-              alt="EleveAI" 
-              className="h-[7rem] md:h-[9rem] w-auto object-contain transition-all scale-[1.3] origin-left" 
+            <img
+              src="/logo.png"
+              alt="EleveAI"
+              className="h-[4rem] md:h-[5rem] w-auto object-contain transition-all scale-[1.3] origin-left"
             />
           </div>
 
@@ -431,13 +430,13 @@ const Hero = ({ onOpenModal }: { onOpenModal: () => void }) => {
           <div className="inline-block px-4 py-1.5 rounded-full glass border-[#B988BF]/30 text-[#B988BF] text-xs font-bold uppercase tracking-widest mb-6">
             Empresas que crescem não dependem da sorte. Elas constroem um sistema de clientes.
           </div>
-          <h1 className="text-3xl sm:text-4xl md:text-[3.5rem] font-extrabold text-white leading-tight mb-6">
+          <h1 className="text-3xl sm:text-4xl md:text-[3.5rem] font-extrabold text-white leading-snug md:leading-[1.15] mb-6">
             Transformamos seu negócio em um <span className="text-gradient">sistema previsível</span> de geração de clientes.
           </h1>
           <p className="text-gray-400 text-sm sm:text-base md:text-xl max-w-lg mb-8 leading-relaxed">
             Estruturamos posicionamento, aquisição e automação para que sua empresa seja encontrada, desejada e escolhida.
           </p>
-          
+
           <div className="flex flex-wrap gap-3 justify-center md:justify-start mb-10">
             <span className="px-4 py-1.5 rounded-full bg-[#68259A]/10 border border-[#68259A]/30 text-xs font-bold text-gray-300">Posicionamento</span>
             <span className="px-4 py-1.5 rounded-full bg-[#B988BF]/10 border border-[#B988BF]/30 text-xs font-bold text-gray-300">Aquisição</span>
@@ -473,7 +472,7 @@ const Hero = ({ onOpenModal }: { onOpenModal: () => void }) => {
           transition={{ duration: 1, ease: "easeOut" }}
           className="relative mt-12 md:mt-0"
         >
-            <div className="relative z-10 rounded-[1.5rem] md:rounded-[3rem] overflow-hidden glass border-white/10 shadow-[0_0_50px_rgba(104,37,154,0.3)]">
+          <div className="relative z-10 rounded-[1.5rem] md:rounded-[3rem] overflow-hidden glass border-white/10 shadow-[0_0_50px_rgba(104,37,154,0.3)]">
             <img
               src="/strategic-funnel-pt.png"
               alt="Sistema Previsível de Geração de Clientes"
@@ -515,11 +514,11 @@ const EmpresasNotaveis = () => {
           className="glass p-8 md:p-12 rounded-[2rem] border-white/5"
         >
           <h2 className="text-2xl sm:text-3xl md:text-5xl font-extrabold text-white mb-6 leading-tight">
-            Empresas comuns disputam atenção. <br className="hidden md:block"/>
+            Empresas comuns disputam atenção. <br className="hidden md:block" />
             <span className="text-gradient">Empresas notáveis são procuradas.</span>
           </h2>
           <p className="text-gray-400 text-base md:text-xl leading-relaxed">
-            Se o seu negócio parece igual a todos os outros, o cliente escolhe pelo preço. 
+            Se o seu negócio parece igual a todos os outros, o cliente escolhe pelo preço.
             Negócios que constroem presença e autoridade deixam de disputar atenção e passam a ser procurados.
             Essa é a diferença entre correr atrás de clientes e construir um sistema que atrai clientes.
           </p>
@@ -547,13 +546,13 @@ const GoogleSearchMockup = ({ onOpenModal }: { onOpenModal: () => void }) => {
   return (
     <section className="py-24 relative px-6 overflow-hidden bg-[#0A0A0B]">
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#68259A]/10 via-[#0A0A0B] to-[#0A0A0B] pointer-events-none" />
-      
+
       <div className="max-w-4xl mx-auto text-center relative z-10 mb-16">
         <h2 className="text-2xl sm:text-3xl md:text-5xl font-extrabold text-white mb-6 mt-4">
-          Seu cliente já está procurando. <br className="hidden md:block"/><span className="text-gradient">A pergunta é: ele encontra você?</span>
+          Seu cliente já está procurando. <br className="hidden md:block" /><span className="text-gradient">A pergunta é: ele encontra você?</span>
         </h2>
         <p className="text-gray-400 text-sm sm:text-base md:text-lg">
-          Todos os dias pessoas pesquisam exatamente pelo que sua empresa vende.<br className="hidden md:block"/> Quem aparece primeiro leva o cliente.
+          Todos os dias pessoas pesquisam exatamente pelo que sua empresa vende.<br className="hidden md:block" /> Quem aparece primeiro leva o cliente.
         </p>
       </div>
 
@@ -561,8 +560,8 @@ const GoogleSearchMockup = ({ onOpenModal }: { onOpenModal: () => void }) => {
         {/* Left: Google Search Mockup */}
         <div>
           <div className="mb-4 relative">
-            <input 
-              type="text" 
+            <input
+              type="text"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               placeholder="Digite o nome do seu negócio"
@@ -570,14 +569,14 @@ const GoogleSearchMockup = ({ onOpenModal }: { onOpenModal: () => void }) => {
             />
             <div className="absolute right-4 top-1/2 -translate-y-1/2 text-[#9aa0a6]">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                <path d="M15.5 14H14.71L14.43 13.73C15.41 12.59 16 11.11 16 9.5C16 5.91 13.09 3 9.5 3C5.91 3 3 5.91 3 9.5C3 13.09 5.91 16 9.5 16C11.11 16 12.59 15.41 13.73 14.43L14 14.71V15.5L19 20.49L20.49 19L15.5 14ZM9.5 14C7.01 14 5 11.99 5 9.5C5 7.01 7.01 5 9.5 5C11.99 5 14 7.01 14 9.5C14 11.99 11.99 14 9.5 14Z" fill="currentColor"/>
+                <path d="M15.5 14H14.71L14.43 13.73C15.41 12.59 16 11.11 16 9.5C16 5.91 13.09 3 9.5 3C5.91 3 3 5.91 3 9.5C3 13.09 5.91 16 9.5 16C11.11 16 12.59 15.41 13.73 14.43L14 14.71V15.5L19 20.49L20.49 19L15.5 14ZM9.5 14C7.01 14 5 11.99 5 9.5C5 7.01 7.01 5 9.5 5C11.99 5 14 7.01 14 9.5C14 11.99 11.99 14 9.5 14Z" fill="currentColor" />
               </svg>
             </div>
           </div>
 
           <AnimatePresence>
             {searchTerm && (
-              <motion.div 
+              <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
@@ -642,7 +641,7 @@ const GoogleSearchMockup = ({ onOpenModal }: { onOpenModal: () => void }) => {
               {/* App header */}
               <div className="px-5 pt-3 pb-4 bg-gradient-to-b from-[#68259A]/20 to-transparent">
                 <p className="text-[9px] text-gray-500 uppercase tracking-widest">EleveAI</p>
-                <p className="text-white font-extrabold text-[15px] leading-tight mt-0.5">Seu sistema de<br/>crescimento</p>
+                <p className="text-white font-extrabold text-[15px] leading-tight mt-0.5">Seu sistema de<br />crescimento</p>
               </div>
 
               {/* Menu items */}
@@ -1192,7 +1191,7 @@ const FinalCTA = ({ onOpenModal }: { onOpenModal: () => void }) => {
           viewport={{ once: true }}
         >
           <h2 className="text-2xl sm:text-3xl md:text-5xl font-extrabold text-white mb-8 leading-tight">
-            Seu negócio precisa de <span className="text-gradient">mais esforço</span> ou de <br className="hidden md:block"/> <span className="text-gradient">mais estrutura?</span>
+            Seu negócio precisa de <span className="text-gradient">mais esforço</span> ou de <br className="hidden md:block" /> <span className="text-gradient">mais estrutura?</span>
           </h2>
 
           <p className="text-gray-400 text-sm sm:text-base md:text-xl max-w-2xl mx-auto mb-12">
@@ -1335,40 +1334,7 @@ const WhatsAppFloat = () => {
   );
 };
 
-const Preloader = ({ onComplete }: { onComplete: () => void }) => {
-  useEffect(() => {
-    const timer = setTimeout(onComplete, 2500);
-    return () => clearTimeout(timer);
-  }, [onComplete]);
 
-  return (
-    <motion.div
-      initial={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.5 }}
-      className="fixed inset-0 z-[100] bg-[#0A0A0B] flex flex-col items-center justify-center"
-    >
-      <motion.div
-        initial={{ scale: 0.8, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
-        className="relative mb-8 flex items-center justify-center p-8"
-      >
-        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-          <div className="w-64 h-64 rounded-full bg-[#68259A]/30 blur-[40px] animate-pulse"></div>
-        </div>
-        <img src="/logo.png" alt="EleveAI Carregando" className="h-48 w-auto relative z-10 scale-150" />
-      </motion.div>
-
-      <motion.div
-        initial={{ width: 0 }}
-        animate={{ width: 200 }}
-        transition={{ duration: 2, ease: "easeInOut" }}
-        className="h-1 bg-gradient-to-r from-[#68259A] to-[#B988BF] rounded-full"
-      />
-    </motion.div>
-  );
-};
 
 const PrivacyPolicy = ({ onBack }: { onBack: () => void }) => {
   useEffect(() => {
@@ -1546,7 +1512,7 @@ const RaioXSection = ({ onOpenModal }: { onOpenModal: () => void }) => {
             <h3 className="text-xl font-bold text-white mb-4">1. Aquisição</h3>
             <p className="text-sm text-gray-400 leading-relaxed">Negócios que até geram visitas, mas não atraem as oportunidades certas para vendas de alto ticket.</p>
           </motion.div>
-          
+
           <motion.div whileHover={{ y: -10 }} className="glass p-8 rounded-[2rem] border-white/5 hover:border-[#68259A]/40 transition-all flex flex-col items-center text-center">
             <div className="w-14 h-14 rounded-2xl bg-[#EEC6A2]/10 flex items-center justify-center mb-6">
               <TrendingUp className="text-[#EEC6A2]" size={28} />
@@ -1554,7 +1520,7 @@ const RaioXSection = ({ onOpenModal }: { onOpenModal: () => void }) => {
             <h3 className="text-xl font-bold text-white mb-4">2. Conversão</h3>
             <p className="text-sm text-gray-400 leading-relaxed">Negócios que recebem contatos, mas não transformam o interesse em um avanço comercial previsível.</p>
           </motion.div>
-          
+
           <motion.div whileHover={{ y: -10 }} className="glass p-8 rounded-[2rem] border-white/5 hover:border-[#68259A]/40 transition-all flex flex-col items-center text-center">
             <div className="w-14 h-14 rounded-2xl bg-[#68259A]/10 flex items-center justify-center mb-6">
               <MessageCircle className="text-[#B988BF]" size={28} />
@@ -1562,7 +1528,7 @@ const RaioXSection = ({ onOpenModal }: { onOpenModal: () => void }) => {
             <h3 className="text-xl font-bold text-white mb-4">3. Relacionamento</h3>
             <p className="text-sm text-gray-400 leading-relaxed">Negócios que não mantêm continuidade com leads interessados e acabam perdendo o timing ideal da venda.</p>
           </motion.div>
-          
+
           <motion.div whileHover={{ y: -10 }} className="glass p-8 rounded-[2rem] border-white/5 hover:border-[#68259A]/40 transition-all flex flex-col items-center text-center">
             <div className="w-14 h-14 rounded-2xl bg-[#EEC6A2]/10 flex items-center justify-center mb-6">
               <BarChart3 className="text-[#EEC6A2]" size={28} />
@@ -1589,14 +1555,15 @@ const RaioXSection = ({ onOpenModal }: { onOpenModal: () => void }) => {
 };
 
 const App = () => {
-  const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState<'home' | 'privacy' | 'terms'>('home');
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
-    // Only start popup triggers after preloader finishes
-    if (loading) return;
+    // Ensure the site always goes to home position (top) on load
+    window.scrollTo(0, 0);
+  }, []);
 
+  useEffect(() => {
     const hasSeenModal = sessionStorage.getItem('eleveai-modal-closed');
     const hasSubmitted = sessionStorage.getItem('eleveai-modal-submitted');
     if (hasSeenModal || hasSubmitted) return;
@@ -1626,7 +1593,7 @@ const App = () => {
       clearTimeout(timer);
       window.removeEventListener('scroll', handleScroll);
     };
-  }, [loading]);
+  }, []);
 
   const handleOpenModal = () => {
     setIsModalOpen(true);
@@ -1639,44 +1606,38 @@ const App = () => {
 
   return (
     <div className="min-h-screen">
-      <AnimatePresence>
-        {loading && <Preloader onComplete={() => setLoading(false)} />}
-      </AnimatePresence>
-
       <DiagnosticModal isOpen={isModalOpen} onClose={handleCloseModal} />
 
-      {!loading && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5 }}
-        >
-          <Navbar onHome={() => setCurrentPage('home')} />
-          <main>
-            {currentPage === 'home' && (
-              <>
-                <Hero onOpenModal={handleOpenModal} />
-                <EmpresasNotaveis />
-                <GoogleSearchMockup onOpenModal={handleOpenModal} />
-                <SistemaDeClientes />
-                <RaioXSection onOpenModal={handleOpenModal} />
-                <PorQueEleveAI />
-                <FAQ />
-                <FinalCTA onOpenModal={handleOpenModal} />
-              </>
-            )}
-            {currentPage === 'privacy' && <PrivacyPolicy onBack={() => setCurrentPage('home')} />}
-            {currentPage === 'terms' && <TermsOfUse onBack={() => setCurrentPage('home')} />}
-          </main>
-          <Footer
-            onPrivacy={() => setCurrentPage('privacy')}
-            onTerms={() => setCurrentPage('terms')}
-            onHome={() => setCurrentPage('home')}
-          />
-          <WhatsAppFloat />
-          <CookieConsent />
-        </motion.div>
-      )}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.5 }}
+      >
+        <Navbar onHome={() => setCurrentPage('home')} />
+        <main>
+          {currentPage === 'home' && (
+            <>
+              <Hero onOpenModal={handleOpenModal} />
+              <EmpresasNotaveis />
+              <GoogleSearchMockup onOpenModal={handleOpenModal} />
+              <SistemaDeClientes />
+              <RaioXSection onOpenModal={handleOpenModal} />
+              <PorQueEleveAI />
+              <FAQ />
+              <FinalCTA onOpenModal={handleOpenModal} />
+            </>
+          )}
+          {currentPage === 'privacy' && <PrivacyPolicy onBack={() => setCurrentPage('home')} />}
+          {currentPage === 'terms' && <TermsOfUse onBack={() => setCurrentPage('home')} />}
+        </main>
+        <Footer
+          onPrivacy={() => setCurrentPage('privacy')}
+          onTerms={() => setCurrentPage('terms')}
+          onHome={() => setCurrentPage('home')}
+        />
+        <WhatsAppFloat />
+        <CookieConsent />
+      </motion.div>
     </div>
   );
 };
