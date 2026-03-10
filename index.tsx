@@ -431,10 +431,10 @@ const Hero = ({ onOpenModal }: { onOpenModal: () => void }) => {
             Empresas que crescem não dependem da sorte. Elas constroem um sistema de clientes.
           </div>
           <h1 className="text-3xl sm:text-4xl md:text-[3.5rem] font-extrabold text-white leading-snug md:leading-[1.15] mb-6">
-            Transformamos seu negócio em um <span className="text-gradient">sistema previsível</span> de geração de clientes.
+            Você está preparado para <span className="text-gradient">atrair clientes na internet</span> ou apenas estar presente?
           </h1>
           <p className="text-gray-400 text-sm sm:text-base md:text-xl max-w-lg mb-8 leading-relaxed">
-            Estruturamos posicionamento, aquisição e automação para que sua empresa seja encontrada, desejada e escolhida.
+            Em poucos segundos analisamos os pontos que podem estar limitando a geração de contatos para o seu negócio.
           </p>
 
           <div className="flex flex-wrap gap-3 justify-center md:justify-start mb-10">
