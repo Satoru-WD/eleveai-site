@@ -464,7 +464,7 @@ const Hero = ({ onOpenModal }: { onOpenModal: () => void }) => {
         >
           <div className="relative z-10 rounded-[1.5rem] md:rounded-[3rem] overflow-hidden glass border-white/10 shadow-[0_0_50px_rgba(104,37,154,0.3)]">
             <img
-              src="/strategic-funnel-pt.png"
+              src="/strategic-funnel-pt.webp"
               alt="Sistema Previsível de Geração de Clientes"
               className="w-full h-auto brightness-50 hover:brightness-100 transition-all duration-700"
               width="600"
@@ -832,7 +832,7 @@ const Benefits = () => {
             >
               <div className="absolute inset-0 bg-gradient-to-tr from-[#68259A]/20 to-transparent rounded-[2.5rem] blur-2xl -z-10" />
               <img
-                src="/social-media-visual.png"
+                src="/social-media-visual.webp"
                 alt="Gestão de Marketing Estratégico no Instagram: Conteúdo de Alta Conversão e Branding"
                 className="w-full h-auto rounded-[2.5rem] border border-white/10 shadow-2xl hover:scale-[1.02] transition-transform duration-700"
                 loading="lazy"
@@ -854,7 +854,7 @@ const Benefits = () => {
             >
               <div className="absolute inset-0 bg-gradient-to-bl from-[#EEC6A2]/10 to-transparent rounded-[2.5rem] blur-2xl -z-10" />
               <img
-                src="/traffic-growth-visual.png"
+                src="/traffic-growth-visual.webp"
                 alt="Dashboard de Tráfego Pago e Performance para Negócios"
                 className="w-full h-auto rounded-[2.5rem] border border-white/10 shadow-2xl hover:scale-[1.02] transition-transform duration-700"
                 loading="lazy"
@@ -939,7 +939,7 @@ const ProductPresentation = () => {
           </div>
 
           <img
-            src="/operational-flow-visual.png"
+            src="/operational-flow-visual.webp"
             alt="Estrutura Operacional Automatizada: Fluxo de Atendimento e Triagem Inteligente"
             className="w-full h-full object-cover mt-10 p-2 rounded-[1.5rem] brightness-[0.8] hover:brightness-100 transition-all duration-700"
             loading="lazy"
