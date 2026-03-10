@@ -1602,10 +1602,10 @@ const App = () => {
     const hasSubmitted = sessionStorage.getItem('eleveai-modal-submitted');
     if (hasSeenModal || hasSubmitted) return;
 
-    // 20-second timer trigger
+    // 30-second timer trigger
     const timer = setTimeout(() => {
       setIsModalOpen(true);
-    }, 20000);
+    }, 30000);
 
     // 50% scroll trigger
     const handleScroll = () => {
