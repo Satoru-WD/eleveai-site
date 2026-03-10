@@ -831,7 +831,7 @@ const Benefits = () => {
             >
               <div className="absolute inset-0 bg-gradient-to-tr from-[#68259A]/20 to-transparent rounded-[2.5rem] blur-2xl -z-10" />
               <img
-                src="/social-media-visual.webp"
+                src="/social-media-visual.webp?v=bust"
                 alt="Gestão de Marketing Estratégico no Instagram: Conteúdo de Alta Conversão e Branding"
                 className="w-full h-auto rounded-[2.5rem] border border-white/10 shadow-2xl hover:scale-[1.02] transition-transform duration-700"
                 width="600"
@@ -850,7 +850,7 @@ const Benefits = () => {
             >
               <div className="absolute inset-0 bg-gradient-to-bl from-[#EEC6A2]/10 to-transparent rounded-[2.5rem] blur-2xl -z-10" />
               <img
-                src="/traffic-growth-visual.webp"
+                src="/traffic-growth-visual.webp?v=bust"
                 alt="Dashboard de Tráfego Pago e Performance para Negócios"
                 className="w-full h-auto rounded-[2.5rem] border border-white/10 shadow-2xl hover:scale-[1.02] transition-transform duration-700"
                 width="600"
@@ -933,7 +933,7 @@ const ProductPresentation = () => {
           </div>
 
           <img
-            src="/operational-flow-visual.webp"
+            src="/operational-flow-visual.webp?v=bust"
             alt="Estrutura Operacional Automatizada: Fluxo de Atendimento e Triagem Inteligente"
             className="w-full h-full object-cover mt-10 p-2 rounded-[1.5rem] brightness-[0.8] hover:brightness-100 transition-all duration-700"
             width="800"
