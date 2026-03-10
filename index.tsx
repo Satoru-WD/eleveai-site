@@ -84,7 +84,7 @@ const DiagnosticModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => 
     const formData = new FormData(form);
 
     Object.entries(answers).forEach(([key, value]) => {
-      formData.append(key, value);
+      formData.append(key, value as string);
     });
 
     fetch('https://formsubmit.co/ajax/satorukubota01@gmail.com', {
@@ -518,180 +518,318 @@ const EmpresasNotaveis = () => {
   );
 };
 
-const GoogleSearchMockup = ({ onOpenModal }: { onOpenModal: () => void }) => {
-  const [searchTerm, setSearchTerm] = useState('');
-
-  const scrollTo = (id: string) => {
-    const el = document.getElementById(id);
-    if (el) el.scrollIntoView({ behavior: 'smooth' });
-  };
-
-  const phoneLinks = [
-    { label: '01. Sistema de Clientes', sub: 'Como construir previsibilidade', id: 'sistema', color: '#B988BF' },
-    { label: '02. Raio-X do Negócio', sub: 'Diagnóstico estratégico', id: 'diagnostico', color: '#EEC6A2' },
-    { label: '03. Por que EleveAI', sub: 'Nossa diferença metodológica', id: 'porque', color: '#B988BF' },
-    { label: '04. FAQ', sub: 'Dúvidas frequentes', id: 'faq', color: '#EEC6A2' },
+const GoogleAdsPremium = ({ onOpenModal }: { onOpenModal: () => void }) => {
+  const searches = [
+    {
+      query: "contador para mei",
+      results: [
+        {
+          url: "contabilizasp.com.br",
+          title: "Contabilidade para MEI | Sem Burocracia",
+          desc: "Abertura de MEI, emissão de DAS e declarações anuais com suporte especializado. Atendimento 100% online.",
+          chips: ["MEI Grátis", "DASN Anual", "Certificado Digital"],
+        },
+        {
+          url: "contajuridica.com.br",
+          title: "Contador MEI – Regularize Agora",
+          desc: "Consultoria contábil para microempreendedores. Planos a partir de R$59/mês com suporte dedicado.",
+          chips: ["Consultoria Grátis", "Plano Mensal"],
+        },
+      ],
+    },
+    {
+      query: "abertura de empresa",
+      results: [
+        {
+          url: "abreempresa.com.br",
+          title: "Abra sua Empresa em 48h | Online",
+          desc: "CNPJ, alvará e contrato social em até 2 dias úteis. Escritório digital com suporte jurídico.",
+          chips: ["Abertura Rápida", "100% Online", "LTDA e SA"],
+        },
+        {
+          url: "juridicobiz.com.br",
+          title: "Abertura de CNPJ – Assessoria Completa",
+          desc: "Do registro à regularização fiscal. Consultores especializados aguardam seu contato.",
+          chips: ["CNPJ Express", "Suporte Jurídico"],
+        },
+      ],
+    },
+    {
+      query: "advogado trabalhista",
+      results: [
+        {
+          url: "advtrabalhista.com.br",
+          title: "Advogado Trabalhista | Consulta Grátis",
+          desc: "Defesa em ações trabalhistas, rescisões e acordos. Mais de 1.200 casos resolvidos na região.",
+          chips: ["Consulta Grátis", "Rescisão", "Horas Extras"],
+        },
+        {
+          url: "mouraaadvocacia.com.br",
+          title: "Escritório Trabalhista – Agende Agora",
+          desc: "Especialistas em direito do trabalho para empresas e colaboradores. Atendimento presencial e remoto.",
+          chips: ["Para Empresas", "Para Funcionários"],
+        },
+      ],
+    },
+    {
+      query: "advogado inventário",
+      results: [
+        {
+          url: "inventariocampinas.com.br",
+          title: "Inventário e Partilha | Rápido e Seguro",
+          desc: "Inventário judicial e extrajudicial. Regularize bens e herança com assessoria jurídica especializada.",
+          chips: ["Inventário Extrajudicial", "Partilha", "Consulta Grátis"],
+        },
+        {
+          url: "herdeirosadv.com.br",
+          title: "Advogado de Inventário – Fale Agora",
+          desc: "Habilitação de herdeiros, formal de partilha e alvará judicial. Processo simplificado e transparente.",
+          chips: ["Herdeiros", "Alvará Judicial"],
+        },
+      ],
+    },
+    {
+      query: "apartamento na planta",
+      results: [
+        {
+          url: "mrv.com.br/campinas",
+          title: "Apartamentos na Planta | Entrada Fácil",
+          desc: "Empreendimentos com MCMV, FGTS e parcelamento direto com a construtora. Unidades a partir de R$220k.",
+          chips: ["MCMV", "FGTS", "Entrada Facilitada"],
+        },
+        {
+          url: "vivacampinas.com.br",
+          title: "Lançamentos 2025 – Reserve sua Unidade",
+          desc: "Localizações estratégicas, plantas modernas e lazer completo. Simule seu financiamento agora.",
+          chips: ["Lançamento 2025", "Simule Agora"],
+        },
+      ],
+    },
   ];
+
+  const [searchIndex, setSearchIndex] = useState(0);
+  const [displayText, setDisplayText] = useState('');
+  const [phase, setPhase] = useState<'typing' | 'showing' | 'clearing'>('typing');
+
+  const currentSearch = searches[searchIndex];
+
+  useEffect(() => {
+    let timeout: NodeJS.Timeout;
+    const fullQuery = currentSearch.query;
+
+    if (phase === 'typing') {
+      if (displayText.length < fullQuery.length) {
+        timeout = setTimeout(() => {
+          setDisplayText(fullQuery.slice(0, displayText.length + 1));
+        }, 75);
+      } else {
+        timeout = setTimeout(() => setPhase('showing'), 700);
+      }
+    } else if (phase === 'showing') {
+      timeout = setTimeout(() => setPhase('clearing'), 4500);
+    } else if (phase === 'clearing') {
+      if (displayText.length > 0) {
+        timeout = setTimeout(() => {
+          setDisplayText(displayText.slice(0, -1));
+        }, 30);
+      } else {
+        setSearchIndex((prev) => (prev + 1) % searches.length);
+        setPhase('typing');
+      }
+    }
+
+    return () => clearTimeout(timeout);
+  }, [displayText, phase, searchIndex]);
 
   return (
     <section className="py-24 relative px-6 overflow-hidden bg-[#0A0A0B]">
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#68259A]/10 via-[#0A0A0B] to-[#0A0A0B] pointer-events-none" />
-
-      <div className="max-w-4xl mx-auto text-center relative z-10 mb-16">
-        <h2 className="text-2xl sm:text-3xl md:text-5xl font-extrabold text-white mb-6 mt-4">
-          Seu cliente já está procurando. <br className="hidden md:block" /><span className="text-gradient">A pergunta é: ele encontra você?</span>
-        </h2>
-        <p className="text-gray-400 text-sm sm:text-base md:text-lg">
-          Todos os dias pessoas pesquisam exatamente pelo que sua empresa vende.<br className="hidden md:block" /> Quem aparece primeiro leva o cliente.
-        </p>
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-[#68259A]/8 rounded-full blur-[120px]" />
+        <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-[#EEC6A2]/5 rounded-full blur-[100px]" />
       </div>
 
-      <div className="max-w-6xl mx-auto relative z-10 grid md:grid-cols-2 gap-12 items-center">
-        {/* Left: Google Search Mockup */}
-        <div>
-          <div className="mb-4 relative">
-            <input
-              type="text"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              placeholder="Digite o nome do seu negócio"
-              className="w-full bg-[#202124] border border-[#5f6368] rounded-full px-6 py-4 text-white text-base focus:outline-none focus:border-[#8ab4f8] focus:bg-[#303134] transition-all"
-            />
-            <div className="absolute right-4 top-1/2 -translate-y-1/2 text-[#9aa0a6]">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                <path d="M15.5 14H14.71L14.43 13.73C15.41 12.59 16 11.11 16 9.5C16 5.91 13.09 3 9.5 3C5.91 3 3 5.91 3 9.5C3 13.09 5.91 16 9.5 16C11.11 16 12.59 15.41 13.73 14.43L14 14.71V15.5L19 20.49L20.49 19L15.5 14ZM9.5 14C7.01 14 5 11.99 5 9.5C5 7.01 7.01 5 9.5 5C11.99 5 14 7.01 14 9.5C14 11.99 11.99 14 9.5 14Z" fill="currentColor" />
-              </svg>
-            </div>
+      <div className="max-w-7xl mx-auto relative z-10 grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
+
+        {/* ── Left Column ── */}
+        <motion.div
+          initial={{ opacity: 0, x: -30 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          className="flex flex-col items-start"
+        >
+          {/* Badges */}
+          <div className="flex gap-2 mb-8">
+            <span className="px-4 py-1.5 rounded-full bg-[#68259A]/10 border border-[#68259A]/25 text-[#B988BF] text-[10px] font-bold uppercase tracking-widest">
+              Tráfego Pago
+            </span>
+            <span className="px-4 py-1.5 rounded-full bg-[#EEC6A2]/10 border border-[#EEC6A2]/25 text-[#EEC6A2] text-[10px] font-bold uppercase tracking-widest">
+              Google Ads
+            </span>
           </div>
 
-          <AnimatePresence>
-            {searchTerm && (
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                className="bg-[#202124] rounded-2xl p-6 border border-[#3c4043] shadow-2xl text-left"
-              >
-                <div className="flex items-center gap-2 mb-2">
-                  <span className="text-[13px] font-bold text-white">Patrocinado</span>
-                </div>
-                <div className="flex items-center gap-3 mb-2">
-                  <div className="w-8 h-8 rounded-full bg-[#1A73E8] flex items-center justify-center text-white font-bold text-sm">
-                    {searchTerm.charAt(0).toUpperCase()}
-                  </div>
-                  <div>
-                    <div className="text-[#bdc1c6] text-[11px]">{`https://www.${searchTerm.toLowerCase().replace(/\s/g, '')}.com.br`}</div>
-                    <div className="text-[#8ab4f8] text-[17px] font-medium hover:underline cursor-pointer line-clamp-1">{searchTerm} | Estrutura de Vendas</div>
-                  </div>
-                </div>
-                <div className="text-[#bdc1c6] text-[13px] leading-snug">
-                  Não dependa mais da sorte. A <span className="font-bold">{searchTerm}</span> constrói sistemas de atração e conversão previsíveis.
-                </div>
-                <div className="grid grid-cols-2 gap-3 mt-4 pt-4 border-t border-[#3c4043]">
-                  <div className="text-[#8ab4f8] text-[13px] hover:underline cursor-pointer" onClick={onOpenModal}>Diagnóstico Gratuito</div>
-                  <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="text-[#8ab4f8] text-[13px] hover:underline">Fale com Especialista</a>
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
+          {/* Title */}
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white mb-8 leading-[1.15] tracking-tight">
+            Quer vender mais,<br />
+            <span className="text-gradient">mas não sabe como?</span>
+          </h2>
 
+          {/* Body copy */}
+          <div className="space-y-5 text-gray-400 text-base md:text-lg leading-relaxed max-w-lg">
+            <p>
+              Quando alguém pesquisa pelo seu serviço no Google, ela já decidiu comprar. Se o seu negócio não aparece ali, você está entregando esse cliente ao concorrente.
+            </p>
+            <p>
+              Aparecer no topo não é sorte — é posicionamento. Colocamos a sua empresa na frente de quem já está procurando o que você oferece.
+            </p>
+          </div>
+
+          {/* Highlight */}
+          <p className="mt-8 text-lg md:text-xl font-bold text-white border-l-4 border-[#68259A] pl-4">
+            Aumente suas vendas com <span className="text-[#B988BF]">Google Ads</span>
+          </p>
+
+          {/* CTA */}
           <motion.button
             onClick={onOpenModal}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="mt-8 px-8 py-4 w-full bg-[#68259A] text-white rounded-2xl font-bold text-base shadow-[0_10px_30px_rgba(104,37,154,0.3)] hover:shadow-[0_10px_40px_rgba(104,37,154,0.5)] transition-all flex items-center justify-center gap-3"
+            whileHover={{ scale: 1.04 }}
+            whileTap={{ scale: 0.96 }}
+            className="mt-10 px-10 py-5 bg-[#68259A] text-white rounded-2xl font-bold text-base shadow-[0_10px_40px_rgba(104,37,154,0.35)] hover:shadow-[0_12px_50px_rgba(104,37,154,0.5)] transition-all flex items-center gap-3"
           >
-            Quero aplicar isso no meu negócio
+            Quero aparecer no Google
             <ArrowRight size={20} />
           </motion.button>
-        </div>
+        </motion.div>
 
-        {/* Right: Phone Mockup */}
-        <div className="flex justify-center">
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="relative w-[260px] sm:w-[300px]"
-          >
-            {/* Phone shell */}
-            <div className="relative bg-[#111] rounded-[3rem] border-[6px] border-[#2a2a2a] shadow-[0_30px_80px_rgba(0,0,0,0.7)] overflow-hidden">
-              {/* Status bar */}
-              <div className="flex justify-between items-center px-6 pt-4 pb-2">
-                <span className="text-[10px] text-gray-500 font-bold">9:41</span>
-                <div className="w-16 h-4 bg-[#1a1a1a] rounded-full mx-auto" />
-                <div className="flex gap-1 items-center">
-                  <div className="w-1 h-1 rounded-full bg-gray-500" />
-                  <div className="w-1 h-1.5 rounded-full bg-gray-500" />
-                  <div className="w-1 h-2 rounded-full bg-gray-400" />
-                  <div className="w-1 h-2.5 rounded-full bg-white" />
-                </div>
+        {/* ── Right Column: Search Card ── */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.9 }}
+          className="flex justify-center lg:justify-end"
+        >
+          {/* Card */}
+          <div className="w-full max-w-[480px] bg-white rounded-3xl shadow-[0_24px_80px_rgba(0,0,0,0.22)] overflow-hidden">
+
+            {/* Card Header */}
+            <div className="px-6 pt-6 pb-4 flex items-center justify-between border-b border-gray-100">
+              {/* Google-like logo */}
+              <div className="flex items-center gap-[3px]">
+                <span className="font-extrabold text-[22px] leading-none" style={{ color: '#4285F4' }}>G</span>
+                <span className="font-extrabold text-[22px] leading-none" style={{ color: '#EA4335' }}>o</span>
+                <span className="font-extrabold text-[22px] leading-none" style={{ color: '#FBBC05' }}>o</span>
+                <span className="font-extrabold text-[22px] leading-none" style={{ color: '#4285F4' }}>g</span>
+                <span className="font-extrabold text-[22px] leading-none" style={{ color: '#34A853' }}>l</span>
+                <span className="font-extrabold text-[22px] leading-none" style={{ color: '#EA4335' }}>e</span>
               </div>
-
-              {/* App header */}
-              <div className="px-5 pt-3 pb-4 bg-gradient-to-b from-[#68259A]/20 to-transparent">
-                <p className="text-[9px] text-gray-500 uppercase tracking-widest">EleveAI</p>
-                <p className="text-white font-extrabold text-[15px] leading-tight mt-0.5">Seu sistema de<br />crescimento</p>
-              </div>
-
-              {/* Menu items */}
-              <div className="px-4 pb-6 flex flex-col gap-3">
-                {phoneLinks.map((link, i) => (
-                  <motion.button
-                    key={i}
-                    onClick={() => scrollTo(link.id)}
-                    whileHover={{ scale: 1.02, x: 4 }}
-                    whileTap={{ scale: 0.97 }}
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: i * 0.1 }}
-                    className="w-full text-left bg-white/5 hover:bg-[#68259A]/20 border border-white/5 hover:border-[#68259A]/40 rounded-2xl px-4 py-3 transition-all group"
-                  >
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <p className="text-[11px] font-bold text-white group-hover:text-[#B988BF] transition-colors">{link.label}</p>
-                        <p className="text-[9px] text-gray-500 mt-0.5">{link.sub}</p>
-                      </div>
-                      <ArrowRight size={12} className="text-gray-600 group-hover:text-[#B988BF] transition-colors" />
-                    </div>
-                  </motion.button>
-                ))}
-
-                <motion.button
-                  onClick={onOpenModal}
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.97 }}
-                  className="w-full mt-1 bg-[#68259A] text-white rounded-2xl px-4 py-3 text-[11px] font-black flex items-center justify-between shadow-[0_6px_20px_rgba(104,37,154,0.4)]"
-                >
-                  Iniciar Diagnóstico
-                  <ArrowRight size={12} />
-                </motion.button>
-              </div>
-
-              {/* Home bar */}
-              <div className="flex justify-center pb-4">
-                <div className="w-24 h-1 bg-white/20 rounded-full" />
+              {/* Purple button */}
+              <div className="w-8 h-8 rounded-full bg-[#68259A] flex items-center justify-center shadow-[0_4px_12px_rgba(104,37,154,0.35)]">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                  <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" fill="white" />
+                </svg>
               </div>
             </div>
 
-            {/* Glow */}
-            <div className="absolute -bottom-10 left-1/2 -translate-x-1/2 w-40 h-20 bg-[#68259A]/30 blur-[40px] rounded-full pointer-events-none" />
+            {/* Search Bar */}
+            <div className="px-6 py-4">
+              <div className="flex items-center gap-3 bg-gray-50 border border-gray-200 rounded-full px-5 py-3 shadow-sm">
+                <span className="flex-1 text-sm text-gray-700 font-normal min-h-[20px] flex items-center gap-[2px]">
+                  {displayText}
+                  <span
+                    className="inline-block w-[2px] h-[15px] bg-[#4285F4] ml-[1px]"
+                    style={{ animation: 'blink 1s step-end infinite' }}
+                  />
+                </span>
+                <svg className="text-gray-400 flex-shrink-0" width="17" height="17" viewBox="0 0 24 24" fill="none">
+                  <path d="M15.5 14H14.71L14.43 13.73C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3 5.91 3 3 5.91 3 9.5 3 13.09 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.27V15.5l5 4.99L20.49 19l-5-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" fill="currentColor" />
+                </svg>
+              </div>
+            </div>
 
-            {/* Floating badge */}
-            <motion.div
-              animate={{ y: [0, -8, 0] }}
-              transition={{ repeat: Infinity, duration: 3 }}
-              className="absolute -right-8 top-20 glass px-3 py-2 rounded-xl border-white/10 text-xs font-bold text-white shadow-xl"
-            >
-              <span className="text-green-400">●</span> Online
-            </motion.div>
-          </motion.div>
-        </div>
+            {/* Results Area */}
+            <div className="px-6 pb-6 min-h-[300px]">
+              <AnimatePresence mode="wait">
+                {phase === 'showing' ? (
+                  <motion.div
+                    key={`results-${searchIndex}`}
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -8 }}
+                    transition={{ duration: 0.45, ease: 'easeOut' }}
+                    className="space-y-5"
+                  >
+                    {currentSearch.results.map((result, i) => (
+                      <motion.div
+                        key={i}
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: i * 0.12, duration: 0.4 }}
+                        className={`${i < currentSearch.results.length - 1 ? 'pb-5 border-b border-gray-100' : ''}`}
+                      >
+                        {/* Ad label + URL */}
+                        <div className="flex items-center gap-2 mb-1">
+                          <span className="text-[10px] font-semibold text-gray-500 border border-gray-300 rounded px-1.5 py-0.5 leading-none">Anúncio</span>
+                          <span className="text-[11px] text-gray-400 truncate">{result.url}</span>
+                        </div>
+                        {/* Title */}
+                        <p className="text-[#1a0dab] text-[15px] font-medium leading-snug mb-1.5 hover:underline cursor-pointer">
+                          {result.title}
+                        </p>
+                        {/* Description */}
+                        <p className="text-[#4d5156] text-[13px] leading-relaxed mb-3">
+                          {result.desc}
+                        </p>
+                        {/* Chips */}
+                        <div className="flex flex-wrap gap-1.5">
+                          {result.chips.map((chip, ci) => (
+                            <span
+                              key={ci}
+                              className="px-3 py-1 bg-gray-100 text-gray-600 text-[11px] font-medium rounded-full hover:bg-gray-200 transition-colors cursor-pointer"
+                            >
+                              {chip}
+                            </span>
+                          ))}
+                        </div>
+                      </motion.div>
+                    ))}
+                  </motion.div>
+                ) : (
+                  <motion.div
+                    key="idle"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.3 }}
+                    className="h-full flex flex-col justify-center items-center gap-4 py-16"
+                  >
+                    <div className="w-10 h-10 rounded-full border-[3px] border-gray-100 border-t-[#68259A] animate-spin" />
+                    <div className="text-center">
+                      <p className="text-xs text-gray-400 mb-1">Buscando por</p>
+                      <p className="text-sm font-semibold text-[#68259A] max-w-[220px] leading-snug">
+                        "{displayText || currentSearch.query}"
+                      </p>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+
+          </div>
+        </motion.div>
+
       </div>
+
+      <style>{`
+        @keyframes blink {
+          0%, 100% { opacity: 1; }
+          50% { opacity: 0; }
+        }
+      `}</style>
     </section>
   );
 };
+
 
 const SistemaDeClientes = () => {
   return (
@@ -825,17 +963,18 @@ const Benefits = () => {
             </motion.div>
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
               transition={{ duration: 0.8 }}
               className="order-1 md:order-2 relative"
             >
               <div className="absolute inset-0 bg-gradient-to-tr from-[#68259A]/20 to-transparent rounded-[2.5rem] blur-2xl -z-10" />
               <img
-                src="/social-media-visual.webp?v=bust"
-                alt="Gestão de Marketing Estratégico no Instagram: Conteúdo de Alta Conversão e Branding"
+                src="/social-media-new.webp?v=1.1"
+                alt="Instagram Marketing e Branding Estratégico"
                 className="w-full h-auto rounded-[2.5rem] border border-white/10 shadow-2xl hover:scale-[1.02] transition-transform duration-700"
                 width="600"
-                height="400"
+                height="600"
               />
             </motion.div>
           </div>
@@ -844,17 +983,18 @@ const Benefits = () => {
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
               transition={{ duration: 0.8 }}
               className="relative"
             >
               <div className="absolute inset-0 bg-gradient-to-bl from-[#EEC6A2]/10 to-transparent rounded-[2.5rem] blur-2xl -z-10" />
               <img
-                src="/traffic-growth-visual.webp?v=bust"
-                alt="Dashboard de Tráfego Pago e Performance para Negócios"
+                src="/performance-new.webp?v=1.1"
+                alt="Performance e Tráfego Pago"
                 className="w-full h-auto rounded-[2.5rem] border border-white/10 shadow-2xl hover:scale-[1.02] transition-transform duration-700"
                 width="600"
-                height="400"
+                height="600"
               />
             </motion.div>
             <motion.div
@@ -895,95 +1035,7 @@ const Benefits = () => {
   );
 };
 
-const ProductPresentation = () => {
-  const sectionRef = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start end", "end start"]
-  });
 
-  const rotate = useTransform(scrollYProgress, [0, 0.4], [10, 0]);
-  const scale = useTransform(scrollYProgress, [0, 0.4], [0.8, 1]);
-  const opacity = useTransform(scrollYProgress, [0, 0.2], [0, 1]);
-
-  return (
-    <section id="solucoes" ref={sectionRef} className="py-24 bg-gradient-to-b from-transparent to-[#0A0A0B]/50 px-6 overflow-hidden scroll-mt-32">
-      <div className="max-w-7xl mx-auto text-center mb-16">
-        <motion.h2
-          className="text-2xl sm:text-3xl md:text-5xl font-extrabold mb-8"
-          style={{ opacity }}
-        >
-          Estrutura Operacional <span className="text-gradient">de Alto Nível</span>
-        </motion.h2>
-        <p className="text-gray-400 max-w-3xl mx-auto text-sm sm:text-base md:text-lg mb-12">
-          Substituímos o caos por processos. Visualize sua operação rodando com previsibilidade através de um planejamento estratégico personalizado e automações invisíveis.
-        </p>
-      </div>
-
-      <motion.div
-        style={{ rotateX: rotate, scale }}
-        className="relative max-w-5xl mx-auto flex flex-col items-center gap-12"
-      >
-        <div className="relative w-full aspect-video glass rounded-[2.5rem] border-white/10 overflow-hidden shadow-[0_40px_100px_rgba(0,0,0,0.5)]">
-          <div className="absolute top-0 left-0 right-0 h-10 glass border-b border-white/10 flex items-center px-4 gap-2 z-20">
-            <div className="w-2.5 h-2.5 rounded-full bg-red-500/50" />
-            <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/50" />
-            <div className="w-2.5 h-2.5 rounded-full bg-green-500/50" />
-            <div className="mx-auto bg-white/5 px-12 py-1 rounded text-[10px] text-gray-500 font-mono tracking-widest uppercase">gestao.eleveai.com</div>
-          </div>
-
-          <img
-            src="/operational-flow-visual.webp?v=bust"
-            alt="Estrutura Operacional Automatizada: Fluxo de Atendimento e Triagem Inteligente"
-            className="w-full h-full object-cover mt-10 p-2 rounded-[1.5rem] brightness-[0.8] hover:brightness-100 transition-all duration-700"
-            width="800"
-            height="600"
-          />
-
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0B] via-transparent to-transparent pointer-events-none"></div>
-
-          <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            className="absolute bottom-10 right-10 glass p-6 rounded-2xl border-white/20 max-w-xs z-30"
-          >
-            <div className="flex items-start gap-4">
-              <div className="p-2 bg-[#68259A]/20 rounded-lg text-[#B988BF] shrink-0">
-                <Zap size={20} />
-              </div>
-              <div>
-                <h4 className="text-white font-bold text-[13px] mb-1">Fluxo Automatizado Ativo</h4>
-                <p className="text-gray-400 text-[11px]">Redução de 70% no tempo manual de triagem.</p>
-              </div>
-            </div>
-          </motion.div>
-        </div>
-
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 w-full">
-          <motion.div whileHover={{ scale: 1.05 }} className="glass p-4 rounded-3xl flex flex-col items-center justify-center gap-3 text-center group h-full">
-            <Calendar className="text-[#B988BF] group-hover:scale-110 transition-transform" size={24} />
-            <span className="text-xs md:text-sm font-semibold leading-tight">Agendamento Automático</span>
-          </motion.div>
-          <motion.div whileHover={{ scale: 1.05 }} className="glass p-4 rounded-3xl flex flex-col items-center justify-center gap-3 text-center group h-full">
-            <Clock className="text-[#EEC6A2] group-hover:scale-110 transition-transform" size={24} />
-            <span className="text-xs md:text-sm font-semibold leading-tight">Follow-up Inteligente</span>
-          </motion.div>
-          <motion.div whileHover={{ scale: 1.05 }} className="glass p-4 rounded-3xl flex flex-col items-center justify-center gap-3 text-center group h-full">
-            <div className="flex gap-1 text-[#68259A]">
-              <MessageCircle size={20} className="group-hover:scale-110 transition-transform" />
-              <Star size={20} className="text-yellow-500 fill-yellow-500 group-hover:rotate-12 transition-transform" />
-            </div>
-            <span className="text-xs md:text-sm font-semibold leading-tight">Pós-Venda + NPS Automático</span>
-          </motion.div>
-          <motion.div whileHover={{ scale: 1.05 }} className="glass p-4 rounded-3xl flex flex-col items-center justify-center gap-3 text-center group h-full border border-[#68259A]/40 bg-[#68259A]/10">
-            <Plus className="text-white group-hover:rotate-90 transition-transform" size={24} />
-            <span className="text-xs md:text-sm font-bold text-white leading-tight">E isso é só o básico...</span>
-          </motion.div>
-        </div>
-      </motion.div>
-    </section>
-  );
-};
 
 const PorQueEleveAI = () => {
   return (
@@ -1601,8 +1653,9 @@ const App = () => {
             <>
               <Hero onOpenModal={handleOpenModal} />
               <EmpresasNotaveis />
-              <GoogleSearchMockup onOpenModal={handleOpenModal} />
+              <GoogleAdsPremium onOpenModal={handleOpenModal} />
               <SistemaDeClientes />
+              <Benefits />
               <RaioXSection onOpenModal={handleOpenModal} />
               <PorQueEleveAI />
               <FAQ />
