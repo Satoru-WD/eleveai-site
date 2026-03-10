@@ -835,8 +835,6 @@ const Benefits = () => {
                 src="/social-media-visual.webp"
                 alt="Gestão de Marketing Estratégico no Instagram: Conteúdo de Alta Conversão e Branding"
                 className="w-full h-auto rounded-[2.5rem] border border-white/10 shadow-2xl hover:scale-[1.02] transition-transform duration-700"
-                loading="lazy"
-                decoding="async"
                 width="600"
                 height="400"
               />
@@ -857,8 +855,6 @@ const Benefits = () => {
                 src="/traffic-growth-visual.webp"
                 alt="Dashboard de Tráfego Pago e Performance para Negócios"
                 className="w-full h-auto rounded-[2.5rem] border border-white/10 shadow-2xl hover:scale-[1.02] transition-transform duration-700"
-                loading="lazy"
-                decoding="async"
                 width="600"
                 height="400"
               />
@@ -942,8 +938,6 @@ const ProductPresentation = () => {
             src="/operational-flow-visual.webp"
             alt="Estrutura Operacional Automatizada: Fluxo de Atendimento e Triagem Inteligente"
             className="w-full h-full object-cover mt-10 p-2 rounded-[1.5rem] brightness-[0.8] hover:brightness-100 transition-all duration-700"
-            loading="lazy"
-            decoding="async"
             width="800"
             height="600"
           />
