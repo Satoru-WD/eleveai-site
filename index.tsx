@@ -825,8 +825,7 @@ const Benefits = () => {
             </motion.div>
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
+              animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.8 }}
               className="order-1 md:order-2 relative"
             >
@@ -845,8 +844,7 @@ const Benefits = () => {
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
+              animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.8 }}
               className="relative"
             >
@@ -904,9 +902,9 @@ const ProductPresentation = () => {
     offset: ["start end", "end start"]
   });
 
-  const rotate = useTransform(scrollYProgress, [0, 0.5], [10, 0]);
-  const scale = useTransform(scrollYProgress, [0, 0.5], [0.8, 1]);
-  const opacity = useTransform(scrollYProgress, [0, 0.3], [0, 1]);
+  const rotate = useTransform(scrollYProgress, [0, 0.4], [10, 0]);
+  const scale = useTransform(scrollYProgress, [0, 0.4], [0.8, 1]);
+  const opacity = useTransform(scrollYProgress, [0, 0.2], [0, 1]);
 
   return (
     <section id="solucoes" ref={sectionRef} className="py-24 bg-gradient-to-b from-transparent to-[#0A0A0B]/50 px-6 overflow-hidden scroll-mt-32">
@@ -923,7 +921,7 @@ const ProductPresentation = () => {
       </div>
 
       <motion.div
-        style={{ rotateX: rotate, scale, opacity }}
+        style={{ rotateX: rotate, scale }}
         className="relative max-w-5xl mx-auto flex flex-col items-center gap-12"
       >
         <div className="relative w-full aspect-video glass rounded-[2.5rem] border-white/10 overflow-hidden shadow-[0_40px_100px_rgba(0,0,0,0.5)]">
