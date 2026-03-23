@@ -84,18 +84,20 @@
   </style>
   <title>EleveAI | Construímos Máquinas de Crescimento e Previsibilidade</title>
   <link rel="icon" type="image/png" href="/favicon.png" />
-  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Performance: Google Fonts with display=swap to prevent render-blocking -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preconnect" href="https://connect.facebook.net">
-  <link rel="dns-prefetch" href="https://connect.facebook.net">
   <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link rel="dns-prefetch" href="https://connect.facebook.net">
   <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
-    rel="stylesheet">
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet" media="print" onload="this.media='all'">
+  <noscript>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  </noscript>
   <style>
     :root {
-      --color-primary: #68259A;
+      --color-primary: #B988BF;
       --color-secondary: #72578C;
       --color-accent: #B988BF;
       --color-warm: #EEC6A2;
@@ -117,7 +119,7 @@
     h2,
     h3,
     h4 {
-      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-family: 'Manrope', sans-serif;
     }
 
     .glass {
@@ -128,7 +130,7 @@
     }
 
     .text-gradient {
-      background: linear-gradient(135deg, #EEC6A2 0%, #B988BF 50%, #68259A 100%);
+      background: linear-gradient(135deg, #EEC6A2 0%, #B988BF 50%, #B988BF 100%);
       -webkit-background-clip: text;
       background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -148,24 +150,33 @@
     }
 
     .custom-scrollbar::-webkit-scrollbar-thumb {
-      background: #68259A;
+      background: #B988BF;
       border-radius: 10px;
     }
   </style>
-  <script type="importmap">
-{
-  "imports": {
-    "react": "https://esm.sh/react@^19.2.4",
-    "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
-    "framer-motion": "https://esm.sh/framer-motion@^12.29.2",
-    "lucide-react": "https://esm.sh/lucide-react@^0.563.0",
-    "react/": "https://esm.sh/react@^19.2.4/"
-  }
-}
-</script>
   <link rel="stylesheet" href="/index.css">
 
-  <!-- Meta Pixel Code -->
+
+
+</head>
+
+<body class="custom-scrollbar">
+  <noscript><img height="1" width="1" style="display:none"
+      src="https://www.facebook.com/tr?id=1580522999670986&ev=PageView&noscript=1" /></noscript>
+      
+  
+  <div class="fixed inset-0 z-0 h-full w-full pointer-events-none opacity-60 mix-blend-screen" style="mask-image: linear-gradient(transparent, black 5%, black 80%, transparent); -webkit-mask-image: linear-gradient(transparent, black 5%, black 80%, transparent);">
+    <div style="filter: brightness(0.7) hue-rotate(270deg);" class="w-full h-full absolute inset-0">
+      <div class="absolute w-full h-full left-0 top-0 -z-10" data-us-project="sajpUiTp7MIKdX6daDCu"></div>
+    </div>
+  </div>
+  
+  <div id="root"></div>
+  <script type="module" src="index.tsx"></script>
+  <script type="text/javascript">
+    !function(){if(!window.UnicornStudio){window.UnicornStudio={isInitialized:!1};var i=document.createElement("script");i.src="https://cdn.jsdelivr.net/gh/hiunicornstudio/unicornstudio.js@v1.4.29/dist/unicornStudio.umd.js",i.onload=function(){window.UnicornStudio.isInitialized||(setTimeout(function(){UnicornStudio.init()}, window.innerWidth < 768 ? 2000 : 250),window.UnicornStudio.isInitialized=!0)},(document.head||document.body).appendChild(i)}}();
+  </script>
+  <!-- Meta Pixel Code: deferred to end of body to prevent head blocking -->
   <script>
     !function (f, b, e, v, n, t, s) {
       if (f.fbq) return; n = f.fbq = function () {
@@ -180,26 +191,6 @@
       'https://connect.facebook.net/en_US/fbevents.js');
     fbq('init', '1580522999670986');
     fbq('track', 'PageView');
-  </script>
-  <!-- End Meta Pixel Code -->
-
-</head>
-
-<body class="custom-scrollbar">
-  <noscript><img height="1" width="1" style="display:none"
-      src="https://www.facebook.com/tr?id=1580522999670986&ev=PageView&noscript=1" /></noscript>
-      
-  <div class="fixed inset-0 z-0 bg-black"></div>
-  <div class="fixed inset-0 z-0 h-full w-full pointer-events-none opacity-30 mix-blend-screen" style="mask-image: linear-gradient(transparent, black 5%, black 80%, transparent); -webkit-mask-image: linear-gradient(transparent, black 5%, black 80%, transparent);">
-    <div style="filter: brightness(0.5) hue-rotate(270deg);" class="w-full h-full absolute inset-0">
-      <div class="absolute w-full h-full left-0 top-0 -z-10" data-us-project="sajpUiTp7MIKdX6daDCu"></div>
-    </div>
-  </div>
-  <div class="fixed inset-0 z-0 h-full w-full bg-black/40 pointer-events-none"></div>
-  <div id="root"></div>
-  <script type="module" src="index.tsx"></script>
-  <script type="text/javascript">
-    !function(){if(!window.UnicornStudio){window.UnicornStudio={isInitialized:!1};var i=document.createElement("script");i.src="https://cdn.jsdelivr.net/gh/hiunicornstudio/unicornstudio.js@v1.4.29/dist/unicornStudio.umd.js",i.onload=function(){window.UnicornStudio.isInitialized||(setTimeout(function(){UnicornStudio.init()}, window.innerWidth < 768 ? 2000 : 250),window.UnicornStudio.isInitialized=!0)},(document.head||document.body).appendChild(i)}}();
   </script>
 </body>
 
