@@ -189,15 +189,17 @@
   <noscript><img height="1" width="1" style="display:none"
       src="https://www.facebook.com/tr?id=1580522999670986&ev=PageView&noscript=1" /></noscript>
       
-  <div class="fixed inset-0 z-0 h-full w-full pointer-events-none opacity-50 mix-blend-screen" data-alpha-mask="80" style="mask-image: linear-gradient(transparent, black 0%, black 80%, transparent); -webkit-mask-image: linear-gradient(transparent, black 0%, black 80%, transparent);">
-    <div style="filter: brightness(0.8) hue-rotate(270deg);" class="w-full h-full absolute inset-0">
+  <div class="fixed inset-0 z-0 bg-black"></div>
+  <div class="fixed inset-0 z-0 h-full w-full pointer-events-none opacity-30 mix-blend-screen" style="mask-image: linear-gradient(transparent, black 5%, black 80%, transparent); -webkit-mask-image: linear-gradient(transparent, black 5%, black 80%, transparent);">
+    <div style="filter: brightness(0.5) hue-rotate(270deg);" class="w-full h-full absolute inset-0">
       <div class="absolute w-full h-full left-0 top-0 -z-10" data-us-project="sajpUiTp7MIKdX6daDCu"></div>
     </div>
   </div>
+  <div class="fixed inset-0 z-0 h-full w-full bg-black/40 pointer-events-none"></div>
   <div id="root"></div>
   <script type="module" src="index.tsx"></script>
   <script type="text/javascript">
-    !function(){if(!window.UnicornStudio){window.UnicornStudio={isInitialized:!1};var i=document.createElement("script");i.src="https://cdn.jsdelivr.net/gh/hiunicornstudio/unicornstudio.js@v1.4.29/dist/unicornStudio.umd.js",i.onload=function(){window.UnicornStudio.isInitialized||(UnicornStudio.init(),window.UnicornStudio.isInitialized=!0)},(document.head||document.body).appendChild(i)}}();
+    !function(){if(!window.UnicornStudio){window.UnicornStudio={isInitialized:!1};var i=document.createElement("script");i.src="https://cdn.jsdelivr.net/gh/hiunicornstudio/unicornstudio.js@v1.4.29/dist/unicornStudio.umd.js",i.onload=function(){window.UnicornStudio.isInitialized||(setTimeout(function(){UnicornStudio.init()}, window.innerWidth < 768 ? 2000 : 250),window.UnicornStudio.isInitialized=!0)},(document.head||document.body).appendChild(i)}}();
   </script>
 </body>
 

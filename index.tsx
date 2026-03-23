@@ -192,7 +192,7 @@ const DiagnosticModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => 
                     style={{ width: `${progress}%` }}
                   />
                 </div>
-                <div className="mt-1 text-right text-[10px] text-gray-500 font-medium">{progress}% concluído</div>
+                <div className="mt-1 text-right text-[10px] text-gray-400 font-medium">{progress}% concluído</div>
               </div>
 
               <div className="mb-8">
@@ -248,7 +248,7 @@ const DiagnosticModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => 
                     {status !== 'submitting' && <ArrowRight size={16} className="transition-transform duration-300 group-hover:translate-x-0.5" />}
                   </span>
                 </button>
-                <p className="text-center text-xs text-gray-500 mt-2">Sem compromisso.</p>
+                <p className="text-center text-xs text-gray-400 mt-2">Sem compromisso.</p>
               </form>
             </motion.div>
           )}
@@ -417,28 +417,12 @@ const Navbar = ({ onHome }: { onHome: () => void }) => {
 const Hero = ({ onOpenModal }: { onOpenModal: () => void }) => {
   return (
     <>
-      <div className="gradient-blur" style={{ height: '120px' }}>
-        <div></div><div></div><div></div><div></div><div></div><div></div>
-      </div>
-
       <section id="hero" className="h-auto min-h-[800px] flex flex-col md:pt-20 overflow-hidden w-full pt-32 relative items-center justify-start" style={{ maskImage: 'linear-gradient(180deg, transparent, black 0%, black 95%, transparent)', WebkitMaskImage: 'linear-gradient(180deg, transparent, black 0%, black 95%, transparent)' }}>
         
-        <div className="aura-background-component -z-10 w-full top-0 absolute h-[800px]" data-alpha-mask="80" style={{ maskImage: 'linear-gradient(transparent, black 0%, black 80%, transparent)', WebkitMaskImage: 'linear-gradient(transparent, black 0%, black 80%, transparent)' }}>
-          <div className="aura-background-component top-0 w-full -z-10 absolute h-full" style={{ filter: 'hue-rotate(270deg)' }}>
-            <div className="absolute w-full h-full left-0 top-0 -z-10" data-us-project="sajpUiTp7MIKdX6daDCu"></div>
-          </div>
-        </div>
-
-        <div className="z-10 text-center max-w-5xl mt-24 mx-auto px-6 relative">
+        <div className="z-10 text-center max-w-5xl mt-24 mx-auto px-6 relative flex flex-col items-center">
           
-          <h1 className="flex flex-wrap justify-center gap-x-[0.25em] gap-y-2 leading-[1.1] md:text-8xl cursor-default text-5xl font-medium tracking-tighter font-manrope mb-8" style={{ animation: 'fadeSlideIn 1s ease-out 1s both' }}>
-            <span className="inline-block leading-[1.3] bg-clip-text text-transparent bg-gradient-to-b from-white via-white to-white/50 opacity-60">Você</span>
-            <span className="inline-block leading-[1.3] bg-clip-text text-transparent bg-gradient-to-b from-white via-white to-white/50 opacity-60">está</span>
-            <span className="inline-block leading-[1.3] bg-clip-text text-transparent bg-gradient-to-b from-white via-white to-white/50 opacity-100">preparado</span>
-            <span className="inline-block leading-[1.3] bg-clip-text text-transparent bg-gradient-to-b from-white via-white to-white/50 opacity-60">para</span>
-            <span className="inline-block leading-[1.3] bg-clip-text text-transparent bg-gradient-to-b from-white via-white to-white/50 opacity-100 text-[#B988BF]">dominar</span>
-            <span className="inline-block leading-[1.3] bg-clip-text text-transparent bg-gradient-to-b from-white via-white to-white/50 opacity-60">na internet</span>
-            <span className="inline-block leading-[1.3] bg-clip-text text-transparent bg-gradient-to-b from-white via-white to-white/50 opacity-60">ou apenas estar presente?</span>
+          <h1 className="leading-[1.1] md:text-[5rem] md:leading-[1.05] cursor-default text-5xl font-extrabold tracking-tighter font-manrope mb-8 drop-shadow-2xl text-white max-w-4xl" style={{ animation: 'fadeSlideIn 1s ease-out 1s both' }}>
+            Você está preparado para <span className="text-[#B988BF]">dominar</span> na internet ou apenas estar presente?
           </h1>
 
           <p className="leading-relaxed md:text-2xl text-xl font-medium text-gray-400 tracking-normal font-manrope max-w-3xl mx-auto mb-12" style={{ animation: 'fadeSlideIn 1s ease-out 1.2s both' }}>
@@ -447,12 +431,10 @@ const Hero = ({ onOpenModal }: { onOpenModal: () => void }) => {
 
           <div className="flex flex-col md:flex-row mb-12 gap-6 items-center justify-center" style={{ animation: 'fadeSlideIn 1s ease-out 1.4s both' }}>
             <button onClick={onOpenModal} className="group relative flex h-[50px] w-auto sm:min-w-[220px] items-center justify-center rounded-lg px-6 outline-none cursor-pointer transition-transform active:scale-95" style={{ backgroundColor: 'rgba(255, 255, 255, 0.05)', border: 'none' }} type="button">
-              <div className="pointer-events-none absolute inset-0 opacity-100 transition-opacity duration-[1200ms] ease-in-out group-hover:opacity-0" style={{ background: 'radial-gradient(15% 50% at 50% 100%, #B988BF 0%, rgba(185,136,191, 0) 100%)', filter: 'blur(15px)' }}></div>
-              <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-[1200ms] ease-in-out group-hover:opacity-100" style={{ background: 'radial-gradient(60.6% 50% at 50% 100%, #B988BF 0%, rgba(185,136,191, 0) 100%)', filter: 'blur(18px)' }}></div>
-              <div className="pointer-events-none will-change-auto absolute inset-0 opacity-100 transition-opacity duration-[1200ms] ease-in-out group-hover:opacity-0" style={{ background: 'radial-gradient(10.7% 50% at 50% 100%, #B988BF 0%, rgba(185,136,191, 0) 100%)' }}></div>
-              <div className="pointer-events-none will-change-auto absolute inset-0 opacity-0 transition-opacity duration-[1200ms] ease-in-out group-hover:opacity-100" style={{ background: 'radial-gradient(60.1% 50% at 50% 100%, #B988BF 0%, rgba(185,136,191, 0) 100%)' }}></div>
-              <div className="pointer-events-none absolute inset-0 overflow-hidden rounded-lg">
-                <div className="absolute -inset-[300%] animate-[spin_4s_linear_infinite]" style={{ background: 'conic-gradient(from 90deg at 50% 50%, transparent 0%, transparent 90%, #B988BF 100%)' }}></div>
+              <div className="pointer-events-none absolute inset-0 opacity-100 transition-opacity duration-[1200ms] ease-in-out group-hover:opacity-0" style={{ background: 'radial-gradient(15% 50% at 50% 100%, #B988BF 0%, rgba(185,136,191, 0) 100%)', filter: 'blur(10px)' }}></div>
+              <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-[1200ms] ease-in-out group-hover:opacity-100" style={{ background: 'radial-gradient(60.6% 50% at 50% 100%, #B988BF 0%, rgba(185,136,191, 0) 100%)', filter: 'blur(10px)' }}></div>
+              <div className="pointer-events-none absolute inset-0 overflow-hidden rounded-lg opacity-40">
+                <div className="absolute -inset-[300%] animate-[spin_8s_linear_infinite]" style={{ background: 'conic-gradient(from 90deg at 50% 50%, transparent 0%, transparent 90%, #B988BF 100%)' }}></div>
               </div>
               <div className="absolute inset-[1px] rounded-lg bg-black"></div>
               <span className="relative z-20 flex items-center justify-center gap-2 text-xs font-medium text-white tracking-wide uppercase">
@@ -1402,7 +1384,7 @@ const Footer = ({ onPrivacy, onTerms, onHome }: { onPrivacy: () => void, onTerms
 
           <div className="md:col-span-3">
             <h4 className="text-white font-bold mb-6 text-lg tracking-tight text-left">Atendimento</h4>
-            <ul className="space-y-4 text-gray-500 text-sm">
+            <ul className="space-y-4 text-gray-400 text-sm">
               <li className="flex justify-between border-b border-white/5 pb-2">
                 <span>Segunda a Sexta</span> <span className="text-gray-300">09h - 17h</span>
               </li>
@@ -1420,7 +1402,7 @@ const Footer = ({ onPrivacy, onTerms, onHome }: { onPrivacy: () => void, onTerms
           </div>
         </div>
 
-        <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-gray-600 font-medium">
+        <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-gray-400 font-medium">
           <p>© 2024 EleveAI. Todos os direitos reservados.</p>
           <div className="flex gap-8">
             <button onClick={onTerms} className="hover:text-[#B988BF] transition-colors">Termos de Uso</button>
