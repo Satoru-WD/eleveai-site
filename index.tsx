@@ -41,7 +41,6 @@ const trackWhatsAppClick = () => {
   }
 };
 
-// Branded WhatsApp SVG Icon for a professional look
 const WhatsAppIcon = ({ size = 24, className = "" }: { size?: number, className?: string }) => (
   <svg
     width={size}
@@ -49,6 +48,7 @@ const WhatsAppIcon = ({ size = 24, className = "" }: { size?: number, className?
     viewBox="0 0 24 24"
     fill="currentColor"
     className={className}
+    aria-hidden="true"
     xmlns="http://www.w3.org/2000/svg"
   >
     <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.414 0 .018 5.396.015 12.03c0 2.12.554 4.189 1.605 6.006L0 24l6.117-1.605a11.803 11.803 0 005.925 1.586h.005c6.635 0 12.032-5.396 12.035-12.03a11.8 11.8 0 00-3.669-8.498" />
@@ -149,13 +149,17 @@ const DiagnosticModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => 
           initial={{ opacity: 0, scale: 0.95, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: 20 }}
-          className="relative w-full max-w-lg glass rounded-[2rem] border-white/10 p-6 md:p-10 shadow-2xl z-10"
+          className="relative w-full max-w-lg bg-[#0A0A0B] border border-white/10 p-6 md:p-10 shadow-2xl z-10 rounded-none"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="modal-title"
         >
           <button
             onClick={onClose}
+            aria-label="Fechar diagnóstico"
             className="absolute top-4 right-4 p-2 text-gray-400 hover:text-white transition-colors rounded-full hover:bg-white/5"
           >
-            <X size={20} />
+            <X size={20} aria-hidden="true" />
           </button>
 
           {status === 'success' ? (
@@ -167,7 +171,7 @@ const DiagnosticModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => 
               <p className="text-gray-400">Nossa equipe estratégica analisará seu negócio e entrará em contato em breve.</p>
               <button
                 onClick={onClose}
-                className="mt-8 w-full py-3 bg-white/5 hover:bg-white/10 text-white rounded-xl font-medium transition-colors"
+                className="mt-8 w-full py-3 bg-white/5 hover:bg-white/10 text-white rounded-none font-medium transition-colors border border-white/10"
               >
                 Fechar
               </button>
@@ -192,7 +196,7 @@ const DiagnosticModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => 
               </div>
 
               <div className="mb-8">
-                <h4 className="text-xl md:text-2xl font-semibold text-white leading-snug">
+                <h4 id="modal-title" className="text-xl md:text-2xl font-semibold text-white leading-snug">
                   {questions[step - 1].title}
                 </h4>
               </div>
@@ -202,7 +206,7 @@ const DiagnosticModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => 
                   <button
                     key={idx}
                     onClick={() => handleNext(questions[step - 1].id, option)}
-                    className="w-full text-left px-5 py-4 rounded-xl border border-white/10 hover:border-[#B988BF] hover:bg-[#68259A]/10 text-gray-300 hover:text-white transition-all font-medium"
+                    className="w-full text-left px-5 py-4 rounded-none border border-white/10 hover:border-[#B988BF] hover:bg-[#B988BF]/10 text-gray-300 hover:text-white transition-all font-medium"
                   >
                     {option}
                   </button>
@@ -225,22 +229,24 @@ const DiagnosticModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => 
                 <input type="hidden" name="_template" value="table" />
 
                 <div>
-                  <label className="block text-xs font-semibold text-gray-400 mb-1.5 ml-1">Nome</label>
-                  <input required type="text" name="Nome" className="w-full bg-[#0A0A0B]/50 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#B988BF] transition-colors" placeholder="Seu nome completo" />
+                  <label htmlFor="diag-nome" className="block text-xs font-semibold text-gray-400 mb-1.5 ml-1">Nome</label>
+                  <input id="diag-nome" required type="text" name="Nome" className="w-full bg-[#0A0A0B]/50 border border-white/10 rounded-none px-4 py-3 text-white focus:outline-none focus:border-[#B988BF] transition-colors" placeholder="Seu nome completo" />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-gray-400 mb-1.5 ml-1">WhatsApp</label>
-                  <input required type="tel" name="WhatsApp" className="w-full bg-[#0A0A0B]/50 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#B988BF] transition-colors" placeholder="(00) 00000-0000" />
+                  <label htmlFor="diag-whatsapp" className="block text-xs font-semibold text-gray-400 mb-1.5 ml-1">WhatsApp</label>
+                  <input id="diag-whatsapp" required type="tel" name="WhatsApp" className="w-full bg-[#0A0A0B]/50 border border-white/10 rounded-none px-4 py-3 text-white focus:outline-none focus:border-[#B988BF] transition-colors" placeholder="(00) 00000-0000" />
                 </div>
 
                 <button
                   type="submit"
                   disabled={status === 'submitting'}
-                  className="w-full mt-4 py-4 bg-[#68259A] hover:bg-[#72578C] text-white rounded-xl font-bold transition-all shadow-lg flex items-center justify-center gap-2 disabled:opacity-50"
+                  className="group relative inline-flex w-full mt-4 h-[50px] items-center justify-center overflow-hidden rounded-none outline-none cursor-pointer transition-transform active:scale-95 bg-white/5 border border-[#B988BF] text-[#B988BF] hover:bg-[#B988BF] hover:text-white disabled:opacity-50"
                 >
-                  {status === 'submitting' ? 'Enviando...' : 'Receber análise estratégica'}
-                  {status !== 'submitting' && <ArrowRight size={18} />}
+                  <span className="relative z-20 flex items-center justify-center gap-2 text-xs font-bold tracking-wide uppercase">
+                    {status === 'submitting' ? 'Enviando...' : 'Receber análise estratégica'}
+                    {status !== 'submitting' && <ArrowRight size={16} className="transition-transform duration-300 group-hover:translate-x-0.5" />}
+                  </span>
                 </button>
                 <p className="text-center text-xs text-gray-500 mt-2">Sem compromisso.</p>
               </form>
@@ -286,13 +292,6 @@ const TypingEffect = ({ texts }: { texts: string[] }) => {
 
 const Navbar = ({ onHome }: { onHome: () => void }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 20);
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   const closeMenu = () => setIsMobileMenuOpen(false);
   const handleHomeClick = () => {
@@ -318,41 +317,42 @@ const Navbar = ({ onHome }: { onHome: () => void }) => {
 
   return (
     <>
-      <motion.nav
-        initial={{ y: -100 }}
-        animate={{ y: 0 }}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 px-6 py-3 ${isScrolled ? 'bg-[#0A0A0B]/90 backdrop-blur-lg border-b border-white/10 shadow-lg' : 'bg-transparent'
-          }`}
-      >
-        <div className="max-w-7xl mx-auto flex justify-between items-center relative z-10">
+      <div className="fixed flex w-full z-50 pt-6 pr-4 pl-4 top-0 left-0 justify-center" style={{ animation: 'fadeSlideIn 1s ease-out 1s both' }}>
+        <nav 
+          className="shadow-black/50 flex md:gap-12 md:w-auto bg-black/60 w-full max-w-6xl rounded-none pt-2 pr-2 pb-2 pl-3 shadow-2xl backdrop-blur-lg gap-x-8 gap-y-8 items-center justify-between" 
+          style={{ position: 'relative', '--border-gradient': 'linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.2))', '--border-radius-before': '0px' } as React.CSSProperties}
+        >
           {/* Logo */}
-          <div className="flex items-center cursor-pointer" onClick={handleHomeClick}>
+          <a href="#" aria-label="Voltar para o topo" className="flex items-center cursor-pointer px-2" onClick={(e) => { e.preventDefault(); handleHomeClick(); }}>
             <img
               src="/logo.png"
-              alt="EleveAI"
-              className="h-[4rem] md:h-[5rem] w-auto object-contain transition-all scale-[1.3] origin-left"
+              alt="EleveAI - Máquinas de Crescimento"
+              width="150"
+              height="56"
+              className="h-[3rem] md:h-[3.5rem] w-auto object-contain transition-all origin-left"
             />
-          </div>
+          </a>
 
           {/* Desktop Nav Links */}
-          <div className="hidden md:flex items-center gap-8 text-sm font-medium text-gray-400">
-            <button onClick={handleHomeClick} className="hover:text-white transition-colors">Home</button>
-            <button onClick={() => scrollToSection('sistema')} className="hover:text-white transition-colors">Sistema</button>
-            <button onClick={() => scrollToSection('diagnostico')} className="hover:text-white transition-colors">Soluções</button>
-            <button onClick={() => scrollToSection('faq')} className="hover:text-white transition-colors">FAQ</button>
+          <div className="hidden md:flex items-center gap-6 pr-4">
+            <button onClick={handleHomeClick} className="group hover:text-white transition-colors text-sm font-medium text-gray-400 font-sans py-1 relative">Home</button>
+            <button onClick={() => scrollToSection('sistema')} className="group hover:text-white transition-colors text-sm font-medium text-gray-400 font-sans py-1 relative">Sistema</button>
+            <button onClick={() => scrollToSection('diagnostico')} className="group hover:text-white transition-colors text-sm font-medium text-gray-400 font-sans py-1 relative">Soluções</button>
+            <button onClick={() => scrollToSection('faq')} className="group hover:text-white transition-colors text-sm font-medium text-gray-400 font-sans py-1 relative">FAQ</button>
           </div>
 
           {/* Mobile Menu Button */}
-          <div className="flex items-center md:hidden">
+          <div className="flex items-center md:hidden pr-2">
             <button
+              aria-label="Toggle menu"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               className="text-white p-2"
             >
-              {isMobileMenuOpen ? <Plus className="rotate-45" size={32} /> : <Menu size={32} />}
+              {isMobileMenuOpen ? <Plus className="rotate-45" size={28} aria-hidden="true" /> : <Menu size={28} aria-hidden="true" />}
             </button>
           </div>
-        </div>
-      </motion.nav>
+        </nav>
+      </div>
 
       {/* ====== FULLSCREEN OVERLAY MENU (Mobile Only) ====== */}
       <AnimatePresence>
@@ -366,10 +366,11 @@ const Navbar = ({ onHome }: { onHome: () => void }) => {
           >
             {/* Close button */}
             <button
+              aria-label="Fechar menu"
               onClick={closeMenu}
               className="absolute top-6 right-6 text-gray-400 hover:text-white transition-colors p-2"
             >
-              <Plus className="rotate-45" size={32} />
+              <Plus className="rotate-45" size={32} aria-hidden="true" />
             </button>
 
             <nav className="flex flex-col items-center gap-8">
@@ -415,81 +416,142 @@ const Navbar = ({ onHome }: { onHome: () => void }) => {
 
 const Hero = ({ onOpenModal }: { onOpenModal: () => void }) => {
   return (
-    <section className="relative min-h-screen flex items-center pt-44 overflow-hidden">
-      {/* Background Shapes */}
-      <div className="absolute top-1/4 -left-20 w-96 h-96 bg-[#68259A] rounded-full bg-glow" />
-      <div className="absolute bottom-1/4 -right-20 w-96 h-96 bg-[#B988BF] rounded-full bg-glow" />
+    <>
+      <div className="gradient-blur" style={{ height: '120px' }}>
+        <div></div><div></div><div></div><div></div><div></div><div></div>
+      </div>
 
-      <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center relative z-10">
-        <motion.div
-          initial={{ opacity: 0, x: -50 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8 }}
-          className="text-center md:text-left flex flex-col items-center md:items-start"
-        >
-          <div className="inline-block px-4 py-1.5 rounded-full glass border-[#B988BF]/30 text-[#B988BF] text-xs font-bold uppercase tracking-widest mb-6">
-            Empresas que crescem não dependem da sorte. Elas constroem um sistema de clientes.
+      <section id="hero" className="h-auto min-h-[800px] flex flex-col md:pt-20 overflow-hidden w-full pt-32 relative items-center justify-start" style={{ maskImage: 'linear-gradient(180deg, transparent, black 0%, black 95%, transparent)', WebkitMaskImage: 'linear-gradient(180deg, transparent, black 0%, black 95%, transparent)' }}>
+        
+        <div className="aura-background-component -z-10 w-full top-0 absolute h-[800px]" data-alpha-mask="80" style={{ maskImage: 'linear-gradient(transparent, black 0%, black 80%, transparent)', WebkitMaskImage: 'linear-gradient(transparent, black 0%, black 80%, transparent)' }}>
+          <div className="aura-background-component top-0 w-full -z-10 absolute h-full" style={{ filter: 'hue-rotate(270deg)' }}>
+            <div className="absolute w-full h-full left-0 top-0 -z-10" data-us-project="sajpUiTp7MIKdX6daDCu"></div>
           </div>
-          <h1 className="text-3xl sm:text-4xl md:text-[3.5rem] font-extrabold text-white leading-snug md:leading-[1.15] mb-6">
-            Você está preparado para <span className="text-gradient">atrair clientes na internet</span> ou apenas estar presente?
+        </div>
+
+        <div className="z-10 text-center max-w-5xl mt-24 mx-auto px-6 relative">
+          
+          <h1 className="flex flex-wrap justify-center gap-x-[0.25em] gap-y-2 leading-[1.1] md:text-8xl cursor-default text-5xl font-medium tracking-tighter font-manrope mb-8" style={{ animation: 'fadeSlideIn 1s ease-out 1s both' }}>
+            <span className="inline-block leading-[1.3] bg-clip-text text-transparent bg-gradient-to-b from-white via-white to-white/50 opacity-60">Você</span>
+            <span className="inline-block leading-[1.3] bg-clip-text text-transparent bg-gradient-to-b from-white via-white to-white/50 opacity-60">está</span>
+            <span className="inline-block leading-[1.3] bg-clip-text text-transparent bg-gradient-to-b from-white via-white to-white/50 opacity-100">preparado</span>
+            <span className="inline-block leading-[1.3] bg-clip-text text-transparent bg-gradient-to-b from-white via-white to-white/50 opacity-60">para</span>
+            <span className="inline-block leading-[1.3] bg-clip-text text-transparent bg-gradient-to-b from-white via-white to-white/50 opacity-100 text-[#B988BF]">dominar</span>
+            <span className="inline-block leading-[1.3] bg-clip-text text-transparent bg-gradient-to-b from-white via-white to-white/50 opacity-60">na internet</span>
+            <span className="inline-block leading-[1.3] bg-clip-text text-transparent bg-gradient-to-b from-white via-white to-white/50 opacity-60">ou apenas estar presente?</span>
           </h1>
-          <p className="text-gray-400 text-sm sm:text-base md:text-xl max-w-lg mb-8 leading-relaxed">
+
+          <p className="leading-relaxed md:text-2xl text-xl font-medium text-gray-400 tracking-normal font-manrope max-w-3xl mx-auto mb-12" style={{ animation: 'fadeSlideIn 1s ease-out 1.2s both' }}>
             Em poucos segundos analisamos os pontos que podem estar limitando a geração de contatos para o seu negócio.
           </p>
 
-          <div className="flex flex-wrap gap-3 justify-center md:justify-start mb-10">
-            <span className="px-4 py-1.5 rounded-full bg-[#68259A]/10 border border-[#68259A]/30 text-xs font-bold text-gray-300">Posicionamento</span>
-            <span className="px-4 py-1.5 rounded-full bg-[#B988BF]/10 border border-[#B988BF]/30 text-xs font-bold text-gray-300">Aquisição</span>
-            <span className="px-4 py-1.5 rounded-full bg-[#EEC6A2]/10 border border-[#EEC6A2]/30 text-xs font-bold text-gray-300">Conversão</span>
-            <span className="px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs font-bold text-gray-300">Automação</span>
-          </div>
+          <div className="flex flex-col md:flex-row mb-12 gap-6 items-center justify-center" style={{ animation: 'fadeSlideIn 1s ease-out 1.4s both' }}>
+            <button onClick={onOpenModal} className="group relative flex h-[50px] w-auto sm:min-w-[220px] items-center justify-center rounded-lg px-6 outline-none cursor-pointer transition-transform active:scale-95" style={{ backgroundColor: 'rgba(255, 255, 255, 0.05)', border: 'none' }} type="button">
+              <div className="pointer-events-none absolute inset-0 opacity-100 transition-opacity duration-[1200ms] ease-in-out group-hover:opacity-0" style={{ background: 'radial-gradient(15% 50% at 50% 100%, #B988BF 0%, rgba(185,136,191, 0) 100%)', filter: 'blur(15px)' }}></div>
+              <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-[1200ms] ease-in-out group-hover:opacity-100" style={{ background: 'radial-gradient(60.6% 50% at 50% 100%, #B988BF 0%, rgba(185,136,191, 0) 100%)', filter: 'blur(18px)' }}></div>
+              <div className="pointer-events-none will-change-auto absolute inset-0 opacity-100 transition-opacity duration-[1200ms] ease-in-out group-hover:opacity-0" style={{ background: 'radial-gradient(10.7% 50% at 50% 100%, #B988BF 0%, rgba(185,136,191, 0) 100%)' }}></div>
+              <div className="pointer-events-none will-change-auto absolute inset-0 opacity-0 transition-opacity duration-[1200ms] ease-in-out group-hover:opacity-100" style={{ background: 'radial-gradient(60.1% 50% at 50% 100%, #B988BF 0%, rgba(185,136,191, 0) 100%)' }}></div>
+              <div className="pointer-events-none absolute inset-0 overflow-hidden rounded-lg">
+                <div className="absolute -inset-[300%] animate-[spin_4s_linear_infinite]" style={{ background: 'conic-gradient(from 90deg at 50% 50%, transparent 0%, transparent 90%, #B988BF 100%)' }}></div>
+              </div>
+              <div className="absolute inset-[1px] rounded-lg bg-black"></div>
+              <span className="relative z-20 flex items-center justify-center gap-2 text-xs font-medium text-white tracking-wide uppercase">
+                <span style={{ WebkitFontSmoothing: 'antialiased', textShadow: '0 1px 2px rgba(0,0,0,0.5)' }}>VER DIAGNÓSTICO</span>
+                <ArrowRight size={16} className="transition-transform duration-300 group-hover:translate-x-0.5" />
+              </span>
+            </button>
 
-          <div className="flex flex-col sm:flex-row items-center md:items-start gap-4 w-full sm:w-auto">
-            <motion.button
-              onClick={onOpenModal}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="px-8 py-4 md:px-10 md:py-5 bg-[#68259A] text-white rounded-2xl font-bold text-base md:text-lg text-center shadow-[0_10px_30px_rgba(104,37,154,0.3)] hover:shadow-[0_10px_40px_rgba(104,37,154,0.5)] transition-all flex items-center justify-center w-full sm:w-auto"
-            >
-              Ver diagnóstico do meu negócio
-            </motion.button>
+            <a href={WHATSAPP_URL} target="_blank" rel="noreferrer" onClick={trackWhatsAppClick} className="group relative inline-flex h-[50px] sm:min-w-[220px] items-center justify-center overflow-hidden rounded-lg outline-none cursor-pointer transition-transform active:scale-95 px-6" style={{ backgroundColor: 'rgba(255, 255, 255, 0.05)' }}>
+              <span className="absolute inset-[-100%] animate-[spin_3s_linear_infinite] opacity-0 transition-opacity duration-300 group-hover:opacity-100" style={{ background: 'conic-gradient(from 90deg at 50% 50%, transparent 0%, transparent 75%, #68259A 100%)' }}></span>
+              <span className="absolute inset-0 rounded-lg bg-zinc-800 transition-opacity duration-300 group-hover:opacity-0"></span>
+              <span className="absolute inset-[1px] rounded-lg bg-black z-10"></span>
+              <span className="absolute inset-0 pointer-events-none opacity-0 transition-opacity duration-500 group-hover:opacity-100 z-10" style={{ background: 'radial-gradient(50% 50% at 50% 100%, rgba(104,37,154, 0.3) 0%, transparent 100%)' }}></span>
+              <span className="relative z-20 flex items-center justify-center gap-2 text-xs font-medium text-white tracking-wide uppercase">
+                <span>FALAR NO WHATSAPP</span>
+                <WhatsAppIcon size={16} className="transition-transform duration-300 group-hover:translate-x-0.5 text-white" />
+              </span>
+            </a>
           </div>
-        </motion.div>
+        </div>
 
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9, y: 50 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          transition={{ duration: 1, ease: "easeOut" }}
-          className="relative mt-12 md:mt-0"
-        >
-          <div className="relative z-10 rounded-[1.5rem] md:rounded-[3rem] overflow-hidden glass border-white/10 shadow-[0_0_50px_rgba(104,37,154,0.3)]">
-            <img
-              src="/strategic-funnel-pt.webp"
-              alt="Sistema Previsível de Geração de Clientes"
-              className="w-full h-auto brightness-50 hover:brightness-100 transition-all duration-700"
-              width="600"
-              height="400"
-              fetchPriority="high"
-            />
-          </div>
-          <motion.div
-            animate={{ y: [0, -10, 0] }}
-            transition={{ repeat: Infinity, duration: 4 }}
-            className="absolute top-10 -right-4 glass p-5 rounded-2xl border-white/20 shadow-xl"
-          >
-            <div className="flex items-center gap-3">
-              <div className="p-2.5 bg-green-500/20 rounded-lg"><TrendingUp size={24} className="text-green-500" /></div>
+        <div className="flex flex-col lg:flex-row gap-6 w-full max-w-7xl mx-auto px-6 mb-16 relative z-10">
+          
+          <section className="flex-1 bg-black border border-white/10 border-dashed relative p-8 flex flex-col justify-between group hover:border-[#B988BF]/50 transition-all duration-500 rounded-none [animation:fadeSlideIn_1s_ease-out_0.2s_both]">
+            <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-[#B988BF]"></div>
+            <div className="absolute top-0 right-0 w-2 h-2 border-t border-r border-[#B988BF]"></div>
+            <div className="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-[#B988BF]"></div>
+            <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-[#B988BF]"></div>
+            <div className="space-y-8">
+              <div className="flex items-center justify-between border-b border-white/10 pb-4 border-dashed">
+                <span className="font-mono text-[10px] text-[#B988BF] tracking-widest uppercase font-bold">[ Status da Análise ]</span>
+                <div className="flex gap-1.5"><div className="w-1.5 h-1.5 bg-[#B988BF] animate-pulse rounded-none"></div><div className="w-1.5 h-1.5 bg-zinc-800 rounded-none"></div><div className="w-1.5 h-1.5 bg-zinc-800 rounded-none"></div></div>
+              </div>
               <div>
-                <div className="text-[10px] text-gray-400 uppercase font-bold tracking-wider">Crescimento Previsível</div>
-                <div className="text-xl font-black text-white">+42% ROI</div>
+                <h2 className="text-zinc-500 text-[10px] font-mono mb-2 uppercase tracking-wider">Média de Aumento no ROI</h2>
+                <div className="flex items-baseline gap-2"><p className="text-5xl font-medium text-white font-manrope tracking-tighter">42</p><span className="text-white text-3xl font-manrope tracking-tighter">%</span></div>
+                <p className="text-xs text-zinc-400 mt-2 font-sans">Empresas otimizadas com sistema de vendas inteligente.</p>
               </div>
             </div>
-          </motion.div>
-          <div className="absolute -top-10 -right-10 w-40 h-40 bg-[#68259A] rounded-full blur-[80px] opacity-40"></div>
-          <div className="absolute -bottom-10 -left-10 w-40 h-40 bg-[#B988BF] rounded-full blur-[80px] opacity-40"></div>
-        </motion.div>
-      </div>
-    </section>
+            <button onClick={onOpenModal} className="mt-8 w-full bg-transparent border border-[#B988BF] text-[#B988BF] hover:bg-[#B988BF] hover:text-white transition-all uppercase text-[11px] font-bold tracking-widest py-4 px-4 flex items-center justify-center gap-3 group/btn rounded-none">
+              <span>Iniciar Avaliação</span>
+              <svg className="w-3 h-3 transform group-hover/btn:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" strokeLinecap="square" strokeLinejoin="miter" strokeWidth="2"></path></svg>
+            </button>
+          </section>
+
+          <section className="lg:flex-[1.6] min-h-[400px] md:min-h-[500px] group overflow-hidden border-white/10 border rounded-lg relative [animation:fadeSlideIn_1s_ease-out_0.4s_both]">
+            <img 
+              alt="Representação visual de máquina de crescimento e funil de vendas estratégico" 
+              className="group-hover:opacity-80 group-hover:scale-105 transition-all duration-700 opacity-60 mix-blend-normal w-full h-full object-cover absolute inset-0" 
+              src="/strategic-funnel-pt.webp" 
+              loading="lazy"
+              decoding="async"
+              width="800"
+              height="600"
+            />
+            <div className="flex flex-col z-20 p-6 md:p-8 absolute inset-0 justify-between">
+              <div className="flex items-start justify-between">
+                <div className="bg-black/80 backdrop-blur-sm border-white/20 border p-4 shadow-xl">
+                  <div className="flex gap-2 mb-2 items-center"><span className="w-1.5 h-1.5 bg-[#B988BF]"></span><p className="text-zinc-300 font-mono text-[10px] uppercase tracking-widest">Growth Engine</p></div>
+                  <h2 className="text-white font-manrope text-xl md:text-2xl font-semibold tracking-tight uppercase">Sistema Inteligente</h2>
+                </div>
+              </div>
+              <div className="flex flex-col gap-6">
+                <div className="bg-black/90 backdrop-blur border-l-4 border-[#B988BF] p-5 max-w-sm shadow-2xl">
+                  <p className="text-zinc-300 text-sm leading-relaxed font-sans">Atraímos o público certo e o conduzimos até a venda através de inteligência de dados e conversão.</p>
+                </div>
+              </div>
+            </div>
+            <div className="absolute bottom-8 right-8 w-16 h-16 md:w-24 md:h-24 border-r border-b border-[#B988BF]/30 z-10"></div>
+          </section>
+
+          <section className="flex-1 flex flex-col bg-black border border-white/10 rounded-none relative [animation:fadeSlideIn_1s_ease-out_0.6s_both]">
+            <div className="p-5 border-b border-white/10 border-dashed flex justify-between items-center bg-zinc-900/10">
+              <span className="font-mono text-[10px] text-white uppercase tracking-widest font-bold">Metodologia EleveAI</span>
+              <div className="flex gap-1"><div className="w-0.5 h-3 bg-[#B988BF]"></div><div className="w-0.5 h-3 bg-zinc-800"></div><div className="w-0.5 h-3 bg-zinc-800"></div></div>
+            </div>
+            <div className="flex-1 flex flex-col">
+              <div className="flex-1 border-b border-white/10 p-5 flex items-center justify-between group hover:bg-zinc-900/40 transition-colors relative overflow-hidden cursor-default">
+                <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#68259A] transform -translate-x-full group-hover:translate-x-0 transition-transform duration-200"></div>
+                <div><span className="block text-[10px] text-zinc-500 font-mono mb-1 group-hover:text-[#B988BF] transition-colors">01</span><h4 className="text-base text-white font-manrope font-normal tracking-tight group-hover:translate-x-2 transition-transform duration-300">Posicionamento</h4></div>
+              </div>
+              <div className="flex-1 border-b border-white/10 p-5 flex items-center justify-between group hover:bg-zinc-900/40 transition-colors relative overflow-hidden cursor-default">
+                <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#B988BF] transform -translate-x-full group-hover:translate-x-0 transition-transform duration-200"></div>
+                <div><span className="block text-[10px] text-zinc-500 font-mono mb-1 group-hover:text-[#B988BF] transition-colors">02</span><h4 className="text-base text-white font-manrope font-normal tracking-tight group-hover:translate-x-2 transition-transform duration-300">Aquisição</h4></div>
+              </div>
+              <div className="flex-1 border-b border-white/10 p-5 flex items-center justify-between group hover:bg-zinc-900/40 transition-colors relative overflow-hidden cursor-default">
+                <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#EEC6A2] transform -translate-x-full group-hover:translate-x-0 transition-transform duration-200"></div>
+                <div><span className="block text-[10px] text-zinc-500 font-mono mb-1 group-hover:text-[#EEC6A2] transition-colors">03</span><h4 className="text-base text-white font-manrope font-normal tracking-tight group-hover:translate-x-2 transition-transform duration-300">Conversão</h4></div>
+              </div>
+              <div className="flex-1 p-5 flex items-center justify-between group hover:bg-zinc-900/40 transition-colors relative overflow-hidden cursor-default">
+                <div className="absolute left-0 top-0 bottom-0 w-1 bg-white transform -translate-x-full group-hover:translate-x-0 transition-transform duration-200"></div>
+                <div><span className="block text-[10px] text-zinc-500 font-mono mb-1 group-hover:text-white transition-colors">04</span><h4 className="text-base text-white font-manrope font-normal tracking-tight group-hover:translate-x-2 transition-transform duration-300">Automação</h4></div>
+              </div>
+            </div>
+          </section>
+        </div>
+
+      </section>
+    </>
   );
 };
 
@@ -501,13 +563,17 @@ const EmpresasNotaveis = () => {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="glass p-8 md:p-12 rounded-[2rem] border-white/5"
+          className="bg-black border border-white/10 p-8 md:p-12 rounded-none [animation:fadeSlideIn_1s_ease-out_both] shadow-2xl relative"
         >
-          <h2 className="text-2xl sm:text-3xl md:text-5xl font-extrabold text-white mb-6 leading-tight">
+          <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-[#B988BF]"></div>
+          <div className="absolute top-0 right-0 w-2 h-2 border-t border-r border-[#B988BF]"></div>
+          <div className="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-[#B988BF]"></div>
+          <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-[#B988BF]"></div>
+          <h2 className="text-4xl sm:text-5xl md:text-6xl font-medium text-white mb-6 tracking-tighter font-manrope leading-[1.1]">
             Empresas comuns disputam atenção. <br className="hidden md:block" />
             <span className="text-gradient">Empresas notáveis são procuradas.</span>
           </h2>
-          <p className="text-gray-400 text-base md:text-xl leading-relaxed">
+          <p className="text-zinc-400 text-lg md:text-xl font-sans leading-relaxed max-w-3xl mx-auto">
             Se o seu negócio parece igual a todos os outros, o cliente escolhe pelo preço.
             Negócios que constroem presença e autoridade deixam de disputar atenção e passam a ser procurados.
             Essa é a diferença entre correr atrás de clientes e construir um sistema que atrai clientes.
@@ -669,7 +735,7 @@ const GoogleAdsPremium = ({ onOpenModal }: { onOpenModal: () => void }) => {
           </div>
 
           {/* Title */}
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white mb-8 leading-[1.15] tracking-tight">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white mb-8 leading-[1.15] tracking-tight font-manrope">
             Quer vender mais,<br />
             <span className="text-gradient">mas não sabe como?</span>
           </h2>
@@ -690,15 +756,24 @@ const GoogleAdsPremium = ({ onOpenModal }: { onOpenModal: () => void }) => {
           </p>
 
           {/* CTA */}
-          <motion.button
+          <button
             onClick={onOpenModal}
-            whileHover={{ scale: 1.04 }}
-            whileTap={{ scale: 0.96 }}
-            className="mt-10 px-10 py-5 bg-[#68259A] text-white rounded-2xl font-bold text-base shadow-[0_10px_40px_rgba(104,37,154,0.35)] hover:shadow-[0_12px_50px_rgba(104,37,154,0.5)] transition-all flex items-center gap-3"
+            className="group relative flex h-[50px] w-auto sm:min-w-[280px] mt-8 items-center justify-center rounded-none px-6 outline-none cursor-pointer transition-transform active:scale-95 bg-white/5 border-none"
+            type="button"
           >
-            Quero aparecer no Google
-            <ArrowRight size={20} />
-          </motion.button>
+            <div className="pointer-events-none absolute inset-0 opacity-100 transition-opacity duration-[1200ms] ease-in-out group-hover:opacity-0" style={{ background: 'radial-gradient(15% 50% at 50% 100%, #B988BF 0%, rgba(185,136,191, 0) 100%)', filter: 'blur(15px)' }}></div>
+            <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-[1200ms] ease-in-out group-hover:opacity-100" style={{ background: 'radial-gradient(60.6% 50% at 50% 100%, #B988BF 0%, rgba(185,136,191, 0) 100%)', filter: 'blur(18px)' }}></div>
+            <div className="pointer-events-none will-change-auto absolute inset-0 opacity-100 transition-opacity duration-[1200ms] ease-in-out group-hover:opacity-0" style={{ background: 'radial-gradient(10.7% 50% at 50% 100%, #B988BF 0%, rgba(185,136,191, 0) 100%)' }}></div>
+            <div className="pointer-events-none will-change-auto absolute inset-0 opacity-0 transition-opacity duration-[1200ms] ease-in-out group-hover:opacity-100" style={{ background: 'radial-gradient(60.1% 50% at 50% 100%, #B988BF 0%, rgba(185,136,191, 0) 100%)' }}></div>
+            <div className="pointer-events-none absolute inset-0 overflow-hidden rounded-none">
+              <div className="absolute -inset-[300%] animate-[spin_4s_linear_infinite]" style={{ background: 'conic-gradient(from 90deg at 50% 50%, transparent 0%, transparent 90%, #B988BF 100%)' }}></div>
+            </div>
+            <div className="absolute inset-[1px] rounded-none bg-black"></div>
+            <span className="relative z-20 flex items-center justify-center gap-3 text-sm font-bold text-white tracking-wide uppercase">
+              Quero aparecer no Google
+              <ArrowRight size={18} className="transition-transform duration-300 group-hover:translate-x-1" />
+            </span>
+          </button>
         </motion.div>
 
         {/* ── Right Column: Search Card ── */}
@@ -710,7 +785,7 @@ const GoogleAdsPremium = ({ onOpenModal }: { onOpenModal: () => void }) => {
           className="flex justify-center lg:justify-end"
         >
           {/* Card */}
-          <div className="w-full max-w-[480px] bg-white rounded-3xl shadow-[0_24px_80px_rgba(0,0,0,0.22)] overflow-hidden">
+          <div className="w-full max-w-[480px] bg-white rounded-none shadow-[0_24px_80px_rgba(0,0,0,0.22)] overflow-hidden">
 
             {/* Card Header */}
             <div className="px-6 pt-6 pb-4 flex items-center justify-between border-b border-gray-100">
@@ -840,7 +915,7 @@ const SistemaDeClientes = () => {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-2xl sm:text-3xl md:text-5xl font-extrabold text-white mb-6"
+            className="text-2xl sm:text-3xl md:text-5xl font-extrabold text-white mb-6 font-manrope"
           >
             Clientes não aparecem por acaso.
           </motion.h2>
@@ -850,35 +925,39 @@ const SistemaDeClientes = () => {
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-          <motion.div whileHover={{ y: -10 }} className="glass p-8 rounded-[2rem] border-white/5 hover:border-[#68259A]/40 transition-all flex flex-col items-center text-center">
-            <div className="w-14 h-14 rounded-2xl bg-[#68259A]/10 flex items-center justify-center mb-6 text-[#B988BF]">
+          <motion.div whileHover={{ y: -10 }} className="bg-black p-8 rounded-none border border-white/10 hover:border-[#B988BF]/50 transition-all flex flex-col items-center text-center relative overflow-hidden group">
+            <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#B988BF] transform -translate-x-full group-hover:translate-x-0 transition-transform duration-200"></div>
+            <div className="w-14 h-14 rounded-full bg-[#68259A]/10 flex items-center justify-center mb-6 text-[#B988BF] group-hover:scale-110 transition-transform duration-300">
               <Star size={28} />
             </div>
-            <h3 className="text-xl font-bold text-white mb-2">Posicionamento forte</h3>
+            <h3 className="text-xl font-bold text-white mb-2 font-manrope">Posicionamento forte</h3>
             <p className="text-sm text-gray-400">Ser lembrado antes de ser comparado.</p>
           </motion.div>
 
-          <motion.div whileHover={{ y: -10 }} className="glass p-8 rounded-[2rem] border-white/5 hover:border-[#68259A]/40 transition-all flex flex-col items-center text-center">
-            <div className="w-14 h-14 rounded-2xl bg-[#EEC6A2]/10 flex items-center justify-center mb-6 text-[#EEC6A2]">
+          <motion.div whileHover={{ y: -10 }} className="bg-black p-8 rounded-none border border-white/10 hover:border-[#B988BF]/50 transition-all flex flex-col items-center text-center relative overflow-hidden group">
+            <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#B988BF] transform -translate-x-full group-hover:translate-x-0 transition-transform duration-200"></div>
+            <div className="w-14 h-14 rounded-full bg-[#EEC6A2]/10 flex items-center justify-center mb-6 text-[#EEC6A2] group-hover:scale-110 transition-transform duration-300">
               <Target size={28} />
             </div>
-            <h3 className="text-xl font-bold text-white mb-2">Captação inteligente</h3>
+            <h3 className="text-xl font-bold text-white mb-2 font-manrope">Captação inteligente</h3>
             <p className="text-sm text-gray-400">Ser encontrado por quem já está procurando.</p>
           </motion.div>
 
-          <motion.div whileHover={{ y: -10 }} className="glass p-8 rounded-[2rem] border-white/5 hover:border-[#68259A]/40 transition-all flex flex-col items-center text-center">
-            <div className="w-14 h-14 rounded-2xl bg-[#68259A]/10 flex items-center justify-center mb-6 text-[#B988BF]">
+          <motion.div whileHover={{ y: -10 }} className="bg-black p-8 rounded-none border border-white/10 hover:border-[#B988BF]/50 transition-all flex flex-col items-center text-center relative overflow-hidden group">
+            <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#B988BF] transform -translate-x-full group-hover:translate-x-0 transition-transform duration-200"></div>
+            <div className="w-14 h-14 rounded-full bg-[#68259A]/10 flex items-center justify-center mb-6 text-[#B988BF] group-hover:scale-110 transition-transform duration-300">
               <BarChart3 size={28} />
             </div>
-            <h3 className="text-xl font-bold text-white mb-2">Engajamento direcionado</h3>
+            <h3 className="text-xl font-bold text-white mb-2 font-manrope">Engajamento direcionado</h3>
             <p className="text-sm text-gray-400">Transformar interesse em clientes.</p>
           </motion.div>
 
-          <motion.div whileHover={{ y: -10 }} className="glass p-8 rounded-[2rem] border-white/5 hover:border-[#68259A]/40 transition-all flex flex-col items-center text-center">
-            <div className="w-14 h-14 rounded-2xl bg-[#EEC6A2]/10 flex items-center justify-center mb-6 text-[#EEC6A2]">
+          <motion.div whileHover={{ y: -10 }} className="bg-black p-8 rounded-none border border-white/10 hover:border-[#B988BF]/50 transition-all flex flex-col items-center text-center relative overflow-hidden group">
+            <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#B988BF] transform -translate-x-full group-hover:translate-x-0 transition-transform duration-200"></div>
+            <div className="w-14 h-14 rounded-full bg-[#EEC6A2]/10 flex items-center justify-center mb-6 text-[#EEC6A2] group-hover:scale-110 transition-transform duration-300">
               <Cpu size={28} />
             </div>
-            <h3 className="text-xl font-bold text-white mb-2">Automação</h3>
+            <h3 className="text-xl font-bold text-white mb-2 font-manrope">Automação</h3>
             <p className="text-sm text-gray-400">Criar consistência no crescimento.</p>
           </motion.div>
         </div>
@@ -895,13 +974,14 @@ const BenefitCard = ({ icon: Icon, title, description, delay }: any) => {
       viewport={{ once: true }}
       transition={{ duration: 0.6, delay }}
       whileHover={{ y: -10 }}
-      className="glass p-6 md:p-8 rounded-[1.5rem] md:rounded-[2rem] border-white/5 hover:border-[#68259A]/40 transition-all group"
+      className="bg-black p-6 md:p-8 rounded-none border border-white/10 hover:border-[#B988BF]/50 transition-all group relative overflow-hidden"
     >
-      <div className="w-12 h-12 md:w-14 md:h-14 rounded-2xl bg-[#68259A]/10 flex items-center justify-center mb-6 group-hover:bg-[#68259A] transition-colors duration-500">
+      <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#B988BF] transform -translate-x-full group-hover:translate-x-0 transition-transform duration-200"></div>
+      <div className="w-12 h-12 md:w-14 md:h-14 rounded-full bg-[#68259A]/10 flex items-center justify-center mb-6 group-hover:bg-[#B988BF] transition-colors duration-500">
         <Icon className="text-[#B988BF] group-hover:text-white transition-colors duration-500" size={24} />
       </div>
-      <h3 className="text-lg md:text-xl font-bold text-white mb-4">{title}</h3>
-      <p className="text-gray-400 leading-relaxed text-xs md:text-sm">
+      <h3 className="text-lg md:text-xl font-bold text-white mb-4 font-manrope">{title}</h3>
+      <p className="text-gray-400 leading-relaxed text-xs md:text-sm font-sans">
         {description}
       </p>
     </motion.div>
@@ -917,7 +997,7 @@ const Benefits = () => {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-2xl sm:text-3xl md:text-5xl font-extrabold text-white mb-6"
+            className="text-2xl sm:text-3xl md:text-5xl font-extrabold text-white mb-6 font-manrope"
           >
             Domínio Completo do <span className="text-gradient">Digital</span>
           </motion.h2>
@@ -940,7 +1020,7 @@ const Benefits = () => {
                 <Instagram size={18} />
                 <span>Branding & Conteúdo</span>
               </div>
-              <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-6">
+              <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-6 font-manrope">
                 Posicionamento Premium que <br /> <span className="text-gradient">Gera Desejo</span>
               </h3>
               <p className="text-gray-400 text-base md:text-lg leading-relaxed mb-8">
@@ -968,13 +1048,15 @@ const Benefits = () => {
               transition={{ duration: 0.8 }}
               className="order-1 md:order-2 relative"
             >
-              <div className="absolute inset-0 bg-gradient-to-tr from-[#68259A]/20 to-transparent rounded-[2.5rem] blur-2xl -z-10" />
+              <div className="absolute inset-0 bg-gradient-to-tr from-[#68259A]/20 to-transparent rounded-none blur-2xl -z-10" />
               <img
                 src="/social-media-new.webp?v=1.1"
                 alt="Instagram Marketing e Branding Estratégico"
-                className="w-full h-auto rounded-[2.5rem] border border-white/10 shadow-2xl hover:scale-[1.02] transition-transform duration-700"
+                className="w-full h-auto rounded-none border border-white/10 shadow-2xl hover:scale-[1.02] transition-transform duration-700"
                 width="600"
                 height="600"
+                loading="lazy"
+                decoding="async"
               />
             </motion.div>
           </div>
@@ -988,13 +1070,15 @@ const Benefits = () => {
               transition={{ duration: 0.8 }}
               className="relative"
             >
-              <div className="absolute inset-0 bg-gradient-to-bl from-[#EEC6A2]/10 to-transparent rounded-[2.5rem] blur-2xl -z-10" />
+              <div className="absolute inset-0 bg-gradient-to-bl from-[#EEC6A2]/10 to-transparent rounded-none blur-2xl -z-10" />
               <img
                 src="/performance-new.webp?v=1.1"
                 alt="Performance e Tráfego Pago"
-                className="w-full h-auto rounded-[2.5rem] border border-white/10 shadow-2xl hover:scale-[1.02] transition-transform duration-700"
+                className="w-full h-auto rounded-none border border-white/10 shadow-2xl hover:scale-[1.02] transition-transform duration-700"
                 width="600"
                 height="600"
+                loading="lazy"
+                decoding="async"
               />
             </motion.div>
             <motion.div
@@ -1007,7 +1091,7 @@ const Benefits = () => {
                 <TrendingUp size={18} />
                 <span>Tráfego & Performance</span>
               </div>
-              <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-6">
+              <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-6 font-manrope">
                 Leads Qualificados, <br /> <span className="text-[#EEC6A2]">Não Curiosos</span>
               </h3>
               <p className="text-gray-400 text-base md:text-lg leading-relaxed mb-8">
@@ -1042,7 +1126,7 @@ const PorQueEleveAI = () => {
     <section className="py-24 px-6 overflow-hidden bg-gradient-to-b from-transparent to-[#0A0A0B]/50">
       <div className="max-w-7xl mx-auto">
         <div className="mb-16 text-center md:text-left">
-          <h2 className="text-2xl sm:text-3xl md:text-5xl font-extrabold text-white mb-6">
+          <h2 className="text-2xl sm:text-3xl md:text-5xl font-extrabold text-white mb-6 font-manrope">
             O que torna a <span className="text-gradient">EleveAI diferente.</span>
           </h2>
           <p className="text-gray-400 text-sm sm:text-base md:text-xl max-w-2xl">
@@ -1055,39 +1139,42 @@ const PorQueEleveAI = () => {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="glass p-8 md:p-10 rounded-[2.5rem] border-white/5 hover:border-[#68259A]/30 transition-all group"
+            className="bg-black p-8 md:p-10 rounded-none border border-white/10 hover:border-[#B988BF]/50 transition-all group relative overflow-hidden"
           >
-            <div className="w-14 h-14 rounded-2xl bg-[#68259A]/10 flex items-center justify-center mb-8 group-hover:scale-110 transition-transform">
+            <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#B988BF] transform -translate-x-full group-hover:translate-x-0 transition-transform duration-200"></div>
+            <div className="w-14 h-14 rounded-full bg-[#68259A]/10 flex items-center justify-center mb-8 group-hover:scale-110 transition-transform">
               <Star className="text-[#B988BF]" size={28} />
             </div>
-            <h4 className="text-xl md:text-2xl font-bold text-white mb-4">Clareza de posicionamento</h4>
-            <p className="text-gray-400 leading-relaxed text-sm md:text-base">Mostramos o valor único do seu negócio para que o preço deixe de ser a única variável na decisão do cliente.</p>
+            <h3 className="text-xl md:text-2xl font-bold text-white mb-4 font-manrope">Clareza de posicionamento</h3>
+            <p className="text-gray-400 leading-relaxed text-sm md:text-base font-sans">Mostramos o valor único do seu negócio para que o preço deixe de ser a única variável na decisão do cliente.</p>
           </motion.div>
 
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="glass p-8 md:p-10 rounded-[2.5rem] border-white/5 hover:border-[#EEC6A2]/30 transition-all group"
+            className="bg-black p-8 md:p-10 rounded-none border border-white/10 hover:border-[#EEC6A2]/50 transition-all group relative overflow-hidden"
           >
-            <div className="w-14 h-14 rounded-2xl bg-[#EEC6A2]/10 flex items-center justify-center mb-8 group-hover:scale-110 transition-transform">
+            <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#EEC6A2] transform -translate-x-full group-hover:translate-x-0 transition-transform duration-200"></div>
+            <div className="w-14 h-14 rounded-full bg-[#EEC6A2]/10 flex items-center justify-center mb-8 group-hover:scale-110 transition-transform">
               <Target className="text-[#EEC6A2]" size={28} />
             </div>
-            <h4 className="text-xl md:text-2xl font-bold text-white mb-4">Estratégia de atração de clientes</h4>
-            <p className="text-gray-400 leading-relaxed text-sm md:text-base">Desenhamos campanhas que trazem não apenas cliques, mas oportunidades reais e qualificadas de venda todos os dias.</p>
+            <h3 className="text-xl md:text-2xl font-bold text-white mb-4 font-manrope">Estratégia de atração de clientes</h3>
+            <p className="text-gray-400 leading-relaxed text-sm md:text-base font-sans">Desenhamos campanhas que trazem não apenas cliques, mas oportunidades reais e qualificadas de venda todos os dias.</p>
           </motion.div>
 
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="glass p-8 md:p-10 rounded-[2.5rem] border-white/5 hover:border-[#68259A]/30 transition-all group"
+            className="bg-black p-8 md:p-10 rounded-none border border-white/10 hover:border-[#B988BF]/50 transition-all group relative overflow-hidden"
           >
-            <div className="w-14 h-14 rounded-2xl bg-[#68259A]/10 flex items-center justify-center mb-8 group-hover:scale-110 transition-transform">
+            <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#B988BF] transform -translate-x-full group-hover:translate-x-0 transition-transform duration-200"></div>
+            <div className="w-14 h-14 rounded-full bg-[#68259A]/10 flex items-center justify-center mb-8 group-hover:scale-110 transition-transform">
               <Cpu className="text-[#B988BF]" size={28} />
             </div>
-            <h4 className="text-xl md:text-2xl font-bold text-white mb-4">Processos automatizados de crescimento</h4>
-            <p className="text-gray-400 leading-relaxed text-sm md:text-base">Implementamos sistemas que organizam seu relacionamento com o cliente, triplicando as chances de fechamento sem aumentar a carga da equipe.</p>
+            <h3 className="text-xl md:text-2xl font-bold text-white mb-4 font-manrope">Processos automatizados de crescimento</h3>
+            <p className="text-gray-400 leading-relaxed text-sm md:text-base font-sans">Implementamos sistemas que organizam seu relacionamento com o cliente, triplicando as chances de fechamento sem aumentar a carga da equipe.</p>
           </motion.div>
         </div>
       </div>
@@ -1100,9 +1187,9 @@ const FAQItem = ({ question, answer, isOpen, toggle }: any) => {
     <div className="mb-4">
       <button
         onClick={toggle}
-        className={`w-full text-left p-5 md:p-6 rounded-[1.2rem] md:rounded-[1.5rem] flex justify-between items-center transition-all ${isOpen ? 'bg-[#68259A]/10 border border-[#68259A]/30' : 'glass border-white/5 hover:border-white/15'}`}
+        className={`w-full text-left p-5 md:p-6 rounded-none flex justify-between items-center transition-all border ${isOpen ? 'bg-[#B988BF]/10 border-[#B988BF]/50 border-l-4' : 'bg-black border-white/10 hover:border-[#B988BF]/30 hover:bg-zinc-900/40'}`}
       >
-        <span className="text-base md:text-lg font-bold text-white pr-8">{question}</span>
+        <span className="text-base md:text-lg font-bold text-white pr-8 font-manrope">{question}</span>
         {isOpen ? <Minus className="text-[#B988BF] shrink-0" size={20} /> : <Plus className="text-[#B988BF] shrink-0" size={20} />}
       </button>
       <AnimatePresence>
@@ -1150,7 +1237,7 @@ const InfiniteTicker = () => {
       >
         {[...words, ...words].map((word, i) => (
           <div key={i} className="flex items-center gap-10">
-            <span className="text-sm md:text-base font-black text-white/10 tracking-[0.3em] uppercase transition-colors cursor-default hover:text-[#B988BF]/40">
+            <span className="text-sm md:text-base font-black text-white/10 tracking-[0.3em] uppercase transition-colors cursor-default hover:text-[#B988BF]/40 font-manrope">
               {word}
             </span>
             <Star className="text-[#68259A]/30 fill-[#68259A]/10" size={14} />
@@ -1167,7 +1254,7 @@ const FAQ = () => {
   const faqs = [
     {
       question: "Quanto tempo leva para estruturar esse sistema?",
-      answer: "A implantação do sistema primário costuma levar entre 15 e 30 dias, dependendo do estágio atual do seu negócio. Nesse período, já criamos as fundações para que sua empresa comece a ser encontrada."
+      answer: "A implantação do sistema primário costuma levar entre 7 e 15 dias, podendo ser mais rápido ou prolongar até 20 dias, dependendo do estágio atual do seu negócio. Nesse período, já criamos as fundações para que sua empresa comece a ser encontrada."
     },
     {
       question: "Preciso já investir em anúncios?",
@@ -1195,8 +1282,8 @@ const FAQ = () => {
     <section id="faq" className="py-24 px-6 scroll-mt-32">
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-16">
-          <h2 className="text-2xl sm:text-3xl md:text-5xl font-extrabold text-white mb-6">Dúvidas Frequentes</h2>
-          <p className="text-gray-400 text-xs sm:text-sm md:text-base">Entenda como podemos construir um crescimento previsível para sua empresa.</p>
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-medium text-white mb-6 tracking-tighter font-manrope leading-[1.1]">Dúvidas Frequentes</h2>
+          <p className="text-zinc-400 text-lg leading-relaxed font-sans max-w-3xl mx-auto">Entenda como podemos construir um crescimento previsível para sua empresa.</p>
         </div>
         <div className="space-y-4">
           {faqs.map((f, i) => (
@@ -1216,30 +1303,41 @@ const FAQ = () => {
 const FinalCTA = ({ onOpenModal }: { onOpenModal: () => void }) => {
   return (
     <section className="py-24 px-6 relative overflow-hidden">
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#68259A]/20 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#B988BF]/10 rounded-full blur-[120px] pointer-events-none" />
 
-      <div className="max-w-5xl mx-auto glass rounded-[3rem] p-12 md:p-20 text-center relative z-10 border-white/10">
+      <div className="max-w-5xl mx-auto bg-black rounded-none p-12 md:p-20 text-center relative z-10 border border-white/10">
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
         >
-          <h2 className="text-2xl sm:text-3xl md:text-5xl font-extrabold text-white mb-8 leading-tight">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-medium text-white mb-8 tracking-tighter font-manrope leading-[1.1]">
             Seu negócio precisa de <span className="text-gradient">mais esforço</span> ou de <br className="hidden md:block" /> <span className="text-gradient">mais estrutura?</span>
           </h2>
 
-          <p className="text-gray-400 text-sm sm:text-base md:text-xl max-w-2xl mx-auto mb-12">
+          <p className="text-zinc-400 text-lg leading-relaxed font-sans max-w-3xl mx-auto mb-12">
             Empresas que crescem constroem sistemas de geração de clientes. Solicite seu diagnóstico e descubra como criar previsibilidade de vendas.
           </p>
-          <motion.button
-            onClick={onOpenModal}
-            whileHover={{ scale: 1.05, boxShadow: "0 20px 40px rgba(104,37,154,0.4)" }}
-            whileTap={{ scale: 0.95 }}
-            className="inline-flex items-center gap-3 md:gap-4 bg-[#68259A] text-white px-8 py-4 md:px-12 md:py-5 rounded-full font-black text-base md:text-xl shadow-[0_10px_30px_rgba(104,37,154,0.3)] hover:shadow-[0_10px_40px_rgba(104,37,154,0.5)] transition-all"
-          >
-            Receber análise estratégica
-            <ArrowRight size={22} className="text-white" />
-          </motion.button>
+          <div className="flex justify-center">
+            <button
+              onClick={onOpenModal}
+              className="group relative flex h-[60px] w-auto sm:min-w-[320px] items-center justify-center rounded-lg px-8 outline-none cursor-pointer transition-transform active:scale-95 bg-white/5 border-none"
+              type="button"
+            >
+              <div className="pointer-events-none absolute inset-0 opacity-100 transition-opacity duration-[1200ms] ease-in-out group-hover:opacity-0" style={{ background: 'radial-gradient(15% 50% at 50% 100%, #B988BF 0%, rgba(185,136,191, 0) 100%)', filter: 'blur(15px)' }}></div>
+              <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-[1200ms] ease-in-out group-hover:opacity-100" style={{ background: 'radial-gradient(60.6% 50% at 50% 100%, #B988BF 0%, rgba(185,136,191, 0) 100%)', filter: 'blur(18px)' }}></div>
+              <div className="pointer-events-none will-change-auto absolute inset-0 opacity-100 transition-opacity duration-[1200ms] ease-in-out group-hover:opacity-0" style={{ background: 'radial-gradient(10.7% 50% at 50% 100%, #B988BF 0%, rgba(185,136,191, 0) 100%)' }}></div>
+              <div className="pointer-events-none will-change-auto absolute inset-0 opacity-0 transition-opacity duration-[1200ms] ease-in-out group-hover:opacity-100" style={{ background: 'radial-gradient(60.1% 50% at 50% 100%, #B988BF 0%, rgba(185,136,191, 0) 100%)' }}></div>
+              <div className="pointer-events-none absolute inset-0 overflow-hidden rounded-lg">
+                <div className="absolute -inset-[300%] animate-[spin_4s_linear_infinite]" style={{ background: 'conic-gradient(from 90deg at 50% 50%, transparent 0%, transparent 90%, #B988BF 100%)' }}></div>
+              </div>
+              <div className="absolute inset-[1px] rounded-lg bg-black"></div>
+              <span className="relative z-20 flex items-center justify-center gap-3 text-base md:text-lg font-bold text-white tracking-wide uppercase">
+                Receber análise estratégica
+                <ArrowRight size={22} className="transition-transform duration-300 group-hover:translate-x-1" />
+              </span>
+            </button>
+          </div>
           <p className="mt-8 text-sm text-gray-500 font-medium">Sem compromisso.</p>
         </motion.div>
       </div>
@@ -1281,13 +1379,13 @@ const Footer = ({ onPrivacy, onTerms, onHome }: { onPrivacy: () => void, onTerms
               ].map((btn, i) => (
                 <motion.a
                   key={i}
-                  whileHover={{ y: -3, backgroundColor: "rgba(104, 37, 154, 0.2)" }}
+                  whileHover={{ y: -3, backgroundColor: "rgba(185, 136, 191, 0.2)" }}
                   href={btn.href}
                   target={btn.target ? btn.target : undefined}
                   rel={btn.target === "_blank" ? "noopener noreferrer" : undefined}
-                  className={`w-12 h-12 rounded-xl bg-white/5 border border-white/5 flex items-center justify-center ${btn.color} hover:text-white hover:border-[#68259A]/30 transition-all`}
+                  className={`w-12 h-12 rounded-none bg-white/5 border border-white/5 flex items-center justify-center ${btn.color} hover:text-white hover:border-[#B988BF]/50 transition-all`}
                 >
-                  <btn.icon size={20} />
+                  <btn.icon size={20} className="group-hover:scale-110 transition-transform" />
                 </motion.a>
               ))}
             </div>
@@ -1337,21 +1435,14 @@ const Footer = ({ onPrivacy, onTerms, onHome }: { onPrivacy: () => void, onTerms
 const WhatsAppFloat = () => {
   return (
     <div className="fixed bottom-8 right-8 z-50 flex flex-col items-end gap-3">
-      {/* Label Tooltip */}
-      <motion.div
-        initial={{ opacity: 0, scale: 0.8, y: 10 }}
-        animate={{ opacity: 1, scale: 1, y: 0 }}
-        transition={{ delay: 1.5, duration: 0.5 }}
-        className="glass px-4 py-2 rounded-xl border-white/10 text-[10px] font-bold text-white shadow-2xl tracking-wider uppercase mb-[-4px] mr-1 pointer-events-none whitespace-nowrap"
-      >
-        Iniciar
-      </motion.div>
+
 
       {/* WhatsApp Button */}
       <motion.a
         href={WHATSAPP_URL}
         target="_blank"
         rel="noopener noreferrer"
+        aria-label="Atendimento via WhatsApp"
         initial={{ scale: 0, rotate: -45 }}
         animate={{ scale: 1, rotate: 0 }}
         whileHover={{ scale: 1.1, rotate: 5, boxShadow: "0 20px 40px rgba(37,211,102,0.4)" }}
@@ -1391,11 +1482,11 @@ const PrivacyPolicy = ({ onBack }: { onBack: () => void }) => {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="glass rounded-[2rem] md:rounded-[2.5rem] p-6 md:p-16 border-white/5"
+          className="bg-black border border-white/10 rounded-none p-6 md:p-16"
         >
-          <h1 className="text-3xl md:text-5xl font-extrabold text-white mb-8 tracking-tight text-center md:text-left">Política de <span className="text-gradient">Privacidade</span></h1>
+          <h1 className="text-3xl md:text-5xl font-extrabold text-white mb-8 tracking-tight text-center md:text-left font-manrope">Política de <span className="text-gradient">Privacidade</span></h1>
 
-          <div className="space-y-6 md:space-y-8 text-gray-400 leading-relaxed text-base md:text-lg">
+          <div className="space-y-6 md:space-y-8 text-gray-400 leading-relaxed text-base md:text-lg font-sans">
             <section>
               <h2 className="text-xl md:text-2xl font-bold text-white mb-3 md:mb-4">1. Coleta de Dados</h2>
               <p>Coletamos informações fornecidas voluntariamente por você através de nossos formulários de contato, incluindo nome, e-mail e número de telefone ("leads").</p>
@@ -1448,11 +1539,11 @@ const TermsOfUse = ({ onBack }: { onBack: () => void }) => {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="glass rounded-[2rem] md:rounded-[2.5rem] p-6 md:p-16 border-white/5"
+          className="bg-black border border-white/10 rounded-none p-6 md:p-16"
         >
-          <h1 className="text-3xl md:text-5xl font-extrabold text-white mb-8 tracking-tight text-center md:text-left">Termos de <span className="text-gradient">Uso</span></h1>
+          <h1 className="text-3xl md:text-5xl font-extrabold text-white mb-8 tracking-tight text-center md:text-left font-manrope">Termos de <span className="text-gradient">Uso</span></h1>
 
-          <div className="space-y-6 md:space-y-8 text-gray-400 leading-relaxed text-base md:text-lg">
+          <div className="space-y-6 md:space-y-8 text-gray-400 leading-relaxed text-base md:text-lg font-sans">
             <section>
               <h2 className="text-xl md:text-2xl font-bold text-white mb-3 md:mb-4">1. Uso Informativo</h2>
               <p>Este site tem caráter estritamente informativo sobre os serviços de inteligência artificial e marketing estratégico da EleveAI. O acesso e uso deste site não constituem uma relação contratual imediata.</p>
@@ -1503,13 +1594,19 @@ const CookieConsent = () => {
           exit={{ y: 100, opacity: 0 }}
           className="fixed bottom-6 left-6 right-6 md:left-8 md:right-auto md:max-w-sm z-[60]"
         >
-          <div className="glass p-5 rounded-[1.5rem] border-white/10 shadow-2xl flex flex-col gap-3">
-            <p className="text-[13px] text-gray-300 leading-relaxed">
+          <div className="bg-black border border-white/10 p-5 rounded-none shadow-2xl flex flex-col gap-4 relative">
+            <button
+              onClick={() => setIsVisible(false)}
+              className="absolute top-2 right-2 p-1 text-gray-400 hover:text-white transition-colors"
+            >
+              <X size={16} />
+            </button>
+            <p className="text-[13px] text-gray-300 leading-relaxed font-sans pr-4">
               Utilizamos cookies para personalizar métricas de crescimento e melhorar sua experiência. Ao continuar, você concorda com nossa <span className="text-white font-semibold">Política de Privacidade</span>.
             </p>
             <button
               onClick={handleAccept}
-              className="w-full py-2.5 bg-[#68259A] text-white rounded-xl font-bold text-xs hover:bg-[#7a2cb3] transition-all shadow-lg active:scale-95"
+              className="w-full py-3 bg-[#B988BF] text-[#0A0A0B] rounded-lg font-bold text-xs hover:bg-[#E0B0FF] transition-all shadow-lg active:scale-95 uppercase tracking-wide"
             >
               Aceitar
             </button>
@@ -1525,58 +1622,71 @@ const RaioXSection = ({ onOpenModal }: { onOpenModal: () => void }) => {
     <section id="diagnostico" className="py-24 relative px-6 overflow-hidden scroll-mt-24">
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-5xl font-extrabold text-white mb-6 tracking-tight">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-medium text-white mb-6 tracking-tighter font-manrope leading-[1.1]">
             Raio-X Estratégico de <span className="text-gradient hover-glow">Mercado</span>
           </h2>
-          <p className="text-gray-400 max-w-2xl mx-auto text-sm md:text-lg leading-relaxed">
+          <p className="text-zinc-400 text-lg leading-relaxed font-sans max-w-3xl mx-auto">
             Seu desafio não é apenas atrair cliques. É construir uma base sólida de vendas.
           </p>
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
-          <motion.div whileHover={{ y: -10 }} className="glass p-8 rounded-[2rem] border-white/5 hover:border-[#68259A]/40 transition-all flex flex-col items-center text-center">
-            <div className="w-14 h-14 rounded-2xl bg-[#68259A]/10 flex items-center justify-center mb-6">
-              <Target className="text-[#B988BF]" size={28} />
+          <motion.div whileHover={{ y: -10 }} className="bg-black p-8 rounded-none border border-white/10 hover:border-[#B988BF]/50 transition-all flex flex-col items-center text-center relative overflow-hidden group">
+            <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#B988BF] transform -translate-x-full group-hover:translate-x-0 transition-transform duration-200"></div>
+            <div className="w-14 h-14 rounded-full bg-[#68259A]/10 flex items-center justify-center mb-6 text-[#B988BF] group-hover:scale-110 transition-transform duration-300">
+              <Target size={28} />
             </div>
-            <h3 className="text-xl font-bold text-white mb-4">1. Visibilidade</h3>
-            <p className="text-sm text-gray-400 leading-relaxed">Negócios que até geram visitas, mas não atraem as oportunidades certas para vendas de alto ticket.</p>
+            <h3 className="text-white font-manrope text-xl md:text-2xl font-semibold tracking-tight uppercase mb-4">1. Visibilidade</h3>
+            <p className="text-sm text-zinc-300 leading-relaxed font-sans">Negócios que até geram visitas, mas não atraem as oportunidades certas para vendas de alto ticket.</p>
           </motion.div>
 
-          <motion.div whileHover={{ y: -10 }} className="glass p-8 rounded-[2rem] border-white/5 hover:border-[#68259A]/40 transition-all flex flex-col items-center text-center">
-            <div className="w-14 h-14 rounded-2xl bg-[#EEC6A2]/10 flex items-center justify-center mb-6">
-              <TrendingUp className="text-[#EEC6A2]" size={28} />
+          <motion.div whileHover={{ y: -10 }} className="bg-black p-8 rounded-none border border-white/10 hover:border-[#EEC6A2]/50 transition-all flex flex-col items-center text-center relative overflow-hidden group">
+            <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#EEC6A2] transform -translate-x-full group-hover:translate-x-0 transition-transform duration-200"></div>
+            <div className="w-14 h-14 rounded-full bg-[#EEC6A2]/10 flex items-center justify-center mb-6 text-[#EEC6A2] group-hover:scale-110 transition-transform duration-300">
+              <TrendingUp size={28} />
             </div>
-            <h3 className="text-xl font-bold text-white mb-4">2. Fechamento</h3>
-            <p className="text-sm text-gray-400 leading-relaxed">Negócios que recebem contatos, mas não transformam o interesse em um avanço comercial previsível.</p>
+            <h3 className="text-white font-manrope text-xl md:text-2xl font-semibold tracking-tight uppercase mb-4">2. Fechamento</h3>
+            <p className="text-sm text-zinc-300 leading-relaxed font-sans">Negócios que recebem contatos, mas não transformam o interesse em um avanço comercial previsível.</p>
           </motion.div>
 
-          <motion.div whileHover={{ y: -10 }} className="glass p-8 rounded-[2rem] border-white/5 hover:border-[#68259A]/40 transition-all flex flex-col items-center text-center">
-            <div className="w-14 h-14 rounded-2xl bg-[#68259A]/10 flex items-center justify-center mb-6">
-              <MessageCircle className="text-[#B988BF]" size={28} />
+          <motion.div whileHover={{ y: -10 }} className="bg-black p-8 rounded-none border border-white/10 hover:border-[#B988BF]/50 transition-all flex flex-col items-center text-center relative overflow-hidden group">
+            <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#B988BF] transform -translate-x-full group-hover:translate-x-0 transition-transform duration-200"></div>
+            <div className="w-14 h-14 rounded-full bg-[#68259A]/10 flex items-center justify-center mb-6 text-[#B988BF] group-hover:scale-110 transition-transform duration-300">
+              <MessageCircle size={28} />
             </div>
-            <h3 className="text-xl font-bold text-white mb-4">3. Relacionamento</h3>
-            <p className="text-sm text-gray-400 leading-relaxed">Negócios que não mantêm continuidade com leads interessados e acabam perdendo o timing ideal da venda.</p>
+            <h3 className="text-white font-manrope text-xl md:text-2xl font-semibold tracking-tight uppercase mb-4">3. Relacionamento</h3>
+            <p className="text-sm text-zinc-300 leading-relaxed font-sans">Negócios que não mantêm continuidade com leads interessados e acabam perdendo o timing ideal da venda.</p>
           </motion.div>
 
-          <motion.div whileHover={{ y: -10 }} className="glass p-8 rounded-[2rem] border-white/5 hover:border-[#68259A]/40 transition-all flex flex-col items-center text-center">
-            <div className="w-14 h-14 rounded-2xl bg-[#EEC6A2]/10 flex items-center justify-center mb-6">
-              <BarChart3 className="text-[#EEC6A2]" size={28} />
+          <motion.div whileHover={{ y: -10 }} className="bg-black p-8 rounded-none border border-white/10 hover:border-[#EEC6A2]/50 transition-all flex flex-col items-center text-center relative overflow-hidden group">
+            <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#EEC6A2] transform -translate-x-full group-hover:translate-x-0 transition-transform duration-200"></div>
+            <div className="w-14 h-14 rounded-full bg-[#EEC6A2]/10 flex items-center justify-center mb-6 text-[#EEC6A2] group-hover:scale-110 transition-transform duration-300">
+              <BarChart3 size={28} />
             </div>
-            <h3 className="text-xl font-bold text-white mb-4">4. Escala</h3>
-            <p className="text-sm text-gray-400 leading-relaxed">Negócios que crescem no improviso, dependem demais dos sócios e não possuem uma estrutura replicável.</p>
+            <h3 className="text-white font-manrope text-xl md:text-2xl font-semibold tracking-tight uppercase mb-4">4. Escala</h3>
+            <p className="text-sm text-zinc-300 leading-relaxed font-sans">Negócios que crescem no improviso, dependem demais dos sócios e não possuem uma estrutura replicável.</p>
           </motion.div>
         </div>
 
         <div className="text-center">
-          <motion.button
+          <button
             onClick={onOpenModal}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="px-8 py-4 md:px-10 md:py-5 bg-[#68259A] text-white rounded-2xl font-bold text-base md:text-lg text-center shadow-[0_10px_30px_rgba(104,37,154,0.3)] hover:shadow-[0_10px_40px_rgba(104,37,154,0.5)] transition-all inline-flex items-center justify-center gap-3"
+            className="group relative flex h-[60px] w-auto sm:min-w-[320px] mx-auto items-center justify-center rounded-lg px-8 outline-none cursor-pointer transition-transform active:scale-95 bg-white/5 border-none"
+            type="button"
           >
-            Ver o Raio-X do Meu Negócio
-            <ArrowRight size={22} className="text-white" />
-          </motion.button>
+            <div className="pointer-events-none absolute inset-0 opacity-100 transition-opacity duration-[1200ms] ease-in-out group-hover:opacity-0" style={{ background: 'radial-gradient(15% 50% at 50% 100%, #B988BF 0%, rgba(185,136,191, 0) 100%)', filter: 'blur(15px)' }}></div>
+            <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-[1200ms] ease-in-out group-hover:opacity-100" style={{ background: 'radial-gradient(60.6% 50% at 50% 100%, #B988BF 0%, rgba(185,136,191, 0) 100%)', filter: 'blur(18px)' }}></div>
+            <div className="pointer-events-none will-change-auto absolute inset-0 opacity-100 transition-opacity duration-[1200ms] ease-in-out group-hover:opacity-0" style={{ background: 'radial-gradient(10.7% 50% at 50% 100%, #B988BF 0%, rgba(185,136,191, 0) 100%)' }}></div>
+            <div className="pointer-events-none will-change-auto absolute inset-0 opacity-0 transition-opacity duration-[1200ms] ease-in-out group-hover:opacity-100" style={{ background: 'radial-gradient(60.1% 50% at 50% 100%, #B988BF 0%, rgba(185,136,191, 0) 100%)' }}></div>
+            <div className="pointer-events-none absolute inset-0 overflow-hidden rounded-lg">
+              <div className="absolute -inset-[300%] animate-[spin_4s_linear_infinite]" style={{ background: 'conic-gradient(from 90deg at 50% 50%, transparent 0%, transparent 90%, #B988BF 100%)' }}></div>
+            </div>
+            <div className="absolute inset-[1px] rounded-lg bg-black"></div>
+            <span className="relative z-20 flex items-center justify-center gap-3 text-base md:text-lg font-bold text-white tracking-wide uppercase font-manrope">
+              Ver o Raio-X do Meu Negócio
+              <ArrowRight size={22} className="transition-transform duration-300 group-hover:translate-x-1" />
+            </span>
+          </button>
         </div>
       </div>
     </section>

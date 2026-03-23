@@ -13,6 +13,7 @@
 
   <!-- Facebook Domain Verification -->
   <meta name="facebook-domain-verification" content="evhnzjgr3hftgopmmt85g5sx3yr0ki" />
+  <meta name="theme-color" content="#0A0A0B" />
 
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website" />
@@ -54,11 +55,41 @@
       ]
     }
   </script>
+  <style>
+    @keyframes fadeSlideIn {
+      0% { opacity: 0; transform: translateY(30px); filter: blur(8px); }
+      100% { opacity: 1; transform: translateY(0); filter: blur(0); }
+    }
+
+    .animate-fade-slide-in {
+      animation: fadeSlideIn 1s ease-out both;
+    }
+    .animate-delay-1000 { animation-delay: 1s; }
+    .animate-delay-1200 { animation-delay: 1.2s; }
+    .animate-delay-1400 { animation-delay: 1.4s; }
+    
+    [style*="--border-gradient"]::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      padding: 1px;
+      border-radius: var(--border-radius-before, inherit);
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      background: var(--border-gradient);
+      pointer-events: none;
+    }
+  </style>
   <title>EleveAI | Construímos Máquinas de Crescimento e Previsibilidade</title>
   <link rel="icon" type="image/png" href="/favicon.png" />
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://connect.facebook.net">
+  <link rel="dns-prefetch" href="https://connect.facebook.net">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
   <link
     href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
     rel="stylesheet">
@@ -157,9 +188,17 @@
 <body class="custom-scrollbar">
   <noscript><img height="1" width="1" style="display:none"
       src="https://www.facebook.com/tr?id=1580522999670986&ev=PageView&noscript=1" /></noscript>
+      
+  <div class="fixed inset-0 z-0 h-full w-full pointer-events-none opacity-50 mix-blend-screen" data-alpha-mask="80" style="mask-image: linear-gradient(transparent, black 0%, black 80%, transparent); -webkit-mask-image: linear-gradient(transparent, black 0%, black 80%, transparent);">
+    <div style="filter: brightness(0.8) hue-rotate(270deg);" class="w-full h-full absolute inset-0">
+      <div class="absolute w-full h-full left-0 top-0 -z-10" data-us-project="sajpUiTp7MIKdX6daDCu"></div>
+    </div>
+  </div>
   <div id="root"></div>
   <script type="module" src="index.tsx"></script>
-
+  <script type="text/javascript">
+    !function(){if(!window.UnicornStudio){window.UnicornStudio={isInitialized:!1};var i=document.createElement("script");i.src="https://cdn.jsdelivr.net/gh/hiunicornstudio/unicornstudio.js@v1.4.29/dist/unicornStudio.umd.js",i.onload=function(){window.UnicornStudio.isInitialized||(UnicornStudio.init(),window.UnicornStudio.isInitialized=!0)},(document.head||document.body).appendChild(i)}}();
+  </script>
 </body>
 
 </html>
