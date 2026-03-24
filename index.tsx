@@ -37,8 +37,9 @@ import {
 const WHATSAPP_URL = "https://wa.me/5519994671493?text=Ol%C3%A1%21+Gostaria+de+conhecer+o+atendimento+automatizado+da+EleveAI+e+elevar+meu+neg%C3%B3cio.";
 
 const trackWhatsAppClick = () => {
-  if (typeof window !== 'undefined' && (window as any).fbq) {
-    (window as any).fbq('track', 'Contact');
+  if (typeof window !== 'undefined' && !(window as any).leadFired && (window as any).fbq) {
+    (window as any).fbq('track', 'Lead');
+    (window as any).leadFired = true;
   }
 };
 
@@ -99,9 +100,6 @@ const DiagnosticModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => 
       .then(response => response.json())
       .then(data => {
         setStatus('success');
-        if (typeof window !== 'undefined' && (window as any).fbq) {
-          (window as any).fbq('track', 'Lead');
-        }
       })
       .catch(error => {
         console.error(error);
@@ -1775,6 +1773,10 @@ const App = () => {
   }, []);
 
   const handleOpenModal = () => {
+    if (typeof window !== 'undefined' && !(window as any).leadFired && (window as any).fbq) {
+      (window as any).fbq('track', 'Lead');
+      (window as any).leadFired = true;
+    }
     setIsModalOpen(true);
   };
 
