@@ -953,7 +953,7 @@
   </footer>
 
   <!-- Meta Pixel -->
-  <script>
+    <script>
     !function(f,b,e,v,n,t,s){
       if(f.fbq)return;n=f.fbq=function(){n.callMethod?
       n.callMethod.apply(n,arguments):n.queue.push(arguments)};
@@ -964,6 +964,7 @@
     }(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
     fbq('init', '1580522999670986');
     fbq('track', 'PageView');
+    fbq('track', 'ViewContent');
   </script>
   <noscript>
     <img height="1" width="1" style="display:none"
@@ -979,7 +980,7 @@
       modal.classList.add('active');
       document.body.style.overflow = 'hidden';
       setTimeout(function() { nameInput && nameInput.focus(); }, 300);
-      if (typeof fbq !== 'undefined') fbq('track', 'InitiateCheckout');
+      if (typeof fbq !== 'undefined') fbq('track', 'Lead');
     }
 
     function closeModal() {
@@ -1010,8 +1011,6 @@
 
       var msg = 'Olá, me chamo ' + name + '. Quero entender o que está travando meu site.';
       var url = 'https://wa.me/5519994671493?text=' + encodeURIComponent(msg);
-
-      if (typeof fbq !== 'undefined') fbq('track', 'Lead');
 
       closeModal();
       window.open(url, '_blank', 'noopener');
