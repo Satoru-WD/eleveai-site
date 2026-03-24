@@ -94,7 +94,7 @@
       border-bottom: 1px solid var(--border);
     }
 
-    .navbar img { height: 2.25rem; width: auto; }
+    .navbar img { height: 3rem; width: auto; }
 
     .navbar-cta {
       display: inline-flex;
@@ -179,31 +179,98 @@
       line-height: 1.7;
     }
 
-    /* ── CTA Button ── */
-    .btn-primary {
+    /* ── CTA Button (Design System) ── */
+    .btn-ds {
+      position: relative;
       display: inline-flex;
       align-items: center;
-      gap: 0.625rem;
-      padding: 0.9rem 2rem;
-      background: var(--primary);
+      justify-content: center;
+      gap: 0.5rem;
+      height: 50px;
+      min-width: 280px;
+      width: 100%;
+      max-width: 400px;
+      padding: 0 1.5rem;
+      background: rgba(255,255,255,0.05);
+      border: none;
+      outline: none;
+      cursor: pointer;
+      text-decoration: none;
       color: #fff;
       font-family: 'Inter', sans-serif;
-      font-size: 0.85rem;
+      font-size: 0.7rem;
       font-weight: 700;
-      letter-spacing: 0.06em;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
-      cursor: pointer;
-      border: none;
-      transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
-      box-shadow: 0 8px 32px rgba(185,136,191,0.25);
-      text-decoration: none;
+      overflow: hidden;
+      transition: transform 0.15s ease;
     }
-    .btn-primary:hover {
-      background: #a070a9;
-      transform: translateY(-1px);
-      box-shadow: 0 12px 40px rgba(185,136,191,0.4);
+    .btn-ds:active { transform: scale(0.95); }
+
+    /* glow default */
+    .btn-ds .glow-default {
+      pointer-events: none;
+      position: absolute;
+      inset: 0;
+      opacity: 1;
+      transition: opacity 1.2s ease;
+      background: radial-gradient(15% 50% at 50% 100%, #B988BF 0%, rgba(185,136,191,0) 100%);
+      filter: blur(15px);
     }
-    .btn-primary svg { flex-shrink: 0; }
+    .btn-ds:hover .glow-default { opacity: 0; }
+
+    /* glow hover */
+    .btn-ds .glow-hover {
+      pointer-events: none;
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity 1.2s ease;
+      background: radial-gradient(60.6% 50% at 50% 100%, #B988BF 0%, rgba(185,136,191,0) 100%);
+      filter: blur(15px);
+    }
+    .btn-ds:hover .glow-hover { opacity: 1; }
+
+    /* conic border spinner */
+    .btn-ds .border-spin {
+      pointer-events: none;
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+    }
+    .btn-ds .border-spin::after {
+      content: '';
+      position: absolute;
+      inset: -300%;
+      animation: spin 4s linear infinite;
+      background: conic-gradient(from 90deg at 50% 50%, transparent 0%, transparent 90%, #B988BF 100%);
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* inner fill */
+    .btn-ds .btn-inner {
+      position: absolute;
+      inset: 1px;
+      background: #000;
+    }
+
+    /* label */
+    .btn-ds .btn-label {
+      position: relative;
+      z-index: 20;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    /* secondary variant */
+    .btn-ds-secondary .glow-default {
+      background: radial-gradient(15% 50% at 50% 100%, rgba(185,136,191,0.5) 0%, rgba(185,136,191,0) 100%);
+    }
+    .btn-ds-secondary .btn-inner { background: #18181b; }
+    .btn-ds-secondary .border-spin::after {
+      background: conic-gradient(from 90deg at 50% 50%, transparent 0%, transparent 75%, #B988BF 100%);
+    }
 
     /* ── Section Label ── */
     .section-label {
@@ -410,6 +477,117 @@
     .delay-1 { animation-delay: 0.1s; }
     .delay-2 { animation-delay: 0.2s; }
     .delay-3 { animation-delay: 0.35s; }
+    /* ── Modal ── */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      background: rgba(0,0,0,0.75);
+      backdrop-filter: blur(6px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.25s ease, visibility 0.25s ease;
+    }
+    .modal-backdrop.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .modal {
+      position: relative;
+      width: 100%;
+      max-width: 440px;
+      background: #0A0A0B;
+      border: 1px solid rgba(255,255,255,0.1);
+      padding: 2.5rem 2rem;
+      transform: translateY(24px) scale(0.97);
+      transition: transform 0.3s ease;
+    }
+    .modal-backdrop.active .modal {
+      transform: translateY(0) scale(1);
+    }
+
+    /* corner accents */
+    .modal::before { content:''; position:absolute; top:0; left:0; width:10px; height:10px; border-top:1px solid #B988BF; border-left:1px solid #B988BF; }
+    .modal::after  { content:''; position:absolute; bottom:0; right:0; width:10px; height:10px; border-bottom:1px solid #B988BF; border-right:1px solid #B988BF; }
+
+    .modal-close {
+      position: absolute;
+      top: 1rem; right: 1rem;
+      width: 2rem; height: 2rem;
+      display: flex; align-items: center; justify-content: center;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      color: #6b7280;
+      transition: color 0.2s;
+      border-radius: 50%;
+    }
+    .modal-close:hover { color: #fff; }
+
+    .modal-label {
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #B988BF;
+      font-family: 'Manrope', sans-serif;
+      margin-bottom: 1.5rem;
+      display: block;
+    }
+
+    .modal h2 {
+      font-size: 1.5rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+      line-height: 1.25;
+    }
+
+    .modal .modal-sub {
+      font-size: 0.875rem;
+      color: #9ca3af;
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+
+    .modal-field {
+      margin-bottom: 1rem;
+    }
+    .modal-field label {
+      display: block;
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: #9ca3af;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+    .modal-field input {
+      width: 100%;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.1);
+      padding: 0.75rem 1rem;
+      color: #fff;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.9rem;
+      outline: none;
+      transition: border-color 0.2s;
+      border-radius: 0;
+    }
+    .modal-field input::placeholder { color: #4b5563; }
+    .modal-field input:focus { border-color: #B988BF; }
+
+    .modal-form-note {
+      text-align: center;
+      font-size: 0.7rem;
+      color: #4b5563;
+      margin-top: 1rem;
+    }
   </style>
 </head>
 
@@ -447,15 +625,21 @@
         </p>
 
         <a
-          href="#cta-final"
-          class="btn-primary fade-up delay-3"
+          href="javascript:void(0)"
+          onclick="openModal()"
+          class="btn-ds fade-up delay-3"
           id="hero-cta"
           aria-label="Quero entender o que está travando meu site"
+          role="button"
         >
-          Quero entender o que está travando meu site
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="square" aria-hidden="true">
-            <path d="M5 12h14M12 5l7 7-7 7"/>
-          </svg>
+          <span class="glow-default" aria-hidden="true"></span>
+          <span class="glow-hover" aria-hidden="true"></span>
+          <span class="border-spin" aria-hidden="true"></span>
+          <span class="btn-inner" aria-hidden="true"></span>
+          <span class="btn-label">
+            Quero entender o que está travando meu site
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="square" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </span>
         </a>
 
       </div>
@@ -602,16 +786,22 @@
         </p>
 
         <a
-          href="/"
-          class="btn-primary"
+          href="javascript:void(0)"
+          onclick="openModal()"
+          class="btn-ds"
           id="cta-final-btn"
-          aria-label="Receber análise do meu site"
-          style="display: inline-flex; margin: 0 auto;"
+          aria-label="Quero entender o que está travando meu site"
+          role="button"
+          style="margin: 0 auto;"
         >
-          Receber análise do meu site
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="square" aria-hidden="true">
-            <path d="M5 12h14M12 5l7 7-7 7"/>
-          </svg>
+          <span class="glow-default" aria-hidden="true"></span>
+          <span class="glow-hover" aria-hidden="true"></span>
+          <span class="border-spin" aria-hidden="true"></span>
+          <span class="btn-inner" aria-hidden="true"></span>
+          <span class="btn-label">
+            Quero entender o que está travando meu site
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="square" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </span>
         </a>
 
         <p style="margin-top: 1rem; font-size: 0.75rem; color: #6b7280;">
@@ -622,6 +812,74 @@
     </section>
 
   </main>
+
+  <!-- ======================================
+       MODAL DE MICROCOMPROMISSO
+  ======================================= -->
+  <div
+    class="modal-backdrop"
+    id="lead-modal"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="modal-title"
+    onclick="handleBackdropClick(event)"
+  >
+    <div class="modal">
+
+      <button class="modal-close" onclick="closeModal()" aria-label="Fechar">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square">
+          <path d="M18 6L6 18M6 6l12 12"/>
+        </svg>
+      </button>
+
+      <span class="modal-label">Análise do seu site</span>
+
+      <h2 id="modal-title">Vamos analisar seu site</h2>
+      <p class="modal-sub">Em poucos minutos você entende o que está travando seus resultados.</p>
+
+      <form id="lead-form" onsubmit="handleSubmit(event)" novalidate>
+
+        <div class="modal-field">
+          <label for="modal-name">Nome</label>
+          <input
+            type="text"
+            id="modal-name"
+            name="nome"
+            placeholder="Seu nome"
+            required
+            autocomplete="name"
+          />
+        </div>
+
+        <div class="modal-field" style="margin-bottom: 1.5rem;">
+          <label for="modal-whatsapp">WhatsApp</label>
+          <input
+            type="tel"
+            id="modal-whatsapp"
+            name="whatsapp"
+            placeholder="(00) 00000-0000"
+            required
+            autocomplete="tel"
+            inputmode="numeric"
+          />
+        </div>
+
+        <button type="submit" class="btn-ds" style="width:100%; max-width:100%;">
+          <span class="glow-default" aria-hidden="true"></span>
+          <span class="glow-hover" aria-hidden="true"></span>
+          <span class="border-spin" aria-hidden="true"></span>
+          <span class="btn-inner" aria-hidden="true"></span>
+          <span class="btn-label">
+            Receber análise
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="square" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </span>
+        </button>
+
+        <p class="modal-form-note">Sem compromisso. Análise 100% gratuita.</p>
+
+      </form>
+    </div>
+  </div>
 
   <!-- ── Footer ── -->
   <footer class="footer" role="contentinfo">
@@ -648,6 +906,54 @@
     <img height="1" width="1" style="display:none"
       src="https://www.facebook.com/tr?id=1580522999670986&ev=PageView&noscript=1" />
   </noscript>
+
+  <!-- Modal Controller -->
+  <script>
+    var modal = document.getElementById('lead-modal');
+    var nameInput = document.getElementById('modal-name');
+
+    function openModal() {
+      modal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+      setTimeout(function() { nameInput && nameInput.focus(); }, 300);
+      if (typeof fbq !== 'undefined') fbq('track', 'InitiateCheckout');
+    }
+
+    function closeModal() {
+      modal.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    function handleBackdropClick(e) {
+      if (e.target === modal) closeModal();
+    }
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && modal.classList.contains('active')) closeModal();
+    });
+
+    function handleSubmit(e) {
+      e.preventDefault();
+      var name = (document.getElementById('modal-name').value || '').trim();
+      var phone = (document.getElementById('modal-whatsapp').value || '').trim();
+
+      if (!name || !phone) {
+        var empty = !name ? document.getElementById('modal-name') : document.getElementById('modal-whatsapp');
+        empty.focus();
+        empty.style.borderColor = '#ef4444';
+        setTimeout(function() { empty.style.borderColor = ''; }, 2000);
+        return;
+      }
+
+      var msg = 'Olá, me chamo ' + name + '. Quero entender o que está travando meu site.';
+      var url = 'https://wa.me/5519994671493?text=' + encodeURIComponent(msg);
+
+      if (typeof fbq !== 'undefined') fbq('track', 'Lead');
+
+      closeModal();
+      window.open(url, '_blank', 'noopener');
+    }
+  </script>
 
   <!-- Scroll-triggered fade (progressive enhancement) -->
   <script>
