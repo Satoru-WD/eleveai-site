@@ -1,3 +1,9 @@
 User-agent: *
 Allow: /
+
+# Disallow admin or internal paths if they exist
+Disallow: /dist/
+Disallow: /.env
+
+# Sitemaps
 Sitemap: https://eleveai.com.br/sitemap.xml
