@@ -561,6 +561,35 @@ const Hero = ({ onOpenModal }: { onOpenModal: () => void }) => {
   );
 };
 
+const DiagnosticBanner = () => {
+  return (
+    <section className="py-20 relative px-6 bg-[#0A0A0B] border-y border-zinc-800">
+      <div className="max-w-4xl mx-auto text-center">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+        >
+          <h2 className="text-3xl md:text-5xl font-medium text-white mb-4 tracking-tighter leading-tight font-manrope">
+            A maioria dos sites parece profissional...<br className="hidden md:block" />
+            <span className="text-[#B988BF]">mas não gera nenhum cliente.</span>
+          </h2>
+          <p className="text-zinc-400 text-lg md:text-xl font-sans mb-8">
+            Entenda o que está travando os resultados.
+          </p>
+          <a
+            href="/porque-seu-site-nao-gera-clientes"
+            className="inline-flex items-center gap-3 px-8 py-4 bg-transparent border border-[#B988BF]/30 text-[#B988BF] text-xs font-bold tracking-[0.15em] uppercase hover:bg-[#B988BF] hover:text-white transition-colors duration-300"
+          >
+            Entenda o porquê
+            <ArrowRight className="w-4 h-4" />
+          </a>
+        </motion.div>
+      </div>
+    </section>
+  );
+};
+
 const EmpresasNotaveis = () => {
   return (
     <section className="py-24 relative px-6 overflow-hidden">
@@ -1769,6 +1798,7 @@ const App = () => {
             <>
               <Hero onOpenModal={handleOpenModal} />
               <EmpresasNotaveis />
+              <DiagnosticBanner />
               <GoogleAdsPremium onOpenModal={handleOpenModal} />
               <SistemaDeClientes />
               <Benefits />
