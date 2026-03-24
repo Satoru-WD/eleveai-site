@@ -422,22 +422,22 @@ const Hero = ({ onOpenModal }: { onOpenModal: () => void }) => {
         <div></div><div></div><div></div><div></div><div></div><div></div>
       </div>
 
-      <section id="hero" className="h-auto min-h-[800px] flex flex-col md:pt-20 overflow-hidden w-full pt-32 relative items-center justify-start" style={{ maskImage: 'linear-gradient(180deg, transparent, black 0%, black 95%, transparent)', WebkitMaskImage: 'linear-gradient(180deg, transparent, black 0%, black 95%, transparent)' }}>
+      <section id="hero" className="h-auto min-h-[800px] flex flex-col md:pt-20 overflow-hidden w-full pt-20 relative items-center justify-start" style={{ maskImage: 'linear-gradient(180deg, transparent, black 0%, black 95%, transparent)', WebkitMaskImage: 'linear-gradient(180deg, transparent, black 0%, black 95%, transparent)' }}>
         
-        <div className="z-10 text-center max-w-5xl mt-24 mx-auto px-6 relative flex flex-col items-center">
+        <div className="z-10 text-center max-w-5xl mt-2 sm:mt-6 md:mt-24 mx-auto px-6 relative flex flex-col items-center">
 
-          <div className="[animation:fadeSlideIn_1s_ease-out_0.8s_both] inline-flex transition-transform hover:scale-105 cursor-pointer group bg-gradient-to-b from-white/20 via-white/0 to-white/10 rounded-full mb-10 pt-1.5 pr-3 pb-1.5 pl-3 backdrop-blur-sm gap-x-2 gap-y-2 items-center" style={{ position: 'relative', '--border-gradient': 'linear-gradient(180deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.1))', '--border-radius-before': '9999px' } as any}>
+          <div className="[animation:fadeSlideIn_1s_ease-out_0.8s_both] inline-flex transition-transform hover:scale-105 cursor-pointer group bg-gradient-to-b from-white/20 via-white/0 to-white/10 rounded-full mb-4 md:mb-10 pt-1.5 pr-3 pb-1.5 pl-3 backdrop-blur-sm gap-x-2 gap-y-2 items-center" style={{ position: 'relative', '--border-gradient': 'linear-gradient(180deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.1))', '--border-radius-before': '9999px' } as any}>
             <span className="flex h-1.5 w-1.5 rounded-full group-hover:animate-pulse bg-[#B988BF] shadow-[0_0_10px_rgba(185, 136, 191,0.5)]"></span>
             <span className="text-xs font-medium tracking-wide group-hover:text-white transition-colors font-sans text-purple-100/80">Estratégia e Performance</span>
           </div>
           
-          <h1 className="text-center leading-[1.2] md:text-6xl cursor-default text-4xl font-semibold tracking-tighter font-manrope mb-8 text-white" style={{ animation: 'fadeSlideIn 1s ease-out 1s both', textShadow: '0 2px 24px rgba(0,0,0,0.95)' }}>
+          <h1 className="text-center leading-[1.2] md:text-6xl cursor-default text-4xl font-semibold tracking-tighter font-manrope mb-4 md:mb-8 text-white" style={{ animation: 'fadeSlideIn 1s ease-out 1s both', textShadow: '0 2px 24px rgba(0,0,0,0.95)' }}>
             <span className="block">Você está preparado</span>
             <span className="block">para <span className="text-[#B988BF]">dominar</span> na internet</span>
             <span className="block">ou apenas estar presente?</span>
           </h1>
 
-          <p className="leading-relaxed md:text-2xl text-xl font-medium text-gray-400 tracking-normal font-manrope max-w-3xl mx-auto mb-12" style={{ animation: 'fadeSlideIn 1s ease-out 1.2s both' }}>
+          <p className="leading-relaxed md:text-2xl text-base font-medium text-gray-400 tracking-normal font-manrope max-w-3xl mx-auto mb-6 md:mb-12" style={{ animation: 'fadeSlideIn 1s ease-out 1.2s both' }}>
             Em poucos segundos analisamos os pontos que podem estar limitando a geração de contatos para o seu negócio.
           </p>
 
