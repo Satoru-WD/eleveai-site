@@ -37,9 +37,9 @@ import {
 const WHATSAPP_URL = "https://wa.me/5519994671493?text=Ol%C3%A1%21+Gostaria+de+conhecer+o+atendimento+automatizado+da+EleveAI+e+elevar+meu+neg%C3%B3cio.";
 
 const trackWhatsAppClick = () => {
-  if (typeof window !== 'undefined' && !(window as any).leadFired && (window as any).fbq) {
+  if (typeof window !== 'undefined' && !(window as any).whatsAppLeadFired && (window as any).fbq) {
     (window as any).fbq('track', 'Lead');
-    (window as any).leadFired = true;
+    (window as any).whatsAppLeadFired = true;
   }
 };
 
