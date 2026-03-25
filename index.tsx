@@ -30,7 +30,12 @@ import {
   Calendar,
   Clock,
   MessageCircle,
-  X
+  X,
+  Shield,
+  UserCheck,
+  BarChart2,
+  ShieldAlert,
+  Lock
 } from 'lucide-react';
 
 // Configuration
@@ -148,7 +153,7 @@ const DiagnosticModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => 
           initial={{ opacity: 0, scale: 0.95, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: 20 }}
-          className="relative w-full max-w-lg bg-[#0A0A0B] border border-zinc-800 p-6 md:p-10 shadow-2xl z-10 rounded-none"
+          className="relative w-full max-w-lg bg-black/70 backdrop-blur-xl border border-white/10 p-6 md:p-10 shadow-2xl z-10 rounded-none"
           role="dialog"
           aria-modal="true"
           aria-labelledby="modal-title"
@@ -205,7 +210,7 @@ const DiagnosticModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => 
                   <button
                     key={idx}
                     onClick={() => handleNext(questions[step - 1].id, option)}
-                    className="w-full text-left px-5 py-4 rounded-none border border-zinc-800 hover:border-[#B988BF] hover:bg-[#B988BF]/10 text-gray-300 hover:text-white transition-all font-medium"
+                    className="w-full text-left px-5 py-4 rounded-none border border-white/10 bg-white/5 hover:border-[#B988BF] hover:bg-[#B988BF]/10 text-gray-300 hover:text-white transition-all font-medium backdrop-blur-sm"
                   >
                     {option}
                   </button>
@@ -422,6 +427,18 @@ const Hero = ({ onOpenModal }: { onOpenModal: () => void }) => {
 
       <section id="hero" className="h-auto min-h-[800px] flex flex-col md:pt-20 overflow-hidden w-full pt-20 relative items-center justify-start" style={{ maskImage: 'linear-gradient(180deg, transparent, black 0%, black 95%, transparent)', WebkitMaskImage: 'linear-gradient(180deg, transparent, black 0%, black 95%, transparent)' }}>
         
+        {/* Subtle Pulsating Halo Background */}
+        <div className="absolute top-[10%] left-1/2 w-[80vw] max-w-[800px] h-[80vw] max-h-[800px] rounded-full pointer-events-none -z-10" 
+             style={{ 
+               background: 'radial-gradient(circle, rgba(185,136,191,0.15) 0%, rgba(185,136,191,0) 70%)',
+               filter: 'blur(80px)',
+               transform: 'translate(-50%, 0)',
+               animation: 'haloPulse 8s ease-in-out infinite' 
+             }}>
+        </div>
+
+
+
         <div className="z-10 text-center max-w-5xl mt-2 sm:mt-6 md:mt-24 mx-auto px-6 relative flex flex-col items-center">
 
           <div className="[animation:fadeSlideIn_1s_ease-out_0.8s_both] inline-flex transition-transform hover:scale-105 cursor-pointer group bg-gradient-to-b from-white/20 via-white/0 to-white/10 rounded-full mb-4 md:mb-10 pt-1.5 pr-3 pb-1.5 pl-3 backdrop-blur-sm gap-x-2 gap-y-2 items-center" style={{ position: 'relative', '--border-gradient': 'linear-gradient(180deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.1))', '--border-radius-before': '9999px' } as any}>
@@ -468,7 +485,7 @@ const Hero = ({ onOpenModal }: { onOpenModal: () => void }) => {
 
         <div className="flex flex-col lg:flex-row gap-6 w-full max-w-7xl mx-auto px-6 mb-16 relative z-10">
           
-          <section className="flex-1 bg-black border border-zinc-800 border-dashed relative p-8 flex flex-col justify-between group hover:border-[#B988BF]/50 transition-all duration-500 rounded-sm [animation:fadeSlideIn_1s_ease-out_0.2s_both]">
+          <section className="flex-1 bg-black/60 backdrop-blur-md border border-white/10 border-dashed relative p-8 flex flex-col justify-between group hover:border-[#B988BF]/50 transition-all duration-500 rounded-sm [animation:fadeSlideIn_1s_ease-out_0.2s_both]">
             <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-[#B988BF]"></div>
             <div className="absolute top-0 right-0 w-2 h-2 border-t border-r border-[#B988BF]"></div>
             <div className="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-[#B988BF]"></div>
@@ -502,13 +519,13 @@ const Hero = ({ onOpenModal }: { onOpenModal: () => void }) => {
             />
             <div className="flex flex-col z-20 p-6 md:p-8 absolute inset-0 justify-between">
               <div className="flex items-start justify-between">
-                <div className="bg-black/80 backdrop-blur-sm border-zinc-700 border p-4 shadow-xl">
+                <div className="bg-black/60 backdrop-blur-md border-white/10 border p-4 shadow-xl">
                   <div className="flex gap-2 mb-2 items-center"><span className="w-1.5 h-1.5 bg-[#B988BF]"></span><p className="text-zinc-300 font-mono text-[10px] uppercase tracking-widest">Growth Engine</p></div>
                   <h2 className="text-white font-manrope text-xl md:text-2xl font-semibold tracking-tight uppercase">Sistema Inteligente</h2>
                 </div>
               </div>
               <div className="flex flex-col gap-6">
-                <div className="bg-black/90 backdrop-blur border-l-4 border-[#B988BF] p-5 max-w-sm shadow-2xl">
+                <div className="bg-black/60 backdrop-blur-md border-l-4 border-[#B988BF] p-5 max-w-sm shadow-2xl">
                   <p className="text-zinc-300 text-sm leading-relaxed font-sans">Atraímos o público certo e o conduzimos até a venda através de inteligência de dados e conversão.</p>
                 </div>
               </div>
@@ -516,7 +533,7 @@ const Hero = ({ onOpenModal }: { onOpenModal: () => void }) => {
             <div className="absolute bottom-8 right-8 w-16 h-16 md:w-24 md:h-24 border-r border-b border-[#B988BF]/30 z-10"></div>
           </section>
 
-          <section className="flex-1 flex flex-col bg-black border border-zinc-800 rounded-none relative [animation:fadeSlideIn_1s_ease-out_0.6s_both]">
+          <section className="flex-1 flex flex-col bg-black/60 backdrop-blur-md border border-white/10 rounded-none relative [animation:fadeSlideIn_1s_ease-out_0.6s_both]">
             <div className="p-5 border-b border-zinc-800 border-dashed flex justify-between items-center bg-zinc-900/10">
               <span className="font-mono text-[10px] text-white uppercase tracking-widest font-bold">Metodologia EleveAI</span>
               <div className="flex gap-1"><div className="w-0.5 h-3 bg-[#B988BF]"></div><div className="w-0.5 h-3 bg-zinc-800"></div><div className="w-0.5 h-3 bg-zinc-800"></div></div>
@@ -561,7 +578,7 @@ const Hero = ({ onOpenModal }: { onOpenModal: () => void }) => {
 
 const DiagnosticBanner = () => {
   return (
-    <section className="py-20 relative px-6 bg-[#0A0A0B] border-y border-zinc-800">
+    <section className="py-20 relative px-6 bg-black/40 backdrop-blur-md border-y border-white/5">
       <div className="max-w-4xl mx-auto text-center">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -596,7 +613,7 @@ const EmpresasNotaveis = () => {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="bg-black border border-zinc-800 p-8 md:p-12 rounded-sm [animation:fadeSlideIn_1s_ease-out_both] shadow-2xl relative"
+          className="bg-black/60 backdrop-blur-md border border-white/10 p-8 md:p-12 rounded-sm [animation:fadeSlideIn_1s_ease-out_both] shadow-2xl relative"
         >
           <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-[#B988BF]"></div>
           <div className="absolute top-0 right-0 w-2 h-2 border-t border-r border-[#B988BF]"></div>
@@ -741,7 +758,7 @@ const GoogleAdsPremium = ({ onOpenModal }: { onOpenModal: () => void }) => {
   }, [displayText, phase, searchIndex]);
 
   return (
-    <section className="py-24 relative px-6 overflow-hidden bg-[#0A0A0B]">
+    <section className="py-24 relative px-6 overflow-hidden bg-black/40 backdrop-blur-lg border-y border-white/5">
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-0 left-1/4 w-96 h-96 bg-[#B988BF]/8 rounded-full blur-[120px]" />
         <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-[#EEC6A2]/5 rounded-full blur-[100px]" />
@@ -791,7 +808,7 @@ const GoogleAdsPremium = ({ onOpenModal }: { onOpenModal: () => void }) => {
           {/* CTA */}
           <button
             onClick={onOpenModal}
-            className="group relative flex h-[50px] w-auto sm:min-w-[280px] mt-8 items-center justify-center rounded-none px-6 outline-none cursor-pointer transition-transform active:scale-95 bg-white/5 border-none"
+            className="group relative flex h-[50px] w-full sm:min-w-[280px] sm:w-auto mt-8 self-center items-center justify-center rounded-none px-6 outline-none cursor-pointer transition-transform active:scale-95 bg-white/5 border-none"
             type="button"
           >
             <div className="pointer-events-none absolute inset-0 opacity-100 transition-opacity duration-[1200ms] ease-in-out group-hover:opacity-0" style={{ background: 'radial-gradient(15% 50% at 50% 100%, #B988BF 0%, rgba(185, 136, 191, 0) 100%)', filter: 'blur(15px)' }}></div>
@@ -985,7 +1002,7 @@ const SistemaDeClientes = () => {
             <p className="text-sm text-gray-400">Transformar interesse em clientes.</p>
           </motion.div>
 
-          <motion.div whileHover={{ y: -10 }} className="bg-black p-8 rounded-none border border-zinc-800 hover:border-[#B988BF]/50 transition-all flex flex-col items-center text-center relative overflow-hidden group">
+          <motion.div whileHover={{ y: -10 }} className="bg-black/60 backdrop-blur-md p-8 rounded-none border border-white/10 hover:border-[#B988BF]/50 transition-all flex flex-col items-center text-center relative overflow-hidden group">
             <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#B988BF] transform -translate-x-full group-hover:translate-x-0 transition-transform duration-200"></div>
             <div className="w-14 h-14 rounded-full bg-[#EEC6A2]/10 flex items-center justify-center mb-6 text-[#EEC6A2] group-hover:scale-110 transition-transform duration-300">
               <Cpu size={28} />
@@ -1007,7 +1024,7 @@ const BenefitCard = ({ icon: Icon, title, description, delay }: any) => {
       viewport={{ once: true }}
       transition={{ duration: 0.6, delay }}
       whileHover={{ y: -10 }}
-      className="bg-black p-6 md:p-8 rounded-none border border-zinc-800 hover:border-[#B988BF]/50 transition-all group relative overflow-hidden"
+      className="bg-black/60 backdrop-blur-md p-6 md:p-8 rounded-none border border-white/10 hover:border-[#B988BF]/50 transition-all group relative overflow-hidden"
     >
       <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#B988BF] transform -translate-x-full group-hover:translate-x-0 transition-transform duration-200"></div>
       <div className="w-12 h-12 md:w-14 md:h-14 rounded-full bg-[#B988BF]/10 flex items-center justify-center mb-6 group-hover:bg-[#B988BF] transition-colors duration-500">
@@ -1172,7 +1189,7 @@ const PorQueEleveAI = () => {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="bg-black p-8 md:p-10 rounded-none border border-zinc-800 hover:border-[#B988BF]/50 transition-all group relative overflow-hidden"
+            className="bg-black/40 backdrop-blur-md p-8 md:p-10 rounded-none border border-white/10 hover:border-[#B988BF]/50 transition-all group relative overflow-hidden"
           >
             <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#B988BF] transform -translate-x-full group-hover:translate-x-0 transition-transform duration-200"></div>
             <div className="w-14 h-14 rounded-full bg-[#B988BF]/10 flex items-center justify-center mb-8 group-hover:scale-110 transition-transform">
@@ -1186,7 +1203,7 @@ const PorQueEleveAI = () => {
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="bg-black p-8 md:p-10 rounded-none border border-zinc-800 hover:border-[#EEC6A2]/50 transition-all group relative overflow-hidden"
+            className="bg-black/40 backdrop-blur-md p-8 md:p-10 rounded-none border border-white/10 hover:border-[#EEC6A2]/50 transition-all group relative overflow-hidden"
           >
             <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#EEC6A2] transform -translate-x-full group-hover:translate-x-0 transition-transform duration-200"></div>
             <div className="w-14 h-14 rounded-full bg-[#EEC6A2]/10 flex items-center justify-center mb-8 group-hover:scale-110 transition-transform">
@@ -1200,7 +1217,7 @@ const PorQueEleveAI = () => {
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="bg-black p-8 md:p-10 rounded-none border border-zinc-800 hover:border-[#B988BF]/50 transition-all group relative overflow-hidden"
+            className="bg-black/40 backdrop-blur-md p-8 md:p-10 rounded-none border border-white/10 hover:border-[#B988BF]/50 transition-all group relative overflow-hidden"
           >
             <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#B988BF] transform -translate-x-full group-hover:translate-x-0 transition-transform duration-200"></div>
             <div className="w-14 h-14 rounded-full bg-[#B988BF]/10 flex items-center justify-center mb-8 group-hover:scale-110 transition-transform">
@@ -1220,7 +1237,7 @@ const FAQItem = ({ question, answer, isOpen, toggle }: any) => {
     <div className="mb-4">
       <button
         onClick={toggle}
-        className={`w-full text-left p-5 md:p-6 rounded-none flex justify-between items-center transition-all border ${isOpen ? 'bg-[#B988BF]/10 border-[#B988BF]/50 border-l-4' : 'bg-black border-zinc-800 hover:border-[#B988BF]/30 hover:bg-zinc-900/40'}`}
+        className={`w-full text-left p-5 md:p-6 rounded-none flex justify-between items-center transition-all border ${isOpen ? 'bg-[#B988BF]/10 border-[#B988BF]/50 border-l-4 backdrop-blur-sm' : 'bg-black/40 backdrop-blur-md border-white/10 hover:border-[#B988BF]/30 hover:bg-white/5'}`}
       >
         <span className="text-base md:text-lg font-bold text-white pr-8 font-manrope">{question}</span>
         {isOpen ? <Minus className="text-[#B988BF] shrink-0" size={20} /> : <Plus className="text-[#B988BF] shrink-0" size={20} />}
@@ -1256,8 +1273,8 @@ const InfiniteTicker = () => {
   ];
 
   return (
-    <div className="relative py-6 overflow-hidden bg-[#0A0A0B] border-y border-zinc-800 bg-gradient-to-r from-transparent via-[#B988BF]/5 to-transparent">
-      <div className="absolute inset-0 bg-gradient-to-r from-[#0A0A0B] via-transparent to-[#0A0A0B] z-10 pointer-events-none" />
+    <div className="relative py-6 overflow-hidden bg-black/30 backdrop-blur-sm border-y border-white/5 bg-gradient-to-r from-transparent via-[#B988BF]/5 to-transparent">
+      <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-transparent to-black/60 z-10 pointer-events-none" />
 
       <motion.div
         className="flex whitespace-nowrap gap-10 items-center"
@@ -1338,7 +1355,7 @@ const FinalCTA = ({ onOpenModal }: { onOpenModal: () => void }) => {
     <section className="py-24 px-6 relative overflow-hidden">
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#B988BF]/10 rounded-full blur-[120px] pointer-events-none" />
 
-      <div className="max-w-5xl mx-auto bg-black rounded-none p-12 md:p-20 text-center relative z-10 border border-zinc-800">
+      <div className="max-w-5xl mx-auto bg-black/60 backdrop-blur-md rounded-none p-12 md:p-20 text-center relative z-10 border border-white/10">
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           whileInView={{ opacity: 1, scale: 1 }}
@@ -1380,7 +1397,7 @@ const FinalCTA = ({ onOpenModal }: { onOpenModal: () => void }) => {
 
 const Footer = ({ onPrivacy, onTerms, onHome }: { onPrivacy: () => void, onTerms: () => void, onHome: () => void }) => {
   return (
-    <footer className="relative bg-[#050506] pt-24 pb-12 overflow-hidden">
+    <footer className="relative bg-black/80 backdrop-blur-xl pt-24 pb-12 overflow-hidden border-t border-white/5">
       {/* Decorative Top Border */}
       <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-transparent via-[#B988BF] to-transparent shadow-[0_0_30px_rgba(185, 136, 191,0.8)]" />
       <div className="absolute top-0 left-0 right-0 h-[1px] bg-[#B988BF] opacity-50" />
@@ -1494,112 +1511,198 @@ const WhatsAppFloat = () => {
 
 
 
-const PrivacyPolicy = ({ onBack }: { onBack: () => void }) => {
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+const PrivacyPolicy = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }) => {
+  const [scrollProgress, setScrollProgress] = useState(0);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  if (!isOpen) return null;
+
+  const handleScroll = () => {
+    if (containerRef.current) {
+      const { scrollTop, scrollHeight, clientHeight } = containerRef.current;
+      const progress = (scrollTop / (scrollHeight - clientHeight)) * 100;
+      setScrollProgress(progress);
+    }
+  };
+
+  const sections = [
+    { title: "1. Coleta de Dados", icon: <Target size={22} />, content: "Coletamos informações fornecidas voluntariamente por você através de nossos formulários de contato, incluindo nome, e-mail e número de telefone (\"leads\")." },
+    { title: "2. Uso das Informações", icon: <TrendingUp size={22} />, content: "Os dados coletados são utilizados exclusivamente para entrar em contato com você, fornecer informações sobre nossos serviços, realizar triagens estratégicas e para fins de marketing direto (como envio de propostas e novidades)." },
+    { title: "3. Cookies e Tecnologias", icon: <Cpu size={22} />, content: "Utilizamos cookies, Google Analytics e Meta Pixel para analisar o tráfego do site, melhorar sua experiência de navegação e exibir anúncios personalizados em outras plataformas." },
+    { title: "4. Segurança dos Dados", icon: <Shield size={22} />, content: "Empregamos medidas técnicas e organizacionais adequadas para proteger seus dados contra acessos não autorizados, perda ou alteração. Seus dados são tratados com total confidencialidade." },
+    { title: "5. Seus Direitos", icon: <UserCheck size={22} />, content: "Você tem o direito de solicitar a qualquer momento a remoção, correção ou acesso aos seus dados pessoais em nossa base. Basta entrar em contato através dos nossos canais." }
+  ];
 
   return (
-    <div className="min-h-screen bg-[#0A0A0B] pt-32 pb-24 px-6">
-      <div className="max-w-4xl mx-auto">
-        <motion.button
-          onClick={onBack}
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          className="flex items-center gap-2 text-[#B988BF] mb-12 hover:text-white transition-colors group"
-        >
-          <ArrowRight className="rotate-180 group-hover:-translate-x-1 transition-transform" size={20} />
-          Voltar para Home
-        </motion.button>
-
+    <AnimatePresence>
+      <div className="fixed inset-0 z-[120] flex items-center justify-center p-4">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="bg-black border border-zinc-800 rounded-none p-6 md:p-16"
+          initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+          className="absolute inset-0 bg-black/90 backdrop-blur-md"
+          onClick={onClose}
+        />
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9, y: 40 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          exit={{ opacity: 0, scale: 0.9, y: 40 }}
+          className="relative w-full max-w-3xl h-[85vh] flex flex-col bg-[#0A0A0B] border border-white/10 shadow-[0_0_50px_rgba(0,0,0,0.5)] z-10 overflow-hidden"
         >
-          <h1 className="text-3xl md:text-5xl font-extrabold text-white mb-8 tracking-tight text-center md:text-left font-manrope">Política de <span className="text-gradient">Privacidade</span></h1>
+          {/* Sticky Header */}
+          <div className="flex items-center justify-between px-8 py-6 border-b border-white/5 bg-black/40 backdrop-blur-xl z-20">
+            <div>
+              <h2 className="text-2xl font-black text-white tracking-tight uppercase font-manrope">Política de <span className="text-[#B988BF]">Privacidade</span></h2>
+              <p className="text-[10px] text-gray-500 font-bold uppercase tracking-[0.2em] mt-1">Sua segurança é nossa prioridade</p>
+            </div>
+            <button onClick={onClose} className="p-2 text-gray-500 hover:text-white transition-colors hover:bg-white/5 rounded-none border border-transparent hover:border-white/10">
+              <X size={24} />
+            </button>
+          </div>
 
-          <div className="space-y-6 md:space-y-8 text-gray-400 leading-relaxed text-base md:text-lg font-sans">
-            <section>
-              <h2 className="text-xl md:text-2xl font-bold text-white mb-3 md:mb-4">1. Coleta de Dados</h2>
-              <p>Coletamos informações fornecidas voluntariamente por você através de nossos formulários de contato, incluindo nome, e-mail e número de telefone ("leads").</p>
-            </section>
+          {/* Progress Bar */}
+          <div className="h-0.5 w-full bg-white/5 overflow-hidden">
+            <motion.div 
+              className="h-full bg-gradient-to-r from-[#B988BF] to-[#96649c]" 
+              style={{ width: `${scrollProgress}%` }}
+            />
+          </div>
 
-            <section>
-              <h2 className="text-xl md:text-2xl font-bold text-white mb-3 md:mb-4">2. Uso das Informações</h2>
-              <p>Os dados coletados são utilizados exclusivamente para entrar em contato com você, fornecer informações sobre nossos serviços, realizar triagens estratégicas e para fins de marketing direto (como envio de propostas e novidades).</p>
-            </section>
+          {/* Scrollable Content */}
+          <div 
+            ref={containerRef}
+            onScroll={handleScroll}
+            className="flex-1 overflow-y-auto p-8 md:p-12 space-y-12 scrollbar-hide"
+          >
+            {sections.map((section, idx) => (
+              <motion.section 
+                key={idx}
+                initial={{ opacity: 0, x: -10 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: idx * 0.1 }}
+                className="group"
+              >
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="w-10 h-10 rounded-none bg-white/5 border border-white/10 flex items-center justify-center text-[#B988BF] group-hover:bg-[#B988BF]/10 transition-colors">
+                    {section.icon}
+                  </div>
+                  <h3 className="text-xl font-bold text-white font-manrope">{section.title}</h3>
+                </div>
+                <p className="text-gray-400 leading-relaxed font-sans text-sm md:text-base pl-14">
+                  {section.content}
+                </p>
+              </motion.section>
+            ))}
 
-            <section>
-              <h2 className="text-xl md:text-2xl font-bold text-white mb-3 md:mb-4">3. Cookies e Tecnologias de Rastreio</h2>
-              <p>Utilizamos cookies, Google Analytics e Meta Pixel para analisar o tráfego do site, melhorar sua experiência de navegação e exibir anúncios personalizados em outras plataformas com base no seu interesse em nossa agência.</p>
-            </section>
-
-            <section>
-              <h2 className="text-xl md:text-2xl font-bold text-white mb-3 md:mb-4">4. Segurança dos Dados</h2>
-              <p>Empregamos medidas técnicas e organizacionais adequadas para proteger seus dados contra acessos não autorizados, perda ou alteração. Seus dados são tratados com total confidencialidade.</p>
-            </section>
-
-            <section>
-              <h2 className="text-xl md:text-2xl font-bold text-white mb-3 md:mb-4">5. Seus Direitos</h2>
-              <p>Você tem o direito de solicitar a qualquer momento a remoção, correção ou acesso aos seus dados pessoais em nossa base. Para isso, basta entrar em contato através dos nossos canais de comunicação oficiais.</p>
-            </section>
+            <div className="pt-12 pb-6">
+              <button
+                onClick={onClose}
+                className="w-full py-5 bg-[#B988BF] text-black font-black uppercase tracking-[0.2em] text-xs hover:bg-white transition-all shadow-[0_10px_30px_rgba(185,136,191,0.3)] hover:shadow-[0_10px_40px_rgba(255,255,255,0.2)]"
+              >
+                Compreendo e Aceito os Termos
+              </button>
+              <p className="text-center text-[10px] text-gray-600 mt-4 uppercase font-bold tracking-widest">Ao clicar, você confirma a leitura completa deste documento</p>
+            </div>
           </div>
         </motion.div>
       </div>
-    </div>
+    </AnimatePresence>
   );
 };
 
-const TermsOfUse = ({ onBack }: { onBack: () => void }) => {
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+const TermsOfUse = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }) => {
+  const [scrollProgress, setScrollProgress] = useState(0);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  if (!isOpen) return null;
+
+  const handleScroll = () => {
+    if (containerRef.current) {
+      const { scrollTop, scrollHeight, clientHeight } = containerRef.current;
+      const progress = (scrollTop / (scrollHeight - clientHeight)) * 100;
+      setScrollProgress(progress);
+    }
+  };
+
+  const sections = [
+    { title: "1. Uso Informativo", icon: <BarChart2 size={22} />, content: "Este site tem caráter estritamente informativo sobre os serviços de inteligência artificial e marketing estratégico da EleveAI. O acesso e uso deste site não constituem uma relação contratual imediata." },
+    { title: "2. Propriedade Intelectual", icon: <Lock size={22} />, content: "Todos os textos, imagens, logotipos e designs presentes neste site são de propriedade exclusiva da EleveAI. É proibida a reprodução total ou parcial sem autorização prévia por escrito." },
+    { title: "3. Contratação de Serviços", icon: <CheckCircle2 size={22} />, content: "A formalização de qualquer serviço apresentado só ocorre mediante a assinatura de um contrato específico e/ou aceitação de proposta comercial formalizada pela nossa equipe." },
+    { title: "4. Limitação de Resp.", icon: <ShieldAlert size={22} />, content: "A EleveAI busca a máxima precisão, porém não se responsabiliza por decisões tomadas exclusivamente com base no conteúdo deste site. Os resultados de performance mencionados são estimativas." }
+  ];
 
   return (
-    <div className="min-h-screen bg-[#0A0A0B] pt-32 pb-24 px-6">
-      <div className="max-w-4xl mx-auto">
-        <motion.button
-          onClick={onBack}
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          className="flex items-center gap-2 text-[#B988BF] mb-12 hover:text-white transition-colors group"
-        >
-          <ArrowRight className="rotate-180 group-hover:-translate-x-1 transition-transform" size={20} />
-          Voltar para Home
-        </motion.button>
-
+    <AnimatePresence>
+      <div className="fixed inset-0 z-[120] flex items-center justify-center p-4">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="bg-black border border-zinc-800 rounded-none p-6 md:p-16"
+          initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+          className="absolute inset-0 bg-black/90 backdrop-blur-md"
+          onClick={onClose}
+        />
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9, y: 40 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          exit={{ opacity: 0, scale: 0.9, y: 40 }}
+          className="relative w-full max-w-3xl h-[85vh] flex flex-col bg-[#0A0A0B] border border-white/10 shadow-[0_0_50px_rgba(0,0,0,0.5)] z-10 overflow-hidden"
         >
-          <h1 className="text-3xl md:text-5xl font-extrabold text-white mb-8 tracking-tight text-center md:text-left font-manrope">Termos de <span className="text-gradient">Uso</span></h1>
+          {/* Sticky Header */}
+          <div className="flex items-center justify-between px-8 py-6 border-b border-white/5 bg-black/40 backdrop-blur-xl z-20">
+            <div>
+              <h2 className="text-2xl font-black text-white tracking-tight uppercase font-manrope">Termos de <span className="text-[#B988BF]">Uso</span></h2>
+              <p className="text-[10px] text-gray-500 font-bold uppercase tracking-[0.2em] mt-1">Acordo de navegação e transparência</p>
+            </div>
+            <button onClick={onClose} className="p-2 text-gray-500 hover:text-white transition-colors hover:bg-white/5 rounded-none border border-transparent hover:border-white/10">
+              <X size={24} />
+            </button>
+          </div>
 
-          <div className="space-y-6 md:space-y-8 text-gray-400 leading-relaxed text-base md:text-lg font-sans">
-            <section>
-              <h2 className="text-xl md:text-2xl font-bold text-white mb-3 md:mb-4">1. Uso Informativo</h2>
-              <p>Este site tem caráter estritamente informativo sobre os serviços de inteligência artificial e marketing estratégico da EleveAI. O acesso e uso deste site não constituem uma relação contratual imediata.</p>
-            </section>
+          {/* Progress Bar */}
+          <div className="h-0.5 w-full bg-white/5 overflow-hidden">
+            <motion.div 
+              className="h-full bg-gradient-to-r from-[#B988BF] to-[#96649c]" 
+              style={{ width: `${scrollProgress}%` }}
+            />
+          </div>
 
-            <section>
-              <h2 className="text-xl md:text-2xl font-bold text-white mb-3 md:mb-4">2. Propriedade Intelectual</h2>
-              <p>Todos os textos, imagens, logotipos e designs presentes neste site são de propriedade exclusiva da EleveAI ou licenciados para tal. É proibida a reprodução total ou parcial sem autorização prévia por escrito.</p>
-            </section>
+          {/* Scrollable Content */}
+          <div 
+            ref={containerRef}
+            onScroll={handleScroll}
+            className="flex-1 overflow-y-auto p-8 md:p-12 space-y-12 scrollbar-hide"
+          >
+            {sections.map((section, idx) => (
+              <motion.section 
+                key={idx}
+                initial={{ opacity: 0, x: -10 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: idx * 0.1 }}
+                className="group"
+              >
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="w-10 h-10 rounded-none bg-white/5 border border-white/10 flex items-center justify-center text-[#B988BF] group-hover:bg-[#B988BF]/10 transition-colors">
+                    {section.icon}
+                  </div>
+                  <h3 className="text-xl font-bold text-white font-manrope">{section.title}</h3>
+                </div>
+                <p className="text-gray-400 leading-relaxed font-sans text-sm md:text-base pl-14">
+                  {section.content}
+                </p>
+              </motion.section>
+            ))}
 
-            <section>
-              <h2 className="text-2xl font-bold text-white mb-4">3. Contratação de Serviços</h2>
-              <p>A formalização de qualquer serviço apresentado só ocorre mediante a assinatura de um contrato específico e/ou aceitação de proposta comercial formalizada pela nossa equipe.</p>
-            </section>
-
-            <section>
-              <h2 className="text-2xl font-bold text-white mb-4">4. Limitação de Responsabilidade</h2>
-              <p>A EleveAI busca a máxima precisão nas informações, porém não se responsabiliza por decisões tomadas exclusivamente com base no conteúdo deste site. Os resultados de performance mencionados são estimativas baseadas em casos de sucesso e podem variar de acordo com cada projeto.</p>
-            </section>
+            <div className="pt-12 pb-6">
+              <button
+                onClick={onClose}
+                className="w-full py-5 bg-[#B988BF] text-black font-black uppercase tracking-[0.2em] text-xs hover:bg-white transition-all shadow-[0_10px_30px_rgba(185,136,191,0.3)] hover:shadow-[0_10px_40px_rgba(255,255,255,0.2)]"
+              >
+                Compreendo e Aceito os Termos
+              </button>
+              <p className="text-center text-[10px] text-gray-600 mt-4 uppercase font-bold tracking-widest">Ao continuar navegando, você declara aceitar as diretrizes acima</p>
+            </div>
           </div>
         </motion.div>
       </div>
-    </div>
+    </AnimatePresence>
   );
 };
 
@@ -1622,27 +1725,41 @@ const CookieConsent = () => {
     <AnimatePresence>
       {isVisible && (
         <motion.div
-          initial={{ y: 100, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          exit={{ y: 100, opacity: 0 }}
-          className="fixed bottom-6 left-6 right-6 md:left-8 md:right-auto md:max-w-sm z-[60]"
+          initial={{ y: 50, opacity: 0, scale: 0.9 }}
+          animate={{ y: 0, opacity: 1, scale: 1 }}
+          exit={{ y: 20, opacity: 0, scale: 0.9 }}
+          className="fixed bottom-6 left-1/2 -translate-x-1/2 md:left-auto md:right-8 md:translate-x-0 z-[100] w-[calc(100%-3rem)] max-w-[400px]"
         >
-          <div className="bg-black border border-zinc-800 p-5 rounded-none shadow-2xl flex flex-col gap-4 relative">
-            <button
-              onClick={() => setIsVisible(false)}
-              className="absolute top-2 right-2 p-1 text-gray-400 hover:text-white transition-colors"
-            >
-              <X size={16} />
-            </button>
-            <p className="text-[13px] text-gray-300 leading-relaxed font-sans pr-4">
-              Utilizamos cookies para personalizar métricas de crescimento e melhorar sua experiência. Ao continuar, você concorda com nossa <span className="text-white font-semibold">Política de Privacidade</span>.
-            </p>
-            <button
-              onClick={handleAccept}
-              className="w-full py-3 bg-[#B988BF] text-[#0A0A0B] rounded-none font-bold text-xs hover:bg-[#E0B0FF] transition-all shadow-lg active:scale-95 uppercase tracking-wide"
-            >
-              Aceitar
-            </button>
+          <div className="bg-black/60 backdrop-blur-2xl border border-white/10 p-5 md:p-6 shadow-[0_20px_50px_rgba(0,0,0,0.5)] flex flex-col gap-5 relative overflow-hidden group">
+            {/* Subtle light effect */}
+            <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-[#B988BF]/50 to-transparent" />
+            
+            <div className="flex items-start gap-4">
+              <div className="w-10 h-10 shrink-0 bg-[#B988BF]/10 flex items-center justify-center text-[#B988BF]">
+                <Shield size={20} />
+              </div>
+              <div className="flex-1">
+                <p className="text-[13px] text-gray-300 leading-snug font-medium pr-4">
+                  Utilizamos cookies para otimizar sua experiência e personalizar nossas métricas de crescimento.
+                </p>
+              </div>
+              <button
+                onClick={() => setIsVisible(false)}
+                className="text-gray-500 hover:text-white transition-colors"
+                aria-label="Fechar"
+              >
+                <X size={18} />
+              </button>
+            </div>
+
+            <div className="flex gap-3">
+              <button
+                onClick={handleAccept}
+                className="flex-1 py-3 bg-[#B988BF] text-black font-black uppercase tracking-widest text-[10px] hover:bg-white transition-all active:scale-95 shadow-lg"
+              >
+                Aceitar e Continuar
+              </button>
+            </div>
           </div>
         </motion.div>
       )}
@@ -1664,7 +1781,7 @@ const RaioXSection = ({ onOpenModal }: { onOpenModal: () => void }) => {
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
-          <motion.div whileHover={{ y: -10 }} className="bg-black p-8 rounded-none border border-zinc-800 hover:border-[#B988BF]/50 transition-all flex flex-col items-center text-center relative overflow-hidden group">
+          <motion.div whileHover={{ y: -10 }} className="bg-black/60 backdrop-blur-md p-8 rounded-none border border-white/10 hover:border-[#B988BF]/50 transition-all flex flex-col items-center text-center relative overflow-hidden group">
             <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#B988BF] transform -translate-x-full group-hover:translate-x-0 transition-transform duration-200"></div>
             <div className="w-14 h-14 rounded-full bg-[#B988BF]/10 flex items-center justify-center mb-6 text-[#B988BF] group-hover:scale-110 transition-transform duration-300">
               <Target size={28} />
@@ -1673,7 +1790,7 @@ const RaioXSection = ({ onOpenModal }: { onOpenModal: () => void }) => {
             <p className="text-sm text-zinc-300 leading-relaxed font-sans">Negócios que até geram visitas, mas não atraem as oportunidades certas para vendas de alto ticket.</p>
           </motion.div>
 
-          <motion.div whileHover={{ y: -10 }} className="bg-black p-8 rounded-none border border-zinc-800 hover:border-[#EEC6A2]/50 transition-all flex flex-col items-center text-center relative overflow-hidden group">
+          <motion.div whileHover={{ y: -10 }} className="bg-black/60 backdrop-blur-md p-8 rounded-none border border-white/10 hover:border-[#EEC6A2]/50 transition-all flex flex-col items-center text-center relative overflow-hidden group">
             <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#EEC6A2] transform -translate-x-full group-hover:translate-x-0 transition-transform duration-200"></div>
             <div className="w-14 h-14 rounded-full bg-[#EEC6A2]/10 flex items-center justify-center mb-6 text-[#EEC6A2] group-hover:scale-110 transition-transform duration-300">
               <TrendingUp size={28} />
@@ -1682,7 +1799,7 @@ const RaioXSection = ({ onOpenModal }: { onOpenModal: () => void }) => {
             <p className="text-sm text-zinc-300 leading-relaxed font-sans">Negócios que recebem contatos, mas não transformam o interesse em um avanço comercial previsível.</p>
           </motion.div>
 
-          <motion.div whileHover={{ y: -10 }} className="bg-black p-8 rounded-none border border-zinc-800 hover:border-[#B988BF]/50 transition-all flex flex-col items-center text-center relative overflow-hidden group">
+          <motion.div whileHover={{ y: -10 }} className="bg-black/60 backdrop-blur-md p-8 rounded-none border border-white/10 hover:border-[#B988BF]/50 transition-all flex flex-col items-center text-center relative overflow-hidden group">
             <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#B988BF] transform -translate-x-full group-hover:translate-x-0 transition-transform duration-200"></div>
             <div className="w-14 h-14 rounded-full bg-[#B988BF]/10 flex items-center justify-center mb-6 text-[#B988BF] group-hover:scale-110 transition-transform duration-300">
               <MessageCircle size={28} />
@@ -1691,7 +1808,7 @@ const RaioXSection = ({ onOpenModal }: { onOpenModal: () => void }) => {
             <p className="text-sm text-zinc-300 leading-relaxed font-sans">Negócios que não mantêm continuidade com leads interessados e acabam perdendo o timing ideal da venda.</p>
           </motion.div>
 
-          <motion.div whileHover={{ y: -10 }} className="bg-black p-8 rounded-none border border-zinc-800 hover:border-[#EEC6A2]/50 transition-all flex flex-col items-center text-center relative overflow-hidden group">
+          <motion.div whileHover={{ y: -10 }} className="bg-black/60 backdrop-blur-md p-8 rounded-none border border-white/10 hover:border-[#EEC6A2]/50 transition-all flex flex-col items-center text-center relative overflow-hidden group">
             <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#EEC6A2] transform -translate-x-full group-hover:translate-x-0 transition-transform duration-200"></div>
             <div className="w-14 h-14 rounded-full bg-[#EEC6A2]/10 flex items-center justify-center mb-6 text-[#EEC6A2] group-hover:scale-110 transition-transform duration-300">
               <BarChart3 size={28} />
@@ -1765,6 +1882,7 @@ const App = () => {
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll(); // Check immediately on mount in case of reload
 
     return () => {
       clearTimeout(timer);
@@ -1786,8 +1904,26 @@ const App = () => {
   };
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen relative">
+      {/* Global Vertical Beam */}
+      <div className="fixed inset-0 pointer-events-none z-0">
+        <div className="absolute top-0 bottom-0 left-1/2 w-[1px] -translate-x-1/2">
+          <div className="absolute top-0 left-1/2 w-[6px] h-[500px] mix-blend-screen" 
+               style={{ 
+                 background: 'linear-gradient(to bottom, transparent, rgba(185, 136, 191, 0.7), rgba(96, 165, 250, 0.6), transparent)',
+                 transform: 'translateX(-50%)',
+                 boxShadow: '0 0 60px 25px rgba(185, 136, 191, 0.4), 0 0 100px 35px rgba(96, 165, 250, 0.3)',
+                 filter: 'blur(10px)',
+                 opacity: 0.8,
+                 animation: 'beamFall 6s linear infinite' 
+               }}>
+          </div>
+        </div>
+      </div>
+
       <DiagnosticModal isOpen={isModalOpen} onClose={handleCloseModal} />
+      <PrivacyPolicy isOpen={currentPage === 'privacy'} onClose={() => setCurrentPage('home')} />
+      <TermsOfUse isOpen={currentPage === 'terms'} onClose={() => setCurrentPage('home')} />
 
       <motion.div
         initial={{ opacity: 0 }}
@@ -1796,22 +1932,18 @@ const App = () => {
       >
         <Navbar onHome={() => setCurrentPage('home')} />
         <main>
-          {currentPage === 'home' && (
-            <>
-              <Hero onOpenModal={handleOpenModal} />
-              <EmpresasNotaveis />
-              <DiagnosticBanner />
-              <GoogleAdsPremium onOpenModal={handleOpenModal} />
-              <SistemaDeClientes />
-              <Benefits />
-              <RaioXSection onOpenModal={handleOpenModal} />
-              <PorQueEleveAI />
-              <FAQ />
-              <FinalCTA onOpenModal={handleOpenModal} />
-            </>
-          )}
-          {currentPage === 'privacy' && <PrivacyPolicy onBack={() => setCurrentPage('home')} />}
-          {currentPage === 'terms' && <TermsOfUse onBack={() => setCurrentPage('home')} />}
+          <>
+            <Hero onOpenModal={handleOpenModal} />
+            <EmpresasNotaveis />
+            <DiagnosticBanner />
+            <GoogleAdsPremium onOpenModal={handleOpenModal} />
+            <SistemaDeClientes />
+            <Benefits />
+            <RaioXSection onOpenModal={handleOpenModal} />
+            <PorQueEleveAI />
+            <FAQ />
+            <FinalCTA onOpenModal={handleOpenModal} />
+          </>
         </main>
         <Footer
           onPrivacy={() => setCurrentPage('privacy')}

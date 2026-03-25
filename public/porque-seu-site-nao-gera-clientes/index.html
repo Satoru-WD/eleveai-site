@@ -110,14 +110,17 @@
       top: 0;
       left: 0;
       right: 0;
-      z-index: 50;
+      z-index: 1000;
+      height: var(--nav-height);
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 1rem 1.5rem;
-      background: rgba(10, 10, 11, 0.85);
-      backdrop-filter: blur(16px);
-      border-bottom: 1px solid var(--border);
+      padding: 0 1.5rem;
+      background: rgba(10, 10, 11, 0.6);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      transition: background 0.3s;
     }
 
     .navbar img {
@@ -159,6 +162,24 @@
     }
 
     /* ── Hero ── */
+    @keyframes heroHaloPulse {
+      0%, 100% {
+        transform: translate(-50%, 0) scale(1);
+        opacity: 0.5;
+      }
+      50% {
+        transform: translate(-50%, 0) scale(1.15);
+        opacity: 0.8;
+      }
+    }
+
+    @keyframes beamFall {
+      0% { transform: translate(-50%, -300px); opacity: 0; }
+      10% { opacity: 1; }
+      80% { opacity: 1; }
+      100% { transform: translate(-50%, 1500px); opacity: 0; }
+    }
+
     .hero {
       min-height: 92vh;
       display: flex;
@@ -167,7 +188,63 @@
       padding-bottom: 4rem;
       position: relative;
       overflow: hidden;
-      background: radial-gradient(ellipse 70% 55% at 50% 0%, rgba(185, 136, 191, 0.12) 0%, transparent 70%);
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 10%;
+      left: 50%;
+      width: 80vw;
+      max-width: 800px;
+      height: 80vw;
+      max-height: 800px;
+      background: radial-gradient(circle, rgba(185, 136, 191, 0.15) 0%, rgba(185, 136, 191, 0) 70%);
+      border-radius: 50%;
+      filter: blur(80px);
+      transform: translate(-50%, 0);
+      animation: heroHaloPulse 8s ease-in-out infinite;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 1px;
+      background: transparent;
+      transform: translateX(-50%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .hero-beam {
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 1px;
+      pointer-events: none;
+      z-index: 0;
+      transform: translateX(-50%);
+    }
+    
+    .hero-beam-inner {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      width: 6px;
+      height: 500px;
+      background: linear-gradient(to bottom, transparent, rgba(185, 136, 191, 0.7), rgba(96, 165, 250, 0.6), transparent);
+      box-shadow: 0 0 60px 25px rgba(185, 136, 191, 0.4), 0 0 100px 35px rgba(96, 165, 250, 0.3);
+      filter: blur(10px);
+      opacity: 0.8;
+      mix-blend-mode: screen;
+      transform: translateX(-50%);
+      animation: beamFall 6s linear infinite;
     }
 
     .hero-badge {
@@ -433,8 +510,10 @@
     }
 
     .diag-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.03);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
       padding: 1.75rem 1.5rem;
       position: relative;
     }
@@ -594,11 +673,14 @@
       position: relative;
       width: 100%;
       max-width: 440px;
-      background: #0A0A0B;
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(10, 10, 11, 0.7);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
       padding: 2.5rem 2rem;
       transform: translateY(24px) scale(0.97);
       transition: transform 0.3s ease;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
     }
 
     .modal-backdrop.active .modal {
@@ -720,6 +802,8 @@
 </head>
 
 <body>
+  <!-- Global Beam -->
+  <div class="hero-beam"><div class="hero-beam-inner"></div></div>
 
   <!-- ── Navbar ── -->
   <header class="navbar" role="banner">
@@ -737,7 +821,7 @@
          SEÇÃO 1 — HERO
     ======================================= -->
     <section class="hero" aria-labelledby="hero-headline">
-      <div class="container">
+      <div class="container relative text-center" style="z-index: 10;">
 
         <div class="hero-badge fade-up">
           <span aria-hidden="true"></span>
@@ -1126,6 +1210,19 @@
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape' && modal.classList.contains('active')) closeModal();
     });
+
+    // 50% scroll trigger for modal
+    window.addEventListener('scroll', function handleScroll() {
+      var scrolled = window.scrollY || document.documentElement.scrollTop;
+      var maxScroll = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      if (maxScroll <= 0) return;
+      var scrollPercent = (scrolled / maxScroll) * 100;
+
+      if (scrollPercent >= 50) {
+        openModal();
+        window.removeEventListener('scroll', handleScroll);
+      }
+    }, { passive: true });
 
     function handleSubmit(e) {
       e.preventDefault();
