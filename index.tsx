@@ -512,7 +512,8 @@ const Hero = ({ onOpenModal }: { onOpenModal: () => void }) => {
               alt="Representação visual de máquina de crescimento e funil de vendas estratégico" 
               className="group-hover:opacity-80 group-hover:scale-105 transition-all duration-700 opacity-60 mix-blend-normal w-full h-full object-cover absolute inset-0" 
               src="/strategic-funnel-pt.webp" 
-              loading="lazy"
+              loading="eager"
+              fetchPriority="high"
               decoding="async"
               width="800"
               height="600"
@@ -1915,7 +1916,8 @@ const App = () => {
                  boxShadow: '0 0 60px 25px rgba(185, 136, 191, 0.4), 0 0 100px 35px rgba(96, 165, 250, 0.3)',
                  filter: 'blur(10px)',
                  opacity: 0.8,
-                 animation: 'beamFall 6s linear infinite' 
+                 animation: 'beamFall 6s linear infinite',
+                 willChange: 'transform'
                }}>
           </div>
         </div>
