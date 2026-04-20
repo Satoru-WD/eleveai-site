@@ -72,16 +72,12 @@ const DiagnosticModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => 
 
   if (!isOpen) return null;
 
-  const totalSteps = 5;
+  const totalSteps = 4;
   const progress = (step / totalSteps) * 100;
 
   const handleNext = (questionIndex: string, answer: string) => {
     setAnswers(prev => ({ ...prev, [questionIndex]: answer }));
-    if (step < totalSteps) {
-      setStep(prev => prev + 1);
-    } else {
-      setStep(6);
-    }
+    setStep(prev => prev + 1);
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -104,8 +100,9 @@ const DiagnosticModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => 
       body: JSON.stringify(Object.fromEntries(formData))
     })
       .then(response => response.json())
-      .then(data => {
+      .then(() => {
         setStatus('success');
+        sessionStorage.setItem('eleveai-modal-submitted', 'true');
       })
       .catch(error => {
         console.error(error);
@@ -116,29 +113,22 @@ const DiagnosticModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => 
 
   const questions = [
     {
-      id: "Q1_Investe_Aquisicao",
-      title: "Seu negócio já investe em aquisição de clientes online?",
-      options: ["Sim", "Ainda não", "De forma inconsistente"]
+      id: "Q1_Rastreamento",
+      title: "Sua clínica já possui rastreamento configurado?",
+      options: ["Sim, já possuo", "Não, ainda não"],
+      tip: "Pixel, Analytics, Tag Manager e remarketing ajudam sua clínica a entender quem entrou no site e quem estava pronto para agendar."
     },
     {
-      id: "Q2_Processo_Transformacao",
-      title: "Hoje sua empresa possui um processo estruturado para transformar visitantes em clientes?",
-      options: ["Sim", "Parcialmente", "Não"]
+      id: "Q2_Precisao",
+      title: "Hoje sua clínica sabe exatamente quantos pacientes chegam pelo site ou WhatsApp?",
+      options: ["Sim", "Não", "Tenho uma noção, mas não com precisão"],
+      tip: "Saber a origem exata do paciente permite investir apenas nos canais que realmente trazem retorno financeiro para a clínica."
     },
     {
-      id: "Q3_Automacao_Relacionamento",
-      title: "Existe automação no relacionamento com clientes ou vendas?",
-      options: ["Sim", "Apenas ferramentas isoladas", "Não"]
-    },
-    {
-      id: "Q4_Objetivo_Atual",
-      title: "Qual é o principal objetivo do negócio hoje?",
-      options: ["Gerar mais clientes", "Melhorar conversão", "Estruturar presença digital", "Escalar vendas"]
-    },
-    {
-      id: "Q5_Faturamento",
-      title: "Qual o faturamento médio mensal da empresa?",
-      options: ["Até 10 mil", "10 mil a 50 mil", "50 mil a 100 mil", "Acima de 100 mil"]
+      id: "Q3_Automacao",
+      title: "Sua clínica já envia lembretes e confirmações automáticas?",
+      options: ["Sim", "Não", "Parcialmente"],
+      tip: "Automações reduzem faltas em até 40% e liberam sua secretária para focar em atendimentos mais complexos."
     }
   ];
 
@@ -154,7 +144,7 @@ const DiagnosticModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => 
           initial={{ opacity: 0, scale: 0.95, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: 20 }}
-          className="relative w-full max-w-lg bg-black/70 backdrop-blur-xl border border-white/10 p-6 md:p-10 shadow-2xl z-10 rounded-none"
+          className="relative w-full max-w-lg bg-black/70 backdrop-blur-xl border border-white/10 p-6 md:p-10 shadow-2xl z-10 rounded-[2.5rem]"
           role="dialog"
           aria-modal="true"
           aria-labelledby="modal-title"
@@ -173,32 +163,29 @@ const DiagnosticModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => 
                 <CheckCircle2 size={32} />
               </div>
               <h3 className="text-2xl font-bold text-white mb-2">Análise Solicitada</h3>
-              <p className="text-gray-400">Nossa equipe estratégica analisará seu negócio e entrará em contato em breve.</p>
+              <p className="text-gray-400">Nossa equipe estratégica analisará os dados da sua clínica e entrará em contato em breve.</p>
               <button
                 onClick={onClose}
-                className="mt-8 w-full py-3 bg-white/5 hover:bg-white/10 text-white rounded-none font-medium transition-colors border border-zinc-800"
+                className="mt-8 w-full py-4 bg-white/5 hover:bg-white/10 text-white rounded-2xl font-bold uppercase tracking-[0.2em] text-[10px] transition-all border border-zinc-800"
               >
                 Fechar
               </button>
             </div>
-          ) : step <= 5 ? (
-            <>
-              <div className="mb-8">
+          ) : step <= 3 ? (
+            <div key={step}>
                 <div className="flex justify-between items-end mb-2">
-                  <h3 className="text-lg md:text-xl font-bold text-white">Antes de sair, veja como está a geração de clientes do seu negócio.</h3>
+                  <h3 className="text-lg md:text-xl font-bold text-white max-w-xs leading-tight">Avalie a maturidade digital da sua clínica.</h3>
                 </div>
                 <div className="flex justify-between items-end mb-2">
-                  <span className="text-xs text-gray-400">Leva menos de 30 segundos.</span>
-                  <span className="text-xs text-[#B988BF] font-semibold">Pergunta {step} de 5</span>
+                  <span className="text-[10px] text-gray-500 font-bold uppercase tracking-wider">Passo {step} de {totalSteps}</span>
+                  <span className="text-[10px] text-[#B988BF] font-bold uppercase tracking-wider">Diagnóstico Estratégico</span>
                 </div>
-                <div className="w-full bg-white/10 h-1.5 rounded-full overflow-hidden">
+                <div className="w-full bg-white/5 h-1 rounded-full overflow-hidden mb-8">
                   <div
-                    className="bg-gradient-to-r from-[#B988BF] to-[#B988BF] h-full transition-all duration-500 ease-out"
+                    className="bg-gradient-to-r from-[#B988BF] to-[#96649c] h-full transition-all duration-500 ease-out"
                     style={{ width: `${progress}%` }}
                   />
                 </div>
-                <div className="mt-1 text-right text-[10px] text-gray-400 font-medium">{progress}% concluído</div>
-              </div>
 
               <div className="mb-8">
                 <h4 id="modal-title" className="text-xl md:text-2xl font-semibold text-white leading-snug">
@@ -206,54 +193,62 @@ const DiagnosticModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => 
                 </h4>
               </div>
 
-              <div className="space-y-3">
+              <div className="space-y-4">
+                <p className="text-[11px] text-gray-500 font-medium leading-relaxed bg-white/5 p-4 border border-white/5 rounded-xl">
+                  <strong className="text-gray-300">Dica Estratégica:</strong> {questions[step - 1].tip}
+                </p>
                 {questions[step - 1].options.map((option, idx) => (
                   <button
                     key={idx}
                     onClick={() => handleNext(questions[step - 1].id, option)}
-                    className="w-full text-left px-5 py-4 rounded-none border border-white/10 bg-white/5 hover:border-[#B988BF] hover:bg-[#B988BF]/10 text-gray-300 hover:text-white transition-all font-medium backdrop-blur-sm"
+                    className="w-full text-center px-8 py-5 rounded-2xl border border-white/10 bg-white/5 hover:border-[#B988BF] hover:bg-[#B988BF]/10 text-gray-300 hover:text-white transition-all font-bold uppercase tracking-[0.15em] text-[11px] backdrop-blur-sm"
                   >
                     {option}
                   </button>
                 ))}
               </div>
-            </>
+            </div>
           ) : (
-            <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="text-center">
-              <div className="w-16 h-16 bg-[#B988BF]/20 text-[#B988BF] rounded-full flex items-center justify-center mx-auto mb-6">
-                <BarChart3 size={32} />
+            <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="text-center">
+              <div className="w-16 h-16 bg-[#B988BF]/10 text-[#B988BF] rounded-full flex items-center justify-center mx-auto mb-6 shadow-glow">
+                <Sparkles size={32} />
               </div>
-              <h3 className="text-xl md:text-2xl font-bold text-white mb-4">Análise Finalizada</h3>
+              <h3 className="text-xl md:text-2xl font-bold text-white mb-4">Sua clínica está preparada para crescer?</h3>
               <p className="text-gray-400 text-sm md:text-base mb-8 leading-relaxed">
-                Seu negócio ainda depende de ações isoladas para gerar novos clientes. Com a estrutura correta, é possível transformar aquisição de clientes em um processo previsível.
+                Receba uma análise estratégica sobre site, rastreamento, anúncios e automação para escalar seus agendamentos de forma previsível.
               </p>
 
               <form onSubmit={handleSubmit} className="space-y-4 text-left">
-                <input type="hidden" name="_subject" value="Novo Diagnóstico de Negócio - EleveAI" />
+                <input type="hidden" name="_subject" value="Novo Diagnóstico de Clínica - EleveAI" />
                 <input type="hidden" name="_captcha" value="false" />
                 <input type="hidden" name="_template" value="table" />
 
                 <div>
-                  <label htmlFor="diag-nome" className="block text-xs font-semibold text-gray-400 mb-1.5 ml-1">Nome</label>
-                  <input id="diag-nome" required type="text" name="Nome" className="w-full bg-[#0A0A0B]/50 border border-zinc-800 rounded-none px-4 py-3 text-white focus:outline-none focus:border-[#B988BF] transition-colors" placeholder="Seu nome completo" />
+                  <label htmlFor="diag-nome" className="block text-[10px] font-bold uppercase tracking-wider text-gray-500 mb-1.5 ml-1">Seu Nome</label>
+                  <input id="diag-nome" required type="text" name="Nome" className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#B988BF] transition-all" placeholder="Nome completo" />
                 </div>
 
                 <div>
-                  <label htmlFor="diag-whatsapp" className="block text-xs font-semibold text-gray-400 mb-1.5 ml-1">WhatsApp</label>
-                  <input id="diag-whatsapp" required type="tel" name="WhatsApp" className="w-full bg-[#0A0A0B]/50 border border-zinc-800 rounded-none px-4 py-3 text-white focus:outline-none focus:border-[#B988BF] transition-colors" placeholder="(00) 00000-0000" />
+                  <label htmlFor="diag-clinica" className="block text-[10px] font-bold uppercase tracking-wider text-gray-500 mb-1.5 ml-1">Nome da Clínica</label>
+                  <input id="diag-clinica" required type="text" name="Nome_Clinica" className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#B988BF] transition-all" placeholder="Como se chama sua clínica?" />
+                </div>
+
+                <div>
+                  <label htmlFor="diag-whatsapp" className="block text-[10px] font-bold uppercase tracking-wider text-gray-500 mb-1.5 ml-1">WhatsApp</label>
+                  <input id="diag-whatsapp" required type="tel" name="WhatsApp" className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#B988BF] transition-all" placeholder="(00) 00000-0000" />
                 </div>
 
                 <button
                   type="submit"
                   disabled={status === 'submitting'}
-                  className="group relative inline-flex w-full mt-4 h-[50px] items-center justify-center overflow-hidden rounded-none outline-none cursor-pointer transition-transform active:scale-95 bg-white/5 border border-[#B988BF] text-[#B988BF] hover:bg-[#B988BF] hover:text-white disabled:opacity-50"
+                  className="group relative inline-flex w-full mt-6 h-[64px] px-12 items-center justify-center overflow-hidden rounded-2xl outline-none cursor-pointer transition-all active:scale-95 bg-[#B988BF] text-white font-bold tracking-[0.2em] uppercase text-[11px] hover:bg-[#a372ab] shadow-[0_10px_25px_rgba(185,136,191,0.25)]"
                 >
-                  <span className="relative z-20 flex items-center justify-center gap-2 text-xs font-bold tracking-wide uppercase">
+                  <span className="relative z-20 flex items-center justify-center gap-5">
                     {status === 'submitting' ? 'Enviando...' : 'Receber análise estratégica'}
-                    {status !== 'submitting' && <ArrowRight size={16} className="transition-transform duration-300 group-hover:translate-x-0.5" />}
+                    {status !== 'submitting' && <ArrowRight size={20} className="transition-transform duration-300 group-hover:translate-x-1" />}
                   </span>
                 </button>
-                <p className="text-center text-xs text-gray-400 mt-2">Sem compromisso.</p>
+                <p className="text-center text-[10px] text-gray-500 font-bold uppercase tracking-widest mt-4 opacity-60">Análise técnica • Sem compromisso</p>
               </form>
             </motion.div>
           )}
@@ -343,13 +338,18 @@ const Navbar = ({ onHome }: { onHome: () => void }) => {
               <button 
                 key={link.label}
                 onClick={link.action ?? (() => scrollToSection(link.id!))} 
-                className="group hover:text-black transition-all text-[11px] uppercase tracking-[0.2em] font-bold text-zinc-800 font-manrope py-1 relative drop-shadow-sm"
+                className="group hover:text-[#B988BF] transition-all text-[11px] uppercase tracking-[0.2em] font-bold text-zinc-300 font-manrope py-1 relative drop-shadow-sm"
               >
                 {link.label}
                 <span className="absolute -bottom-1 left-0 w-0 h-[2px] bg-[#B988BF] transition-all group-hover:w-full"></span>
               </button>
             ))}
-            <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="bg-zinc-800 hover:bg-black text-white px-6 py-2.5 rounded-full text-[10px] font-bold uppercase tracking-[0.15em] transition-all shadow-[0_4px_14px_0_rgba(0,0,0,0.12)] hover:shadow-[0_6px_20px_rgba(0,0,0,0.25)] hover:-translate-y-[1px]">
+            <a 
+              href={WHATSAPP_URL} 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="bg-zinc-800 hover:bg-black text-white px-8 py-3.5 rounded-full text-[10px] font-bold uppercase tracking-[0.15em] transition-all shadow-[0_4px_14px_0_rgba(0,0,0,0.12)] hover:shadow-[0_8px_25px_rgba(0,0,0,0.3)] hover:-translate-y-[1px]"
+            >
               Agendar Avaliação
             </a>
           </div>
@@ -411,10 +411,10 @@ const Navbar = ({ onHome }: { onHome: () => void }) => {
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={closeMenu}
-                className="mt-4 flex items-center gap-3 bg-[#B988BF] hover:bg-[#7a2cb3] text-white px-8 py-4 rounded-full font-bold text-lg transition-all shadow-[0_10px_30px_rgba(185, 136, 191,0.35)] hover:shadow-[0_10px_40px_rgba(185, 136, 191,0.5)]"
+                className="mt-4 flex items-center gap-5 bg-[#B988BF] hover:bg-[#7a2cb3] text-white px-10 py-5 rounded-full font-bold text-xl transition-all shadow-[0_15px_35px_rgba(185, 136, 191,0.4)] hover:shadow-[0_20px_45px_rgba(185, 136, 191,0.5)]"
               >
                 Falar no WhatsApp
-                <ArrowRight size={20} />
+                <ArrowRight size={22} />
               </motion.a>
             </nav>
 
@@ -468,17 +468,22 @@ const Hero = ({ onOpenModal }: { onOpenModal: () => void }) => {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-5 w-full lg:w-auto mt-2" style={{ animation: 'fadeSlideIn 1s ease-out 1.4s both' }}>
-              <button onClick={onOpenModal} className="group relative flex h-[60px] w-full sm:w-auto sm:min-w-[280px] items-center justify-center rounded-2xl bg-gradient-to-br from-zinc-900 to-[#1A0B2E] hover:to-[#250F41] transition-all shadow-[0_10px_30px_-10px_rgba(104,37,154,0.4)] hover:shadow-[0_15px_40px_-10px_rgba(104,37,154,0.5)] hover:-translate-y-0.5 overflow-hidden border border-white/10">
-                <span className="absolute inset-0 bg-white/5 shadow-inner"></span>
-                <span className="absolute inset-0 bg-white/10 -skew-x-12 -translate-x-[150%] group-hover:animate-[shimmer_2s_ease-out_infinite]"></span>
-                <span className="relative z-20 flex items-center justify-center gap-3 text-[12px] font-bold text-white tracking-[0.15em] uppercase font-manrope">
+              <button 
+                onClick={onOpenModal}
+                className="group relative flex h-[62px] w-full sm:w-auto sm:min-w-[300px] px-12 items-center justify-center overflow-hidden rounded-2xl transition-all hover:-translate-y-1 active:scale-95 bg-gradient-to-br from-zinc-800 to-[#1A1A1E] border border-white/10 shadow-[0_15px_35px_rgba(0,0,0,0.4)] hover:shadow-[0_20px_50px_rgba(185,136,191,0.25)]"
+              >
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#B988BF]/10 to-transparent translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-1000"></div>
+                <span className="relative z-10 flex items-center justify-center gap-5 text-[12px] sm:text-[13px] font-bold tracking-[0.2em] uppercase font-manrope text-white whitespace-nowrap">
                   <span>Solicitar análise estratégica</span>
-                  <ArrowRight size={16} className="transition-transform duration-300 group-hover:translate-x-1" />
+                  <ArrowRight size={20} className="transition-transform duration-300 group-hover:translate-x-1" />
                 </span>
               </button>
 
-              <button onClick={() => document.getElementById('sistema')?.scrollIntoView({ behavior: 'smooth' })} className="group relative flex h-[60px] w-full sm:w-auto sm:min-w-[240px] items-center justify-center rounded-2xl bg-transparent hover:bg-white/5 backdrop-blur-sm transition-all hover:-translate-y-0.5 text-zinc-300 hover:text-white border border-transparent hover:border-white/10">
-                <span className="relative z-20 flex items-center justify-center gap-3 text-[12px] font-bold tracking-[0.15em] uppercase font-manrope">
+              <button 
+                onClick={() => document.getElementById('sistema')?.scrollIntoView({ behavior: 'smooth' })} 
+                className="group relative flex h-[60px] w-full sm:w-auto sm:min-w-[240px] px-10 items-center justify-center rounded-2xl bg-transparent hover:bg-white/5 backdrop-blur-sm transition-all hover:-translate-y-0.5 text-zinc-300 hover:text-white border border-transparent hover:border-white/10"
+              >
+                <span className="relative z-20 flex items-center justify-center gap-4 text-[12px] font-bold tracking-[0.15em] uppercase font-manrope">
                   <span>Ver como funciona</span>
                   <ChevronDown size={16} className="transition-transform duration-300 group-hover:translate-y-1" />
                 </span>
@@ -787,11 +792,11 @@ const GoogleAdsPremium = ({ onOpenModal }: { onOpenModal: () => void }) => {
           {/* CTA */}
           <button
             onClick={onOpenModal}
-            className="group relative flex h-[54px] w-full sm:min-w-[280px] sm:w-auto mt-10 items-center justify-center bg-primary text-white rounded-2xl text-[11px] font-bold tracking-[0.2em] uppercase transition-all hover:scale-105 shadow-[0_10px_20px_rgba(185,136,191,0.2)] hover:shadow-[0_15px_30px_rgba(185,136,191,0.4)] border border-[#B988BF]/50"
+            className="group relative flex h-[60px] w-full sm:min-w-[320px] sm:w-auto mt-10 px-12 items-center justify-center bg-primary text-white rounded-2xl text-[11px] font-bold tracking-[0.2em] uppercase transition-all hover:scale-105 shadow-[0_15px_35px_rgba(185,136,191,0.3)] hover:shadow-[0_20px_45px_rgba(185,136,191,0.45)] border border-[#B988BF]/50"
             type="button"
           >
             Quero anunciar com rastreamento
-            <ArrowRight size={18} className="ml-3 transition-transform duration-300 group-hover:translate-x-1" />
+            <ArrowRight size={20} className="ml-5 transition-transform duration-300 group-hover:translate-x-1" />
           </button>
         </motion.div>
 
@@ -1197,7 +1202,7 @@ const FinalCTA = ({ onOpenModal }: { onOpenModal: () => void }) => {
     <section className="py-32 px-6 relative overflow-hidden bg-graphite">
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary/10 rounded-full blur-[120px] pointer-events-none" />
       
-      <div className="max-w-6xl mx-auto bg-black/40 backdrop-blur-md p-14 md:p-24 text-center relative z-10 border border-white/10 shadow-[0_20px_80px_rgba(0,0,0,0.8)] rounded-none">
+      <div className="max-w-6xl mx-auto bg-black/40 backdrop-blur-md p-14 md:p-24 text-center relative z-10 border border-white/10 shadow-[0_20px_80px_rgba(0,0,0,0.8)] rounded-[2.5rem]">
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           whileInView={{ opacity: 1, scale: 1 }}
@@ -1215,11 +1220,11 @@ const FinalCTA = ({ onOpenModal }: { onOpenModal: () => void }) => {
           <div className="flex justify-center">
             <button
               onClick={onOpenModal}
-              className="group relative flex h-[64px] w-full sm:min-w-[360px] sm:w-auto items-center justify-center bg-primary text-white text-[12px] font-bold tracking-[0.25em] rounded-[2rem] uppercase transition-all hover:scale-105 hover:shadow-[0_20px_60px_rgba(104,37,154,0.4)] shadow-2xl border border-white/10"
+              className="group relative flex h-[64px] w-full sm:min-w-[380px] sm:w-auto items-center justify-center bg-primary text-white text-[12px] font-bold tracking-[0.25em] rounded-full uppercase transition-all hover:scale-105 hover:shadow-[0_20px_60px_rgba(104,37,154,0.4)] shadow-2xl border border-white/10 px-12"
               type="button"
             >
               Receber análise estratégica
-              <ArrowRight size={22} className="ml-4 transition-transform duration-300 group-hover:translate-x-1" />
+              <ArrowRight size={22} className="ml-5 transition-transform duration-300 group-hover:translate-x-1" />
             </button>
           </div>
           <p className="mt-10 text-xs text-gray-500 font-bold uppercase tracking-widest opacity-60">Análise técnica • Sem compromisso</p>
@@ -1267,7 +1272,7 @@ const Footer = ({ onPrivacy, onTerms, onHome }: { onPrivacy: () => void, onTerms
                   href={btn.href}
                   target={btn.target ? btn.target : undefined}
                   rel={btn.target === "_blank" ? "noopener noreferrer" : undefined}
-                  className={`w-12 h-12 rounded-none bg-white/5 border border-zinc-800 flex items-center justify-center ${btn.color} hover:text-white hover:border-[#B988BF]/50 transition-all`}
+                  className={`w-12 h-12 rounded-full bg-white/5 border border-zinc-800 flex items-center justify-center ${btn.color} hover:text-white hover:border-[#B988BF]/50 transition-all`}
                 >
                   <btn.icon size={20} className="group-hover:scale-110 transition-transform" />
                 </motion.a>
@@ -1416,7 +1421,7 @@ const PrivacyPolicy = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => vo
                 className="group"
               >
                 <div className="flex items-center gap-4 mb-4">
-                  <div className="w-10 h-10 rounded-none bg-white/5 border border-white/10 flex items-center justify-center text-[#B988BF] group-hover:bg-[#B988BF]/10 transition-colors">
+                  <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-[#B988BF] group-hover:bg-[#B988BF]/10 transition-colors">
                     {section.icon}
                   </div>
                   <h3 className="text-xl font-bold text-white font-manrope">{section.title}</h3>
@@ -1430,7 +1435,7 @@ const PrivacyPolicy = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => vo
             <div className="pt-12 pb-6">
               <button
                 onClick={onClose}
-                className="w-full py-5 bg-[#B988BF] text-black font-black uppercase tracking-[0.2em] text-xs hover:bg-white transition-all shadow-[0_10px_30px_rgba(185,136,191,0.3)] hover:shadow-[0_10px_40px_rgba(255,255,255,0.2)]"
+                className="w-full py-5 bg-[#B988BF] text-black font-black uppercase tracking-[0.2em] text-xs hover:bg-white transition-all shadow-[0_10px_30px_rgba(185,136,191,0.3)] hover:shadow-[0_10px_40px_rgba(255,255,255,0.2)] rounded-2xl"
               >
                 Compreendo e Aceito os Termos
               </button>
@@ -1513,7 +1518,7 @@ const TermsOfUse = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => void 
                 className="group"
               >
                 <div className="flex items-center gap-4 mb-4">
-                  <div className="w-10 h-10 rounded-none bg-white/5 border border-white/10 flex items-center justify-center text-[#B988BF] group-hover:bg-[#B988BF]/10 transition-colors">
+                  <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-[#B988BF] group-hover:bg-[#B988BF]/10 transition-colors">
                     {section.icon}
                   </div>
                   <h3 className="text-xl font-bold text-white font-manrope">{section.title}</h3>
@@ -1527,7 +1532,7 @@ const TermsOfUse = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => void 
             <div className="pt-12 pb-6">
               <button
                 onClick={onClose}
-                className="w-full py-5 bg-[#B988BF] text-black font-black uppercase tracking-[0.2em] text-xs hover:bg-white transition-all shadow-[0_10px_30px_rgba(185,136,191,0.3)] hover:shadow-[0_10px_40px_rgba(255,255,255,0.2)]"
+                className="w-full py-5 bg-[#B988BF] text-black font-black uppercase tracking-[0.2em] text-xs hover:bg-white transition-all shadow-[0_10px_30px_rgba(185,136,191,0.3)] hover:shadow-[0_10px_40px_rgba(255,255,255,0.2)] rounded-2xl"
               >
                 Compreendo e Aceito os Termos
               </button>
@@ -1559,39 +1564,45 @@ const CookieConsent = () => {
     <AnimatePresence>
       {isVisible && (
         <motion.div
-          initial={{ y: 50, opacity: 0, scale: 0.9 }}
+          initial={{ y: 50, opacity: 0, scale: 0.95 }}
           animate={{ y: 0, opacity: 1, scale: 1 }}
-          exit={{ y: 20, opacity: 0, scale: 0.9 }}
-          className="fixed bottom-6 left-1/2 -translate-x-1/2 md:left-auto md:right-8 md:translate-x-0 z-[100] w-[calc(100%-3rem)] max-w-[400px]"
+          exit={{ y: 20, opacity: 0, scale: 0.95 }}
+          className="fixed bottom-6 left-1/2 -translate-x-1/2 md:left-auto md:right-8 md:translate-x-0 z-[100] w-[calc(100%-3rem)] max-w-[340px]"
         >
-          <div className="bg-black/60 backdrop-blur-2xl border border-white/10 p-5 md:p-6 shadow-[0_20px_50px_rgba(0,0,0,0.5)] flex flex-col gap-5 relative overflow-hidden group">
-            {/* Subtle light effect */}
-            <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-[#B988BF]/50 to-transparent" />
+          <div className="bg-[#0A0A0B]/80 backdrop-blur-2xl border border-[#B988BF]/20 p-4 md:p-5 shadow-[0_20px_50px_rgba(0,0,0,0.4)] flex flex-col gap-4 relative overflow-hidden rounded-[2rem] group font-manrope">
+            {/* Subtle glow effect */}
+            <div className="absolute -top-10 -left-10 w-24 h-24 bg-[#B988BF]/10 blur-[40px] rounded-full pointer-events-none" />
             
-            <div className="flex items-start gap-4">
-              <div className="w-10 h-10 shrink-0 bg-[#B988BF]/10 flex items-center justify-center text-[#B988BF]">
-                <Shield size={20} />
+            <div className="flex items-start gap-3 relative z-10">
+              <div className="w-8 h-8 shrink-0 bg-[#B988BF]/5 border border-[#B988BF]/10 flex items-center justify-center text-[#B988BF] rounded-xl">
+                <Shield size={14} />
               </div>
               <div className="flex-1">
-                <p className="text-[13px] text-gray-300 leading-snug font-medium pr-4">
-                  Utilizamos cookies para otimizar sua experiência e personalizar nossas métricas de crescimento.
+                <p className="text-[11px] text-zinc-400 leading-relaxed font-medium">
+                  Usamos cookies, Pixel e ferramentas de rastreamento para melhorar sua experiência e entender como os visitantes interagem com o site.
                 </p>
               </div>
               <button
                 onClick={() => setIsVisible(false)}
-                className="text-gray-500 hover:text-white transition-colors"
+                className="text-zinc-600 hover:text-white transition-colors"
                 aria-label="Fechar"
               >
-                <X size={18} />
+                <X size={14} />
               </button>
             </div>
 
-            <div className="flex gap-3">
+            <div className="flex gap-2 relative z-10">
               <button
                 onClick={handleAccept}
-                className="flex-1 py-3 bg-[#B988BF] text-black font-black uppercase tracking-widest text-[10px] hover:bg-white transition-all active:scale-95 shadow-lg"
+                className="flex-[2] py-3 bg-[#B988BF] text-white font-bold uppercase tracking-[0.15em] text-[9px] hover:bg-[#a372ab] transition-all active:scale-95 rounded-2xl shadow-[0_4px_12px_rgba(185,136,191,0.3)]"
               >
-                Aceitar e Continuar
+                Aceitar
+              </button>
+              <button
+                onClick={() => { setIsVisible(false); onPrivacy(); }}
+                className="flex-1 py-3 bg-white/5 border border-white/10 text-zinc-500 font-bold uppercase tracking-[0.15em] text-[9px] hover:bg-white/10 hover:text-zinc-200 transition-all active:scale-95 rounded-2xl"
+              >
+                Configurações
               </button>
             </div>
           </div>
@@ -1615,7 +1626,7 @@ const RaioXSection = ({ onOpenModal }: { onOpenModal: () => void }) => {
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
-          <motion.div whileHover={{ y: -10 }} className="bg-black/60 backdrop-blur-md p-8 rounded-none border border-white/10 hover:border-[#B988BF]/50 transition-all flex flex-col items-center text-center relative overflow-hidden group">
+          <motion.div whileHover={{ y: -10 }} className="bg-black/60 backdrop-blur-md p-8 rounded-[2rem] border border-white/10 hover:border-[#B988BF]/50 transition-all flex flex-col items-center text-center relative overflow-hidden group">
             <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#B988BF] transform -translate-x-full group-hover:translate-x-0 transition-transform duration-200"></div>
             <div className="w-14 h-14 rounded-full bg-[#B988BF]/10 flex items-center justify-center mb-6 text-[#B988BF] group-hover:scale-110 transition-transform duration-300">
               <Target size={28} />
@@ -1624,7 +1635,7 @@ const RaioXSection = ({ onOpenModal }: { onOpenModal: () => void }) => {
             <p className="text-sm text-zinc-300 leading-relaxed font-sans">Negócios que até geram visitas, mas não atraem as oportunidades certas para vendas de alto ticket.</p>
           </motion.div>
 
-          <motion.div whileHover={{ y: -10 }} className="bg-black/60 backdrop-blur-md p-8 rounded-none border border-white/10 hover:border-[#EEC6A2]/50 transition-all flex flex-col items-center text-center relative overflow-hidden group">
+          <motion.div whileHover={{ y: -10 }} className="bg-black/60 backdrop-blur-md p-8 rounded-[2rem] border border-white/10 hover:border-[#EEC6A2]/50 transition-all flex flex-col items-center text-center relative overflow-hidden group">
             <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#EEC6A2] transform -translate-x-full group-hover:translate-x-0 transition-transform duration-200"></div>
             <div className="w-14 h-14 rounded-full bg-[#EEC6A2]/10 flex items-center justify-center mb-6 text-[#EEC6A2] group-hover:scale-110 transition-transform duration-300">
               <TrendingUp size={28} />
@@ -1633,7 +1644,7 @@ const RaioXSection = ({ onOpenModal }: { onOpenModal: () => void }) => {
             <p className="text-sm text-zinc-300 leading-relaxed font-sans">Negócios que recebem contatos, mas não transformam o interesse em um avanço comercial previsível.</p>
           </motion.div>
 
-          <motion.div whileHover={{ y: -10 }} className="bg-black/60 backdrop-blur-md p-8 rounded-none border border-white/10 hover:border-[#B988BF]/50 transition-all flex flex-col items-center text-center relative overflow-hidden group">
+          <motion.div whileHover={{ y: -10 }} className="bg-black/60 backdrop-blur-md p-8 rounded-[2rem] border border-white/10 hover:border-[#B988BF]/50 transition-all flex flex-col items-center text-center relative overflow-hidden group">
             <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#B988BF] transform -translate-x-full group-hover:translate-x-0 transition-transform duration-200"></div>
             <div className="w-14 h-14 rounded-full bg-[#B988BF]/10 flex items-center justify-center mb-6 text-[#B988BF] group-hover:scale-110 transition-transform duration-300">
               <MessageCircle size={28} />
@@ -1642,7 +1653,7 @@ const RaioXSection = ({ onOpenModal }: { onOpenModal: () => void }) => {
             <p className="text-sm text-zinc-300 leading-relaxed font-sans">Negócios que não mantêm continuidade com leads interessados e acabam perdendo o timing ideal da venda.</p>
           </motion.div>
 
-          <motion.div whileHover={{ y: -10 }} className="bg-black/60 backdrop-blur-md p-8 rounded-none border border-white/10 hover:border-[#EEC6A2]/50 transition-all flex flex-col items-center text-center relative overflow-hidden group">
+          <motion.div whileHover={{ y: -10 }} className="bg-black/60 backdrop-blur-md p-8 rounded-[2rem] border border-white/10 hover:border-[#EEC6A2]/50 transition-all flex flex-col items-center text-center relative overflow-hidden group">
             <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#EEC6A2] transform -translate-x-full group-hover:translate-x-0 transition-transform duration-200"></div>
             <div className="w-14 h-14 rounded-full bg-[#EEC6A2]/10 flex items-center justify-center mb-6 text-[#EEC6A2] group-hover:scale-110 transition-transform duration-300">
               <BarChart3 size={28} />
@@ -1655,18 +1666,18 @@ const RaioXSection = ({ onOpenModal }: { onOpenModal: () => void }) => {
         <div className="text-center">
           <button
             onClick={onOpenModal}
-            className="group relative flex h-[60px] w-auto sm:min-w-[320px] mx-auto items-center justify-center rounded-none px-8 outline-none cursor-pointer transition-transform active:scale-95 bg-white/5 border-none"
+            className="group relative flex h-[64px] w-auto sm:min-w-[340px] mx-auto items-center justify-center rounded-2xl px-12 outline-none cursor-pointer transition-all active:scale-95 bg-white/5 border-none overflow-hidden"
             type="button"
           >
             <div className="pointer-events-none absolute inset-0 opacity-100 transition-opacity duration-[1200ms] ease-in-out group-hover:opacity-0" style={{ background: 'radial-gradient(15% 50% at 50% 100%, #B988BF 0%, rgba(185, 136, 191, 0) 100%)', filter: 'blur(15px)' }}></div>
             <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-[1200ms] ease-in-out group-hover:opacity-100" style={{ background: 'radial-gradient(60.6% 50% at 50% 100%, #B988BF 0%, rgba(185, 136, 191, 0) 100%)', filter: 'blur(18px)' }}></div>
             <div className="pointer-events-none will-change-auto absolute inset-0 opacity-100 transition-opacity duration-[1200ms] ease-in-out group-hover:opacity-0" style={{ background: 'radial-gradient(10.7% 50% at 50% 100%, #B988BF 0%, rgba(185, 136, 191, 0) 100%)' }}></div>
             <div className="pointer-events-none will-change-auto absolute inset-0 opacity-0 transition-opacity duration-[1200ms] ease-in-out group-hover:opacity-100" style={{ background: 'radial-gradient(60.1% 50% at 50% 100%, #B988BF 0%, rgba(185, 136, 191, 0) 100%)' }}></div>
-            <div className="pointer-events-none absolute inset-0 overflow-hidden rounded-none">
+            <div className="pointer-events-none absolute inset-0 overflow-hidden">
               <div className="absolute -inset-[300%] animate-[spin_4s_linear_infinite]" style={{ background: 'conic-gradient(from 90deg at 50% 50%, transparent 0%, transparent 90%, #B988BF 100%)' }}></div>
             </div>
-            <div className="absolute inset-[1px] rounded-none bg-black"></div>
-            <span className="relative z-20 flex items-center justify-center gap-3 text-base md:text-lg font-bold text-white tracking-wide uppercase font-manrope">
+            <div className="absolute inset-[1px] rounded-2xl bg-black"></div>
+            <span className="relative z-20 flex items-center justify-center gap-4 text-base md:text-lg font-bold text-white tracking-wide uppercase font-manrope">
               Ver o Raio-X do Meu Negócio
               <ArrowRight size={22} className="transition-transform duration-300 group-hover:translate-x-1" />
             </span>
@@ -1696,31 +1707,13 @@ const App = () => {
     const hasSubmitted = sessionStorage.getItem('eleveai-modal-submitted');
     if (hasSeenModal || hasSubmitted) return;
 
-    // 30-second timer trigger
+    // 50-second timer trigger
     const timer = setTimeout(() => {
       setIsModalOpen(true);
-    }, 30000);
-
-    // 50% scroll trigger
-    const handleScroll = () => {
-      const scrolled = window.scrollY || document.documentElement.scrollTop;
-      const maxScroll = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-      if (maxScroll <= 0) return;
-      const scrollPercent = (scrolled / maxScroll) * 100;
-
-      if (scrollPercent >= 50) {
-        setIsModalOpen(true);
-        window.removeEventListener('scroll', handleScroll);
-        clearTimeout(timer);
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll(); // Check immediately on mount in case of reload
+    }, 50000);
 
     return () => {
       clearTimeout(timer);
-      window.removeEventListener('scroll', handleScroll);
     };
   }, []);
 
