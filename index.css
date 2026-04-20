@@ -3,6 +3,34 @@
 @theme {
   --font-manrope: "Manrope", sans-serif;
   --font-sans: "Inter", sans-serif;
+  --font-serif: "Playfair Display", serif;
+  
+  --color-primary: #68259A;
+  --color-secondary: #72578C;
+  --color-lilac: #B988BF;
+  --color-beige: #EEC6A2;
+  --color-ice: #F7F7FA;
+  --color-graphite: #0B0B10;
+}
+
+@layer base {
+  .font-serif {
+    font-family: var(--font-serif);
+  }
+}
+
+@layer components {
+  .card-premium {
+    @apply bg-white shadow-[0_8px_32px_rgba(104,37,154,0.06)] border border-black/5 rounded-sm transition-all duration-500;
+  }
+
+  .card-premium-dark {
+    @apply bg-graphite/40 backdrop-blur-md border border-white/10 rounded-sm transition-all duration-500;
+  }
+
+  .btn-premium {
+    @apply relative overflow-hidden transition-all duration-300 active:scale-95 px-8 h-[54px] flex items-center justify-center font-bold tracking-widest text-[11px] uppercase;
+  }
 }
 
 @keyframes haloPulse {

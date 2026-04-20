@@ -129,20 +129,22 @@
   <link rel="dns-prefetch" href="https://connect.facebook.net">
   <link rel="dns-prefetch" href="https://www.googletagmanager.com">
   <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap"
     rel="stylesheet" media="print" onload="this.media='all'">
   <noscript>
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap"
       rel="stylesheet">
   </noscript>
   <style>
     :root {
-      --color-primary: #B988BF;
+      --color-primary: #68259A;
       --color-secondary: #72578C;
       --color-accent: #B988BF;
       --color-warm: #EEC6A2;
-      --color-bg: #0A0A0B;
+      --color-ice: #F7F7FA;
+      --color-graphite: #0B0B10;
+      --color-bg: #0B0B10;
     }
 
     * {
@@ -154,6 +156,7 @@
       color: #ffffff;
       font-family: 'Inter', sans-serif;
       overflow-x: hidden;
+      line-height: 1.6;
     }
 
     h1,
@@ -161,6 +164,11 @@
     h3,
     h4 {
       font-family: 'Manrope', sans-serif;
+      letter-spacing: -0.02em;
+    }
+
+    .font-serif {
+      font-family: 'Playfair Display', serif;
     }
 
     .glass {
@@ -171,10 +179,11 @@
     }
 
     .text-gradient {
-      background: linear-gradient(135deg, #EEC6A2 0%, #B988BF 50%, #B988BF 100%);
+      background: linear-gradient(135deg, #F7F7FA 0%, #B988BF 50%, #68259A 100%);
       -webkit-background-clip: text;
       background-clip: text;
       -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
 
     .bg-glow {

@@ -35,7 +35,8 @@ import {
   UserCheck,
   BarChart2,
   ShieldAlert,
-  Lock
+  Lock,
+  Sparkles
 } from 'lucide-react';
 
 // Configuration
@@ -321,38 +322,46 @@ const Navbar = ({ onHome }: { onHome: () => void }) => {
 
   return (
     <>
-      <div className="fixed flex w-full z-50 pt-6 pr-4 pl-4 top-0 left-0 justify-center" style={{ animation: 'fadeSlideIn 1s ease-out 1s both' }}>
+      <div className="fixed flex w-full z-50 pt-0 md:pt-4 pr-4 pl-4 top-0 left-0 justify-center" style={{ animation: 'fadeSlideIn 1s ease-out 0.2s both' }}>
         <nav 
-          className="shadow-black/50 flex md:gap-12 md:w-auto bg-black/60 w-full max-w-6xl rounded-none pt-2 pr-2 pb-2 pl-3 shadow-2xl backdrop-blur-lg gap-x-8 gap-y-8 items-center justify-between" 
-          style={{ position: 'relative', '--border-gradient': 'linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.2))', '--border-radius-before': '0px' } as React.CSSProperties}
+          className="flex md:gap-12 md:w-auto bg-[#1A1A1E]/95 md:bg-[#1A1A1E]/80 w-full max-w-6xl rounded-2xl md:rounded-full py-2 px-5 md:px-8 shadow-2xl md:shadow-[0_10px_40px_rgba(0,0,0,0.2)] backdrop-blur-md border border-white/5 md:border-white/10 items-center justify-between" 
         >
           {/* Logo */}
-          <a href="#" aria-label="Voltar para o topo" className="flex items-center cursor-pointer px-2" onClick={(e) => { e.preventDefault(); handleHomeClick(); }}>
+          <a href="#" aria-label="Voltar para o topo" className="flex items-center cursor-pointer" onClick={(e) => { e.preventDefault(); handleHomeClick(); }}>
             <img
               src="/logo.png"
               alt="EleveAI - Máquinas de Crescimento"
-              width="150"
-              height="56"
-              className="h-[3rem] md:h-[3.5rem] w-auto object-contain transition-all origin-left"
+              width="200"
+              height="80"
+              className="h-[5.5rem] md:h-[4.5rem] w-auto object-contain transition-all hover:brightness-110 drop-shadow-md brightness-[500%] md:brightness-100"
             />
           </a>
 
           {/* Desktop Nav Links */}
-          <div className="hidden md:flex items-center gap-6 pr-4">
-            <button onClick={handleHomeClick} className="group hover:text-white transition-colors text-sm font-medium text-gray-400 font-sans py-1 relative">Home</button>
-            <button onClick={() => scrollToSection('sistema')} className="group hover:text-white transition-colors text-sm font-medium text-gray-400 font-sans py-1 relative">Sistema</button>
-            <button onClick={() => scrollToSection('diagnostico')} className="group hover:text-white transition-colors text-sm font-medium text-gray-400 font-sans py-1 relative">Soluções</button>
-            <button onClick={() => scrollToSection('faq')} className="group hover:text-white transition-colors text-sm font-medium text-gray-400 font-sans py-1 relative">FAQ</button>
+          <div className="hidden md:flex items-center gap-8 pr-2">
+            {navLinks.map((link) => (
+              <button 
+                key={link.label}
+                onClick={link.action ?? (() => scrollToSection(link.id!))} 
+                className="group hover:text-black transition-all text-[11px] uppercase tracking-[0.2em] font-bold text-zinc-800 font-manrope py-1 relative drop-shadow-sm"
+              >
+                {link.label}
+                <span className="absolute -bottom-1 left-0 w-0 h-[2px] bg-[#B988BF] transition-all group-hover:w-full"></span>
+              </button>
+            ))}
+            <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="bg-zinc-800 hover:bg-black text-white px-6 py-2.5 rounded-full text-[10px] font-bold uppercase tracking-[0.15em] transition-all shadow-[0_4px_14px_0_rgba(0,0,0,0.12)] hover:shadow-[0_6px_20px_rgba(0,0,0,0.25)] hover:-translate-y-[1px]">
+              Agendar Avaliação
+            </a>
           </div>
 
           {/* Mobile Menu Button */}
-          <div className="flex items-center md:hidden pr-2">
+          <div className="flex items-center md:hidden">
             <button
               aria-label="Toggle menu"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="text-white p-2"
+              className="text-zinc-200 hover:text-white transition-colors p-4 -mr-2"
             >
-              {isMobileMenuOpen ? <Plus className="rotate-45" size={28} aria-hidden="true" /> : <Menu size={28} aria-hidden="true" />}
+              {isMobileMenuOpen ? <X size={32} aria-hidden="true" /> : <Menu size={32} aria-hidden="true" />}
             </button>
           </div>
         </nav>
@@ -425,151 +434,203 @@ const Hero = ({ onOpenModal }: { onOpenModal: () => void }) => {
         <div></div><div></div><div></div><div></div><div></div><div></div>
       </div>
 
-      <section id="hero" className="h-auto min-h-[800px] flex flex-col md:pt-20 overflow-hidden w-full pt-20 relative items-center justify-start" style={{ maskImage: 'linear-gradient(180deg, transparent, black 0%, black 95%, transparent)', WebkitMaskImage: 'linear-gradient(180deg, transparent, black 0%, black 95%, transparent)' }}>
+      <section id="hero" className="h-auto min-h-[900px] flex flex-col md:pt-24 overflow-hidden w-full pt-[8.5rem] pb-16 relative items-center justify-start bg-[#141417]" style={{ maskImage: 'linear-gradient(180deg, transparent, black 0%, black 95%, transparent)', WebkitMaskImage: 'linear-gradient(180deg, transparent, black 0%, black 95%, transparent)' }}>
         
-        {/* Subtle Pulsating Halo Background */}
-        <div className="absolute top-[10%] left-1/2 w-[80vw] max-w-[800px] h-[80vw] max-h-[800px] rounded-full pointer-events-none -z-10" 
-             style={{ 
-               background: 'radial-gradient(circle, rgba(185,136,191,0.15) 0%, rgba(185,136,191,0) 70%)',
-               filter: 'blur(80px)',
-               transform: 'translate(-50%, 0)',
-               animation: 'haloPulse 8s ease-in-out infinite' 
-             }}>
-        </div>
-
-
-
-        <div className="z-10 text-center max-w-5xl mt-2 sm:mt-6 md:mt-24 mx-auto px-6 relative flex flex-col items-center">
-
-          <div className="[animation:fadeSlideIn_1s_ease-out_0.8s_both] inline-flex transition-transform hover:scale-105 cursor-pointer group bg-gradient-to-b from-white/20 via-white/0 to-white/10 rounded-full mb-4 md:mb-10 pt-1.5 pr-3 pb-1.5 pl-3 backdrop-blur-sm gap-x-2 gap-y-2 items-center" style={{ position: 'relative', '--border-gradient': 'linear-gradient(180deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.1))', '--border-radius-before': '9999px' } as any}>
-            <span className="flex h-1.5 w-1.5 rounded-full group-hover:animate-pulse bg-[#B988BF] shadow-[0_0_10px_rgba(185, 136, 191,0.5)]"></span>
-            <span className="text-xs font-medium tracking-wide group-hover:text-white transition-colors font-sans text-purple-100/80">Estratégia e Performance</span>
-          </div>
-          
-          <h1 className="text-center leading-[1.2] md:text-6xl cursor-default text-4xl font-semibold tracking-tighter font-manrope mb-4 md:mb-8 text-white" style={{ animation: 'fadeSlideIn 1s ease-out 1s both', textShadow: '0 2px 24px rgba(0,0,0,0.95)' }}>
-            <span className="block">Você está preparado</span>
-            <span className="block">para <span className="text-[#B988BF]">dominar</span> na internet</span>
-            <span className="block">ou apenas estar presente?</span>
-          </h1>
-
-          <p className="leading-relaxed md:text-2xl text-base font-medium text-gray-400 tracking-normal font-manrope max-w-3xl mx-auto mb-6 md:mb-12" style={{ animation: 'fadeSlideIn 1s ease-out 1.2s both' }}>
-            Em poucos segundos analisamos os pontos que podem estar limitando a geração de contatos para o seu negócio.
-          </p>
-
-          <div className="flex flex-col md:flex-row mb-12 gap-6 items-center justify-center" style={{ animation: 'fadeSlideIn 1s ease-out 1.4s both' }}>
-            <button onClick={onOpenModal} className="group relative flex h-[50px] w-auto sm:min-w-[220px] items-center justify-center rounded-none px-6 outline-none cursor-pointer transition-transform active:scale-95" style={{ backgroundColor: 'rgba(255, 255, 255, 0.05)', border: 'none' }} type="button">
-              <div className="pointer-events-none absolute inset-0 opacity-100 transition-opacity duration-[1200ms] ease-in-out group-hover:opacity-0" style={{ background: 'radial-gradient(15% 50% at 50% 100%, #B988BF 0%, rgba(185, 136, 191, 0) 100%)', filter: 'blur(15px)' }}></div>
-              <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-[1200ms] ease-in-out group-hover:opacity-100" style={{ background: 'radial-gradient(60.6% 50% at 50% 100%, #B988BF 0%, rgba(185, 136, 191, 0) 100%)', filter: 'blur(15px)' }}></div>
-              <div className="pointer-events-none absolute inset-0 overflow-hidden rounded-none opacity-100">
-                <div className="absolute -inset-[300%] animate-[spin_4s_linear_infinite]" style={{ background: 'conic-gradient(from 90deg at 50% 50%, transparent 0%, transparent 90%, #B988BF 100%)' }}></div>
-              </div>
-              <div className="absolute inset-[1px] rounded-none bg-black"></div>
-              <span className="relative z-20 flex items-center justify-center gap-2 text-xs font-medium text-white tracking-wide uppercase">
-                <span style={{ WebkitFontSmoothing: 'antialiased', textShadow: '0 1px 2px rgba(0,0,0,0.5)' }}>VER DIAGNÓSTICO</span>
-                <ArrowRight size={16} className="transition-transform duration-300 group-hover:translate-x-0.5" />
-              </span>
-            </button>
-
-            <a href={WHATSAPP_URL} target="_blank" rel="noreferrer" onClick={trackWhatsAppClick} className="group relative inline-flex h-[50px] sm:min-w-[220px] items-center justify-center overflow-hidden rounded-none outline-none cursor-pointer transition-transform active:scale-95 px-6" style={{ backgroundColor: 'rgba(255, 255, 255, 0.05)' }}>
-              <span className="absolute inset-[-100%] animate-[spin_3s_linear_infinite] opacity-0 transition-opacity duration-300 group-hover:opacity-100" style={{ background: 'conic-gradient(from 90deg at 50% 50%, transparent 0%, transparent 75%, #B988BF 100%)' }}></span>
-              <span className="absolute inset-0 rounded-none bg-zinc-800 transition-opacity duration-300 group-hover:opacity-0"></span>
-              <span className="absolute inset-[1px] rounded-none bg-black z-10"></span>
-              <span className="absolute inset-0 pointer-events-none opacity-0 transition-opacity duration-500 group-hover:opacity-100 z-10" style={{ background: 'radial-gradient(50% 50% at 50% 100%, rgba(185, 136, 191, 0.3) 0%, transparent 100%)' }}></span>
-              <span className="relative z-20 flex items-center justify-center gap-2 text-xs font-medium text-white tracking-wide uppercase">
-                <span>FALAR NO WHATSAPP</span>
-                <WhatsAppIcon size={16} className="transition-transform duration-300 group-hover:translate-x-0.5 text-white" />
-              </span>
-            </a>
+        {/* Vertical Light Beam (Raio-X Style) */}
+        <div className="absolute top-0 bottom-0 left-1/2 w-[1px] -translate-x-1/2 pointer-events-none z-0">
+          <div className="absolute top-0 left-1/2 w-[6px] h-[500px] mix-blend-screen" 
+               style={{ 
+                 background: 'linear-gradient(to bottom, transparent, rgba(185, 136, 191, 0.7), rgba(96, 165, 250, 0.6), transparent)',
+                 transform: 'translateX(-50%)',
+                 boxShadow: '0 0 60px 25px rgba(185, 136, 191, 0.4), 0 0 100px 35px rgba(96, 165, 250, 0.3)',
+                 filter: 'blur(10px)',
+                 opacity: 0.8,
+                 animation: 'beamFall 6s linear infinite',
+                 willChange: 'transform'
+               }}>
           </div>
         </div>
-
-        <div className="flex flex-col lg:flex-row gap-6 w-full max-w-7xl mx-auto px-6 mb-16 relative z-10">
+        
+        <div className="z-10 max-w-7xl mt-12 md:mt-16 mx-auto px-6 md:px-8 relative w-full flex flex-col lg:flex-row items-center gap-16 lg:gap-10">
           
-          <section className="flex-1 bg-black/60 backdrop-blur-md border border-white/10 border-dashed relative p-8 flex flex-col justify-between group hover:border-[#B988BF]/50 transition-all duration-500 rounded-sm [animation:fadeSlideIn_1s_ease-out_0.2s_both]">
-            <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-[#B988BF]"></div>
-            <div className="absolute top-0 right-0 w-2 h-2 border-t border-r border-[#B988BF]"></div>
-            <div className="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-[#B988BF]"></div>
-            <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-[#B988BF]"></div>
-            <div className="space-y-8">
-              <div className="flex items-center justify-between border-b border-zinc-800 pb-4 border-dashed">
-                <span className="font-mono text-[10px] text-[#B988BF] tracking-widest uppercase font-bold">[ Status da Análise ]</span>
-                <div className="flex gap-1.5"><div className="w-1.5 h-1.5 bg-[#B988BF] animate-pulse rounded-none"></div><div className="w-1.5 h-1.5 bg-zinc-800 rounded-none"></div><div className="w-1.5 h-1.5 bg-zinc-800 rounded-none"></div></div>
-              </div>
-              <div>
-                <h2 className="text-zinc-500 text-[10px] font-mono mb-2 uppercase tracking-wider">Média de Aumento no ROI</h2>
-                <div className="flex items-baseline gap-2"><p className="text-5xl font-medium text-white font-manrope tracking-tighter">42</p><span className="text-white text-3xl font-manrope tracking-tighter">%</span></div>
-                <p className="text-xs text-zinc-400 mt-2 font-sans">Empresas otimizadas com sistema de vendas inteligente.</p>
-              </div>
+          {/* Left Column - Copy */}
+          <div className="flex-1 flex flex-col items-center lg:items-start text-center lg:text-left z-20">
+            <div className="[animation:fadeSlideIn_1s_ease-out_0.8s_both] inline-flex transition-transform hover:scale-105 cursor-pointer group bg-zinc-800/60 backdrop-blur-sm rounded-full mb-8 py-1.5 px-6 shadow-sm items-center justify-center">
+              <span className="text-[10px] sm:text-[11px] font-bold tracking-[0.2em] text-zinc-300 uppercase font-sans">Seja bem-vinda, Dra. Seja bem-vindo, Dr.</span>
             </div>
-            <button onClick={onOpenModal} className="mt-8 w-full bg-transparent border border-[#B988BF] text-[#B988BF] hover:bg-[#B988BF] hover:text-white transition-all uppercase text-[11px] font-bold tracking-widest py-4 px-4 flex items-center justify-center gap-3 group/btn rounded-none">
-              <span>Iniciar Avaliação</span>
-              <svg className="w-3 h-3 transform group-hover/btn:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" strokeLinecap="square" strokeLinejoin="miter" strokeWidth="2"></path></svg>
-            </button>
-          </section>
+            
+            <h1 className="leading-[1.15] text-[2.5rem] md:text-[4rem] lg:text-[4.5rem] cursor-default font-extrabold tracking-tight mb-12 text-white font-manrope max-w-[18ch] md:max-w-2xl" style={{ animation: 'fadeSlideIn 1s ease-out 1s both' }}>
+              Sua clínica precisa de <span className="text-[#B988BF]">estrutura</span>, <br className="md:hidden" /> não apenas anúncios.
+            </h1>
 
-          <section className="lg:flex-[1.6] min-h-[400px] md:min-h-[500px] group overflow-hidden border-zinc-800 border rounded-none relative [animation:fadeSlideIn_1s_ease-out_0.4s_both]">
-            <img 
-              alt="Representação visual de máquina de crescimento e funil de vendas estratégico" 
-              className="group-hover:opacity-80 group-hover:scale-105 transition-all duration-700 opacity-60 mix-blend-normal w-full h-full object-cover absolute inset-0" 
-              src="/strategic-funnel-pt.webp" 
-              loading="eager"
-              fetchPriority="high"
-              decoding="async"
-              width="800"
-              height="600"
-            />
-            <div className="flex flex-col z-20 p-6 md:p-8 absolute inset-0 justify-between">
-              <div className="flex items-start justify-between">
-                <div className="bg-black/60 backdrop-blur-md border-white/10 border p-4 shadow-xl">
-                  <div className="flex gap-2 mb-2 items-center"><span className="w-1.5 h-1.5 bg-[#B988BF]"></span><p className="text-zinc-300 font-mono text-[10px] uppercase tracking-widest">Growth Engine</p></div>
-                  <h2 className="text-white font-manrope text-xl md:text-2xl font-semibold tracking-tight uppercase">Sistema Inteligente</h2>
-                </div>
-              </div>
-              <div className="flex flex-col gap-6">
-                <div className="bg-black/60 backdrop-blur-md border-l-4 border-[#B988BF] p-5 max-w-sm shadow-2xl">
-                  <p className="text-zinc-300 text-sm leading-relaxed font-sans">Atraímos o público certo e o conduzimos até a venda através de inteligência de dados e conversão.</p>
-                </div>
-              </div>
-            </div>
-            <div className="absolute bottom-8 right-8 w-16 h-16 md:w-24 md:h-24 border-r border-b border-[#B988BF]/30 z-10"></div>
-          </section>
+            <p className="leading-relaxed md:text-xl text-lg font-normal text-zinc-400 tracking-wide font-sans max-w-xl mb-14" style={{ animation: 'fadeSlideIn 1s ease-out 1.2s both' }}>
+              Sem site, <strong className="font-bold text-zinc-200">Pixel, Analytics e remarketing</strong>, sua clínica perde pacientes todos os dias sem perceber.
+            </p>
 
-          <section className="flex-1 flex flex-col bg-black/60 backdrop-blur-md border border-white/10 rounded-none relative [animation:fadeSlideIn_1s_ease-out_0.6s_both]">
-            <div className="p-5 border-b border-zinc-800 border-dashed flex justify-between items-center bg-zinc-900/10">
-              <span className="font-mono text-[10px] text-white uppercase tracking-widest font-bold">Metodologia EleveAI</span>
-              <div className="flex gap-1"><div className="w-0.5 h-3 bg-[#B988BF]"></div><div className="w-0.5 h-3 bg-zinc-800"></div><div className="w-0.5 h-3 bg-zinc-800"></div></div>
+            <div className="flex flex-col sm:flex-row gap-5 w-full lg:w-auto mt-2" style={{ animation: 'fadeSlideIn 1s ease-out 1.4s both' }}>
+              <button onClick={onOpenModal} className="group relative flex h-[60px] w-full sm:w-auto sm:min-w-[280px] items-center justify-center rounded-2xl bg-gradient-to-br from-zinc-900 to-[#1A0B2E] hover:to-[#250F41] transition-all shadow-[0_10px_30px_-10px_rgba(104,37,154,0.4)] hover:shadow-[0_15px_40px_-10px_rgba(104,37,154,0.5)] hover:-translate-y-0.5 overflow-hidden border border-white/10">
+                <span className="absolute inset-0 bg-white/5 shadow-inner"></span>
+                <span className="absolute inset-0 bg-white/10 -skew-x-12 -translate-x-[150%] group-hover:animate-[shimmer_2s_ease-out_infinite]"></span>
+                <span className="relative z-20 flex items-center justify-center gap-3 text-[12px] font-bold text-white tracking-[0.15em] uppercase font-manrope">
+                  <span>Solicitar análise estratégica</span>
+                  <ArrowRight size={16} className="transition-transform duration-300 group-hover:translate-x-1" />
+                </span>
+              </button>
+
+              <button onClick={() => document.getElementById('sistema')?.scrollIntoView({ behavior: 'smooth' })} className="group relative flex h-[60px] w-full sm:w-auto sm:min-w-[240px] items-center justify-center rounded-2xl bg-transparent hover:bg-white/5 backdrop-blur-sm transition-all hover:-translate-y-0.5 text-zinc-300 hover:text-white border border-transparent hover:border-white/10">
+                <span className="relative z-20 flex items-center justify-center gap-3 text-[12px] font-bold tracking-[0.15em] uppercase font-manrope">
+                  <span>Ver como funciona</span>
+                  <ChevronDown size={16} className="transition-transform duration-300 group-hover:translate-y-1" />
+                </span>
+              </button>
             </div>
-            <div className="flex-1 flex flex-col">
-              <div className="flex-1 border-b border-zinc-800 p-5 flex items-center justify-between group hover:bg-zinc-900/60 transition-colors relative overflow-hidden cursor-default">
-                <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#B988BF]"></div>
-                <div className="pl-2">
-                  <span className="block text-[10px] text-[#B988BF] font-mono mb-1 font-semibold tracking-widest">01</span>
-                  <h4 className="text-base text-white font-manrope font-medium tracking-tight group-hover:translate-x-1 transition-transform duration-300">Posicionamento</h4>
+          </div>
+
+          {/* Right Column - Tech Visualization */}
+          <div className="flex-1 relative w-full h-[550px] lg:h-[700px] flex items-center justify-center perspective-[1000px] mt-8 lg:mt-0" style={{ animation: 'fadeSlideIn 1s ease-out 1.6s both' }}>
+            {/* Core Glow */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] lg:w-[400px] h-[300px] lg:h-[400px] bg-[#B988BF] rounded-full blur-[140px] opacity-30"></div>
+            
+            {/* Main Phone Mockup Element pt 2*/}
+            <motion.div 
+              initial={{ y: 30, opacity: 0, rotateY: 5, rotateX: 5 }}
+              animate={{ y: 0, opacity: 1, rotateY: 0, rotateX: 0 }}
+              transition={{ duration: 1.2, delay: 1.8, type: "spring" }}
+              className="relative z-20 w-[275px] lg:w-[290px] h-[570px] lg:h-[580px] rounded-[3.5rem] border-[10px] border-[#0A0A0B] bg-[#141417]/80 backdrop-blur-2xl shadow-[0_40px_80px_-20px_rgba(0,0,0,0.8),inset_0_0_20px_rgba(255,255,255,0.05)] overflow-hidden flex flex-col"
+            >
+              {/* Notch */}
+              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-40 h-8 bg-[#0A0A0B] rounded-b-3xl z-30 flex items-center justify-center">
+                <div className="w-16 h-1.5 bg-white/10 rounded-full mt-2"></div>
+              </div>
+              
+              {/* UI Mockup Details - Live Conversation Simulation */}
+              <div className="pt-14 px-4 pb-6 flex-1 flex flex-col gap-4 w-full">
+                {/* Chat Header */}
+                <div className="flex items-center gap-3 mb-2 px-2">
+                  <div className="w-8 h-8 rounded-full bg-[#B988BF]/20 flex items-center justify-center">
+                    <MessageCircle size={16} className="text-[#B988BF]" />
+                  </div>
+                  <div className="flex-1">
+                    <div className="h-2 w-16 bg-white/20 rounded-full"></div>
+                    <div className="h-1.5 w-10 bg-white/10 rounded-full mt-1.5"></div>
+                  </div>
+                </div>
+
+                <div className="flex flex-col gap-3 flex-1">
+                  {/* Patient Message */}
+                  <motion.div 
+                    initial={{ opacity: 0, x: -10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.5, duration: 0.5 }}
+                    className="bg-zinc-800/80 rounded-2xl rounded-tl-none p-3 max-w-[85%] border border-white/5 shadow-sm"
+                  >
+                    <p className="text-[10px] text-zinc-300 leading-tight">Olá, queria saber sobre avaliação.</p>
+                  </motion.div>
+
+                  {/* IA Message */}
+                  <motion.div 
+                    initial={{ opacity: 0, x: 10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 2.0, duration: 0.5 }}
+                    className="bg-[#B988BF]/20 border border-[#B988BF]/30 rounded-2xl rounded-tr-none p-3 max-w-[85%] ml-auto shadow-sm"
+                  >
+                    <div className="flex items-center gap-1.5 mb-1 opacity-80">
+                      <Sparkles size={10} className="text-[#B988BF]" />
+                      <span className="text-[8px] font-bold text-[#B988BF] uppercase tracking-wider">IA EleveAI</span>
+                    </div>
+                    <p className="text-[10px] text-[#EAD5EB] leading-tight">Olá! Posso te ajudar com seu agendamento.</p>
+                  </motion.div>
+
+                  {/* Patient Message 2 */}
+                  <motion.div 
+                    initial={{ opacity: 0, x: -10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 3.5, duration: 0.5 }}
+                    className="bg-zinc-800/80 rounded-2xl rounded-tl-none p-3 max-w-[85%] border border-white/5 shadow-sm"
+                  >
+                    <p className="text-[10px] text-zinc-300 leading-tight">Tem horário esta semana?</p>
+                  </motion.div>
+
+                  {/* IA Message 2 */}
+                  <motion.div 
+                    initial={{ opacity: 0, x: 10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 5.0, duration: 0.5 }}
+                    className="bg-[#B988BF]/20 border border-[#B988BF]/30 rounded-2xl rounded-tr-none p-3 max-w-[85%] ml-auto shadow-sm"
+                  >
+                    <p className="text-[10px] text-[#EAD5EB] leading-tight">Temos sim. Qual período você prefere?</p>
+                  </motion.div>
+
+                  {/* Typing Indicator */}
+                  <motion.div 
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: [0, 1, 1, 0] }}
+                    transition={{ delay: 3.0, duration: 0.8, repeat: Infinity, repeatDelay: 5 }}
+                    className="flex gap-1 ml-auto mr-4"
+                  >
+                    <div className="w-1 h-1 bg-[#B988BF]/60 rounded-full"></div>
+                    <div className="w-1 h-1 bg-[#B988BF]/60 rounded-full"></div>
+                    <div className="w-1 h-1 bg-[#B988BF]/60 rounded-full"></div>
+                  </motion.div>
+                </div>
+
+                {/* Chat Input Placeholder */}
+                <div className="mt-auto h-10 rounded-xl bg-white/5 border border-white/10 flex items-center px-4">
+                  <div className="h-1.5 w-1/2 bg-white/10 rounded-full"></div>
                 </div>
               </div>
-              <div className="flex-1 border-b border-zinc-800 p-5 flex items-center justify-between group hover:bg-zinc-900/60 transition-colors relative overflow-hidden cursor-default">
-                <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#B988BF]"></div>
-                <div className="pl-2">
-                  <span className="block text-[10px] text-[#B988BF] font-mono mb-1 font-semibold tracking-widest">02</span>
-                  <h4 className="text-base text-white font-manrope font-medium tracking-tight group-hover:translate-x-1 transition-transform duration-300">Aquisição</h4>
-                </div>
+            </motion.div>
+
+            {/* Floating WhatsApp Notification */}
+            <motion.div 
+              initial={{ x: 60, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              transition={{ duration: 0.8, delay: 2.2, type: "spring", stiffness: 100 }}
+              className="absolute top-[18%] right-2 lg:-right-10 z-30 bg-[#1A1A1E]/95 backdrop-blur-xl border border-white/[0.03] p-3.5 lg:p-4 rounded-2xl flex items-center gap-4 shadow-xl"
+            >
+              <div className="w-10 h-10 lg:w-12 lg:h-12 rounded-full bg-zinc-800 flex items-center justify-center shadow-inner">
+                <WhatsAppIcon size={22} className="text-green-500 drop-shadow-sm" />
               </div>
-              <div className="flex-1 border-b border-zinc-800 p-5 flex items-center justify-between group hover:bg-zinc-900/60 transition-colors relative overflow-hidden cursor-default">
-                <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#EEC6A2]"></div>
-                <div className="pl-2">
-                  <span className="block text-[10px] text-[#EEC6A2] font-mono mb-1 font-semibold tracking-widest">03</span>
-                  <h4 className="text-base text-white font-manrope font-medium tracking-tight group-hover:translate-x-1 transition-transform duration-300">Conversão</h4>
-                </div>
+              <div className="pr-2">
+                <p className="text-zinc-200 text-sm font-bold tracking-wide">Novo Paciente</p>
+                <p className="text-zinc-500 text-xs font-semibold mt-0.5">Avaliação Confirmada</p>
               </div>
-              <div className="flex-1 p-5 flex items-center justify-between group hover:bg-zinc-900/60 transition-colors relative overflow-hidden cursor-default">
-                <div className="absolute left-0 top-0 bottom-0 w-1 bg-zinc-400"></div>
-                <div className="pl-2">
-                  <span className="block text-[10px] text-zinc-400 font-mono mb-1 font-semibold tracking-widest">04</span>
-                  <h4 className="text-base text-white font-manrope font-medium tracking-tight group-hover:translate-x-1 transition-transform duration-300">Automação</h4>
+            </motion.div>
+
+            {/* Dashboard Floating Widget */}
+            <motion.div 
+              initial={{ x: -60, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              transition={{ duration: 0.8, delay: 2.4, type: "spring", stiffness: 100 }}
+              className="hidden sm:block absolute bottom-[18%] left-2 lg:-left-12 z-30 bg-[#1A1A1E]/90 backdrop-blur-xl border border-[#B988BF]/20 p-5 rounded-2xl shadow-[0_20px_40px_rgba(0,0,0,0.6)]"
+            >
+              <div className="flex items-center gap-2 mb-2">
+                <div className="bg-[#B988BF]/20 p-1.5 rounded-md">
+                  <TrendingUp className="text-[#B988BF] w-4 h-4" />
                 </div>
+                <span className="text-zinc-400 text-[10px] font-bold uppercase tracking-[0.15em]">Taxa Vendas</span>
               </div>
-            </div>
-          </section>
+              <div className="text-4xl font-extrabold text-white drop-shadow-md">+142<span className="text-2xl text-[#B988BF]">%</span></div>
+            </motion.div>
+
+            {/* Floating Tags for Capabilities */}
+            <motion.div initial={{ y: -30, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 2.6, duration: 0.8 }} className="absolute py-1.5 px-4 lg:py-2 lg:px-5 -top-6 right-[10%] lg:right-[32%] bg-[#1A1A1E]/90 rounded-full border border-blue-500/40 backdrop-blur-md shadow-[0_0_25px_rgba(37,99,235,0.4)] z-50 rotate-3 hover:rotate-0 transition-transform">
+              <span className="text-[9px] lg:text-[11px] font-extrabold text-blue-400 uppercase flex items-center gap-2 tracking-widest"><CheckCircle2 size={12} className="text-blue-500" /> Pixel Ativo</span>
+            </motion.div>
+            
+            <motion.div initial={{ scale: 0, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ delay: 2.7, duration: 0.5 }} className="absolute py-1.5 px-4 lg:py-2 lg:px-5 bottom-[4%] right-2 lg:right-4 bg-[#1A1A1E]/80 rounded-full border border-amber-500/30 backdrop-blur-md shadow-[0_0_20px_rgba(245,158,11,0.2)] z-30 -rotate-6 hover:rotate-0 transition-transform">
+              <span className="text-[9px] lg:text-[11px] font-extrabold text-amber-400 uppercase flex items-center gap-2 tracking-widest"><Target size={12} className="text-amber-500" /> Remarketing</span>
+            </motion.div>
+ 
+            <motion.div initial={{ scale: 0, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ delay: 2.8, duration: 0.5 }} className="absolute py-1.5 px-4 lg:py-2 lg:px-5 top-[35%] -left-2 lg:-left-16 bg-[#1A1A1E]/80 rounded-full border border-emerald-500/30 backdrop-blur-md shadow-[0_0_20px_rgba(16,185,129,0.2)] z-20 -rotate-3 hover:rotate-0 transition-transform">
+              <span className="text-[9px] lg:text-[11px] font-extrabold text-emerald-400 uppercase flex items-center gap-2 tracking-widest"><MessageCircle size={12} className="text-emerald-500" /> WhatsApp</span>
+            </motion.div>
+ 
+            <motion.div initial={{ scale: 0, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ delay: 3.0, duration: 0.5 }} className="hidden sm:flex absolute py-1.5 px-4 lg:py-2 lg:px-5 bottom-0 left-[15%] lg:left-[25%] bg-[#1A1A1E]/80 rounded-full border border-purple-500/30 backdrop-blur-md shadow-[0_0_20px_rgba(139,92,246,0.2)] z-40 rotate-[12deg] hover:rotate-0 transition-transform">
+              <span className="text-[9px] lg:text-[11px] font-extrabold text-purple-400 uppercase flex items-center gap-2 tracking-widest"><BarChart2 size={12} className="text-purple-500" /> Analytics</span>
+            </motion.div>
+
+          </div>
         </div>
 
       </section>
@@ -577,59 +638,42 @@ const Hero = ({ onOpenModal }: { onOpenModal: () => void }) => {
   );
 };
 
-const DiagnosticBanner = () => {
-  return (
-    <section className="py-20 relative px-6 bg-black/40 backdrop-blur-md border-y border-white/5">
-      <div className="max-w-4xl mx-auto text-center">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-        >
-          <h2 className="text-3xl md:text-5xl font-medium text-white mb-4 tracking-tighter leading-tight font-manrope">
-            A maioria dos sites parece profissional...<br className="hidden md:block" />
-            <span className="text-[#B988BF]">mas não gera nenhum cliente.</span>
-          </h2>
-          <p className="text-zinc-400 text-lg md:text-xl font-sans mb-8">
-            Entenda o que está travando os resultados.
-          </p>
-          <a
-            href="/porque-seu-site-nao-gera-clientes"
-            className="inline-flex items-center gap-3 px-8 py-4 bg-transparent border border-[#B988BF]/30 text-[#B988BF] text-xs font-bold tracking-[0.15em] uppercase hover:bg-[#B988BF] hover:text-white transition-colors duration-300"
-          >
-            Entenda o porquê
-            <ArrowRight className="w-4 h-4" />
-          </a>
-        </motion.div>
-      </div>
-    </section>
-  );
-};
 
-const EmpresasNotaveis = () => {
+
+const InvestirNoEscuro = () => {
   return (
-    <section className="py-24 relative px-6 overflow-hidden">
-      <div className="max-w-4xl mx-auto text-center relative z-10">
+    <section className="py-32 relative px-6 overflow-hidden bg-ice border-b border-black/5">
+      <div className="max-w-6xl mx-auto text-center relative z-10">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="bg-black/60 backdrop-blur-md border border-white/10 p-8 md:p-12 rounded-sm [animation:fadeSlideIn_1s_ease-out_both] shadow-2xl relative"
-        >
-          <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-[#B988BF]"></div>
-          <div className="absolute top-0 right-0 w-2 h-2 border-t border-r border-[#B988BF]"></div>
-          <div className="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-[#B988BF]"></div>
-          <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-[#B988BF]"></div>
-          <h2 className="text-4xl sm:text-5xl md:text-6xl font-medium text-white mb-6 tracking-tighter font-manrope leading-[1.1]">
-            Empresas comuns disputam atenção. <br className="hidden md:block" />
-            <span className="text-white">Empresas notáveis são procuradas.</span>
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="mb-16"
+          >
+          <h2 className="text-3xl sm:text-4xl md:text-5xl text-graphite mb-6 tracking-tight font-manrope font-bold leading-[1.1]">
+            A maioria das <span className="text-primary font-manrope">clínicas</span> investe no escuro.
           </h2>
-          <p className="text-zinc-400 text-lg md:text-xl font-sans leading-relaxed max-w-3xl mx-auto">
-            Se o seu negócio parece igual a todos os outros, o cliente escolhe pelo preço.
-            Negócios que constroem presença e autoridade deixam de disputar atenção e passam a ser procurados.
-            Essa é a diferença entre correr atrás de clientes e construir um sistema que atrai clientes.
+          <p className="text-gray-600 text-lg md:text-xl font-sans leading-relaxed max-w-3xl mx-auto">
+            Sem Pixel, Analytics e rastreamento, sua clínica não sabe quais anúncios funcionam, quem entrou no site e quem estava pronto para agendar.
           </p>
         </motion.div>
+
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+          {[
+            { icon: X, title: "Sem Pixel" },
+            { icon: X, title: "Sem Analytics" },
+            { icon: X, title: "Sem Remarketing" },
+            { icon: X, title: "Sem WhatsApp" },
+            { icon: X, title: "Sem Previsibilidade" },
+          ].map((item, idx) => (
+             <motion.div key={idx} initial={{opacity:0, y:10}} whileInView={{opacity:1, y:0}} transition={{delay: idx*0.1}} className="bg-white p-8 rounded-[2.5rem] shadow-[0_20px_50px_rgba(0,0,0,0.08)] border border-black/[0.03] flex flex-col items-center text-center group hover:border-[#EF4444]/30 hover:shadow-2xl transition-all">
+                <div className="w-16 h-16 rounded-full bg-gradient-to-br from-[#EF4444]/10 to-[#EF4444]/20 text-[#EF4444] flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-[#EF4444] group-hover:text-white transition-all shadow-sm">
+                  <item.icon size={28} className="stroke-[2.5]" />
+                </div>
+                <h4 className="font-bold text-graphite text-[14px] md:text-base font-manrope tracking-tight">{item.title}</h4>
+             </motion.div>
+          ))}
+        </div>
       </div>
     </section>
   );
@@ -638,87 +682,19 @@ const EmpresasNotaveis = () => {
 const GoogleAdsPremium = ({ onOpenModal }: { onOpenModal: () => void }) => {
   const searches = [
     {
-      query: "contador para mei",
+      query: "clínica de estética em campinas",
       results: [
         {
-          url: "contabilizasp.com.br",
-          title: "Contabilidade para MEI | Sem Burocracia",
-          desc: "Abertura de MEI, emissão de DAS e declarações anuais com suporte especializado. Atendimento 100% online.",
-          chips: ["MEI Grátis", "DASN Anual", "Certificado Digital"],
+          url: "esteticacampinas.com.br",
+          title: "Clínica de Estética em Campinas | Avaliação Gratuita",
+          desc: "Especialistas em harmonização facial, botox e rejuvenescimento.",
+          chips: ["Avaliação Gratuita", "Tecnologia Avançada", "Protocolos Exclusivos"],
         },
         {
-          url: "contajuridica.com.br",
-          title: "Contador MEI – Regularize Agora",
-          desc: "Consultoria contábil para microempreendedores. Planos a partir de R$59/mês com suporte dedicado.",
-          chips: ["Consultoria Grátis", "Plano Mensal"],
-        },
-      ],
-    },
-    {
-      query: "abertura de empresa",
-      results: [
-        {
-          url: "abreempresa.com.br",
-          title: "Abra sua Empresa em 48h | Online",
-          desc: "CNPJ, alvará e contrato social em até 2 dias úteis. Escritório digital com suporte jurídico.",
-          chips: ["Abertura Rápida", "100% Online", "LTDA e SA"],
-        },
-        {
-          url: "juridicobiz.com.br",
-          title: "Abertura de CNPJ – Assessoria Completa",
-          desc: "Do registro à regularização fiscal. Consultores especializados aguardam seu contato.",
-          chips: ["CNPJ Express", "Suporte Jurídico"],
-        },
-      ],
-    },
-    {
-      query: "advogado trabalhista",
-      results: [
-        {
-          url: "advtrabalhista.com.br",
-          title: "Advogado Trabalhista | Consulta Grátis",
-          desc: "Defesa em ações trabalhistas, rescisões e acordos. Mais de 1.200 casos resolvidos na região.",
-          chips: ["Consulta Grátis", "Rescisão", "Horas Extras"],
-        },
-        {
-          url: "mouraaadvocacia.com.br",
-          title: "Escritório Trabalhista – Agende Agora",
-          desc: "Especialistas em direito do trabalho para empresas e colaboradores. Atendimento presencial e remoto.",
-          chips: ["Para Empresas", "Para Funcionários"],
-        },
-      ],
-    },
-    {
-      query: "advogado inventário",
-      results: [
-        {
-          url: "inventariocampinas.com.br",
-          title: "Inventário e Partilha | Rápido e Seguro",
-          desc: "Inventário judicial e extrajudicial. Regularize bens e herança com assessoria jurídica especializada.",
-          chips: ["Inventário Extrajudicial", "Partilha", "Consulta Grátis"],
-        },
-        {
-          url: "herdeirosadv.com.br",
-          title: "Advogado de Inventário – Fale Agora",
-          desc: "Habilitação de herdeiros, formal de partilha e alvará judicial. Processo simplificado e transparente.",
-          chips: ["Herdeiros", "Alvará Judicial"],
-        },
-      ],
-    },
-    {
-      query: "apartamento na planta",
-      results: [
-        {
-          url: "mrv.com.br/campinas",
-          title: "Apartamentos na Planta | Entrada Fácil",
-          desc: "Empreendimentos com MCMV, FGTS e parcelamento direto com a construtora. Unidades a partir de R$220k.",
-          chips: ["MCMV", "FGTS", "Entrada Facilitada"],
-        },
-        {
-          url: "vivacampinas.com.br",
-          title: "Lançamentos 2025 – Reserve sua Unidade",
-          desc: "Localizações estratégicas, plantas modernas e lazer completo. Simule seu financiamento agora.",
-          chips: ["Lançamento 2025", "Simule Agora"],
+          url: "harmonizacaofacialcps.com.br",
+          title: "Botox e Harmonização Facial | Agende Sua Consulta",
+          desc: "Resultados naturais, atendimento personalizado e tecnologia avançada.",
+          chips: ["Botox", "Preenchimento", "Especialistas"],
         },
       ],
     },
@@ -759,10 +735,10 @@ const GoogleAdsPremium = ({ onOpenModal }: { onOpenModal: () => void }) => {
   }, [displayText, phase, searchIndex]);
 
   return (
-    <section className="py-24 relative px-6 overflow-hidden bg-black/40 backdrop-blur-lg border-y border-white/5">
+    <section className="py-32 relative px-6 overflow-hidden bg-ice border-y border-black/5">
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-[#B988BF]/8 rounded-full blur-[120px]" />
-        <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-[#EEC6A2]/5 rounded-full blur-[100px]" />
+        <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-primary/[0.03] rounded-full blur-[120px]" />
+        <div className="absolute bottom-0 right-1/4 w-[400px] h-[400px] bg-warm/[0.02] rounded-full blur-[100px]" />
       </div>
 
       <div className="max-w-7xl mx-auto relative z-10 grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
@@ -777,53 +753,45 @@ const GoogleAdsPremium = ({ onOpenModal }: { onOpenModal: () => void }) => {
         >
           {/* Badges */}
           <div className="flex gap-2 mb-8">
-            <span className="px-4 py-1.5 rounded-full bg-[#B988BF]/10 border border-[#B988BF]/25 text-[#B988BF] text-[10px] font-bold uppercase tracking-widest">
+            <span className="px-4 py-1.5 rounded-none bg-primary/5 border border-primary/20 text-primary text-[10px] font-bold uppercase tracking-widest">
               Tráfego Pago
             </span>
-            <span className="px-4 py-1.5 rounded-full bg-[#EEC6A2]/10 border border-[#EEC6A2]/25 text-[#EEC6A2] text-[10px] font-bold uppercase tracking-widest">
+            <span className="px-4 py-1.5 rounded-none bg-warm/10 border border-warm/25 text-warm text-[10px] font-bold uppercase tracking-widest">
               Google Ads
             </span>
           </div>
 
           {/* Title */}
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white mb-8 leading-[1.15] tracking-tight font-manrope">
-            Quer vender mais,<br />
-            <span className="text-gradient">mas não sabe como?</span>
+          <h2 className="text-3xl sm:text-4xl md:text-6xl font-extrabold text-graphite mb-6 leading-[1.1] tracking-tight font-manrope">
+            Anunciar sem rastreamento é <span className="text-primary">investir no escuro.</span>
           </h2>
 
           {/* Body copy */}
-          <div className="space-y-5 text-gray-400 text-base md:text-lg leading-relaxed max-w-lg">
+          <div className="space-y-4 text-gray-500 text-base md:text-lg leading-relaxed max-w-lg">
             <p>
-              Quando alguém pesquisa pelo seu serviço no Google, ela já decidiu comprar. Se o seu negócio não aparece ali, você está entregando esse cliente ao concorrente.
+              Quando alguém entra no seu site, clica no WhatsApp ou pesquisa sua clínica no Google, sua clínica precisa saber quem demonstrou interesse.
             </p>
-            <p>
-              Aparecer no topo não é sorte — é posicionamento. Colocamos a sua empresa na frente de quem já está procurando o que você oferece.
+            <p className="text-sm font-medium opacity-80">
+              Sem Pixel, Analytics, Tag Manager e remarketing, você perde dados, oportunidades e pacientes.
             </p>
           </div>
 
           {/* Highlight */}
-          <p className="mt-8 text-lg md:text-xl font-bold text-white border-l-4 border-[#B988BF] pl-4">
-            Aumente suas vendas com <span className="text-[#B988BF]">Google Ads</span>
-          </p>
+          <div className="mt-8 border-l-4 border-primary pl-5 py-2">
+            <p className="text-lg font-bold text-graphite mb-2 font-manrope leading-snug">
+              Sua clínica não sabe quem entrou no site, clicou no WhatsApp ou estava pronto para agendar.
+            </p>
+            <p className="text-[14px] uppercase font-bold text-primary tracking-widest mt-3">Você está investindo no escuro.</p>
+          </div>
 
           {/* CTA */}
           <button
             onClick={onOpenModal}
-            className="group relative flex h-[50px] w-full sm:min-w-[280px] sm:w-auto mt-8 self-center items-center justify-center rounded-none px-6 outline-none cursor-pointer transition-transform active:scale-95 bg-white/5 border-none"
+            className="group relative flex h-[54px] w-full sm:min-w-[280px] sm:w-auto mt-10 items-center justify-center bg-primary text-white rounded-2xl text-[11px] font-bold tracking-[0.2em] uppercase transition-all hover:scale-105 shadow-[0_10px_20px_rgba(185,136,191,0.2)] hover:shadow-[0_15px_30px_rgba(185,136,191,0.4)] border border-[#B988BF]/50"
             type="button"
           >
-            <div className="pointer-events-none absolute inset-0 opacity-100 transition-opacity duration-[1200ms] ease-in-out group-hover:opacity-0" style={{ background: 'radial-gradient(15% 50% at 50% 100%, #B988BF 0%, rgba(185, 136, 191, 0) 100%)', filter: 'blur(15px)' }}></div>
-            <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-[1200ms] ease-in-out group-hover:opacity-100" style={{ background: 'radial-gradient(60.6% 50% at 50% 100%, #B988BF 0%, rgba(185, 136, 191, 0) 100%)', filter: 'blur(18px)' }}></div>
-            <div className="pointer-events-none will-change-auto absolute inset-0 opacity-100 transition-opacity duration-[1200ms] ease-in-out group-hover:opacity-0" style={{ background: 'radial-gradient(10.7% 50% at 50% 100%, #B988BF 0%, rgba(185, 136, 191, 0) 100%)' }}></div>
-            <div className="pointer-events-none will-change-auto absolute inset-0 opacity-0 transition-opacity duration-[1200ms] ease-in-out group-hover:opacity-100" style={{ background: 'radial-gradient(60.1% 50% at 50% 100%, #B988BF 0%, rgba(185, 136, 191, 0) 100%)' }}></div>
-            <div className="pointer-events-none absolute inset-0 overflow-hidden rounded-none">
-              <div className="absolute -inset-[300%] animate-[spin_4s_linear_infinite]" style={{ background: 'conic-gradient(from 90deg at 50% 50%, transparent 0%, transparent 90%, #B988BF 100%)' }}></div>
-            </div>
-            <div className="absolute inset-[1px] rounded-none bg-black"></div>
-            <span className="relative z-20 flex items-center justify-center gap-3 text-sm font-bold text-white tracking-wide uppercase">
-              Quero aparecer no Google
-              <ArrowRight size={18} className="transition-transform duration-300 group-hover:translate-x-1" />
-            </span>
+            Quero anunciar com rastreamento
+            <ArrowRight size={18} className="ml-3 transition-transform duration-300 group-hover:translate-x-1" />
           </button>
         </motion.div>
 
@@ -957,213 +925,103 @@ const GoogleAdsPremium = ({ onOpenModal }: { onOpenModal: () => void }) => {
 };
 
 
-const SistemaDeClientes = () => {
+const PacientesQualificados = () => {
   return (
-    <section id="sistema" className="py-24 relative px-6 overflow-hidden scroll-mt-24">
-      <div className="max-w-7xl mx-auto relative z-10">
-        <div className="text-center mb-16">
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-2xl sm:text-3xl md:text-5xl font-extrabold text-white mb-6 font-manrope"
-          >
-            Clientes não aparecem por acaso.
-          </motion.h2>
-          <p className="text-gray-400 max-w-2xl mx-auto text-sm sm:text-base md:text-xl">
-            Empresas que crescem constroem um sistema.
-          </p>
-        </div>
-
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-          <motion.div whileHover={{ y: -10 }} className="bg-black p-8 rounded-none border border-zinc-800 hover:border-[#B988BF]/50 transition-all flex flex-col items-center text-center relative overflow-hidden group">
-            <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#B988BF] transform -translate-x-full group-hover:translate-x-0 transition-transform duration-200"></div>
-            <div className="w-14 h-14 rounded-full bg-[#B988BF]/10 flex items-center justify-center mb-6 text-[#B988BF] group-hover:scale-110 transition-transform duration-300">
-              <Star size={28} />
-            </div>
-            <h3 className="text-xl font-bold text-white mb-2 font-manrope">Posicionamento forte</h3>
-            <p className="text-sm text-gray-400">Ser lembrado antes de ser comparado.</p>
-          </motion.div>
-
-          <motion.div whileHover={{ y: -10 }} className="bg-black p-8 rounded-none border border-zinc-800 hover:border-[#B988BF]/50 transition-all flex flex-col items-center text-center relative overflow-hidden group">
-            <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#B988BF] transform -translate-x-full group-hover:translate-x-0 transition-transform duration-200"></div>
-            <div className="w-14 h-14 rounded-full bg-[#EEC6A2]/10 flex items-center justify-center mb-6 text-[#EEC6A2] group-hover:scale-110 transition-transform duration-300">
-              <Target size={28} />
-            </div>
-            <h3 className="text-xl font-bold text-white mb-2 font-manrope">Captação inteligente</h3>
-            <p className="text-sm text-gray-400">Ser encontrado por quem já está procurando.</p>
-          </motion.div>
-
-          <motion.div whileHover={{ y: -10 }} className="bg-black p-8 rounded-none border border-zinc-800 hover:border-[#B988BF]/50 transition-all flex flex-col items-center text-center relative overflow-hidden group">
-            <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#B988BF] transform -translate-x-full group-hover:translate-x-0 transition-transform duration-200"></div>
-            <div className="w-14 h-14 rounded-full bg-[#B988BF]/10 flex items-center justify-center mb-6 text-[#B988BF] group-hover:scale-110 transition-transform duration-300">
-              <BarChart3 size={28} />
-            </div>
-            <h3 className="text-xl font-bold text-white mb-2 font-manrope">Engajamento direcionado</h3>
-            <p className="text-sm text-gray-400">Transformar interesse em clientes.</p>
-          </motion.div>
-
-          <motion.div whileHover={{ y: -10 }} className="bg-black/60 backdrop-blur-md p-8 rounded-none border border-white/10 hover:border-[#B988BF]/50 transition-all flex flex-col items-center text-center relative overflow-hidden group">
-            <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#B988BF] transform -translate-x-full group-hover:translate-x-0 transition-transform duration-200"></div>
-            <div className="w-14 h-14 rounded-full bg-[#EEC6A2]/10 flex items-center justify-center mb-6 text-[#EEC6A2] group-hover:scale-110 transition-transform duration-300">
-              <Cpu size={28} />
-            </div>
-            <h3 className="text-xl font-bold text-white mb-2 font-manrope">Automação</h3>
-            <p className="text-sm text-gray-400">Criar consistência no crescimento.</p>
-          </motion.div>
-        </div>
-      </div>
-    </section>
-  );
-};
-
-const BenefitCard = ({ icon: Icon, title, description, delay }: any) => {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.6, delay }}
-      whileHover={{ y: -10 }}
-      className="bg-black/60 backdrop-blur-md p-6 md:p-8 rounded-none border border-white/10 hover:border-[#B988BF]/50 transition-all group relative overflow-hidden"
-    >
-      <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#B988BF] transform -translate-x-full group-hover:translate-x-0 transition-transform duration-200"></div>
-      <div className="w-12 h-12 md:w-14 md:h-14 rounded-full bg-[#B988BF]/10 flex items-center justify-center mb-6 group-hover:bg-[#B988BF] transition-colors duration-500">
-        <Icon className="text-[#B988BF] group-hover:text-white transition-colors duration-500" size={24} />
-      </div>
-      <h3 className="text-lg md:text-xl font-bold text-white mb-4 font-manrope">{title}</h3>
-      <p className="text-gray-400 leading-relaxed text-xs md:text-sm font-sans">
-        {description}
-      </p>
-    </motion.div>
-  );
-};
-
-const Benefits = () => {
-  return (
-    <section id="beneficios" className="py-24 relative px-6 overflow-hidden scroll-mt-32">
+    <section id="sistema" className="py-32 relative px-6 overflow-hidden scroll-mt-24 bg-ice">
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="text-center mb-20">
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-2xl sm:text-3xl md:text-5xl font-extrabold text-white mb-6 font-manrope"
+            className="text-3xl sm:text-4xl md:text-5xl font-bold text-graphite mb-6 font-manrope tracking-tight leading-[1.1]"
           >
-            Domínio Completo do <span className="text-gradient">Digital</span>
+            Pacientes qualificados não aparecem <span className="text-primary font-manrope">por acaso.</span>
           </motion.h2>
-          <p className="text-gray-400 max-w-2xl mx-auto text-sm sm:text-base md:text-lg">
-            Não fazemos apenas "posts". Construímos ecossistemas de vendas e autoridade.
+          <p className="text-gray-500 max-w-2xl mx-auto text-lg font-sans leading-relaxed">
+            Pacientes de alto valor seguem uma jornada previsível até a sua clínica. Nós construímos esse caminho.
           </p>
         </div>
 
-        <div className="space-y-24">
-          {/* Social Media Feature */}
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <motion.div
-              initial={{ opacity: 0, x: -50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-              className="order-2 md:order-1"
-            >
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#B988BF]/10 border border-[#B988BF]/20 text-[#B988BF] text-sm font-bold mb-6">
-                <Instagram size={18} />
-                <span>Branding & Conteúdo</span>
-              </div>
-              <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-6 font-manrope">
-                Posicionamento Premium que <br /> <span className="text-gradient">Gera Desejo</span>
-              </h3>
-              <p className="text-gray-400 text-base md:text-lg leading-relaxed mb-8">
-                Transformamos sua marca em uma vitrine de alto padrão. Roteiros estratégicos e design sofisticado que transmitem a excelência do seu negócio antes mesmo da primeira reunião.
-              </p>
-              <ul className="space-y-4 mb-8">
-                <li className="flex items-center gap-3 text-gray-300">
-                  <CheckCircle2 size={20} className="text-[#B988BF]" />
-                  <span>Identidade Visual Exclusiva</span>
-                </li>
-                <li className="flex items-center gap-3 text-gray-300">
-                  <CheckCircle2 size={20} className="text-[#B988BF]" />
-                  <span>Roteiros de Alta Conversão</span>
-                </li>
-                <li className="flex items-center gap-3 text-gray-300">
-                  <CheckCircle2 size={20} className="text-[#B988BF]" />
-                  <span>Gestão de Comunidade Ativa</span>
-                </li>
-              </ul>
-            </motion.div>
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-              className="order-1 md:order-2 relative"
-            >
-              <div className="absolute inset-0 bg-gradient-to-tr from-[#B988BF]/20 to-transparent rounded-none blur-2xl -z-10" />
-              <img
-                src="/social-media-new.webp?v=1.1"
-                alt="Instagram Marketing e Branding Estratégico"
-                className="w-full h-auto rounded-none border border-zinc-800 shadow-2xl hover:scale-[1.02] transition-transform duration-700"
-                width="600"
-                height="600"
-                loading="lazy"
-                decoding="async"
-              />
-            </motion.div>
-          </div>
+        <div className="flex flex-col lg:flex-row items-center lg:items-stretch justify-between gap-4 lg:gap-2">
+          {[
+            { tag: "1", icon: Target, title: "Vê Anúncio", desc: "No Google ou Meta" },
+            { tag: "2", icon: LayoutDashboard, title: "Entra no Site", desc: "Estrutura premium" },
+            { tag: "3", icon: MessageCircle, title: "WhatsApp", desc: "Inicia atendimento" },
+            { tag: "4", icon: Smartphone, title: "Remarketing", desc: "Retenção ativa" },
+            { tag: "5", icon: Shield, title: "Confiança", desc: "Deseja seu serviço" },
+            { tag: "6", icon: Calendar, title: "Agenda", desc: "Paciente Realizado" }
+          ].map((item, idx, arr) => (
+             <React.Fragment key={idx}>
+                <motion.div 
+                  initial={{opacity: 0, y: 20}}
+                  whileInView={{opacity: 1, y: 0}}
+                  transition={{delay: idx * 0.1}}
+                  viewport={{once: true}}
+                  whileHover={{ y: -5 }} 
+                  className="bg-white p-6 w-full lg:w-[15%] rounded-[2rem] shadow-[0_12px_40px_rgba(0,0,0,0.06)] border border-black/[0.04] flex flex-col items-center text-center relative group"
+                >
+                  <div className="absolute -top-3 -right-3 w-8 h-8 rounded-full bg-primary text-white font-bold flex items-center justify-center text-sm shadow-md">{item.tag}</div>
+                  <div className="w-16 h-16 rounded-full bg-primary/5 text-primary flex items-center justify-center mb-4 group-hover:scale-110 group-hover:bg-primary group-hover:text-white transition-all duration-300">
+                    <item.icon size={28} />
+                  </div>
+                  <h3 className="text-[15px] font-bold text-graphite mb-1 font-manrope leading-tight">{item.title}</h3>
+                  <p className="text-[12px] text-gray-500 font-sans">{item.desc}</p>
+                </motion.div>
+                {idx < arr.length - 1 && (
+                  <div className="hidden lg:flex items-center justify-center text-primary/30">
+                    <ArrowRight size={24} className="animate-pulse" />
+                  </div>
+                )}
+                {idx < arr.length - 1 && (
+                  <div className="flex lg:hidden items-center justify-center py-2 text-primary/30">
+                    <ArrowRight size={24} className="rotate-90 animate-pulse" />
+                  </div>
+                )}
+             </React.Fragment>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
 
-          {/* Traffic Feature */}
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-              className="relative"
-            >
-              <div className="absolute inset-0 bg-gradient-to-bl from-[#EEC6A2]/10 to-transparent rounded-none blur-2xl -z-10" />
-              <img
-                src="/performance-new.webp?v=1.1"
-                alt="Performance e Tráfego Pago"
-                className="w-full h-auto rounded-none border border-zinc-800 shadow-2xl hover:scale-[1.02] transition-transform duration-700"
-                width="600"
-                height="600"
-                loading="lazy"
-                decoding="async"
-              />
-            </motion.div>
-            <motion.div
-              initial={{ opacity: 0, x: 50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-            >
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#EEC6A2]/10 border border-[#EEC6A2]/20 text-[#EEC6A2] text-sm font-bold mb-6">
-                <TrendingUp size={18} />
-                <span>Tráfego & Performance</span>
-              </div>
-              <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-6 font-manrope">
-                Leads Qualificados, <br /> <span className="text-[#EEC6A2]">Não Curiosos</span>
-              </h3>
-              <p className="text-gray-400 text-base md:text-lg leading-relaxed mb-8">
-                Chega de curiosos perguntando preço. Nossas campanhas filtram e atraem leads prontos para fechar contratos e serviços de alto valor (High Ticket).
-              </p>
-              <ul className="space-y-4 mb-8">
-                <li className="flex items-center gap-3 text-gray-300">
-                  <CheckCircle2 size={20} className="text-[#EEC6A2]" />
-                  <span>Segmentação de Alto Padrão</span>
-                </li>
-                <li className="flex items-center gap-3 text-gray-300">
-                  <CheckCircle2 size={20} className="text-[#EEC6A2]" />
-                  <span>Otimização Diária de ROI</span>
-                </li>
-                <li className="flex items-center gap-3 text-gray-300">
-                  <CheckCircle2 size={20} className="text-[#EEC6A2]" />
-                  <span>Dashboards de Transparência</span>
-                </li>
-              </ul>
-            </motion.div>
-          </div>
+const AutomacaoClinica = () => {
+  return (
+    <section id="beneficios" className="py-32 relative px-6 overflow-hidden scroll-mt-32 bg-ice border-t border-black/5">
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/5 blur-[120px] rounded-full pointer-events-none" />
+      <div className="max-w-6xl mx-auto relative z-10">
+        <div className="text-center mb-24">
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-3xl sm:text-4xl md:text-5xl font-bold text-graphite mb-6 font-manrope tracking-tight max-w-4xl mx-auto leading-[1.1]"
+          >
+            Sua clínica precisa de <span className="text-primary font-manrope">automação</span>, não apenas atendimento manual.
+          </motion.h2>
+          <p className="text-gray-600 max-w-2xl mx-auto text-lg md:text-xl font-sans leading-relaxed">
+            Confirmações, lembretes e follow-ups automáticos ajudam sua clínica a reduzir faltas, organizar a agenda e melhorar a experiência do paciente.
+          </p>
+        </div>
+
+        <div className="grid md:grid-cols-3 gap-6">
+           {[
+             { icon: CheckCircle2, title: "Confirmação Automática", desc: "Mensagens eficientes, evitando horários vagos e retrabalho manual na recepção." },
+             { icon: Clock, title: "Lembrete de Consulta", desc: "Notificação inteligente horas antes para reduzir drasticamente o número de cancelamentos e 'no-shows'." },
+             { icon: Calendar, title: "Reagendamento", desc: "Roteiro simplificado no WhatsApp para reagendar sem gargalos de comunicação." },
+             { icon: MessageCircle, title: "Follow-up Ativo", desc: "Retome o contato com leads não fechados de modo passivo e aumente o LTV." },
+             { icon: Smartphone, title: "WhatsApp Automatizado", desc: "Triagem 24/7 de todos os contatos provenientes do fluxo Google e Meta Ads." },
+             { icon: TrendingUp, title: "Menos Faltas", desc: "Mais lucratividade mantendo a sua agenda otimizada e previsível todos os dias." },
+           ].map((item, idx) => (
+              <motion.div key={idx} initial={{opacity:0, y:20}} whileInView={{opacity:1, y:0}} transition={{delay: idx*0.1}} viewport={{once: true}} className="bg-white p-8 rounded-3xl shadow-[0_12px_40px_rgba(0,0,0,0.03)] border border-black/[0.04] hover:shadow-xl hover:-translate-y-1 transition-all">
+                 <div className="w-14 h-14 rounded-full bg-primary/10 text-primary flex items-center justify-center mb-6">
+                    <item.icon size={26} />
+                 </div>
+                 <h4 className="text-xl font-bold text-graphite mb-3 font-manrope leading-snug">{item.title}</h4>
+                 <p className="text-gray-500 font-sans text-sm leading-relaxed">{item.desc}</p>
+              </motion.div>
+           ))}
         </div>
       </div>
     </section>
@@ -1174,59 +1032,42 @@ const Benefits = () => {
 
 const PorQueEleveAI = () => {
   return (
-    <section className="py-24 px-6 overflow-hidden bg-gradient-to-b from-transparent to-[#0A0A0B]/50">
-      <div className="max-w-7xl mx-auto">
-        <div className="mb-16 text-center md:text-left">
-          <h2 className="text-2xl sm:text-3xl md:text-5xl font-extrabold text-white mb-6 font-manrope">
-            O que torna a <span className="text-gradient">EleveAI diferente.</span>
+    <section className="py-32 px-6 overflow-hidden bg-graphite relative">
+      {/* Subtle depth gradient */}
+      <div className="absolute inset-0 bg-gradient-to-b from-black/20 to-transparent pointer-events-none" />
+      
+      <div className="max-w-7xl mx-auto relative z-10">
+        <div className="mb-24 text-center md:text-left">
+          <h2 className="text-3xl sm:text-4xl md:text-6xl font-extrabold text-white mb-8 font-manrope leading-[1.1] tracking-tight">
+            O que sua clínica precisa <span className="text-primary block sm:inline font-manrope">para crescer.</span>
           </h2>
-          <p className="text-gray-400 text-sm sm:text-base md:text-xl max-w-2xl">
-            Não focamos em ações isoladas. Construímos a estrutura que permite que seu negócio seja encontrado, desejado e escolhido.
+          <p className="text-zinc-400 text-lg md:text-xl max-w-2xl leading-relaxed font-sans">
+            Não focamos em ações isoladas. Construímos a estrutura que permite que sua clínica seja encontrada, desejada e escolhida pelo paciente ideal.
           </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-6">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="bg-black/40 backdrop-blur-md p-8 md:p-10 rounded-none border border-white/10 hover:border-[#B988BF]/50 transition-all group relative overflow-hidden"
-          >
-            <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#B988BF] transform -translate-x-full group-hover:translate-x-0 transition-transform duration-200"></div>
-            <div className="w-14 h-14 rounded-full bg-[#B988BF]/10 flex items-center justify-center mb-8 group-hover:scale-110 transition-transform">
-              <Star className="text-[#B988BF]" size={28} />
-            </div>
-            <h3 className="text-xl md:text-2xl font-bold text-white mb-4 font-manrope">Clareza de posicionamento</h3>
-            <p className="text-gray-400 leading-relaxed text-sm md:text-base font-sans">Mostramos o valor único do seu negócio para que o preço deixe de ser a única variável na decisão do cliente.</p>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="bg-black/40 backdrop-blur-md p-8 md:p-10 rounded-none border border-white/10 hover:border-[#EEC6A2]/50 transition-all group relative overflow-hidden"
-          >
-            <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#EEC6A2] transform -translate-x-full group-hover:translate-x-0 transition-transform duration-200"></div>
-            <div className="w-14 h-14 rounded-full bg-[#EEC6A2]/10 flex items-center justify-center mb-8 group-hover:scale-110 transition-transform">
-              <Target className="text-[#EEC6A2]" size={28} />
-            </div>
-            <h3 className="text-xl md:text-2xl font-bold text-white mb-4 font-manrope">Estratégia de atração de clientes</h3>
-            <p className="text-gray-400 leading-relaxed text-sm md:text-base font-sans">Desenhamos campanhas que trazem não apenas cliques, mas oportunidades reais e qualificadas de venda todos os dias.</p>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="bg-black/40 backdrop-blur-md p-8 md:p-10 rounded-none border border-white/10 hover:border-[#B988BF]/50 transition-all group relative overflow-hidden"
-          >
-            <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#B988BF] transform -translate-x-full group-hover:translate-x-0 transition-transform duration-200"></div>
-            <div className="w-14 h-14 rounded-full bg-[#B988BF]/10 flex items-center justify-center mb-8 group-hover:scale-110 transition-transform">
-              <Cpu className="text-[#B988BF]" size={28} />
-            </div>
-            <h3 className="text-xl md:text-2xl font-bold text-white mb-4 font-manrope">Processos automatizados de crescimento</h3>
-            <p className="text-gray-400 leading-relaxed text-sm md:text-base font-sans">Implementamos sistemas que organizam seu relacionamento com o cliente, triplicando as chances de fechamento sem aumentar a carga da equipe.</p>
-          </motion.div>
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+          {[
+            { icon: LayoutDashboard, title: "Estrutura Digital", desc: "Site, Pixel, Analytics e rastreamento funcionando.", color: "text-primary" },
+            { icon: Target, title: "Captação Inteligente", desc: "Google Ads, Meta Ads e remarketing estratégico.", color: "text-secondary" },
+            { icon: Zap, title: "Automação", desc: "WhatsApp, lembretes, confirmações e follow-up.", color: "text-primary" },
+            { icon: TrendingUp, title: "Crescimento", desc: "Mais previsibilidade, mais autoridade e mais pacientes.", color: "text-secondary" }
+          ].map((item, idx) => (
+            <motion.div
+              key={idx}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="bg-white/[0.03] backdrop-blur-sm p-10 border border-white/[0.04] hover:border-primary/40 transition-all group relative overflow-hidden flex flex-col items-start"
+            >
+              <div className="absolute left-0 top-0 bottom-0 w-1 bg-primary transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300"></div>
+              <div className={`w-16 h-16 rounded-full bg-white/5 flex items-center justify-center mb-8 group-hover:scale-110 group-hover:bg-primary transition-all duration-500 ${item.color}`}>
+                <item.icon size={30} />
+              </div>
+              <h3 className="text-xl font-bold text-white mb-4 font-manrope tracking-tight">{item.title}</h3>
+              <p className="text-zinc-400 leading-relaxed text-[15px] font-sans">{item.desc}</p>
+            </motion.div>
+          ))}
         </div>
       </div>
     </section>
@@ -1235,13 +1076,13 @@ const PorQueEleveAI = () => {
 
 const FAQItem = ({ question, answer, isOpen, toggle }: any) => {
   return (
-    <div className="mb-4">
+    <div className="bg-white/5 border border-white/10 overflow-hidden relative group transition-all duration-300">
       <button
+        className="w-full p-6 md:p-8 text-left flex justify-between items-center transition-colors group-hover:bg-white/[0.02]"
         onClick={toggle}
-        className={`w-full text-left p-5 md:p-6 rounded-none flex justify-between items-center transition-all border ${isOpen ? 'bg-[#B988BF]/10 border-[#B988BF]/50 border-l-4 backdrop-blur-sm' : 'bg-black/40 backdrop-blur-md border-white/10 hover:border-[#B988BF]/30 hover:bg-white/5'}`}
       >
-        <span className="text-base md:text-lg font-bold text-white pr-8 font-manrope">{question}</span>
-        {isOpen ? <Minus className="text-[#B988BF] shrink-0" size={20} /> : <Plus className="text-[#B988BF] shrink-0" size={20} />}
+        <span className="text-base md:text-xl font-bold text-white pr-8 font-manrope">{question}</span>
+        {isOpen ? <Minus className="text-primary shrink-0" size={20} /> : <Plus className="text-primary shrink-0" size={20} />}
       </button>
       <AnimatePresence>
         {isOpen && (
@@ -1274,8 +1115,8 @@ const InfiniteTicker = () => {
   ];
 
   return (
-    <div className="relative py-6 overflow-hidden bg-black/30 backdrop-blur-sm border-y border-white/5 bg-gradient-to-r from-transparent via-[#B988BF]/5 to-transparent">
-      <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-transparent to-black/60 z-10 pointer-events-none" />
+    <div className="relative py-10 overflow-hidden bg-graphite border-y border-white/5">
+      <div className="absolute inset-0 bg-gradient-to-r from-graphite via-transparent to-graphite z-10 pointer-events-none" />
 
       <motion.div
         className="flex whitespace-nowrap gap-10 items-center"
@@ -1330,11 +1171,11 @@ const FAQ = () => {
   ];
 
   return (
-    <section id="faq" className="py-24 px-6 scroll-mt-32">
+    <section id="faq" className="py-32 px-6 scroll-mt-32 bg-graphite">
       <div className="max-w-4xl mx-auto">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-medium text-white mb-6 tracking-tighter font-manrope leading-[1.1]">Dúvidas Frequentes</h2>
-          <p className="text-zinc-400 text-lg leading-relaxed font-sans max-w-3xl mx-auto">Entenda como podemos construir um crescimento previsível para sua empresa.</p>
+        <div className="text-center mb-24">
+          <h2 className="text-4xl md:text-5xl lg:text-7xl font-extrabold text-white mb-8 tracking-tight font-manrope leading-tight">Dúvidas Frequentes</h2>
+          <p className="text-gray-400 text-lg leading-relaxed font-sans max-w-2xl mx-auto">Tudo o que você precisa saber sobre a estruturação do seu crescimento digital.</p>
         </div>
         <div className="space-y-4">
           {faqs.map((f, i) => (
@@ -1353,43 +1194,35 @@ const FAQ = () => {
 
 const FinalCTA = ({ onOpenModal }: { onOpenModal: () => void }) => {
   return (
-    <section className="py-24 px-6 relative overflow-hidden">
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#B988BF]/10 rounded-full blur-[120px] pointer-events-none" />
-
-      <div className="max-w-5xl mx-auto bg-black/60 backdrop-blur-md rounded-none p-12 md:p-20 text-center relative z-10 border border-white/10">
+    <section className="py-32 px-6 relative overflow-hidden bg-graphite">
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary/10 rounded-full blur-[120px] pointer-events-none" />
+      
+      <div className="max-w-6xl mx-auto bg-black/40 backdrop-blur-md p-14 md:p-24 text-center relative z-10 border border-white/10 shadow-[0_20px_80px_rgba(0,0,0,0.8)] rounded-none">
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
         >
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-medium text-white mb-8 tracking-tighter font-manrope leading-[1.1]">
-            Seu negócio precisa de <span className="text-gradient">mais esforço</span> ou de <br className="hidden md:block" /> <span className="text-gradient">mais estrutura?</span>
+          <h2 className="text-4xl md:text-6xl lg:text-7xl font-extrabold text-white mb-10 tracking-tight font-manrope leading-[1.15] max-w-4xl mx-auto flex flex-col items-center">
+            <span className="font-manrope font-black text-white text-[32px] md:text-[50px] tracking-tight block drop-shadow-sm mb-2">Sua clínica precisa de</span>
+            <span className="font-manrope font-extrabold text-primary uppercase text-[26px] md:text-[36px] tracking-[0.10em] md:tracking-[0.15em] block drop-shadow-lg">Mais previsibilidade?</span>
           </h2>
 
-          <p className="text-zinc-400 text-lg leading-relaxed font-sans max-w-3xl mx-auto mb-12">
-            Empresas que crescem constroem sistemas de geração de clientes. Solicite seu diagnóstico e descubra como criar previsibilidade de vendas.
+          <p className="text-gray-300 text-lg md:text-xl leading-relaxed font-sans max-w-3xl mx-auto mb-16">
+            Solicite uma análise estratégica e descubra como gerar mais pacientes com rastreamento, automação e estrutura.
           </p>
+          
           <div className="flex justify-center">
             <button
               onClick={onOpenModal}
-              className="group relative flex h-[60px] w-auto sm:min-w-[320px] items-center justify-center rounded-none px-8 outline-none cursor-pointer transition-transform active:scale-95 bg-white/5 border-none"
+              className="group relative flex h-[64px] w-full sm:min-w-[360px] sm:w-auto items-center justify-center bg-primary text-white text-[12px] font-bold tracking-[0.25em] rounded-[2rem] uppercase transition-all hover:scale-105 hover:shadow-[0_20px_60px_rgba(104,37,154,0.4)] shadow-2xl border border-white/10"
               type="button"
             >
-              <div className="pointer-events-none absolute inset-0 opacity-100 transition-opacity duration-[1200ms] ease-in-out group-hover:opacity-0" style={{ background: 'radial-gradient(15% 50% at 50% 100%, #B988BF 0%, rgba(185, 136, 191, 0) 100%)', filter: 'blur(15px)' }}></div>
-              <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-[1200ms] ease-in-out group-hover:opacity-100" style={{ background: 'radial-gradient(60.6% 50% at 50% 100%, #B988BF 0%, rgba(185, 136, 191, 0) 100%)', filter: 'blur(18px)' }}></div>
-              <div className="pointer-events-none will-change-auto absolute inset-0 opacity-100 transition-opacity duration-[1200ms] ease-in-out group-hover:opacity-0" style={{ background: 'radial-gradient(10.7% 50% at 50% 100%, #B988BF 0%, rgba(185, 136, 191, 0) 100%)' }}></div>
-              <div className="pointer-events-none will-change-auto absolute inset-0 opacity-0 transition-opacity duration-[1200ms] ease-in-out group-hover:opacity-100" style={{ background: 'radial-gradient(60.1% 50% at 50% 100%, #B988BF 0%, rgba(185, 136, 191, 0) 100%)' }}></div>
-              <div className="pointer-events-none absolute inset-0 overflow-hidden rounded-none">
-                <div className="absolute -inset-[300%] animate-[spin_4s_linear_infinite]" style={{ background: 'conic-gradient(from 90deg at 50% 50%, transparent 0%, transparent 90%, #B988BF 100%)' }}></div>
-              </div>
-              <div className="absolute inset-[1px] rounded-none bg-black"></div>
-              <span className="relative z-20 flex items-center justify-center gap-3 text-base md:text-lg font-bold text-white tracking-wide uppercase">
-                Receber análise estratégica
-                <ArrowRight size={22} className="transition-transform duration-300 group-hover:translate-x-1" />
-              </span>
+              Receber análise estratégica
+              <ArrowRight size={22} className="ml-4 transition-transform duration-300 group-hover:translate-x-1" />
             </button>
           </div>
-          <p className="mt-8 text-sm text-gray-500 font-medium">Sem compromisso.</p>
+          <p className="mt-10 text-xs text-gray-500 font-bold uppercase tracking-widest opacity-60">Análise técnica • Sem compromisso</p>
         </motion.div>
       </div>
     </section>
@@ -1398,22 +1231,22 @@ const FinalCTA = ({ onOpenModal }: { onOpenModal: () => void }) => {
 
 const Footer = ({ onPrivacy, onTerms, onHome }: { onPrivacy: () => void, onTerms: () => void, onHome: () => void }) => {
   return (
-    <footer className="relative bg-black/80 backdrop-blur-xl pt-24 pb-12 overflow-hidden border-t border-white/5">
-      {/* Decorative Top Border */}
-      <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-transparent via-[#B988BF] to-transparent shadow-[0_0_30px_rgba(185, 136, 191,0.8)]" />
-      <div className="absolute top-0 left-0 right-0 h-[1px] bg-[#B988BF] opacity-50" />
+    <footer className="relative bg-graphite pt-32 pb-16 overflow-hidden border-t border-white/5">
+      {/* Decorative Top Glow */}
+      <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-primary/50 to-transparent" />
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-px bg-primary shadow-[0_0_40px_10px_rgba(104,37,154,0.4)]" />
 
       {/* Background Glow */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-2xl h-80 bg-[#B988BF]/30 sm:bg-[#B988BF]/20 rounded-full blur-[100px] sm:blur-[120px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-6 relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-12 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-16 mb-20">
           <div className="md:col-span-5">
             <div className="flex justify-center md:justify-start items-center gap-2 mb-8 cursor-pointer group pt-2" onClick={onHome}>
               <img
                 src="/logo.png"
                 alt="EleveAI - Marketing Estratégico"
-                className="h-20 sm:h-32 w-auto object-contain grayscale opacity-80 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500 scale-150 origin-center md:origin-left"
+                className="h-28 sm:h-36 w-auto object-contain grayscale opacity-80 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500 scale-150 origin-center md:origin-left"
                 loading="lazy"
                 decoding="async"
                 width="150"
@@ -1496,12 +1329,12 @@ const WhatsAppFloat = () => {
         aria-label="Atendimento via WhatsApp"
         initial={{ scale: 0, rotate: -45 }}
         animate={{ scale: 1, rotate: 0 }}
-        whileHover={{ scale: 1.1, rotate: 5, boxShadow: "0 20px 40px rgba(37,211,102,0.4)" }}
+        whileHover={{ scale: 1.1, rotate: 5, boxShadow: "0 25px 50px rgba(37,211,102,0.5)" }}
         whileTap={{ scale: 0.9 }}
-        className="relative w-11 h-11 md:w-16 md:h-16 rounded-full flex items-center justify-center text-white shadow-[0_10px_30px_rgba(0,0,0,0.5)] overflow-hidden group bg-gradient-to-br from-[#25D366] via-[#25D366] to-[#128C7E] border-2 border-zinc-700"
+        className="relative w-12 h-12 md:w-16 md:h-16 rounded-full flex items-center justify-center text-white shadow-[0_15px_30px_rgba(0,0,0,0.3)] overflow-hidden group bg-gradient-to-br from-[#25D366] via-[#25D366] to-[#128C7E]"
       >
         <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-        <WhatsAppIcon size={24} className="relative z-10 text-white drop-shadow-lg md:scale-125" />
+        <WhatsAppIcon size={26} className="relative z-10 text-white drop-shadow-lg md:scale-110" />
 
         {/* Pulsing glow around the button */}
         <div className="absolute inset-0 rounded-full border-2 border-white/40 animate-ping opacity-20 pointer-events-none" />
@@ -1936,11 +1769,10 @@ const App = () => {
         <main>
           <>
             <Hero onOpenModal={handleOpenModal} />
-            <EmpresasNotaveis />
-            <DiagnosticBanner />
+            <InvestirNoEscuro />
             <GoogleAdsPremium onOpenModal={handleOpenModal} />
-            <SistemaDeClientes />
-            <Benefits />
+            <PacientesQualificados />
+            <AutomacaoClinica />
             <RaioXSection onOpenModal={handleOpenModal} />
             <PorQueEleveAI />
             <FAQ />
