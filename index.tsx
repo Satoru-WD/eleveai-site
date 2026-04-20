@@ -494,7 +494,10 @@ const Hero = ({ onOpenModal }: { onOpenModal: () => void }) => {
           {/* Right Column - Tech Visualization */}
           <div className="flex-1 relative w-full h-[550px] lg:h-[700px] flex items-center justify-center perspective-[1000px] mt-8 lg:mt-0" style={{ animation: 'fadeSlideIn 1s ease-out 1.6s both' }}>
             {/* Core Glow */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] lg:w-[400px] h-[300px] lg:h-[400px] bg-[#B988BF] rounded-full blur-[140px] opacity-30"></div>
+            <motion.div 
+              animate={{ opacity: [0.2, 0.4, 0.2], scale: [1, 1.1, 1] }}
+              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] lg:w-[400px] h-[300px] lg:h-[400px] bg-[#B988BF] rounded-full blur-[140px] opacity-30"></motion.div>
             
             {/* Main Phone Mockup Element pt 2*/}
             <motion.div 
@@ -525,8 +528,12 @@ const Hero = ({ onOpenModal }: { onOpenModal: () => void }) => {
                   {/* Patient Message */}
                   <motion.div 
                     initial={{ opacity: 0, x: -10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.5, duration: 0.5 }}
+                    animate={{ opacity: [0, 0, 1, 1, 0] }}
+                    transition={{ 
+                      duration: 12, 
+                      repeat: Infinity, 
+                      times: [0, 2/12, 2.5/12, 11/12, 1] 
+                    }}
                     className="bg-zinc-800/80 rounded-2xl rounded-tl-none p-3 max-w-[85%] border border-white/5 shadow-sm"
                   >
                     <p className="text-[10px] text-zinc-300 leading-tight">Olá, queria saber sobre avaliação.</p>
@@ -535,8 +542,12 @@ const Hero = ({ onOpenModal }: { onOpenModal: () => void }) => {
                   {/* IA Message */}
                   <motion.div 
                     initial={{ opacity: 0, x: 10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 2.0, duration: 0.5 }}
+                    animate={{ opacity: [0, 0, 1, 1, 0] }}
+                    transition={{ 
+                      duration: 12, 
+                      repeat: Infinity, 
+                      times: [0, 4/12, 4.5/12, 11/12, 1] 
+                    }}
                     className="bg-[#B988BF]/20 border border-[#B988BF]/30 rounded-2xl rounded-tr-none p-3 max-w-[85%] ml-auto shadow-sm"
                   >
                     <div className="flex items-center gap-1.5 mb-1 opacity-80">
@@ -549,8 +560,12 @@ const Hero = ({ onOpenModal }: { onOpenModal: () => void }) => {
                   {/* Patient Message 2 */}
                   <motion.div 
                     initial={{ opacity: 0, x: -10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 3.5, duration: 0.5 }}
+                    animate={{ opacity: [0, 0, 1, 1, 0] }}
+                    transition={{ 
+                      duration: 12, 
+                      repeat: Infinity, 
+                      times: [0, 6/12, 6.5/12, 11/12, 1] 
+                    }}
                     className="bg-zinc-800/80 rounded-2xl rounded-tl-none p-3 max-w-[85%] border border-white/5 shadow-sm"
                   >
                     <p className="text-[10px] text-zinc-300 leading-tight">Tem horário esta semana?</p>
@@ -559,8 +574,12 @@ const Hero = ({ onOpenModal }: { onOpenModal: () => void }) => {
                   {/* IA Message 2 */}
                   <motion.div 
                     initial={{ opacity: 0, x: 10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 5.0, duration: 0.5 }}
+                    animate={{ opacity: [0, 0, 1, 1, 0] }}
+                    transition={{ 
+                      duration: 12, 
+                      repeat: Infinity, 
+                      times: [0, 8/12, 8.5/12, 11/12, 1] 
+                    }}
                     className="bg-[#B988BF]/20 border border-[#B988BF]/30 rounded-2xl rounded-tr-none p-3 max-w-[85%] ml-auto shadow-sm"
                   >
                     <p className="text-[10px] text-[#EAD5EB] leading-tight">Temos sim. Qual período você prefere?</p>
@@ -569,13 +588,17 @@ const Hero = ({ onOpenModal }: { onOpenModal: () => void }) => {
                   {/* Typing Indicator */}
                   <motion.div 
                     initial={{ opacity: 0 }}
-                    animate={{ opacity: [0, 1, 1, 0] }}
-                    transition={{ delay: 3.0, duration: 0.8, repeat: Infinity, repeatDelay: 5 }}
+                    animate={{ opacity: [0, 0, 1, 0, 0, 1, 0, 0] }}
+                    transition={{ 
+                      duration: 12, 
+                      repeat: Infinity, 
+                      times: [0, 3/12, 3.1/12, 3.9/12, 7/12, 7.1/12, 7.9/12, 1] 
+                    }}
                     className="flex gap-1 ml-auto mr-4"
                   >
-                    <div className="w-1 h-1 bg-[#B988BF]/60 rounded-full"></div>
-                    <div className="w-1 h-1 bg-[#B988BF]/60 rounded-full"></div>
-                    <div className="w-1 h-1 bg-[#B988BF]/60 rounded-full"></div>
+                    <div className="w-1 h-1 bg-[#B988BF]/60 rounded-full animate-pulse"></div>
+                    <div className="w-1 h-1 bg-[#B988BF]/60 rounded-full animate-pulse delay-75"></div>
+                    <div className="w-1 h-1 bg-[#B988BF]/60 rounded-full animate-pulse delay-150"></div>
                   </motion.div>
                 </div>
 
@@ -589,8 +612,12 @@ const Hero = ({ onOpenModal }: { onOpenModal: () => void }) => {
             {/* Floating WhatsApp Notification */}
             <motion.div 
               initial={{ x: 60, opacity: 0 }}
-              animate={{ x: 0, opacity: 1 }}
-              transition={{ duration: 0.8, delay: 2.2, type: "spring", stiffness: 100 }}
+              animate={{ x: 0, opacity: 1, y: [0, -8, 0] }}
+              transition={{ 
+                x: { duration: 0.8, delay: 2.2, type: "spring", stiffness: 100 },
+                opacity: { duration: 0.8, delay: 2.2 },
+                y: { duration: 2, repeat: Infinity, ease: "easeInOut", delay: 3 }
+              }}
               className="absolute top-[18%] right-2 lg:-right-10 z-30 bg-[#1A1A1E]/95 backdrop-blur-xl border border-white/[0.03] p-3.5 lg:p-4 rounded-2xl flex items-center gap-4 shadow-xl"
             >
               <div className="w-10 h-10 lg:w-12 lg:h-12 rounded-full bg-zinc-800 flex items-center justify-center shadow-inner">
@@ -605,8 +632,12 @@ const Hero = ({ onOpenModal }: { onOpenModal: () => void }) => {
             {/* Dashboard Floating Widget */}
             <motion.div 
               initial={{ x: -60, opacity: 0 }}
-              animate={{ x: 0, opacity: 1 }}
-              transition={{ duration: 0.8, delay: 2.4, type: "spring", stiffness: 100 }}
+              animate={{ x: 0, opacity: 1, y: [0, -10, 0] }}
+              transition={{ 
+                x: { duration: 0.8, delay: 2.4, type: "spring", stiffness: 100 },
+                opacity: { duration: 0.8, delay: 2.4 },
+                y: { duration: 2, repeat: Infinity, ease: "easeInOut", delay: 3.2 }
+              }}
               className="hidden sm:block absolute bottom-[18%] left-2 lg:-left-12 z-30 bg-[#1A1A1E]/90 backdrop-blur-xl border border-[#B988BF]/20 p-5 rounded-2xl shadow-[0_20px_40px_rgba(0,0,0,0.6)]"
             >
               <div className="flex items-center gap-2 mb-2">
@@ -619,19 +650,54 @@ const Hero = ({ onOpenModal }: { onOpenModal: () => void }) => {
             </motion.div>
 
             {/* Floating Tags for Capabilities */}
-            <motion.div initial={{ y: -30, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 2.6, duration: 0.8 }} className="absolute py-1.5 px-4 lg:py-2 lg:px-5 -top-6 right-[10%] lg:right-[32%] bg-[#1A1A1E]/90 rounded-full border border-blue-500/40 backdrop-blur-md shadow-[0_0_25px_rgba(37,99,235,0.4)] z-50 rotate-3 hover:rotate-0 transition-transform">
+            <motion.div 
+              initial={{ y: -30, opacity: 0 }} 
+              animate={{ y: [0, -12, 0], opacity: 1 }} 
+              transition={{ 
+                y: { duration: 2, repeat: Infinity, ease: "easeInOut", delay: 2.6 },
+                opacity: { delay: 2.6, duration: 0.8 }
+              }} 
+              className="absolute py-1.5 px-4 lg:py-2 lg:px-5 -top-6 right-[10%] lg:right-[32%] bg-[#1A1A1E]/90 rounded-full border border-blue-500/40 backdrop-blur-md shadow-[0_0_25px_rgba(37,99,235,0.4)] z-50 rotate-3 hover:rotate-0 transition-transform"
+            >
               <span className="text-[9px] lg:text-[11px] font-extrabold text-blue-400 uppercase flex items-center gap-2 tracking-widest"><CheckCircle2 size={12} className="text-blue-500" /> Pixel Ativo</span>
             </motion.div>
             
-            <motion.div initial={{ scale: 0, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ delay: 2.7, duration: 0.5 }} className="absolute py-1.5 px-4 lg:py-2 lg:px-5 bottom-[4%] right-2 lg:right-4 bg-[#1A1A1E]/80 rounded-full border border-amber-500/30 backdrop-blur-md shadow-[0_0_20px_rgba(245,158,11,0.2)] z-30 -rotate-6 hover:rotate-0 transition-transform">
+            <motion.div 
+              initial={{ scale: 0, opacity: 0 }} 
+              animate={{ scale: [0, 1, 1], y: [0, -8, 0], opacity: 1 }} 
+              transition={{ 
+                scale: { delay: 2.7, duration: 0.5 },
+                y: { duration: 2, repeat: Infinity, ease: "easeInOut", delay: 3.2 },
+                opacity: { delay: 2.7, duration: 0.5 }
+              }} 
+              className="absolute py-1.5 px-4 lg:py-2 lg:px-5 bottom-[4%] right-2 lg:right-4 bg-[#1A1A1E]/80 rounded-full border border-amber-500/30 backdrop-blur-md shadow-[0_0_20px_rgba(245,158,11,0.2)] z-30 -rotate-6 hover:rotate-0 transition-transform"
+            >
               <span className="text-[9px] lg:text-[11px] font-extrabold text-amber-400 uppercase flex items-center gap-2 tracking-widest"><Target size={12} className="text-amber-500" /> Remarketing</span>
             </motion.div>
  
-            <motion.div initial={{ scale: 0, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ delay: 2.8, duration: 0.5 }} className="absolute py-1.5 px-4 lg:py-2 lg:px-5 top-[35%] -left-2 lg:-left-16 bg-[#1A1A1E]/80 rounded-full border border-emerald-500/30 backdrop-blur-md shadow-[0_0_20px_rgba(16,185,129,0.2)] z-20 -rotate-3 hover:rotate-0 transition-transform">
+            <motion.div 
+              initial={{ scale: 0, opacity: 0 }} 
+              animate={{ scale: [0, 1, 1], y: [0, -10, 0], opacity: 1 }} 
+              transition={{ 
+                scale: { delay: 2.8, duration: 0.5 },
+                y: { duration: 2, repeat: Infinity, ease: "easeInOut", delay: 3.3 },
+                opacity: { delay: 2.8, duration: 0.5 }
+              }} 
+              className="absolute py-1.5 px-4 lg:py-2 lg:px-5 top-[35%] -left-2 lg:-left-16 bg-[#1A1A1E]/80 rounded-full border border-emerald-500/30 backdrop-blur-md shadow-[0_0_20px_rgba(16,185,129,0.2)] z-20 -rotate-3 hover:rotate-0 transition-transform"
+            >
               <span className="text-[9px] lg:text-[11px] font-extrabold text-emerald-400 uppercase flex items-center gap-2 tracking-widest"><MessageCircle size={12} className="text-emerald-500" /> WhatsApp</span>
             </motion.div>
  
-            <motion.div initial={{ scale: 0, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ delay: 3.0, duration: 0.5 }} className="hidden sm:flex absolute py-1.5 px-4 lg:py-2 lg:px-5 bottom-0 left-[15%] lg:left-[25%] bg-[#1A1A1E]/80 rounded-full border border-purple-500/30 backdrop-blur-md shadow-[0_0_20px_rgba(139,92,246,0.2)] z-40 rotate-[12deg] hover:rotate-0 transition-transform">
+            <motion.div 
+              initial={{ scale: 0, opacity: 0 }} 
+              animate={{ scale: [0, 1, 1], y: [0, -6, 0], opacity: 1 }} 
+              transition={{ 
+                scale: { delay: 3.0, duration: 0.5 },
+                y: { duration: 2, repeat: Infinity, ease: "easeInOut", delay: 3.5 },
+                opacity: { delay: 3.0, duration: 0.5 }
+              }} 
+              className="hidden sm:flex absolute py-1.5 px-4 lg:py-2 lg:px-5 bottom-0 left-[15%] lg:left-[25%] bg-[#1A1A1E]/80 rounded-full border border-purple-500/30 backdrop-blur-md shadow-[0_0_20px_rgba(139,92,246,0.2)] z-40 rotate-[12deg] hover:rotate-0 transition-transform"
+            >
               <span className="text-[9px] lg:text-[11px] font-extrabold text-purple-400 uppercase flex items-center gap-2 tracking-widest"><BarChart2 size={12} className="text-purple-500" /> Analytics</span>
             </motion.div>
 
@@ -743,7 +809,7 @@ const GoogleAdsPremium = ({ onOpenModal }: { onOpenModal: () => void }) => {
     <section className="py-32 relative px-6 overflow-hidden bg-ice border-y border-black/5">
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-primary/[0.03] rounded-full blur-[120px]" />
-        <div className="absolute bottom-0 right-1/4 w-[400px] h-[400px] bg-warm/[0.02] rounded-full blur-[100px]" />
+        <div className="absolute bottom-0 right-1/4 w-[400px] h-[400px] bg-secondary/[0.02] rounded-full blur-[100px]" />
       </div>
 
       <div className="max-w-7xl mx-auto relative z-10 grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
@@ -761,7 +827,7 @@ const GoogleAdsPremium = ({ onOpenModal }: { onOpenModal: () => void }) => {
             <span className="px-4 py-1.5 rounded-none bg-primary/5 border border-primary/20 text-primary text-[10px] font-bold uppercase tracking-widest">
               Tráfego Pago
             </span>
-            <span className="px-4 py-1.5 rounded-none bg-warm/10 border border-warm/25 text-warm text-[10px] font-bold uppercase tracking-widest">
+            <span className="px-4 py-1.5 rounded-none bg-secondary/5 border border-secondary/20 text-secondary text-[10px] font-bold uppercase tracking-widest">
               Google Ads
             </span>
           </div>
@@ -1618,10 +1684,10 @@ const RaioXSection = ({ onOpenModal }: { onOpenModal: () => void }) => {
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-medium text-white mb-6 tracking-tighter font-manrope leading-[1.1]">
-            Raio-X Estratégico de <span className="text-gradient hover-glow">Mercado</span>
+            Raio-X Estratégico da <span className="text-gradient hover-glow">Sua Clínica</span>
           </h2>
           <p className="text-zinc-400 text-lg leading-relaxed font-sans max-w-3xl mx-auto">
-            Seu desafio não é apenas atrair cliques. É construir uma base sólida de vendas.
+            O problema não é apenas atrair pacientes. É criar uma estrutura que permita rastrear, responder, confirmar e escalar.
           </p>
         </div>
 
@@ -1632,7 +1698,7 @@ const RaioXSection = ({ onOpenModal }: { onOpenModal: () => void }) => {
               <Target size={28} />
             </div>
             <h3 className="text-white font-manrope text-xl md:text-2xl font-semibold tracking-tight uppercase mb-4">1. Visibilidade</h3>
-            <p className="text-sm text-zinc-300 leading-relaxed font-sans">Negócios que até geram visitas, mas não atraem as oportunidades certas para vendas de alto ticket.</p>
+            <p className="text-sm text-zinc-300 leading-relaxed font-sans">Clínicas sem Pixel, Analytics e Tag Manager não sabem quais anúncios realmente geram pacientes.</p>
           </motion.div>
 
           <motion.div whileHover={{ y: -10 }} className="bg-black/60 backdrop-blur-md p-8 rounded-[2rem] border border-white/10 hover:border-[#EEC6A2]/50 transition-all flex flex-col items-center text-center relative overflow-hidden group">
@@ -1640,8 +1706,8 @@ const RaioXSection = ({ onOpenModal }: { onOpenModal: () => void }) => {
             <div className="w-14 h-14 rounded-full bg-[#EEC6A2]/10 flex items-center justify-center mb-6 text-[#EEC6A2] group-hover:scale-110 transition-transform duration-300">
               <TrendingUp size={28} />
             </div>
-            <h3 className="text-white font-manrope text-xl md:text-2xl font-semibold tracking-tight uppercase mb-4">2. Fechamento</h3>
-            <p className="text-sm text-zinc-300 leading-relaxed font-sans">Negócios que recebem contatos, mas não transformam o interesse em um avanço comercial previsível.</p>
+            <h3 className="text-white font-manrope text-xl md:text-2xl font-semibold tracking-tight uppercase mb-4">2. Atendimento</h3>
+            <p className="text-sm text-zinc-300 leading-relaxed font-sans">Quando o WhatsApp demora para responder, muitos pacientes desistem e procuram outra clínica.</p>
           </motion.div>
 
           <motion.div whileHover={{ y: -10 }} className="bg-black/60 backdrop-blur-md p-8 rounded-[2rem] border border-white/10 hover:border-[#B988BF]/50 transition-all flex flex-col items-center text-center relative overflow-hidden group">
@@ -1649,8 +1715,8 @@ const RaioXSection = ({ onOpenModal }: { onOpenModal: () => void }) => {
             <div className="w-14 h-14 rounded-full bg-[#B988BF]/10 flex items-center justify-center mb-6 text-[#B988BF] group-hover:scale-110 transition-transform duration-300">
               <MessageCircle size={28} />
             </div>
-            <h3 className="text-white font-manrope text-xl md:text-2xl font-semibold tracking-tight uppercase mb-4">3. Relacionamento</h3>
-            <p className="text-sm text-zinc-300 leading-relaxed font-sans">Negócios que não mantêm continuidade com leads interessados e acabam perdendo o timing ideal da venda.</p>
+            <h3 className="text-white font-manrope text-xl md:text-2xl font-semibold tracking-tight uppercase mb-4">3. Confirmação</h3>
+            <p className="text-sm text-zinc-300 leading-relaxed font-sans">Sem lembretes e confirmações automáticas, faltas e cancelamentos se tornam frequentes.</p>
           </motion.div>
 
           <motion.div whileHover={{ y: -10 }} className="bg-black/60 backdrop-blur-md p-8 rounded-[2rem] border border-white/10 hover:border-[#EEC6A2]/50 transition-all flex flex-col items-center text-center relative overflow-hidden group">
@@ -1658,8 +1724,8 @@ const RaioXSection = ({ onOpenModal }: { onOpenModal: () => void }) => {
             <div className="w-14 h-14 rounded-full bg-[#EEC6A2]/10 flex items-center justify-center mb-6 text-[#EEC6A2] group-hover:scale-110 transition-transform duration-300">
               <BarChart3 size={28} />
             </div>
-            <h3 className="text-white font-manrope text-xl md:text-2xl font-semibold tracking-tight uppercase mb-4">4. Escala</h3>
-            <p className="text-sm text-zinc-300 leading-relaxed font-sans">Negócios que crescem no improviso, dependem demais dos sócios e não possuem uma estrutura replicável.</p>
+            <h3 className="text-white font-manrope text-xl md:text-2xl font-semibold tracking-tight uppercase mb-4">4. Previsibilidade</h3>
+            <p className="text-sm text-zinc-300 leading-relaxed font-sans">Sem rastreamento e automação, a clínica cresce sem saber exatamente o que está funcionando.</p>
           </motion.div>
         </div>
 
@@ -1678,7 +1744,7 @@ const RaioXSection = ({ onOpenModal }: { onOpenModal: () => void }) => {
             </div>
             <div className="absolute inset-[1px] rounded-2xl bg-black"></div>
             <span className="relative z-20 flex items-center justify-center gap-4 text-base md:text-lg font-bold text-white tracking-wide uppercase font-manrope">
-              Ver o Raio-X do Meu Negócio
+              Quero analisar minha estrutura
               <ArrowRight size={22} className="transition-transform duration-300 group-hover:translate-x-1" />
             </span>
           </button>
