@@ -36,7 +36,10 @@ import {
   BarChart2,
   ShieldAlert,
   Lock,
-  Sparkles
+  Sparkles,
+  ChevronRight,
+  ChevronLeft,
+  Quote
 } from 'lucide-react';
 
 // Configuration
@@ -319,7 +322,7 @@ const Navbar = ({ onHome }: { onHome: () => void }) => {
     <>
       <div className="fixed flex w-full z-50 pt-0 md:pt-4 pr-4 pl-4 top-0 left-0 justify-center" style={{ animation: 'fadeSlideIn 1s ease-out 0.2s both' }}>
         <nav 
-          className="flex md:gap-12 md:w-auto bg-[#1A1A1E]/95 md:bg-[#1A1A1E]/80 w-full max-w-6xl rounded-2xl md:rounded-full py-2 px-5 md:px-8 shadow-2xl md:shadow-[0_10px_40px_rgba(0,0,0,0.2)] backdrop-blur-md border border-white/5 md:border-white/10 items-center justify-between" 
+          className="flex md:gap-12 md:w-auto bg-[#1A1A1E]/95 md:bg-[#1A1A1E]/80 w-full max-w-6xl rounded-2xl md:rounded-full py-1 px-5 md:px-8 shadow-2xl md:shadow-[0_10px_40px_rgba(0,0,0,0.2)] backdrop-blur-md border border-white/5 md:border-white/10 items-center justify-between" 
         >
           {/* Logo */}
           <a href="#" aria-label="Voltar para o topo" className="flex items-center cursor-pointer" onClick={(e) => { e.preventDefault(); handleHomeClick(); }}>
@@ -428,327 +431,199 @@ const Navbar = ({ onHome }: { onHome: () => void }) => {
 };
 
 const Hero = ({ onOpenModal }: { onOpenModal: () => void }) => {
+  const scrollRef = useRef<HTMLDivElement>(null);
+  
   return (
     <>
       <div className="gradient-blur" style={{ height: '120px' }}>
         <div></div><div></div><div></div><div></div><div></div><div></div>
       </div>
 
-      <section id="hero" className="h-auto min-h-[900px] flex flex-col md:pt-24 overflow-hidden w-full pt-[8.5rem] pb-16 relative items-center justify-start bg-[#141417]" style={{ maskImage: 'linear-gradient(180deg, transparent, black 0%, black 95%, transparent)', WebkitMaskImage: 'linear-gradient(180deg, transparent, black 0%, black 95%, transparent)' }}>
-        
-        {/* Vertical Light Beam (Raio-X Style) */}
-        <div className="absolute top-0 bottom-0 left-1/2 w-[1px] -translate-x-1/2 pointer-events-none z-0">
-          <div className="absolute top-0 left-1/2 w-[6px] h-[500px] mix-blend-screen" 
-               style={{ 
-                 background: 'linear-gradient(to bottom, transparent, rgba(185, 136, 191, 0.7), rgba(96, 165, 250, 0.6), transparent)',
-                 transform: 'translateX(-50%)',
-                 boxShadow: '0 0 60px 25px rgba(185, 136, 191, 0.4), 0 0 100px 35px rgba(96, 165, 250, 0.3)',
-                 filter: 'blur(10px)',
-                 opacity: 0.8,
-                 animation: 'beamFall 6s linear infinite',
-                 willChange: 'transform'
-               }}>
-          </div>
-        </div>
-        
-        <div className="z-10 max-w-7xl mt-12 md:mt-16 mx-auto px-6 md:px-8 relative w-full flex flex-col lg:flex-row items-center gap-16 lg:gap-10">
-          
-          {/* Left Column - Copy */}
-          <div className="flex-1 flex flex-col items-center lg:items-start text-center lg:text-left z-20">
-            <div className="[animation:fadeSlideIn_1s_ease-out_0.8s_both] inline-flex transition-transform hover:scale-105 cursor-pointer group bg-zinc-800/60 backdrop-blur-sm rounded-full mb-8 py-1.5 px-6 shadow-sm items-center justify-center">
-              <span className="text-[10px] sm:text-[11px] font-bold tracking-[0.2em] text-zinc-300 uppercase font-sans">Seja bem-vinda, Dra. Seja bem-vindo, Dr.</span>
-            </div>
-            
-            <h1 className="leading-[1.15] text-[2.5rem] md:text-[4rem] lg:text-[4.5rem] cursor-default font-extrabold tracking-tight mb-12 text-white font-manrope max-w-[18ch] md:max-w-2xl" style={{ animation: 'fadeSlideIn 1s ease-out 1s both' }}>
-              Sua clínica precisa de <span className="text-[#B988BF]">estrutura</span>, <br className="md:hidden" /> não apenas anúncios.
-            </h1>
+      <section id="hero" className="relative overflow-hidden pt-[6.5rem] md:pt-[8.5rem] lg:pt-28 pb-10 lg:pb-16">
 
-            <p className="leading-relaxed md:text-xl text-lg font-normal text-zinc-400 tracking-wide font-sans max-w-xl mb-14" style={{ animation: 'fadeSlideIn 1s ease-out 1.2s both' }}>
-              Sem site, <strong className="font-bold text-zinc-200">Pixel, Analytics e remarketing</strong>, sua clínica perde pacientes todos os dias sem perceber.
-            </p>
+        {/* Main container */}
+        <div className="max-w-[1200px] mx-auto px-5 sm:px-6 relative z-10">
+          <div className="flex flex-col lg:flex-row lg:items-center text-center lg:text-left gap-8 lg:gap-20">
 
-            <div className="flex flex-col sm:flex-row gap-5 w-full lg:w-auto mt-2" style={{ animation: 'fadeSlideIn 1s ease-out 1.4s both' }}>
-              <button 
+            {/* ========== LEFT COLUMN (text) ========== */}
+            <div className="w-full lg:w-[40%] flex flex-col items-center lg:items-start pt-4 lg:pt-0 relative z-20">
+
+              {/* Tag - hidden on mobile */}
+
+
+              {/* 1. Headline */}
+              <motion.h1 
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.1 }}
+                className="text-[2.2rem] sm:text-[2.5rem] md:text-[3.3rem] lg:text-[3.6rem] font-extrabold leading-[1.1] tracking-tight text-white font-manrope mb-6"
+              >
+                Sem um processo claro, sua clínica gera interesse — <span className="text-[#B988BF]">mas não transforma em agendamentos.</span>
+              </motion.h1>
+
+              {/* 2. Authority Strategy Line */}
+              <motion.p 
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.15 }}
+                className="text-[15px] sm:text-base md:text-lg text-zinc-400 max-w-[480px] lg:max-w-xl mb-8 leading-relaxed font-light"
+              >
+                Estratégia construída com base em mais de 10 anos em vendas e conversão.
+              </motion.p>
+
+
+
+              <motion.button 
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.3 }}
                 onClick={onOpenModal}
-                className="group relative flex h-[62px] w-full sm:w-auto sm:min-w-[300px] px-12 items-center justify-center overflow-hidden rounded-2xl transition-all hover:-translate-y-1 active:scale-95 bg-gradient-to-br from-zinc-800 to-[#1A1A1E] border border-white/10 shadow-[0_15px_35px_rgba(0,0,0,0.4)] hover:shadow-[0_20px_50px_rgba(185,136,191,0.25)]"
+                className="group w-full sm:w-auto bg-gradient-to-r from-[#5B2E8A] to-[#3A1660] hover:from-[#6B3FA0] hover:to-[#4A2070] text-white rounded-xl px-6 lg:px-8 py-4 lg:py-5 flex items-center justify-center gap-3 font-bold text-[12px] md:text-[13px] tracking-[0.1em] uppercase transition-all shadow-[0_4px_30px_rgba(91,46,138,0.35)] mb-5 font-manrope"
               >
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#B988BF]/10 to-transparent translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-1000"></div>
-                <span className="relative z-10 flex items-center justify-center gap-5 text-[12px] sm:text-[13px] font-bold tracking-[0.2em] uppercase font-manrope text-white whitespace-nowrap">
-                  <span>Solicitar análise estratégica</span>
-                  <ArrowRight size={20} className="transition-transform duration-300 group-hover:translate-x-1" />
-                </span>
-              </button>
+                Quero entender onde estou perdendo pacientes →
+                <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
+              </motion.button>
 
-              <button 
-                onClick={() => document.getElementById('sistema')?.scrollIntoView({ behavior: 'smooth' })} 
-                className="group relative flex h-[60px] w-full sm:w-auto sm:min-w-[240px] px-10 items-center justify-center rounded-2xl bg-transparent hover:bg-white/5 backdrop-blur-sm transition-all hover:-translate-y-0.5 text-zinc-300 hover:text-white border border-transparent hover:border-white/10"
+              {/* Desktop Trust line - hidden on mobile */}
+              <motion.div 
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.5, delay: 0.4 }}
+                className="hidden lg:flex flex-wrap gap-5 text-zinc-500 text-[11px]"
               >
-                <span className="relative z-20 flex items-center justify-center gap-4 text-[12px] font-bold tracking-[0.15em] uppercase font-manrope">
-                  <span>Ver como funciona</span>
-                  <ChevronDown size={16} className="transition-transform duration-300 group-hover:translate-y-1" />
-                </span>
-              </button>
+                <span className="flex items-center gap-1.5"><CheckCircle2 size={13} className="text-zinc-600" /> Sem compromisso</span>
+                <span className="flex items-center gap-1.5"><CheckCircle2 size={13} className="text-zinc-600" /> Análise personalizada</span>
+                <span className="flex items-center gap-1.5"><CheckCircle2 size={13} className="text-zinc-600" /> Resposta em até 24h</span>
+              </motion.div>
+
+              {/* 5. Differentiation Card (glass) */}
+              <motion.div 
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.6 }}
+                className="bg-[#140c24]/50 border border-[#2a1b42] rounded-xl p-4 flex flex-col lg:flex-row items-center lg:items-start gap-3 w-full max-w-md lg:mt-6"
+              >
+                <p className="text-[13px] text-zinc-300">
+                  <strong className="text-white">Não fazemos só marketing.</strong> Aplicamos lógica real de vendas para transformar leads em pacientes.
+                </p>
+              </motion.div>
+
+            </div>
+
+            {/* ========== RIGHT COLUMN ========== */}
+            <div className="w-full lg:w-[55%] relative mt-8 lg:-mt-12 flex flex-col items-center lg:items-start lg:translate-x-10">
+              <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.4 }}
+                className="relative w-full max-w-[600px] lg:max-w-[780px] mb-8 lg:mb-0 scale-110 lg:scale-125 origin-bottom lg:origin-right"
+              >
+                <div className="relative" style={{
+                  maskImage: 'linear-gradient(to right, transparent 5%, black 45%)',
+                  WebkitMaskImage: 'linear-gradient(to right, transparent 5%, black 45%)'
+                }}>
+                  {/* Subtle purple tint for harmony */}
+                  <div className="absolute inset-0 bg-[#68259A]/5 mix-blend-soft-light z-20 pointer-events-none" />
+                  
+                  <img 
+                    src="/hero.img.mobile.png" 
+                    alt="Marketing Estratégico" 
+                    className="relative z-10 w-full h-auto object-contain brightness-[0.95] contrast-[1.1]"
+                  />
+                  
+                  {/* Minimal bottom fade for blending */}
+                  <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[#0A0A0B] to-transparent z-20 pointer-events-none" />
+                </div>
+              </motion.div>
+
+              {/* Depoimentos Mobile (Carrossel) */}
+              <motion.div 
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.6, delay: 0.5 }}
+                className="w-full lg:hidden flex flex-col items-center mb-8 overflow-hidden"
+              >
+                <p className="text-[11px] text-[#A678CB] font-bold uppercase tracking-wider mb-4 px-5 text-center">
+                  O que clínicas percebem após estruturar o marketing
+                </p>
+                
+                {/* Infinite Horizontal Ticker */}
+                <div className="w-full relative py-2 overflow-hidden">
+                  {/* Gradient Masks for smooth edges */}
+                  <div className="absolute inset-y-0 left-0 w-16 bg-gradient-to-r from-[#0A0A0B] to-transparent z-10 pointer-events-none" />
+                  <div className="absolute inset-y-0 right-0 w-16 bg-gradient-to-l from-[#0A0A0B] to-transparent z-10 pointer-events-none" />
+
+                  <motion.div 
+                    className="flex gap-4 w-fit"
+                    animate={{ x: ["0%", "-50%"] }}
+                    transition={{
+                      duration: 30,
+                      repeat: Infinity,
+                      ease: "linear"
+                    }}
+                  >
+                    {[...Array(2)].map((_, setIdx) => (
+                      <div key={setIdx} className="flex gap-4">
+                        {[
+                          { quote: "A gente investia em anúncios, mas não sabia o que estava funcionando. Depois da estrutura, ficou claro de onde vinham os pacientes.", author: "Dra. Mariana", info: "clínica estética – SP" },
+                          { quote: "Percebemos que o problema não era só tráfego, e sim o atendimento. Ajustando isso, começamos a converter muito mais.", author: "Dr. Rafael", info: "odontologia – interior de SP" },
+                          { quote: "Começamos a ter mais consistência nos agendamentos, não só picos. Hoje entendemos melhor o processo todo.", author: "Dr. Felipe", info: "clínica médica – capital" }
+                        ].map((testi, i) => (
+                          <div key={i} className="w-[300px] bg-[#121215]/80 backdrop-blur-md border border-[#2a2433] rounded-2xl p-6 flex flex-col shrink-0">
+                            <Quote size={18} className="text-[#6B3FA0] mb-4" />
+                            <p className="text-[14px] text-zinc-300 mb-5 leading-relaxed flex-grow">
+                              "{testi.quote}"
+                            </p>
+                            <p className="text-[12px] text-[#A678CB] font-bold">
+                              — {testi.author}
+                              <span className="block text-[10px] text-zinc-500 font-normal mt-1">{testi.info}</span>
+                            </p>
+                          </div>
+                        ))}
+                      </div>
+                    ))}
+                  </motion.div>
+                </div>
+              </motion.div>
+
+              {/* 7. Prova Social Mobile (abaixo da imagem e depoimentos) */}
+              <motion.div 
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.6 }}
+                className="flex lg:hidden items-center justify-center gap-3 mt-2 w-full"
+              >
+                <div className="w-10 h-10 rounded-xl bg-[#1a1028] flex items-center justify-center">
+                  <BarChart3 size={16} className="text-[#9b6bbd]" />
+                </div>
+                <div className="text-left">
+                  <p className="text-white font-bold text-base leading-none font-manrope">+R$ 500 mil</p>
+                  <p className="text-zinc-500 text-[9px] font-bold uppercase tracking-wider mt-0.5">gerados para clínicas</p>
+                </div>
+              </motion.div>
+
             </div>
           </div>
-
-          {/* Right Column - Tech Visualization */}
-          <div className="flex-1 relative w-full h-[550px] lg:h-[700px] flex items-center justify-center perspective-[1000px] mt-8 lg:mt-0" style={{ animation: 'fadeSlideIn 1s ease-out 1.6s both' }}>
-            {/* Core Glow */}
-            <motion.div 
-              animate={{ opacity: [0.2, 0.4, 0.2], scale: [1, 1.1, 1] }}
-              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] lg:w-[400px] h-[300px] lg:h-[400px] bg-[#B988BF] rounded-full blur-[140px] opacity-30"></motion.div>
-            
-            {/* Main Phone Mockup Element pt 2*/}
-            <motion.div 
-              initial={{ y: 30, opacity: 0, rotateY: 5, rotateX: 5 }}
-              animate={{ y: 0, opacity: 1, rotateY: 0, rotateX: 0 }}
-              transition={{ duration: 1.2, delay: 1.8, type: "spring" }}
-              className="relative z-20 w-[275px] lg:w-[290px] h-[570px] lg:h-[580px] rounded-[3.5rem] border-[10px] border-[#0A0A0B] bg-[#141417]/80 backdrop-blur-2xl shadow-[0_40px_80px_-20px_rgba(0,0,0,0.8),inset_0_0_20px_rgba(255,255,255,0.05)] overflow-hidden flex flex-col"
-            >
-              {/* Notch */}
-              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-40 h-8 bg-[#0A0A0B] rounded-b-3xl z-30 flex items-center justify-center">
-                <div className="w-16 h-1.5 bg-white/10 rounded-full mt-2"></div>
-              </div>
-              
-              {/* UI Mockup Details - Live Conversation Simulation */}
-              <div className="pt-14 px-4 pb-6 flex-1 flex flex-col gap-4 w-full">
-                {/* Chat Header */}
-                <div className="flex items-center gap-3 mb-2 px-2">
-                  <div className="w-8 h-8 rounded-full bg-[#B988BF]/20 flex items-center justify-center">
-                    <MessageCircle size={16} className="text-[#B988BF]" />
-                  </div>
-                  <div className="flex-1">
-                    <div className="h-2 w-16 bg-white/20 rounded-full"></div>
-                    <div className="h-1.5 w-10 bg-white/10 rounded-full mt-1.5"></div>
-                  </div>
-                </div>
-
-                <div className="flex flex-col gap-3 flex-1">
-                  {/* Patient Message */}
-                  <motion.div 
-                    initial={{ opacity: 0, x: -10 }}
-                    animate={{ opacity: [0, 0, 1, 1, 0] }}
-                    transition={{ 
-                      duration: 12, 
-                      repeat: Infinity, 
-                      times: [0, 2/12, 2.5/12, 11/12, 1] 
-                    }}
-                    className="bg-zinc-800/80 rounded-2xl rounded-tl-none p-3 max-w-[85%] border border-white/5 shadow-sm"
-                  >
-                    <p className="text-[10px] text-zinc-300 leading-tight">Olá, queria saber sobre avaliação.</p>
-                  </motion.div>
-
-                  {/* IA Message */}
-                  <motion.div 
-                    initial={{ opacity: 0, x: 10 }}
-                    animate={{ opacity: [0, 0, 1, 1, 0] }}
-                    transition={{ 
-                      duration: 12, 
-                      repeat: Infinity, 
-                      times: [0, 4/12, 4.5/12, 11/12, 1] 
-                    }}
-                    className="bg-[#B988BF]/20 border border-[#B988BF]/30 rounded-2xl rounded-tr-none p-3 max-w-[85%] ml-auto shadow-sm"
-                  >
-                    <div className="flex items-center gap-1.5 mb-1 opacity-80">
-                      <Sparkles size={10} className="text-[#B988BF]" />
-                      <span className="text-[8px] font-bold text-[#B988BF] uppercase tracking-wider">IA EleveAI</span>
-                    </div>
-                    <p className="text-[10px] text-[#EAD5EB] leading-tight">Olá! Posso te ajudar com seu agendamento.</p>
-                  </motion.div>
-
-                  {/* Patient Message 2 */}
-                  <motion.div 
-                    initial={{ opacity: 0, x: -10 }}
-                    animate={{ opacity: [0, 0, 1, 1, 0] }}
-                    transition={{ 
-                      duration: 12, 
-                      repeat: Infinity, 
-                      times: [0, 6/12, 6.5/12, 11/12, 1] 
-                    }}
-                    className="bg-zinc-800/80 rounded-2xl rounded-tl-none p-3 max-w-[85%] border border-white/5 shadow-sm"
-                  >
-                    <p className="text-[10px] text-zinc-300 leading-tight">Tem horário esta semana?</p>
-                  </motion.div>
-
-                  {/* IA Message 2 */}
-                  <motion.div 
-                    initial={{ opacity: 0, x: 10 }}
-                    animate={{ opacity: [0, 0, 1, 1, 0] }}
-                    transition={{ 
-                      duration: 12, 
-                      repeat: Infinity, 
-                      times: [0, 8/12, 8.5/12, 11/12, 1] 
-                    }}
-                    className="bg-[#B988BF]/20 border border-[#B988BF]/30 rounded-2xl rounded-tr-none p-3 max-w-[85%] ml-auto shadow-sm"
-                  >
-                    <p className="text-[10px] text-[#EAD5EB] leading-tight">Temos sim. Qual período você prefere?</p>
-                  </motion.div>
-
-                  {/* Typing Indicator */}
-                  <motion.div 
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: [0, 0, 1, 0, 0, 1, 0, 0] }}
-                    transition={{ 
-                      duration: 12, 
-                      repeat: Infinity, 
-                      times: [0, 3/12, 3.1/12, 3.9/12, 7/12, 7.1/12, 7.9/12, 1] 
-                    }}
-                    className="flex gap-1 ml-auto mr-4"
-                  >
-                    <div className="w-1 h-1 bg-[#B988BF]/60 rounded-full animate-pulse"></div>
-                    <div className="w-1 h-1 bg-[#B988BF]/60 rounded-full animate-pulse delay-75"></div>
-                    <div className="w-1 h-1 bg-[#B988BF]/60 rounded-full animate-pulse delay-150"></div>
-                  </motion.div>
-                </div>
-
-                {/* Chat Input Placeholder */}
-                <div className="mt-auto h-10 rounded-xl bg-white/5 border border-white/10 flex items-center px-4">
-                  <div className="h-1.5 w-1/2 bg-white/10 rounded-full"></div>
-                </div>
-              </div>
-            </motion.div>
-
-            {/* Floating WhatsApp Notification */}
-            <motion.div 
-              initial={{ x: 60, opacity: 0 }}
-              animate={{ x: 0, opacity: 1, y: [0, -8, 0] }}
-              transition={{ 
-                x: { duration: 0.8, delay: 2.2, type: "spring", stiffness: 100 },
-                opacity: { duration: 0.8, delay: 2.2 },
-                y: { duration: 2, repeat: Infinity, ease: "easeInOut", delay: 3 }
-              }}
-              className="absolute top-[18%] right-2 lg:-right-10 z-30 bg-[#1A1A1E]/95 backdrop-blur-xl border border-white/[0.03] p-3.5 lg:p-4 rounded-2xl flex items-center gap-4 shadow-xl"
-            >
-              <div className="w-10 h-10 lg:w-12 lg:h-12 rounded-full bg-zinc-800 flex items-center justify-center shadow-inner">
-                <WhatsAppIcon size={22} className="text-green-500 drop-shadow-sm" />
-              </div>
-              <div className="pr-2">
-                <p className="text-zinc-200 text-sm font-bold tracking-wide">Novo Paciente</p>
-                <p className="text-zinc-500 text-xs font-semibold mt-0.5">Avaliação Confirmada</p>
-              </div>
-            </motion.div>
-
-            {/* Dashboard Floating Widget */}
-            <motion.div 
-              initial={{ x: -60, opacity: 0 }}
-              animate={{ x: 0, opacity: 1, y: [0, -10, 0] }}
-              transition={{ 
-                x: { duration: 0.8, delay: 2.4, type: "spring", stiffness: 100 },
-                opacity: { duration: 0.8, delay: 2.4 },
-                y: { duration: 2, repeat: Infinity, ease: "easeInOut", delay: 3.2 }
-              }}
-              className="hidden sm:block absolute bottom-[18%] left-2 lg:-left-12 z-30 bg-[#1A1A1E]/90 backdrop-blur-xl border border-[#B988BF]/20 p-5 rounded-2xl shadow-[0_20px_40px_rgba(0,0,0,0.6)]"
-            >
-              <div className="flex items-center gap-2 mb-2">
-                <div className="bg-[#B988BF]/20 p-1.5 rounded-md">
-                  <TrendingUp className="text-[#B988BF] w-4 h-4" />
-                </div>
-                <span className="text-zinc-400 text-[10px] font-bold uppercase tracking-[0.15em]">Taxa Vendas</span>
-              </div>
-              <div className="text-4xl font-extrabold text-white drop-shadow-md">+142<span className="text-2xl text-[#B988BF]">%</span></div>
-            </motion.div>
-
-            {/* Floating Tags for Capabilities */}
-            <motion.div 
-              initial={{ y: -30, opacity: 0 }} 
-              animate={{ y: [0, -12, 0], opacity: 1 }} 
-              transition={{ 
-                y: { duration: 2, repeat: Infinity, ease: "easeInOut", delay: 2.6 },
-                opacity: { delay: 2.6, duration: 0.8 }
-              }} 
-              className="absolute py-1.5 px-4 lg:py-2 lg:px-5 -top-6 right-[10%] lg:right-[32%] bg-[#1A1A1E]/90 rounded-full border border-blue-500/40 backdrop-blur-md shadow-[0_0_25px_rgba(37,99,235,0.4)] z-50 rotate-3 hover:rotate-0 transition-transform"
-            >
-              <span className="text-[9px] lg:text-[11px] font-extrabold text-blue-400 uppercase flex items-center gap-2 tracking-widest"><CheckCircle2 size={12} className="text-blue-500" /> Pixel Ativo</span>
-            </motion.div>
-            
-            <motion.div 
-              initial={{ scale: 0, opacity: 0 }} 
-              animate={{ scale: [0, 1, 1], y: [0, -8, 0], opacity: 1 }} 
-              transition={{ 
-                scale: { delay: 2.7, duration: 0.5 },
-                y: { duration: 2, repeat: Infinity, ease: "easeInOut", delay: 3.2 },
-                opacity: { delay: 2.7, duration: 0.5 }
-              }} 
-              className="absolute py-1.5 px-4 lg:py-2 lg:px-5 bottom-[4%] right-2 lg:right-4 bg-[#1A1A1E]/80 rounded-full border border-amber-500/30 backdrop-blur-md shadow-[0_0_20px_rgba(245,158,11,0.2)] z-30 -rotate-6 hover:rotate-0 transition-transform"
-            >
-              <span className="text-[9px] lg:text-[11px] font-extrabold text-amber-400 uppercase flex items-center gap-2 tracking-widest"><Target size={12} className="text-amber-500" /> Remarketing</span>
-            </motion.div>
- 
-            <motion.div 
-              initial={{ scale: 0, opacity: 0 }} 
-              animate={{ scale: [0, 1, 1], y: [0, -10, 0], opacity: 1 }} 
-              transition={{ 
-                scale: { delay: 2.8, duration: 0.5 },
-                y: { duration: 2, repeat: Infinity, ease: "easeInOut", delay: 3.3 },
-                opacity: { delay: 2.8, duration: 0.5 }
-              }} 
-              className="absolute py-1.5 px-4 lg:py-2 lg:px-5 top-[35%] -left-2 lg:-left-16 bg-[#1A1A1E]/80 rounded-full border border-emerald-500/30 backdrop-blur-md shadow-[0_0_20px_rgba(16,185,129,0.2)] z-20 -rotate-3 hover:rotate-0 transition-transform"
-            >
-              <span className="text-[9px] lg:text-[11px] font-extrabold text-emerald-400 uppercase flex items-center gap-2 tracking-widest"><MessageCircle size={12} className="text-emerald-500" /> WhatsApp</span>
-            </motion.div>
- 
-            <motion.div 
-              initial={{ scale: 0, opacity: 0 }} 
-              animate={{ scale: [0, 1, 1], y: [0, -6, 0], opacity: 1 }} 
-              transition={{ 
-                scale: { delay: 3.0, duration: 0.5 },
-                y: { duration: 2, repeat: Infinity, ease: "easeInOut", delay: 3.5 },
-                opacity: { delay: 3.0, duration: 0.5 }
-              }} 
-              className="hidden sm:flex absolute py-1.5 px-4 lg:py-2 lg:px-5 bottom-0 left-[15%] lg:left-[25%] bg-[#1A1A1E]/80 rounded-full border border-purple-500/30 backdrop-blur-md shadow-[0_0_20px_rgba(139,92,246,0.2)] z-40 rotate-[12deg] hover:rotate-0 transition-transform"
-            >
-              <span className="text-[9px] lg:text-[11px] font-extrabold text-purple-400 uppercase flex items-center gap-2 tracking-widest"><BarChart2 size={12} className="text-purple-500" /> Analytics</span>
-            </motion.div>
-
-          </div>
         </div>
-
       </section>
+      
+      {/* Scroll fix CSS specifically for this component if needed */}
+      <style dangerouslySetInnerHTML={{__html: `
+        .hide-scrollbar::-webkit-scrollbar {
+          display: none;
+        }
+        .hide-scrollbar {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+      `}} />
     </>
   );
 };
 
 
 
-const InvestirNoEscuro = () => {
-  return (
-    <section className="py-32 relative px-6 overflow-hidden bg-ice border-b border-black/5">
-      <div className="max-w-6xl mx-auto text-center relative z-10">
-        <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="mb-16"
-          >
-          <h2 className="text-3xl sm:text-4xl md:text-5xl text-graphite mb-6 tracking-tight font-manrope font-bold leading-[1.1]">
-            A maioria das <span className="text-primary font-manrope">clínicas</span> investe no escuro.
-          </h2>
-          <p className="text-gray-600 text-lg md:text-xl font-sans leading-relaxed max-w-3xl mx-auto">
-            Sem Pixel, Analytics e rastreamento, sua clínica não sabe quais anúncios funcionam, quem entrou no site e quem estava pronto para agendar.
-          </p>
-        </motion.div>
 
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
-          {[
-            { icon: X, title: "Sem Pixel" },
-            { icon: X, title: "Sem Analytics" },
-            { icon: X, title: "Sem Remarketing" },
-            { icon: X, title: "Sem WhatsApp" },
-            { icon: X, title: "Sem Previsibilidade" },
-          ].map((item, idx) => (
-             <motion.div key={idx} initial={{opacity:0, y:10}} whileInView={{opacity:1, y:0}} transition={{delay: idx*0.1}} className="bg-white p-8 rounded-[2.5rem] shadow-[0_20px_50px_rgba(0,0,0,0.08)] border border-black/[0.03] flex flex-col items-center text-center group hover:border-[#EF4444]/30 hover:shadow-2xl transition-all">
-                <div className="w-16 h-16 rounded-full bg-gradient-to-br from-[#EF4444]/10 to-[#EF4444]/20 text-[#EF4444] flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-[#EF4444] group-hover:text-white transition-all shadow-sm">
-                  <item.icon size={28} className="stroke-[2.5]" />
-                </div>
-                <h4 className="font-bold text-graphite text-[14px] md:text-base font-manrope tracking-tight">{item.title}</h4>
-             </motion.div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-};
 
 const GoogleAdsPremium = ({ onOpenModal }: { onOpenModal: () => void }) => {
   const searches = [
@@ -838,21 +713,19 @@ const GoogleAdsPremium = ({ onOpenModal }: { onOpenModal: () => void }) => {
           </h2>
 
           {/* Body copy */}
-          <div className="space-y-4 text-gray-500 text-base md:text-lg leading-relaxed max-w-lg">
-            <p>
-              Quando alguém entra no seu site, clica no WhatsApp ou pesquisa sua clínica no Google, sua clínica precisa saber quem demonstrou interesse.
+          <div className="space-y-6 text-gray-500 text-lg md:text-xl leading-relaxed max-w-xl">
+            <p className="text-graphite font-medium">
+              Sua clínica gera interesse todos os dias. <br />
+              Mas você não sabe quem realmente quer agendar.
             </p>
-            <p className="text-sm font-medium opacity-80">
-              Sem Pixel, Analytics, Tag Manager e remarketing, você perde dados, oportunidades e pacientes.
+            <p>
+              Sem o rastreamento correto, você atrai pessoas mas não entende o comportamento delas. Quem clicou no botão? Quem viu o preço? Quem está pronto para a consulta?
             </p>
           </div>
 
           {/* Highlight */}
-          <div className="mt-8 border-l-4 border-primary pl-5 py-2">
-            <p className="text-lg font-bold text-graphite mb-2 font-manrope leading-snug">
-              Sua clínica não sabe quem entrou no site, clicou no WhatsApp ou estava pronto para agendar.
-            </p>
-            <p className="text-[14px] uppercase font-bold text-primary tracking-widest mt-3">Você está investindo no escuro.</p>
+          <div className="mt-10 border-l-4 border-primary pl-6 py-2">
+            <p className="text-[14px] uppercase font-bold text-primary tracking-widest">Você está investindo no escuro.</p>
           </div>
 
           {/* CTA */}
@@ -996,62 +869,87 @@ const GoogleAdsPremium = ({ onOpenModal }: { onOpenModal: () => void }) => {
 };
 
 
-const PacientesQualificados = () => {
+const PacientesQualificados = ({ onOpenModal }: { onOpenModal: () => void }) => {
+  const steps = [
+    { tag: "1", icon: Target, title: "Atrai o público certo", desc: "A comunicação filtra quem realmente tem interesse." },
+    { tag: "2", icon: MessageCircle, title: "Organiza o primeiro contato", desc: "A conversa começa com direção." },
+    { tag: "3", icon: UserCheck, title: "Identifica quem está pronto", desc: "Você entende quem tem perfil para avançar." },
+    { tag: "4", icon: Calendar, title: "Conduz até o agendamento", desc: "Só os pacientes certos chegam à consulta." }
+  ];
+
   return (
-    <section id="sistema" className="py-32 relative px-6 overflow-hidden scroll-mt-24 bg-ice">
+    <section id="sistema" className="py-24 md:py-32 relative px-6 overflow-hidden scroll-mt-24 bg-ice">
       <div className="max-w-7xl mx-auto relative z-10">
-        <div className="text-center mb-20">
+        <div className="text-center mb-20 md:mb-28">
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-3xl sm:text-4xl md:text-5xl font-bold text-graphite mb-6 font-manrope tracking-tight leading-[1.1]"
+            className="text-[2.2rem] sm:text-4xl md:text-5xl lg:text-[4rem] font-extrabold text-graphite mb-8 font-manrope tracking-tight leading-[1.05] max-w-5xl mx-auto"
           >
-            Pacientes qualificados não aparecem <span className="text-primary font-manrope">por acaso.</span>
+            Você não precisa de mais leads. <br className="hidden md:block" />
+            <span className="text-primary font-manrope">Precisa parar de falar com quem não vai fechar.</span>
           </motion.h2>
-          <p className="text-gray-500 max-w-2xl mx-auto text-lg font-sans leading-relaxed">
-            Pacientes de alto valor seguem uma jornada previsível até a sua clínica. Nós construímos esse caminho.
-          </p>
+          <motion.p 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1 }}
+            className="text-gray-500 max-w-2xl mx-auto text-lg md:text-xl font-sans leading-relaxed"
+          >
+            Sua clínica já gera interesse. O problema é o desperdício de tempo com contatos desqualificados.
+          </motion.p>
         </div>
 
-        <div className="flex flex-col lg:flex-row items-center lg:items-stretch justify-between gap-4 lg:gap-2">
-          {[
-            { tag: "1", icon: Target, title: "Vê Anúncio", desc: "No Google ou Meta" },
-            { tag: "2", icon: LayoutDashboard, title: "Entra no Site", desc: "Estrutura premium" },
-            { tag: "3", icon: MessageCircle, title: "WhatsApp", desc: "Inicia atendimento" },
-            { tag: "4", icon: Smartphone, title: "Remarketing", desc: "Retenção ativa" },
-            { tag: "5", icon: Shield, title: "Confiança", desc: "Deseja seu serviço" },
-            { tag: "6", icon: Calendar, title: "Agenda", desc: "Paciente Realizado" }
-          ].map((item, idx, arr) => (
-             <React.Fragment key={idx}>
-                <motion.div 
-                  initial={{opacity: 0, y: 20}}
-                  whileInView={{opacity: 1, y: 0}}
-                  transition={{delay: idx * 0.1}}
-                  viewport={{once: true}}
-                  whileHover={{ y: -5 }} 
-                  className="bg-white p-6 w-full lg:w-[15%] rounded-[2rem] shadow-[0_12px_40px_rgba(0,0,0,0.06)] border border-black/[0.04] flex flex-col items-center text-center relative group"
-                >
-                  <div className="absolute -top-3 -right-3 w-8 h-8 rounded-full bg-primary text-white font-bold flex items-center justify-center text-sm shadow-md">{item.tag}</div>
-                  <div className="w-16 h-16 rounded-full bg-primary/5 text-primary flex items-center justify-center mb-4 group-hover:scale-110 group-hover:bg-primary group-hover:text-white transition-all duration-300">
-                    <item.icon size={28} />
-                  </div>
-                  <h3 className="text-[15px] font-bold text-graphite mb-1 font-manrope leading-tight">{item.title}</h3>
-                  <p className="text-[12px] text-gray-500 font-sans">{item.desc}</p>
-                </motion.div>
-                {idx < arr.length - 1 && (
-                  <div className="hidden lg:flex items-center justify-center text-primary/30">
-                    <ArrowRight size={24} className="animate-pulse" />
-                  </div>
-                )}
-                {idx < arr.length - 1 && (
-                  <div className="flex lg:hidden items-center justify-center py-2 text-primary/30">
-                    <ArrowRight size={24} className="rotate-90 animate-pulse" />
-                  </div>
-                )}
-             </React.Fragment>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 relative">
+          <div className="hidden lg:block absolute top-[4.5rem] left-[10%] right-[10%] h-[2px] bg-primary/10 -z-10" />
+
+          {steps.map((item, idx) => (
+             <motion.div 
+               key={idx}
+               initial={{opacity: 0, y: 20}}
+               whileInView={{opacity: 1, y: 0}}
+               transition={{delay: idx * 0.1}}
+               viewport={{once: true}}
+               whileHover={{ y: -5 }} 
+               className="bg-white p-8 rounded-[2rem] shadow-[0_12px_40px_rgba(0,0,0,0.04)] border border-black/[0.04] flex flex-col items-center text-center relative group"
+             >
+               <div className="absolute -top-4 -right-4 w-10 h-10 rounded-full bg-primary text-white font-bold flex items-center justify-center text-[15px] shadow-[0_4px_15px_rgba(104,37,154,0.3)]">{item.tag}</div>
+               <div className="w-20 h-20 rounded-full bg-primary/5 text-primary flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-primary group-hover:text-white transition-all duration-300">
+                 <item.icon size={32} strokeWidth={1.5} />
+               </div>
+               <h3 className="text-[17px] md:text-lg font-bold text-graphite mb-2 font-manrope tracking-tight leading-tight">
+                 {item.title}
+               </h3>
+               <p className="text-[13px] md:text-[14px] text-gray-500 font-sans leading-relaxed">
+                 {item.desc}
+               </p>
+             </motion.div>
           ))}
         </div>
+
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.4 }}
+          className="mt-16 md:mt-24 flex flex-col items-center"
+        >
+          <div className="inline-block bg-white shadow-xl border border-black/5 rounded-2xl p-6 md:p-8 max-w-3xl relative overflow-hidden text-left sm:text-center mb-10">
+            <div className="absolute top-0 left-0 w-1 sm:w-full sm:h-1 h-full bg-primary"></div>
+            <p className="text-graphite font-bold text-[16px] md:text-xl font-manrope tracking-tight leading-snug">
+              "Você não precisa de mais leads. Precisa de mais clareza sobre quem realmente vale a pena atender."
+            </p>
+          </div>
+
+          <button
+            onClick={onOpenModal}
+            className="group relative flex h-[60px] w-full sm:w-auto items-center justify-center bg-primary text-white text-[11px] md:text-[12px] font-bold tracking-[0.15em] rounded-xl uppercase transition-all shadow-[0_10px_30px_rgba(104,37,154,0.3)] hover:shadow-[0_15px_40px_rgba(104,37,154,0.4)] px-10 font-manrope active:scale-95"
+            type="button"
+          >
+            Analisar meu processo →
+          </button>
+        </motion.div>
       </div>
     </section>
   );
@@ -1069,21 +967,21 @@ const AutomacaoClinica = () => {
             viewport={{ once: true }}
             className="text-3xl sm:text-4xl md:text-5xl font-bold text-graphite mb-6 font-manrope tracking-tight max-w-4xl mx-auto leading-[1.1]"
           >
-            Sua clínica precisa de <span className="text-primary font-manrope">automação</span>, não apenas atendimento manual.
+            Sua clínica perde pacientes no <span className="text-primary font-manrope">tempo de resposta.</span>
           </motion.h2>
           <p className="text-gray-600 max-w-2xl mx-auto text-lg md:text-xl font-sans leading-relaxed">
-            Confirmações, lembretes e follow-ups automáticos ajudam sua clínica a reduzir faltas, organizar a agenda e melhorar a experiência do paciente.
+            Cada minuto de demora no WhatsApp diminui drasticamente a chance de agendamento. Automatizamos para que você nunca mais perca um lead por lentidão.
           </p>
         </div>
 
         <div className="grid md:grid-cols-3 gap-6">
            {[
-             { icon: CheckCircle2, title: "Confirmação Automática", desc: "Mensagens eficientes, evitando horários vagos e retrabalho manual na recepção." },
-             { icon: Clock, title: "Lembrete de Consulta", desc: "Notificação inteligente horas antes para reduzir drasticamente o número de cancelamentos e 'no-shows'." },
-             { icon: Calendar, title: "Reagendamento", desc: "Roteiro simplificado no WhatsApp para reagendar sem gargalos de comunicação." },
-             { icon: MessageCircle, title: "Follow-up Ativo", desc: "Retome o contato com leads não fechados de modo passivo e aumente o LTV." },
-             { icon: Smartphone, title: "WhatsApp Automatizado", desc: "Triagem 24/7 de todos os contatos provenientes do fluxo Google e Meta Ads." },
-             { icon: TrendingUp, title: "Menos Faltas", desc: "Mais lucratividade mantendo a sua agenda otimizada e previsível todos os dias." },
+             { icon: CheckCircle2, title: "Resposta Instantânea", desc: "Triagem 24/7 de todos os contatos. O paciente é atendido no segundo que demonstra interesse." },
+             { icon: MessageCircle, title: "Follow-up Ativo", desc: "O sistema retoma o contato com quem não agendou, garantindo que nenhum lead seja esquecido." },
+             { icon: Clock, title: "Lembretes Inteligentes", desc: "Redução drástica de faltas com notificações automáticas antes da consulta." },
+             { icon: Calendar, title: "Reagendamento Fluido", desc: "Processo simplificado para horários desmarcados, mantendo sua agenda sempre otimizada." },
+             { icon: Smartphone, title: "Triagem Estratégica", desc: "O bot identifica quem tem perfil para agendamento imediato e encaminha para a recepção." },
+             { icon: TrendingUp, title: "Máxima Conversão", desc: "Transformamos o fluxo de mensagens em uma máquina previsível de novos pacientes." },
            ].map((item, idx) => (
               <motion.div key={idx} initial={{opacity:0, y:20}} whileInView={{opacity:1, y:0}} transition={{delay: idx*0.1}} viewport={{once: true}} className="bg-white p-8 rounded-3xl shadow-[0_12px_40px_rgba(0,0,0,0.03)] border border-black/[0.04] hover:shadow-xl hover:-translate-y-1 transition-all">
                  <div className="w-14 h-14 rounded-full bg-primary/10 text-primary flex items-center justify-center mb-6">
@@ -1101,49 +999,7 @@ const AutomacaoClinica = () => {
 
 
 
-const PorQueEleveAI = () => {
-  return (
-    <section className="py-32 px-6 overflow-hidden bg-graphite relative">
-      {/* Subtle depth gradient */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/20 to-transparent pointer-events-none" />
-      
-      <div className="max-w-7xl mx-auto relative z-10">
-        <div className="mb-24 text-center md:text-left">
-          <h2 className="text-3xl sm:text-4xl md:text-6xl font-extrabold text-white mb-8 font-manrope leading-[1.1] tracking-tight">
-            O que sua clínica precisa <span className="text-primary block sm:inline font-manrope">para crescer.</span>
-          </h2>
-          <p className="text-zinc-400 text-lg md:text-xl max-w-2xl leading-relaxed font-sans">
-            Não focamos em ações isoladas. Construímos a estrutura que permite que sua clínica seja encontrada, desejada e escolhida pelo paciente ideal.
-          </p>
-        </div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
-          {[
-            { icon: LayoutDashboard, title: "Estrutura Digital", desc: "Site, Pixel, Analytics e rastreamento funcionando.", color: "text-primary" },
-            { icon: Target, title: "Captação Inteligente", desc: "Google Ads, Meta Ads e remarketing estratégico.", color: "text-secondary" },
-            { icon: Zap, title: "Automação", desc: "WhatsApp, lembretes, confirmações e follow-up.", color: "text-primary" },
-            { icon: TrendingUp, title: "Crescimento", desc: "Mais previsibilidade, mais autoridade e mais pacientes.", color: "text-secondary" }
-          ].map((item, idx) => (
-            <motion.div
-              key={idx}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="bg-white/[0.03] backdrop-blur-sm p-10 border border-white/[0.04] hover:border-primary/40 transition-all group relative overflow-hidden flex flex-col items-start"
-            >
-              <div className="absolute left-0 top-0 bottom-0 w-1 bg-primary transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300"></div>
-              <div className={`w-16 h-16 rounded-full bg-white/5 flex items-center justify-center mb-8 group-hover:scale-110 group-hover:bg-primary transition-all duration-500 ${item.color}`}>
-                <item.icon size={30} />
-              </div>
-              <h3 className="text-xl font-bold text-white mb-4 font-manrope tracking-tight">{item.title}</h3>
-              <p className="text-zinc-400 leading-relaxed text-[15px] font-sans">{item.desc}</p>
-            </motion.div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-};
 
 const FAQItem = ({ question, answer, isOpen, toggle }: any) => {
   return (
@@ -1229,7 +1085,7 @@ const FAQ = () => {
     },
     {
       question: "Preciso ter equipe interna?",
-      answer: "Não. Nós estruturamos a automação e o funil de aquisição de forma que você ou um pequeno time consiga lidar apenas com os fechamentos de alto valor."
+      answer: "Não. Nós estruturamos a automação e o funil de aquisição de forma que você time consiga lidar apenas com os fechamentos de alto valor."
     },
     {
       question: "Como funciona a implantação?",
@@ -1243,12 +1099,12 @@ const FAQ = () => {
 
   return (
     <section id="faq" className="py-32 px-6 scroll-mt-32 bg-graphite">
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-3xl mx-auto">
         <div className="text-center mb-24">
           <h2 className="text-4xl md:text-5xl lg:text-7xl font-extrabold text-white mb-8 tracking-tight font-manrope leading-tight">Dúvidas Frequentes</h2>
           <p className="text-gray-400 text-lg leading-relaxed font-sans max-w-2xl mx-auto">Tudo o que você precisa saber sobre a estruturação do seu crescimento digital.</p>
         </div>
-        <div className="space-y-4">
+        <div className="space-y-6">
           {faqs.map((f, i) => (
             <FAQItem
               key={i}
@@ -1265,35 +1121,38 @@ const FAQ = () => {
 
 const FinalCTA = ({ onOpenModal }: { onOpenModal: () => void }) => {
   return (
-    <section className="py-32 px-6 relative overflow-hidden bg-graphite">
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary/10 rounded-full blur-[120px] pointer-events-none" />
+    <section className="py-24 md:py-40 px-6 relative overflow-hidden bg-graphite">
+      {/* Subtle background glow */}
+      <div className="absolute top-1/2 left-0 w-[400px] h-[400px] bg-primary/5 rounded-full blur-[120px] pointer-events-none" />
       
-      <div className="max-w-6xl mx-auto bg-black/40 backdrop-blur-md p-14 md:p-24 text-center relative z-10 border border-white/10 shadow-[0_20px_80px_rgba(0,0,0,0.8)] rounded-[2.5rem]">
+      <div className="max-w-5xl mx-auto relative z-10 text-left">
         <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          whileInView={{ opacity: 1, scale: 1 }}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
         >
-          <h2 className="text-4xl md:text-6xl lg:text-7xl font-extrabold text-white mb-10 tracking-tight font-manrope leading-[1.15] max-w-4xl mx-auto flex flex-col items-center">
-            <span className="font-manrope font-black text-white text-[32px] md:text-[50px] tracking-tight block drop-shadow-sm mb-2">Sua clínica precisa de</span>
-            <span className="font-manrope font-extrabold text-primary uppercase text-[26px] md:text-[36px] tracking-[0.10em] md:tracking-[0.15em] block drop-shadow-lg">Mais previsibilidade?</span>
+          <h2 className="text-[2.2rem] sm:text-[3rem] md:text-[4.5rem] font-extrabold text-white mb-10 tracking-tight font-manrope leading-[1.05]">
+            Você já está atraindo pacientes. <br className="hidden md:block" />
+            <span className="text-[#B988BF]">Só não está convertendo.</span>
           </h2>
 
-          <p className="text-gray-300 text-lg md:text-xl leading-relaxed font-sans max-w-3xl mx-auto mb-16">
-            Solicite uma análise estratégica e descubra como gerar mais pacientes com rastreamento, automação e estrutura.
+          <p className="text-zinc-400 text-lg md:text-2xl leading-relaxed font-manrope max-w-2xl mb-14 font-light">
+            Sua clínica gera interesse. O problema está no que acontece depois.
           </p>
           
-          <div className="flex justify-center">
+          <div className="flex flex-col items-start gap-8">
             <button
               onClick={onOpenModal}
-              className="group relative flex h-[64px] w-full sm:min-w-[380px] sm:w-auto items-center justify-center bg-primary text-white text-[12px] font-bold tracking-[0.25em] rounded-full uppercase transition-all hover:scale-105 hover:shadow-[0_20px_60px_rgba(104,37,154,0.4)] shadow-2xl border border-white/10 px-12"
+              className="group relative flex h-[68px] w-full sm:w-auto items-center justify-center bg-gradient-to-r from-[#5B2E8A] to-[#3A1660] hover:from-[#6B3FA0] hover:to-[#4A2070] text-white text-[12px] md:text-[13px] font-bold tracking-[0.1em] rounded-xl uppercase transition-all shadow-[0_10px_40px_rgba(91,46,138,0.3)] px-12 font-manrope"
               type="button"
             >
-              Receber análise estratégica
-              <ArrowRight size={22} className="ml-5 transition-transform duration-300 group-hover:translate-x-1" />
+              Quero entender onde estou perdendo pacientes →
             </button>
+            <p className="text-zinc-500 text-[11px] md:text-xs font-bold uppercase tracking-[0.2em] opacity-70">
+              Análise estratégica personalizada. Sem compromisso.
+            </p>
           </div>
-          <p className="mt-10 text-xs text-gray-500 font-bold uppercase tracking-widest opacity-60">Análise técnica • Sem compromisso</p>
         </motion.div>
       </div>
     </section>
@@ -1431,8 +1290,8 @@ const PrivacyPolicy = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => vo
   };
 
   const sections = [
-    { title: "1. Coleta de Dados", icon: <Target size={22} />, content: "Coletamos informações fornecidas voluntariamente por você através de nossos formulários de contato, incluindo nome, e-mail e número de telefone (\"leads\")." },
-    { title: "2. Uso das Informações", icon: <TrendingUp size={22} />, content: "Os dados coletados são utilizados exclusivamente para entrar em contato com você, fornecer informações sobre nossos serviços, realizar triagens estratégicas e para fins de marketing direto (como envio de propostas e novidades)." },
+    { title: "1. Coleta de Dados", icon: <Target size={22} />, content: "Coletamos informações fornecidas voluntariamente por vocêssos formulários de contato, incluindo nome, e-mail e número de telefone (\"leads\")." },
+    { title: "2. Uso das Informações", icon: <TrendingUp size={22} />, content: "Os dados coletados são utilizados exclusivamente para entrar em contato com vocêormações sobre nossos serviços, realizar triagens estratégicas e para fins de marketing direto (como envio de propostas e novidades)." },
     { title: "3. Cookies e Tecnologias", icon: <Cpu size={22} />, content: "Utilizamos cookies, Google Analytics e Meta Pixel para analisar o tráfego do site, melhorar sua experiência de navegação e exibir anúncios personalizados em outras plataformas." },
     { title: "4. Segurança dos Dados", icon: <Shield size={22} />, content: "Empregamos medidas técnicas e organizacionais adequadas para proteger seus dados contra acessos não autorizados, perda ou alteração. Seus dados são tratados com total confidencialidade." },
     { title: "5. Seus Direitos", icon: <UserCheck size={22} />, content: "Você tem o direito de solicitar a qualquer momento a remoção, correção ou acesso aos seus dados pessoais em nossa base. Basta entrar em contato através dos nossos canais." }
@@ -1505,7 +1364,7 @@ const PrivacyPolicy = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => vo
               >
                 Compreendo e Aceito os Termos
               </button>
-              <p className="text-center text-[10px] text-gray-600 mt-4 uppercase font-bold tracking-widest">Ao clicar, você confirma a leitura completa deste documento</p>
+              <p className="text-center text-[10px] text-gray-600 mt-4 uppercase font-bold tracking-widest">Ao clicar, vocêitura completa deste documento</p>
             </div>
           </div>
         </motion.div>
@@ -1602,7 +1461,7 @@ const TermsOfUse = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => void 
               >
                 Compreendo e Aceito os Termos
               </button>
-              <p className="text-center text-[10px] text-gray-600 mt-4 uppercase font-bold tracking-widest">Ao continuar navegando, você declara aceitar as diretrizes acima</p>
+              <p className="text-center text-[10px] text-gray-600 mt-4 uppercase font-bold tracking-widest">Ao continuar navegaçãocÃÂª declara aceitar as diretrizes acima</p>
             </div>
           </div>
         </motion.div>
@@ -1645,7 +1504,7 @@ const CookieConsent = () => {
               </div>
               <div className="flex-1">
                 <p className="text-[11px] text-zinc-400 leading-relaxed font-medium">
-                  Usamos cookies, Pixel e ferramentas de rastreamento para melhorar sua experiência e entender como os visitantes interagem com o site.
+                  Usamos cookies e ferramentas de rastreamento para melhorar sua experiência e entender como os visitantes interagem com o site.
                 </p>
               </div>
               <button
@@ -1660,15 +1519,9 @@ const CookieConsent = () => {
             <div className="flex gap-2 relative z-10">
               <button
                 onClick={handleAccept}
-                className="flex-[2] py-3 bg-[#B988BF] text-white font-bold uppercase tracking-[0.15em] text-[9px] hover:bg-[#a372ab] transition-all active:scale-95 rounded-2xl shadow-[0_4px_12px_rgba(185,136,191,0.3)]"
+                className="w-full py-3 bg-[#B988BF] text-white font-bold uppercase tracking-[0.15em] text-[9px] hover:bg-[#a372ab] transition-all active:scale-95 rounded-2xl shadow-[0_4px_12px_rgba(185,136,191,0.3)]"
               >
                 Aceitar
-              </button>
-              <button
-                onClick={() => { setIsVisible(false); onPrivacy(); }}
-                className="flex-1 py-3 bg-white/5 border border-white/10 text-zinc-500 font-bold uppercase tracking-[0.15em] text-[9px] hover:bg-white/10 hover:text-zinc-200 transition-all active:scale-95 rounded-2xl"
-              >
-                Configurações
               </button>
             </div>
           </div>
@@ -1744,7 +1597,7 @@ const RaioXSection = ({ onOpenModal }: { onOpenModal: () => void }) => {
             </div>
             <div className="absolute inset-[1px] rounded-2xl bg-black"></div>
             <span className="relative z-20 flex items-center justify-center gap-4 text-base md:text-lg font-bold text-white tracking-wide uppercase font-manrope">
-              Quero analisar minha estrutura
+              Quero ver onde estou perdendo pacientes →
               <ArrowRight size={22} className="transition-transform duration-300 group-hover:translate-x-1" />
             </span>
           </button>
@@ -1798,22 +1651,7 @@ const App = () => {
 
   return (
     <div className="min-h-screen relative">
-      {/* Global Vertical Beam */}
-      <div className="fixed inset-0 pointer-events-none z-0">
-        <div className="absolute top-0 bottom-0 left-1/2 w-[1px] -translate-x-1/2">
-          <div className="absolute top-0 left-1/2 w-[6px] h-[500px] mix-blend-screen" 
-               style={{ 
-                 background: 'linear-gradient(to bottom, transparent, rgba(185, 136, 191, 0.7), rgba(96, 165, 250, 0.6), transparent)',
-                 transform: 'translateX(-50%)',
-                 boxShadow: '0 0 60px 25px rgba(185, 136, 191, 0.4), 0 0 100px 35px rgba(96, 165, 250, 0.3)',
-                 filter: 'blur(10px)',
-                 opacity: 0.8,
-                 animation: 'beamFall 6s linear infinite',
-                 willChange: 'transform'
-               }}>
-          </div>
-        </div>
-      </div>
+
 
       <DiagnosticModal isOpen={isModalOpen} onClose={handleCloseModal} />
       <PrivacyPolicy isOpen={currentPage === 'privacy'} onClose={() => setCurrentPage('home')} />
@@ -1828,12 +1666,11 @@ const App = () => {
         <main>
           <>
             <Hero onOpenModal={handleOpenModal} />
-            <InvestirNoEscuro />
             <GoogleAdsPremium onOpenModal={handleOpenModal} />
-            <PacientesQualificados />
+            <PacientesQualificados onOpenModal={handleOpenModal} />
             <AutomacaoClinica />
             <RaioXSection onOpenModal={handleOpenModal} />
-            <PorQueEleveAI />
+
             <FAQ />
             <FinalCTA onOpenModal={handleOpenModal} />
           </>

@@ -11,6 +11,8 @@
   --color-beige: #EEC6A2;
   --color-ice: #F7F7FA;
   --color-graphite: #0B0B10;
+  
+  --animate-testimonial-scroll: testimonialScroll 30s linear infinite;
 }
 
 @layer base {
@@ -58,4 +60,9 @@
 .scrollbar-hide {
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
+}
+
+@keyframes testimonialScroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(calc(-50% - 10px)); }
 }
