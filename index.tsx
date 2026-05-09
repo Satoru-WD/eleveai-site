@@ -440,7 +440,7 @@ const Hero = ({ onOpenModal }: { onOpenModal: () => void }) => {
         <div></div><div></div><div></div><div></div><div></div><div></div>
       </div>
 
-      <section id="hero" className="relative overflow-hidden pt-4 md:pt-[8.5rem] lg:pt-28 pb-12 lg:pb-16 min-h-[auto] lg:min-h-0">
+      <section id="hero" className="relative overflow-hidden pt-12 md:pt-[8.5rem] lg:pt-28 pb-12 lg:pb-16 min-h-[auto] lg:min-h-0">
         {/* Background Subtle Glows */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[500px] bg-[#6B3FA0]/10 blur-[120px] rounded-full pointer-events-none z-0" />
         
@@ -453,15 +453,15 @@ const Hero = ({ onOpenModal }: { onOpenModal: () => void }) => {
                <img 
                  src="/heroimg.png" 
                  alt="" 
-                 className="w-full h-full object-cover brightness-[0.4] contrast-[1.1] scale-110"
+                 className="w-full h-full object-cover brightness-[0.7] contrast-[1.1] scale-110 object-top"
                />
-               {/* Darker overlays for contrast */}
-               <div className="absolute inset-0 bg-gradient-to-b from-[#0A0A0B]/80 via-[#0A0A0B]/20 to-[#0A0A0B]" />
-               <div className="absolute inset-0 bg-[#0A0A0B]/30" />
+               {/* Darker overlays for contrast and smooth transition */}
+               <div className="absolute inset-0 bg-gradient-to-b from-[#0A0A0B]/95 via-[#0A0A0B]/10 via-40% to-[#0A0A0B]" />
+               <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-[#0A0A0B] via-[#0A0A0B] to-transparent" />
              </div>
 
              {/* ========== CONTENT OVERLAY ========== */}
-             <div className="w-full lg:w-[48%] flex flex-col items-center lg:items-start pt-0 lg:pt-0 relative z-20 -mt-2 sm:-mt-4">
+             <div className="w-full lg:w-[48%] flex flex-col items-center lg:items-start pt-2 lg:pt-0 relative z-20">
                
                {/* Headline - Maximized Top Position */}
                <motion.h1 
@@ -469,9 +469,9 @@ const Hero = ({ onOpenModal }: { onOpenModal: () => void }) => {
                  whileInView={{ opacity: 1, y: 0 }}
                  viewport={{ once: true }}
                  transition={{ duration: 0.7, delay: 0.1 }}
-                 className="text-[1.85rem] sm:text-[2.3rem] md:text-[3.3rem] lg:text-[3.6rem] font-bold leading-[1.15] tracking-tight text-white font-manrope text-center lg:text-left mb-6 lg:mb-6 mt-0 lg:mt-0"
+                 className="text-[1.85rem] sm:text-[2.4rem] md:text-[3.8rem] lg:text-[4rem] font-extrabold leading-[1.05] tracking-tight text-white font-manrope text-center lg:text-left mb-5 lg:mb-6 mt-0 w-[95%] max-w-[500px] lg:max-w-none lg:w-full"
                >
-                 Sem um processo claro, sua clínica gera interesse — mas <span className="text-[#B988BF]">não transforma em agendamentos.</span>
+                 Sem um processo claro, sua clínica gera interesse mas <span className="text-[#B988BF]">não transforma em agendamentos.</span>
                </motion.h1>
 
                {/* Desktop only image - removed from mobile flow here to avoid duplication */}
@@ -494,10 +494,10 @@ const Hero = ({ onOpenModal }: { onOpenModal: () => void }) => {
                 initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.4 }}
-                className="lg:hidden w-full mb-4"
+                className="lg:hidden w-full mb-8"
               >
-                <div className="bg-[#140c24]/30 border border-[#2a1b42]/50 rounded-2xl p-3 flex items-center justify-center gap-3">
-                  <div className="w-8 h-8 rounded-full bg-[#6B3FA0]/10 flex items-center justify-center border border-[#6B3FA0]/20">
+                <div className="flex items-center justify-center gap-3">
+                  <div className="w-8 h-8 rounded-full flex items-center justify-center">
                     <Target size={14} className="text-[#A678CB]" />
                   </div>
                   <div className="text-left">
@@ -511,9 +511,9 @@ const Hero = ({ onOpenModal }: { onOpenModal: () => void }) => {
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.5 }}
-                className="bg-[#140c24]/40 border border-[#2a1b42]/60 backdrop-blur-sm rounded-2xl p-5 flex items-center gap-4 w-full max-w-md lg:mt-6 mb-8 lg:mb-8"
+                className="flex items-center gap-4 w-full max-w-md mt-6 lg:mt-6 mb-8 lg:mb-8"
               >
-                <div className="w-10 h-10 rounded-xl bg-[#6B3FA0]/10 flex items-center justify-center shrink-0 border border-[#6B3FA0]/20">
+                <div className="w-10 h-10 flex items-center justify-center shrink-0">
                   <Star size={20} className="text-[#A678CB]" />
                 </div>
                 <div className="text-left">
@@ -523,24 +523,27 @@ const Hero = ({ onOpenModal }: { onOpenModal: () => void }) => {
                 </div>
               </motion.div>
 
-              {/* Main CTA - Same as Print */}
+              {/* Spacer for mobile to reveal background image */}
+              <div className="lg:hidden w-full min-h-[160px] sm:min-h-[200px]"></div>
+
+              {/* Main CTA - Desktop Only (Mobile version is below testimonials) */}
               <motion.button 
                 initial={{ opacity: 0, scale: 0.98 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.4, delay: 0.6 }}
                 onClick={onOpenModal}
-                className="group w-full sm:w-auto bg-gradient-to-r from-[#5B2E8A] to-[#3A1660] hover:from-[#6B3FA0] hover:to-[#4A2070] text-white rounded-2xl px-6 lg:px-12 py-5 lg:py-6 flex items-center justify-center gap-3 font-bold text-[13px] md:text-[14px] tracking-[0.05em] uppercase transition-all shadow-[0_8px_30px_rgba(91,46,138,0.3)] mb-6 font-manrope relative z-10"
+                className="group hidden lg:flex w-full sm:w-auto bg-gradient-to-r from-[#5B2E8A] to-[#3A1660] hover:from-[#6B3FA0] hover:to-[#4A2070] text-white rounded-2xl px-6 lg:px-12 py-5 lg:py-6 items-center justify-center gap-3 font-bold text-[13px] md:text-[14px] tracking-[0.05em] uppercase transition-all shadow-[0_8px_30px_rgba(91,46,138,0.3)] mb-6 font-manrope relative z-10"
               >
                 Quero um diagnóstico da minha clínica
                 <ArrowRight size={18} className="transition-transform group-hover:translate-x-1" />
               </motion.button>
 
-              {/* Trust Footer Row */}
+              {/* Trust Footer Row - Desktop Only */}
               <motion.div 
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.6, delay: 0.7 }}
-                className="flex flex-wrap justify-center lg:justify-start gap-4 text-zinc-500 text-[10px] font-medium"
+                className="hidden lg:flex flex-wrap justify-center lg:justify-start gap-4 text-zinc-500 text-[10px] font-medium"
               >
                 <span className="flex items-center gap-1.5"><ShieldCheck size={13} className="text-zinc-600" /> Sem compromisso</span>
                 <span className="flex items-center gap-1.5"><BarChart3 size={13} className="text-zinc-600" /> Análise personalizada</span>
@@ -604,7 +607,7 @@ const Hero = ({ onOpenModal }: { onOpenModal: () => void }) => {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="w-full lg:hidden flex flex-col items-center mt-12 mb-8 overflow-hidden"
+          className="w-full lg:hidden flex flex-col items-center -mt-20 mb-8 overflow-hidden relative z-20"
         >
           <p className="text-[11px] text-[#A678CB] font-bold uppercase tracking-[0.2em] mb-6 px-5 text-center">
             O QUE CLÍNICAS PERCEBEM APÓS ESTRUTURAR O MARKETING
@@ -630,7 +633,7 @@ const Hero = ({ onOpenModal }: { onOpenModal: () => void }) => {
                     { quote: "Percebemos que o problema não era só tráfego, e sim o atendimento. Ajustando isso, começamos a converter muito mais.", author: "Dr. Rafael", info: "odontologia – interior de SP" },
                     { quote: "Começamos a ter mais consistência nos agendamentos, não só picos. Hoje entendemos melhor o processo todo.", author: "Dr. Felipe", info: "clínica médica – capital" }
                   ].map((testi, i) => (
-                    <div key={i} className="w-[280px] bg-[#121215]/60 backdrop-blur-sm border border-[#2a2433] rounded-2xl p-6 flex flex-col shrink-0">
+                    <div key={i} className="w-[280px] p-4 flex flex-col shrink-0">
                       <Quote size={16} className="text-[#6B3FA0] mb-4" />
                       <p className="text-[13px] text-zinc-300 mb-5 leading-relaxed flex-grow italic">
                         "{testi.quote}"
@@ -646,6 +649,33 @@ const Hero = ({ onOpenModal }: { onOpenModal: () => void }) => {
             </motion.div>
           </div>
         </motion.div>
+
+        {/* Mobile CTA - Positioned below testimonials */}
+        <div className="w-full lg:hidden flex flex-col items-center px-5 pb-8 relative z-20">
+          <motion.button 
+            initial={{ opacity: 0, scale: 0.98 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.4 }}
+            onClick={onOpenModal}
+            className="group w-full bg-gradient-to-r from-[#5B2E8A] to-[#3A1660] hover:from-[#6B3FA0] hover:to-[#4A2070] text-white rounded-2xl px-6 py-5 flex items-center justify-center gap-3 font-bold text-[13px] tracking-[0.05em] uppercase transition-all shadow-[0_8px_30px_rgba(91,46,138,0.3)] mb-6 font-manrope relative z-10"
+          >
+            Quero um diagnóstico da minha clínica
+            <ArrowRight size={18} className="transition-transform group-hover:translate-x-1" />
+          </motion.button>
+
+          <motion.div 
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="flex flex-wrap justify-center gap-4 text-zinc-500 text-[10px] font-medium"
+          >
+            <span className="flex items-center gap-1.5"><ShieldCheck size={13} className="text-zinc-600" /> Sem compromisso</span>
+            <span className="flex items-center gap-1.5"><BarChart3 size={13} className="text-zinc-600" /> Análise personalizada</span>
+            <span className="flex items-center gap-1.5"><Clock size={13} className="text-zinc-600" /> Resposta em 24h</span>
+          </motion.div>
+        </div>
       </section>
 
       {/* Scroll fix CSS specifically for this component if needed */}
