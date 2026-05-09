@@ -39,7 +39,8 @@ import {
   Sparkles,
   ChevronRight,
   ChevronLeft,
-  Quote
+  Quote,
+  ShieldCheck
 } from 'lucide-react';
 
 // Configuration
@@ -176,19 +177,19 @@ const DiagnosticModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => 
             </div>
           ) : step <= 3 ? (
             <div key={step}>
-                <div className="flex justify-between items-end mb-2">
-                  <h3 className="text-lg md:text-xl font-bold text-white max-w-xs leading-tight">Avalie a maturidade digital da sua clínica.</h3>
-                </div>
-                <div className="flex justify-between items-end mb-2">
-                  <span className="text-[10px] text-gray-500 font-bold uppercase tracking-wider">Passo {step} de {totalSteps}</span>
-                  <span className="text-[10px] text-[#B988BF] font-bold uppercase tracking-wider">Diagnóstico Estratégico</span>
-                </div>
-                <div className="w-full bg-white/5 h-1 rounded-full overflow-hidden mb-8">
-                  <div
-                    className="bg-gradient-to-r from-[#B988BF] to-[#96649c] h-full transition-all duration-500 ease-out"
-                    style={{ width: `${progress}%` }}
-                  />
-                </div>
+              <div className="flex justify-between items-end mb-2">
+                <h3 className="text-lg md:text-xl font-bold text-white max-w-xs leading-tight">Avalie a maturidade digital da sua clínica.</h3>
+              </div>
+              <div className="flex justify-between items-end mb-2">
+                <span className="text-[10px] text-gray-500 font-bold uppercase tracking-wider">Passo {step} de {totalSteps}</span>
+                <span className="text-[10px] text-[#B988BF] font-bold uppercase tracking-wider">Diagnóstico Estratégico</span>
+              </div>
+              <div className="w-full bg-white/5 h-1 rounded-full overflow-hidden mb-8">
+                <div
+                  className="bg-gradient-to-r from-[#B988BF] to-[#96649c] h-full transition-all duration-500 ease-out"
+                  style={{ width: `${progress}%` }}
+                />
+              </div>
 
               <div className="mb-8">
                 <h4 id="modal-title" className="text-xl md:text-2xl font-semibold text-white leading-snug">
@@ -261,14 +262,14 @@ const DiagnosticModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => 
   );
 };
 
-const TypingEffect = ({ texts }: { texts: string[] }) => {
+const TypingEffect = ({ texts, className = "", cursorClassName = "" }: { texts: string[], className?: string, cursorClassName?: string }) => {
   const [index, setIndex] = useState(0);
   const [subIndex, setSubIndex] = useState(0);
   const [reverse, setReverse] = useState(false);
 
   useEffect(() => {
     if (subIndex === texts[index].length + 1 && !reverse) {
-      setTimeout(() => setReverse(true), 2000);
+      setTimeout(() => setReverse(true), 2500);
       return;
     }
 
@@ -280,15 +281,15 @@ const TypingEffect = ({ texts }: { texts: string[] }) => {
 
     const timeout = setTimeout(() => {
       setSubIndex((prev) => prev + (reverse ? -1 : 1));
-    }, reverse ? 75 : 150);
+    }, reverse ? 30 : 60);
 
     return () => clearTimeout(timeout);
   }, [subIndex, index, reverse, texts]);
 
   return (
-    <span className="text-gradient min-h-[1.2em] inline-block">
+    <span className={`${className} inline-block`}>
       {texts[index].substring(0, subIndex)}
-      <span className="animate-pulse border-r-4 border-[#B988BF] ml-1"></span>
+      <span className={`animate-pulse border-r-2 ml-1 ${cursorClassName}`}></span>
     </span>
   );
 };
@@ -321,8 +322,8 @@ const Navbar = ({ onHome }: { onHome: () => void }) => {
   return (
     <>
       <div className="fixed flex w-full z-50 pt-0 md:pt-4 pr-4 pl-4 top-0 left-0 justify-center" style={{ animation: 'fadeSlideIn 1s ease-out 0.2s both' }}>
-        <nav 
-          className="flex md:gap-12 md:w-auto bg-[#1A1A1E]/95 md:bg-[#1A1A1E]/80 w-full max-w-6xl rounded-2xl md:rounded-full py-1 px-5 md:px-8 shadow-2xl md:shadow-[0_10px_40px_rgba(0,0,0,0.2)] backdrop-blur-md border border-white/5 md:border-white/10 items-center justify-between" 
+        <nav
+          className="flex md:gap-12 md:w-auto bg-[#1A1A1E]/95 md:bg-[#1A1A1E]/80 w-full max-w-6xl rounded-2xl md:rounded-full py-1 px-5 md:px-8 shadow-2xl md:shadow-[0_10px_40px_rgba(0,0,0,0.2)] backdrop-blur-md border border-white/5 md:border-white/10 items-center justify-between"
         >
           {/* Logo */}
           <a href="#" aria-label="Voltar para o topo" className="flex items-center cursor-pointer" onClick={(e) => { e.preventDefault(); handleHomeClick(); }}>
@@ -338,19 +339,19 @@ const Navbar = ({ onHome }: { onHome: () => void }) => {
           {/* Desktop Nav Links */}
           <div className="hidden md:flex items-center gap-8 pr-2">
             {navLinks.map((link) => (
-              <button 
+              <button
                 key={link.label}
-                onClick={link.action ?? (() => scrollToSection(link.id!))} 
+                onClick={link.action ?? (() => scrollToSection(link.id!))}
                 className="group hover:text-[#B988BF] transition-all text-[11px] uppercase tracking-[0.2em] font-bold text-zinc-300 font-manrope py-1 relative drop-shadow-sm"
               >
                 {link.label}
                 <span className="absolute -bottom-1 left-0 w-0 h-[2px] bg-[#B988BF] transition-all group-hover:w-full"></span>
               </button>
             ))}
-            <a 
-              href={WHATSAPP_URL} 
-              target="_blank" 
-              rel="noopener noreferrer" 
+            <a
+              href={WHATSAPP_URL}
+              target="_blank"
+              rel="noopener noreferrer"
               className="bg-zinc-800 hover:bg-black text-white px-8 py-3.5 rounded-full text-[10px] font-bold uppercase tracking-[0.15em] transition-all shadow-[0_4px_14px_0_rgba(0,0,0,0.12)] hover:shadow-[0_8px_25px_rgba(0,0,0,0.3)] hover:-translate-y-[1px]"
             >
               Agendar Avaliação
@@ -432,91 +433,130 @@ const Navbar = ({ onHome }: { onHome: () => void }) => {
 
 const Hero = ({ onOpenModal }: { onOpenModal: () => void }) => {
   const scrollRef = useRef<HTMLDivElement>(null);
-  
+
   return (
     <>
       <div className="gradient-blur" style={{ height: '120px' }}>
         <div></div><div></div><div></div><div></div><div></div><div></div>
       </div>
 
-      <section id="hero" className="relative overflow-hidden pt-[6.5rem] md:pt-[8.5rem] lg:pt-28 pb-10 lg:pb-16">
-
+      <section id="hero" className="relative overflow-hidden pt-4 md:pt-[8.5rem] lg:pt-28 pb-12 lg:pb-16 min-h-[auto] lg:min-h-0">
+        {/* Background Subtle Glows */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[500px] bg-[#6B3FA0]/10 blur-[120px] rounded-full pointer-events-none z-0" />
+        
         {/* Main container */}
         <div className="max-w-[1200px] mx-auto px-5 sm:px-6 relative z-10">
           <div className="flex flex-col lg:flex-row lg:items-center text-center lg:text-left gap-8 lg:gap-20">
 
-            {/* ========== LEFT COLUMN (text) ========== */}
-            <div className="w-full lg:w-[40%] flex flex-col items-center lg:items-start pt-4 lg:pt-0 relative z-20">
+             {/* Immersive Background Image (Mobile Only) */}
+             <div className="absolute inset-0 z-0 lg:hidden overflow-hidden">
+               <img 
+                 src="/heroimg.png" 
+                 alt="" 
+                 className="w-full h-full object-cover brightness-[0.4] contrast-[1.1] scale-110"
+               />
+               {/* Darker overlays for contrast */}
+               <div className="absolute inset-0 bg-gradient-to-b from-[#0A0A0B]/80 via-[#0A0A0B]/20 to-[#0A0A0B]" />
+               <div className="absolute inset-0 bg-[#0A0A0B]/30" />
+             </div>
 
-              {/* Tag - hidden on mobile */}
+             {/* ========== CONTENT OVERLAY ========== */}
+             <div className="w-full lg:w-[48%] flex flex-col items-center lg:items-start pt-0 lg:pt-0 relative z-20 -mt-2 sm:-mt-4">
+               
+               {/* Headline - Maximized Top Position */}
+               <motion.h1 
+                 initial={{ opacity: 0, y: 20 }}
+                 whileInView={{ opacity: 1, y: 0 }}
+                 viewport={{ once: true }}
+                 transition={{ duration: 0.7, delay: 0.1 }}
+                 className="text-[1.85rem] sm:text-[2.3rem] md:text-[3.3rem] lg:text-[3.6rem] font-bold leading-[1.15] tracking-tight text-white font-manrope text-center lg:text-left mb-6 lg:mb-6 mt-0 lg:mt-0"
+               >
+                 Sem um processo claro, sua clínica gera interesse — mas <span className="text-[#B988BF]">não transforma em agendamentos.</span>
+               </motion.h1>
 
-
-              {/* 1. Headline */}
-              <motion.h1 
-                initial={{ opacity: 0, y: 15 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.1 }}
-                className="text-[2.2rem] sm:text-[2.5rem] md:text-[3.3rem] lg:text-[3.6rem] font-extrabold leading-[1.1] tracking-tight text-white font-manrope mb-6"
-              >
-                Sem um processo claro, sua clínica gera interesse — <span className="text-[#B988BF]">mas não transforma em agendamentos.</span>
-              </motion.h1>
+               {/* Desktop only image - removed from mobile flow here to avoid duplication */}
+               <div className="hidden lg:block w-full mb-8">
+                 {/* ... content stays the same for desktop ... */}
+               </div>
 
               {/* 2. Authority Strategy Line */}
               <motion.p 
                 initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.15 }}
-                className="text-[15px] sm:text-base md:text-lg text-zinc-400 max-w-[480px] lg:max-w-xl mb-8 leading-relaxed font-light"
+                transition={{ duration: 0.5, delay: 0.3 }}
+                className="text-[14px] sm:text-[15px] md:text-lg text-zinc-400 max-w-[480px] lg:max-w-xl mb-8 lg:mb-8 leading-relaxed font-light relative z-10"
               >
                 Estratégia construída com base em mais de 10 anos em vendas e conversão.
               </motion.p>
 
-
-
-              <motion.button 
+              {/* Trust Blocks - Single Focused Block (Reduced) */}
+              <motion.div 
                 initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.3 }}
-                onClick={onOpenModal}
-                className="group w-full sm:w-auto bg-gradient-to-r from-[#5B2E8A] to-[#3A1660] hover:from-[#6B3FA0] hover:to-[#4A2070] text-white rounded-xl px-6 lg:px-8 py-4 lg:py-5 flex items-center justify-center gap-3 font-bold text-[12px] md:text-[13px] tracking-[0.1em] uppercase transition-all shadow-[0_4px_30px_rgba(91,46,138,0.35)] mb-5 font-manrope"
+                transition={{ duration: 0.5, delay: 0.4 }}
+                className="lg:hidden w-full mb-4"
               >
-                Quero entender onde estou perdendo pacientes →
-                <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
+                <div className="bg-[#140c24]/30 border border-[#2a1b42]/50 rounded-2xl p-3 flex items-center justify-center gap-3">
+                  <div className="w-8 h-8 rounded-full bg-[#6B3FA0]/10 flex items-center justify-center border border-[#6B3FA0]/20">
+                    <Target size={14} className="text-[#A678CB]" />
+                  </div>
+                  <div className="text-left">
+                    <p className="text-white font-bold text-sm leading-none">Foco total em performance</p>
+                  </div>
+                </div>
+              </motion.div>
+
+              {/* 5. Methodology Card - Identical to Print */}
+              <motion.div 
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.5 }}
+                className="bg-[#140c24]/40 border border-[#2a1b42]/60 backdrop-blur-sm rounded-2xl p-5 flex items-center gap-4 w-full max-w-md lg:mt-6 mb-8 lg:mb-8"
+              >
+                <div className="w-10 h-10 rounded-xl bg-[#6B3FA0]/10 flex items-center justify-center shrink-0 border border-[#6B3FA0]/20">
+                  <Star size={20} className="text-[#A678CB]" />
+                </div>
+                <div className="text-left">
+                  <p className="text-[13px] md:text-[14px] text-zinc-300 leading-relaxed">
+                    <strong className="text-white">Metodologia exclusiva.</strong> Estratégia e tecnologia para atrair, converter e fidelizar pacientes.
+                  </p>
+                </div>
+              </motion.div>
+
+              {/* Main CTA - Same as Print */}
+              <motion.button 
+                initial={{ opacity: 0, scale: 0.98 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.4, delay: 0.6 }}
+                onClick={onOpenModal}
+                className="group w-full sm:w-auto bg-gradient-to-r from-[#5B2E8A] to-[#3A1660] hover:from-[#6B3FA0] hover:to-[#4A2070] text-white rounded-2xl px-6 lg:px-12 py-5 lg:py-6 flex items-center justify-center gap-3 font-bold text-[13px] md:text-[14px] tracking-[0.05em] uppercase transition-all shadow-[0_8px_30px_rgba(91,46,138,0.3)] mb-6 font-manrope relative z-10"
+              >
+                Quero um diagnóstico da minha clínica
+                <ArrowRight size={18} className="transition-transform group-hover:translate-x-1" />
               </motion.button>
 
-              {/* Desktop Trust line - hidden on mobile */}
+              {/* Trust Footer Row */}
               <motion.div 
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                transition={{ duration: 0.5, delay: 0.4 }}
-                className="hidden lg:flex flex-wrap gap-5 text-zinc-500 text-[11px]"
+                transition={{ duration: 0.6, delay: 0.7 }}
+                className="flex flex-wrap justify-center lg:justify-start gap-4 text-zinc-500 text-[10px] font-medium"
               >
-                <span className="flex items-center gap-1.5"><CheckCircle2 size={13} className="text-zinc-600" /> Sem compromisso</span>
-                <span className="flex items-center gap-1.5"><CheckCircle2 size={13} className="text-zinc-600" /> Análise personalizada</span>
-                <span className="flex items-center gap-1.5"><CheckCircle2 size={13} className="text-zinc-600" /> Resposta em até 24h</span>
+                <span className="flex items-center gap-1.5"><ShieldCheck size={13} className="text-zinc-600" /> Sem compromisso</span>
+                <span className="flex items-center gap-1.5"><BarChart3 size={13} className="text-zinc-600" /> Análise personalizada</span>
+                <span className="flex items-center gap-1.5"><Clock size={13} className="text-zinc-600" /> Resposta em 24h</span>
               </motion.div>
 
-              {/* 5. Differentiation Card (glass) */}
-              <motion.div 
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.6 }}
-                className="bg-[#140c24]/50 border border-[#2a1b42] rounded-xl p-4 flex flex-col lg:flex-row items-center lg:items-start gap-3 w-full max-w-md lg:mt-6"
-              >
-                <p className="text-[13px] text-zinc-300">
-                  <strong className="text-white">Não fazemos só marketing.</strong> Aplicamos lógica real de vendas para transformar leads em pacientes.
-                </p>
-              </motion.div>
 
             </div>
 
             {/* ========== RIGHT COLUMN ========== */}
-            <div className="w-full lg:w-[55%] relative mt-8 lg:-mt-12 flex flex-col items-center lg:items-start lg:translate-x-10">
-              <motion.div 
+            <div className="hidden lg:flex w-full lg:w-[55%] relative -mt-16 lg:-mt-12 flex-col items-center lg:items-start lg:translate-x-10">
+              <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.4 }}
-                className="relative w-full max-w-[600px] lg:max-w-[780px] mb-8 lg:mb-0 scale-110 lg:scale-125 origin-bottom lg:origin-right"
+                className="relative w-full max-w-[600px] lg:max-w-[780px] mb-8 lg:mb-0 scale-[1.2] lg:scale-125 origin-top lg:origin-right"
               >
                 <div className="relative" style={{
                   maskImage: 'linear-gradient(to right, transparent 5%, black 45%)',
@@ -524,70 +564,22 @@ const Hero = ({ onOpenModal }: { onOpenModal: () => void }) => {
                 }}>
                   {/* Subtle purple tint for harmony */}
                   <div className="absolute inset-0 bg-[#68259A]/5 mix-blend-soft-light z-20 pointer-events-none" />
-                  
-                  <img 
-                    src="/hero.img.mobile.png" 
-                    alt="Marketing Estratégico" 
+
+                  <img
+                    src="/hero.img.mobile.png"
+                    alt="Marketing Estratégico"
                     className="relative z-10 w-full h-auto object-contain brightness-[0.95] contrast-[1.1]"
                   />
-                  
+
                   {/* Minimal bottom fade for blending */}
                   <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[#0A0A0B] to-transparent z-20 pointer-events-none" />
                 </div>
               </motion.div>
 
-              {/* Depoimentos Mobile (Carrossel) */}
-              <motion.div 
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.6, delay: 0.5 }}
-                className="w-full lg:hidden flex flex-col items-center mb-8 overflow-hidden"
-              >
-                <p className="text-[11px] text-[#A678CB] font-bold uppercase tracking-wider mb-4 px-5 text-center">
-                  O que clínicas percebem após estruturar o marketing
-                </p>
-                
-                {/* Infinite Horizontal Ticker */}
-                <div className="w-full relative py-2 overflow-hidden">
-                  {/* Gradient Masks for smooth edges */}
-                  <div className="absolute inset-y-0 left-0 w-16 bg-gradient-to-r from-[#0A0A0B] to-transparent z-10 pointer-events-none" />
-                  <div className="absolute inset-y-0 right-0 w-16 bg-gradient-to-l from-[#0A0A0B] to-transparent z-10 pointer-events-none" />
 
-                  <motion.div 
-                    className="flex gap-4 w-fit"
-                    animate={{ x: ["0%", "-50%"] }}
-                    transition={{
-                      duration: 30,
-                      repeat: Infinity,
-                      ease: "linear"
-                    }}
-                  >
-                    {[...Array(2)].map((_, setIdx) => (
-                      <div key={setIdx} className="flex gap-4">
-                        {[
-                          { quote: "A gente investia em anúncios, mas não sabia o que estava funcionando. Depois da estrutura, ficou claro de onde vinham os pacientes.", author: "Dra. Mariana", info: "clínica estética – SP" },
-                          { quote: "Percebemos que o problema não era só tráfego, e sim o atendimento. Ajustando isso, começamos a converter muito mais.", author: "Dr. Rafael", info: "odontologia – interior de SP" },
-                          { quote: "Começamos a ter mais consistência nos agendamentos, não só picos. Hoje entendemos melhor o processo todo.", author: "Dr. Felipe", info: "clínica médica – capital" }
-                        ].map((testi, i) => (
-                          <div key={i} className="w-[300px] bg-[#121215]/80 backdrop-blur-md border border-[#2a2433] rounded-2xl p-6 flex flex-col shrink-0">
-                            <Quote size={18} className="text-[#6B3FA0] mb-4" />
-                            <p className="text-[14px] text-zinc-300 mb-5 leading-relaxed flex-grow">
-                              "{testi.quote}"
-                            </p>
-                            <p className="text-[12px] text-[#A678CB] font-bold">
-                              — {testi.author}
-                              <span className="block text-[10px] text-zinc-500 font-normal mt-1">{testi.info}</span>
-                            </p>
-                          </div>
-                        ))}
-                      </div>
-                    ))}
-                  </motion.div>
-                </div>
-              </motion.div>
 
               {/* 7. Prova Social Mobile (abaixo da imagem e depoimentos) */}
-              <motion.div 
+              <motion.div
                 initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.6 }}
@@ -605,10 +597,60 @@ const Hero = ({ onOpenModal }: { onOpenModal: () => void }) => {
             </div>
           </div>
         </div>
+
+        {/* Depoimentos Mobile (Carrossel) - Positioned below main container for mobile */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="w-full lg:hidden flex flex-col items-center mt-12 mb-8 overflow-hidden"
+        >
+          <p className="text-[11px] text-[#A678CB] font-bold uppercase tracking-[0.2em] mb-6 px-5 text-center">
+            O QUE CLÍNICAS PERCEBEM APÓS ESTRUTURAR O MARKETING
+          </p>
+
+          <div className="w-full relative py-2 overflow-hidden">
+            <div className="absolute inset-y-0 left-0 w-20 bg-gradient-to-r from-[#0A0A0B] to-transparent z-10 pointer-events-none" />
+            <div className="absolute inset-y-0 right-0 w-20 bg-gradient-to-l from-[#0A0A0B] to-transparent z-10 pointer-events-none" />
+
+            <motion.div
+              className="flex gap-4 w-fit"
+              animate={{ x: ["0%", "-50%"] }}
+              transition={{
+                duration: 35,
+                repeat: Infinity,
+                ease: "linear"
+              }}
+            >
+              {[...Array(2)].map((_, setIdx) => (
+                <div key={setIdx} className="flex gap-4 px-2">
+                  {[
+                    { quote: "A gente investia em anúncios, mas não sabia o que estava funcionando. Depois da estrutura, ficou claro de onde vinham os pacientes.", author: "Dra. Mariana", info: "clínica estética – SP" },
+                    { quote: "Percebemos que o problema não era só tráfego, e sim o atendimento. Ajustando isso, começamos a converter muito mais.", author: "Dr. Rafael", info: "odontologia – interior de SP" },
+                    { quote: "Começamos a ter mais consistência nos agendamentos, não só picos. Hoje entendemos melhor o processo todo.", author: "Dr. Felipe", info: "clínica médica – capital" }
+                  ].map((testi, i) => (
+                    <div key={i} className="w-[280px] bg-[#121215]/60 backdrop-blur-sm border border-[#2a2433] rounded-2xl p-6 flex flex-col shrink-0">
+                      <Quote size={16} className="text-[#6B3FA0] mb-4" />
+                      <p className="text-[13px] text-zinc-300 mb-5 leading-relaxed flex-grow italic">
+                        "{testi.quote}"
+                      </p>
+                      <p className="text-[12px] text-white font-bold">
+                        — {testi.author}
+                        <span className="block text-[10px] text-zinc-500 font-normal mt-1">{testi.info}</span>
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              ))}
+            </motion.div>
+          </div>
+        </motion.div>
       </section>
-      
+
       {/* Scroll fix CSS specifically for this component if needed */}
-      <style dangerouslySetInnerHTML={{__html: `
+      <style dangerouslySetInnerHTML={{
+        __html: `
         .hide-scrollbar::-webkit-scrollbar {
           display: none;
         }
@@ -890,7 +932,7 @@ const PacientesQualificados = ({ onOpenModal }: { onOpenModal: () => void }) => 
             Você não precisa de mais leads. <br className="hidden md:block" />
             <span className="text-primary font-manrope">Precisa parar de falar com quem não vai fechar.</span>
           </motion.h2>
-          <motion.p 
+          <motion.p
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -905,30 +947,30 @@ const PacientesQualificados = ({ onOpenModal }: { onOpenModal: () => void }) => 
           <div className="hidden lg:block absolute top-[4.5rem] left-[10%] right-[10%] h-[2px] bg-primary/10 -z-10" />
 
           {steps.map((item, idx) => (
-             <motion.div 
-               key={idx}
-               initial={{opacity: 0, y: 20}}
-               whileInView={{opacity: 1, y: 0}}
-               transition={{delay: idx * 0.1}}
-               viewport={{once: true}}
-               whileHover={{ y: -5 }} 
-               className="bg-white p-8 rounded-[2rem] shadow-[0_12px_40px_rgba(0,0,0,0.04)] border border-black/[0.04] flex flex-col items-center text-center relative group"
-             >
-               <div className="absolute -top-4 -right-4 w-10 h-10 rounded-full bg-primary text-white font-bold flex items-center justify-center text-[15px] shadow-[0_4px_15px_rgba(104,37,154,0.3)]">{item.tag}</div>
-               <div className="w-20 h-20 rounded-full bg-primary/5 text-primary flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-primary group-hover:text-white transition-all duration-300">
-                 <item.icon size={32} strokeWidth={1.5} />
-               </div>
-               <h3 className="text-[17px] md:text-lg font-bold text-graphite mb-2 font-manrope tracking-tight leading-tight">
-                 {item.title}
-               </h3>
-               <p className="text-[13px] md:text-[14px] text-gray-500 font-sans leading-relaxed">
-                 {item.desc}
-               </p>
-             </motion.div>
+            <motion.div
+              key={idx}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: idx * 0.1 }}
+              viewport={{ once: true }}
+              whileHover={{ y: -5 }}
+              className="bg-white p-8 rounded-[2rem] shadow-[0_12px_40px_rgba(0,0,0,0.04)] border border-black/[0.04] flex flex-col items-center text-center relative group"
+            >
+              <div className="absolute -top-4 -right-4 w-10 h-10 rounded-full bg-primary text-white font-bold flex items-center justify-center text-[15px] shadow-[0_4px_15px_rgba(104,37,154,0.3)]">{item.tag}</div>
+              <div className="w-20 h-20 rounded-full bg-primary/5 text-primary flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-primary group-hover:text-white transition-all duration-300">
+                <item.icon size={32} strokeWidth={1.5} />
+              </div>
+              <h3 className="text-[17px] md:text-lg font-bold text-graphite mb-2 font-manrope tracking-tight leading-tight">
+                {item.title}
+              </h3>
+              <p className="text-[13px] md:text-[14px] text-gray-500 font-sans leading-relaxed">
+                {item.desc}
+              </p>
+            </motion.div>
           ))}
         </div>
 
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -975,22 +1017,22 @@ const AutomacaoClinica = () => {
         </div>
 
         <div className="grid md:grid-cols-3 gap-6">
-           {[
-             { icon: CheckCircle2, title: "Resposta Instantânea", desc: "Triagem 24/7 de todos os contatos. O paciente é atendido no segundo que demonstra interesse." },
-             { icon: MessageCircle, title: "Follow-up Ativo", desc: "O sistema retoma o contato com quem não agendou, garantindo que nenhum lead seja esquecido." },
-             { icon: Clock, title: "Lembretes Inteligentes", desc: "Redução drástica de faltas com notificações automáticas antes da consulta." },
-             { icon: Calendar, title: "Reagendamento Fluido", desc: "Processo simplificado para horários desmarcados, mantendo sua agenda sempre otimizada." },
-             { icon: Smartphone, title: "Triagem Estratégica", desc: "O bot identifica quem tem perfil para agendamento imediato e encaminha para a recepção." },
-             { icon: TrendingUp, title: "Máxima Conversão", desc: "Transformamos o fluxo de mensagens em uma máquina previsível de novos pacientes." },
-           ].map((item, idx) => (
-              <motion.div key={idx} initial={{opacity:0, y:20}} whileInView={{opacity:1, y:0}} transition={{delay: idx*0.1}} viewport={{once: true}} className="bg-white p-8 rounded-3xl shadow-[0_12px_40px_rgba(0,0,0,0.03)] border border-black/[0.04] hover:shadow-xl hover:-translate-y-1 transition-all">
-                 <div className="w-14 h-14 rounded-full bg-primary/10 text-primary flex items-center justify-center mb-6">
-                    <item.icon size={26} />
-                 </div>
-                 <h4 className="text-xl font-bold text-graphite mb-3 font-manrope leading-snug">{item.title}</h4>
-                 <p className="text-gray-500 font-sans text-sm leading-relaxed">{item.desc}</p>
-              </motion.div>
-           ))}
+          {[
+            { icon: CheckCircle2, title: "Resposta Instantânea", desc: "Triagem 24/7 de todos os contatos. O paciente é atendido no segundo que demonstra interesse." },
+            { icon: MessageCircle, title: "Follow-up Ativo", desc: "O sistema retoma o contato com quem não agendou, garantindo que nenhum lead seja esquecido." },
+            { icon: Clock, title: "Lembretes Inteligentes", desc: "Redução drástica de faltas com notificações automáticas antes da consulta." },
+            { icon: Calendar, title: "Reagendamento Fluido", desc: "Processo simplificado para horários desmarcados, mantendo sua agenda sempre otimizada." },
+            { icon: Smartphone, title: "Triagem Estratégica", desc: "O bot identifica quem tem perfil para agendamento imediato e encaminha para a recepção." },
+            { icon: TrendingUp, title: "Máxima Conversão", desc: "Transformamos o fluxo de mensagens em uma máquina previsível de novos pacientes." },
+          ].map((item, idx) => (
+            <motion.div key={idx} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: idx * 0.1 }} viewport={{ once: true }} className="bg-white p-8 rounded-3xl shadow-[0_12px_40px_rgba(0,0,0,0.03)] border border-black/[0.04] hover:shadow-xl hover:-translate-y-1 transition-all">
+              <div className="w-14 h-14 rounded-full bg-primary/10 text-primary flex items-center justify-center mb-6">
+                <item.icon size={26} />
+              </div>
+              <h4 className="text-xl font-bold text-graphite mb-3 font-manrope leading-snug">{item.title}</h4>
+              <p className="text-gray-500 font-sans text-sm leading-relaxed">{item.desc}</p>
+            </motion.div>
+          ))}
         </div>
       </div>
     </section>
@@ -1124,7 +1166,7 @@ const FinalCTA = ({ onOpenModal }: { onOpenModal: () => void }) => {
     <section className="py-24 md:py-40 px-6 relative overflow-hidden bg-graphite">
       {/* Subtle background glow */}
       <div className="absolute top-1/2 left-0 w-[400px] h-[400px] bg-primary/5 rounded-full blur-[120px] pointer-events-none" />
-      
+
       <div className="max-w-5xl mx-auto relative z-10 text-left">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -1140,7 +1182,7 @@ const FinalCTA = ({ onOpenModal }: { onOpenModal: () => void }) => {
           <p className="text-zinc-400 text-lg md:text-2xl leading-relaxed font-manrope max-w-2xl mb-14 font-light">
             Sua clínica gera interesse. O problema está no que acontece depois.
           </p>
-          
+
           <div className="flex flex-col items-start gap-8">
             <button
               onClick={onOpenModal}
@@ -1324,20 +1366,20 @@ const PrivacyPolicy = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => vo
 
           {/* Progress Bar */}
           <div className="h-0.5 w-full bg-white/5 overflow-hidden">
-            <motion.div 
-              className="h-full bg-gradient-to-r from-[#B988BF] to-[#96649c]" 
+            <motion.div
+              className="h-full bg-gradient-to-r from-[#B988BF] to-[#96649c]"
               style={{ width: `${scrollProgress}%` }}
             />
           </div>
 
           {/* Scrollable Content */}
-          <div 
+          <div
             ref={containerRef}
             onScroll={handleScroll}
             className="flex-1 overflow-y-auto p-8 md:p-12 space-y-12 scrollbar-hide"
           >
             {sections.map((section, idx) => (
-              <motion.section 
+              <motion.section
                 key={idx}
                 initial={{ opacity: 0, x: -10 }}
                 whileInView={{ opacity: 1, x: 0 }}
@@ -1421,20 +1463,20 @@ const TermsOfUse = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => void 
 
           {/* Progress Bar */}
           <div className="h-0.5 w-full bg-white/5 overflow-hidden">
-            <motion.div 
-              className="h-full bg-gradient-to-r from-[#B988BF] to-[#96649c]" 
+            <motion.div
+              className="h-full bg-gradient-to-r from-[#B988BF] to-[#96649c]"
               style={{ width: `${scrollProgress}%` }}
             />
           </div>
 
           {/* Scrollable Content */}
-          <div 
+          <div
             ref={containerRef}
             onScroll={handleScroll}
             className="flex-1 overflow-y-auto p-8 md:p-12 space-y-12 scrollbar-hide"
           >
             {sections.map((section, idx) => (
-              <motion.section 
+              <motion.section
                 key={idx}
                 initial={{ opacity: 0, x: -10 }}
                 whileInView={{ opacity: 1, x: 0 }}
@@ -1497,7 +1539,7 @@ const CookieConsent = () => {
           <div className="bg-[#0A0A0B]/80 backdrop-blur-2xl border border-[#B988BF]/20 p-4 md:p-5 shadow-[0_20px_50px_rgba(0,0,0,0.4)] flex flex-col gap-4 relative overflow-hidden rounded-[2rem] group font-manrope">
             {/* Subtle glow effect */}
             <div className="absolute -top-10 -left-10 w-24 h-24 bg-[#B988BF]/10 blur-[40px] rounded-full pointer-events-none" />
-            
+
             <div className="flex items-start gap-3 relative z-10">
               <div className="w-8 h-8 shrink-0 bg-[#B988BF]/5 border border-[#B988BF]/10 flex items-center justify-center text-[#B988BF] rounded-xl">
                 <Shield size={14} />
