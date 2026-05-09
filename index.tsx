@@ -532,10 +532,20 @@ const Hero = ({ onOpenModal }: { onOpenModal: () => void }) => {
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.4, delay: 0.6 }}
                 onClick={onOpenModal}
-                className="group hidden lg:flex w-full sm:w-auto bg-gradient-to-r from-[#5B2E8A] to-[#3A1660] hover:from-[#6B3FA0] hover:to-[#4A2070] text-white rounded-2xl px-6 lg:px-12 py-5 lg:py-6 items-center justify-center gap-3 font-bold text-[13px] md:text-[14px] tracking-[0.05em] uppercase transition-all shadow-[0_8px_30px_rgba(91,46,138,0.3)] mb-6 font-manrope relative z-10"
+                className="group hidden lg:flex relative h-[64px] w-full sm:w-auto items-center justify-center rounded-2xl px-6 lg:px-12 outline-none cursor-pointer transition-all active:scale-95 bg-white/5 border-none overflow-hidden mb-6 z-10 shadow-[0_8px_30px_rgba(91,46,138,0.3)]"
               >
-                Quero um diagnóstico da minha clínica
-                <ArrowRight size={18} className="transition-transform group-hover:translate-x-1" />
+                <div className="pointer-events-none absolute inset-0 opacity-100 transition-opacity duration-[1200ms] ease-in-out group-hover:opacity-0" style={{ background: 'radial-gradient(15% 50% at 50% 100%, #B988BF 0%, rgba(185, 136, 191, 0) 100%)', filter: 'blur(15px)' }}></div>
+                <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-[1200ms] ease-in-out group-hover:opacity-100" style={{ background: 'radial-gradient(60.6% 50% at 50% 100%, #B988BF 0%, rgba(185, 136, 191, 0) 100%)', filter: 'blur(18px)' }}></div>
+                <div className="pointer-events-none will-change-auto absolute inset-0 opacity-100 transition-opacity duration-[1200ms] ease-in-out group-hover:opacity-0" style={{ background: 'radial-gradient(10.7% 50% at 50% 100%, #B988BF 0%, rgba(185, 136, 191, 0) 100%)' }}></div>
+                <div className="pointer-events-none will-change-auto absolute inset-0 opacity-0 transition-opacity duration-[1200ms] ease-in-out group-hover:opacity-100" style={{ background: 'radial-gradient(60.1% 50% at 50% 100%, #B988BF 0%, rgba(185, 136, 191, 0) 100%)' }}></div>
+                <div className="pointer-events-none absolute inset-0 overflow-hidden">
+                  <div className="absolute -inset-[300%] animate-[spin_4s_linear_infinite]" style={{ background: 'conic-gradient(from 90deg at 50% 50%, transparent 0%, transparent 90%, #B988BF 100%)' }}></div>
+                </div>
+                <div className="absolute inset-[1px] rounded-2xl bg-gradient-to-r from-[#5B2E8A] to-[#3A1660] group-hover:from-[#6B3FA0] group-hover:to-[#4A2070] transition-colors"></div>
+                <span className="relative z-20 flex items-center justify-center gap-3 font-bold text-[13px] md:text-[14px] tracking-[0.05em] uppercase text-white font-manrope">
+                  Quero um diagnóstico da minha clínica
+                  <ArrowRight size={18} className="transition-transform group-hover:translate-x-1" />
+                </span>
               </motion.button>
 
               {/* Trust Footer Row - Desktop Only */}
@@ -658,10 +668,20 @@ const Hero = ({ onOpenModal }: { onOpenModal: () => void }) => {
             viewport={{ once: true }}
             transition={{ duration: 0.4 }}
             onClick={onOpenModal}
-            className="group w-full bg-gradient-to-r from-[#5B2E8A] to-[#3A1660] hover:from-[#6B3FA0] hover:to-[#4A2070] text-white rounded-2xl px-6 py-5 flex items-center justify-center gap-3 font-bold text-[13px] tracking-[0.05em] uppercase transition-all shadow-[0_8px_30px_rgba(91,46,138,0.3)] mb-6 font-manrope relative z-10"
+            className="group relative flex h-[60px] w-full items-center justify-center rounded-2xl px-6 outline-none cursor-pointer transition-all active:scale-95 bg-white/5 border-none overflow-hidden mb-6 z-10 shadow-[0_8px_30px_rgba(91,46,138,0.3)]"
           >
-            Quero um diagnóstico da minha clínica
-            <ArrowRight size={18} className="transition-transform group-hover:translate-x-1" />
+            <div className="pointer-events-none absolute inset-0 opacity-100 transition-opacity duration-[1200ms] ease-in-out group-hover:opacity-0" style={{ background: 'radial-gradient(15% 50% at 50% 100%, #B988BF 0%, rgba(185, 136, 191, 0) 100%)', filter: 'blur(15px)' }}></div>
+            <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-[1200ms] ease-in-out group-hover:opacity-100" style={{ background: 'radial-gradient(60.6% 50% at 50% 100%, #B988BF 0%, rgba(185, 136, 191, 0) 100%)', filter: 'blur(18px)' }}></div>
+            <div className="pointer-events-none will-change-auto absolute inset-0 opacity-100 transition-opacity duration-[1200ms] ease-in-out group-hover:opacity-0" style={{ background: 'radial-gradient(10.7% 50% at 50% 100%, #B988BF 0%, rgba(185, 136, 191, 0) 100%)' }}></div>
+            <div className="pointer-events-none will-change-auto absolute inset-0 opacity-0 transition-opacity duration-[1200ms] ease-in-out group-hover:opacity-100" style={{ background: 'radial-gradient(60.1% 50% at 50% 100%, #B988BF 0%, rgba(185, 136, 191, 0) 100%)' }}></div>
+            <div className="pointer-events-none absolute inset-0 overflow-hidden">
+              <div className="absolute -inset-[300%] animate-[spin_4s_linear_infinite]" style={{ background: 'conic-gradient(from 90deg at 50% 50%, transparent 0%, transparent 90%, #B988BF 100%)' }}></div>
+            </div>
+            <div className="absolute inset-[1px] rounded-2xl bg-gradient-to-r from-[#5B2E8A] to-[#3A1660] group-hover:from-[#6B3FA0] group-hover:to-[#4A2070] transition-colors"></div>
+            <span className="relative z-20 flex items-center justify-center gap-3 font-bold text-[13px] tracking-[0.05em] uppercase text-white font-manrope">
+              Quero um diagnóstico da minha clínica
+              <ArrowRight size={18} className="transition-transform group-hover:translate-x-1" />
+            </span>
           </motion.button>
 
           <motion.div 
@@ -803,11 +823,21 @@ const GoogleAdsPremium = ({ onOpenModal }: { onOpenModal: () => void }) => {
           {/* CTA */}
           <button
             onClick={onOpenModal}
-            className="group relative flex h-[60px] w-full sm:min-w-[320px] sm:w-auto mt-10 px-12 items-center justify-center bg-primary text-white rounded-2xl text-[11px] font-bold tracking-[0.2em] uppercase transition-all hover:scale-105 shadow-[0_15px_35px_rgba(185,136,191,0.3)] hover:shadow-[0_20px_45px_rgba(185,136,191,0.45)] border border-[#B988BF]/50"
+            className="group relative flex h-[60px] w-full sm:min-w-[320px] sm:w-auto mt-10 px-12 items-center justify-center rounded-2xl outline-none cursor-pointer transition-all active:scale-95 hover:scale-105 bg-[#0A0A0B] border-none overflow-hidden shadow-[0_15px_40px_rgba(10,10,11,0.15)]"
             type="button"
           >
-            Quero anunciar com rastreamento
-            <ArrowRight size={20} className="ml-5 transition-transform duration-300 group-hover:translate-x-1" />
+            <div className="pointer-events-none absolute inset-0 opacity-100 transition-opacity duration-[1200ms] ease-in-out group-hover:opacity-0" style={{ background: 'radial-gradient(15% 50% at 50% 100%, #B988BF 0%, rgba(185, 136, 191, 0) 100%)', filter: 'blur(15px)' }}></div>
+            <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-[1200ms] ease-in-out group-hover:opacity-100" style={{ background: 'radial-gradient(60.6% 50% at 50% 100%, #B988BF 0%, rgba(185, 136, 191, 0) 100%)', filter: 'blur(18px)' }}></div>
+            <div className="pointer-events-none will-change-auto absolute inset-0 opacity-100 transition-opacity duration-[1200ms] ease-in-out group-hover:opacity-0" style={{ background: 'radial-gradient(10.7% 50% at 50% 100%, #B988BF 0%, rgba(185, 136, 191, 0) 100%)' }}></div>
+            <div className="pointer-events-none will-change-auto absolute inset-0 opacity-0 transition-opacity duration-[1200ms] ease-in-out group-hover:opacity-100" style={{ background: 'radial-gradient(60.1% 50% at 50% 100%, #B988BF 0%, rgba(185, 136, 191, 0) 100%)' }}></div>
+            <div className="pointer-events-none absolute inset-0 overflow-hidden">
+              <div className="absolute -inset-[300%] animate-[spin_4s_linear_infinite]" style={{ background: 'conic-gradient(from 90deg at 50% 50%, transparent 0%, transparent 90%, #B988BF 100%)' }}></div>
+            </div>
+            <div className="absolute inset-[1px] rounded-[15px] bg-[#68259A] hover:bg-[#7a32b3] transition-colors shadow-[0_15px_35px_rgba(185,136,191,0.3)]"></div>
+            <span className="relative z-20 flex items-center justify-center text-white text-[11px] font-bold tracking-[0.2em] uppercase font-manrope">
+              Quero anunciar com rastreamento
+              <ArrowRight size={20} className="ml-5 transition-transform duration-300 group-hover:translate-x-1" />
+            </span>
           </button>
         </motion.div>
 
@@ -1016,10 +1046,20 @@ const PacientesQualificados = ({ onOpenModal }: { onOpenModal: () => void }) => 
 
           <button
             onClick={onOpenModal}
-            className="group relative flex h-[60px] w-full sm:w-auto items-center justify-center bg-primary text-white text-[11px] md:text-[12px] font-bold tracking-[0.15em] rounded-xl uppercase transition-all shadow-[0_10px_30px_rgba(104,37,154,0.3)] hover:shadow-[0_15px_40px_rgba(104,37,154,0.4)] px-10 font-manrope active:scale-95"
+            className="group relative flex h-[60px] w-full sm:w-auto items-center justify-center rounded-xl px-10 outline-none cursor-pointer transition-all active:scale-95 bg-[#0A0A0B] border-none overflow-hidden shadow-[0_15px_40px_rgba(10,10,11,0.15)]"
             type="button"
           >
-            Analisar meu processo →
+            <div className="pointer-events-none absolute inset-0 opacity-100 transition-opacity duration-[1200ms] ease-in-out group-hover:opacity-0" style={{ background: 'radial-gradient(15% 50% at 50% 100%, #B988BF 0%, rgba(185, 136, 191, 0) 100%)', filter: 'blur(15px)' }}></div>
+            <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-[1200ms] ease-in-out group-hover:opacity-100" style={{ background: 'radial-gradient(60.6% 50% at 50% 100%, #B988BF 0%, rgba(185, 136, 191, 0) 100%)', filter: 'blur(18px)' }}></div>
+            <div className="pointer-events-none will-change-auto absolute inset-0 opacity-100 transition-opacity duration-[1200ms] ease-in-out group-hover:opacity-0" style={{ background: 'radial-gradient(10.7% 50% at 50% 100%, #B988BF 0%, rgba(185, 136, 191, 0) 100%)' }}></div>
+            <div className="pointer-events-none will-change-auto absolute inset-0 opacity-0 transition-opacity duration-[1200ms] ease-in-out group-hover:opacity-100" style={{ background: 'radial-gradient(60.1% 50% at 50% 100%, #B988BF 0%, rgba(185, 136, 191, 0) 100%)' }}></div>
+            <div className="pointer-events-none absolute inset-0 overflow-hidden">
+              <div className="absolute -inset-[300%] animate-[spin_4s_linear_infinite]" style={{ background: 'conic-gradient(from 90deg at 50% 50%, transparent 0%, transparent 90%, #B988BF 100%)' }}></div>
+            </div>
+            <div className="absolute inset-[1px] rounded-[11px] bg-[#68259A] hover:bg-[#7a32b3] transition-colors shadow-[0_10px_30px_rgba(104,37,154,0.3)]"></div>
+            <span className="relative z-20 flex items-center justify-center text-white text-[11px] md:text-[12px] font-bold tracking-[0.15em] uppercase font-manrope">
+              Analisar meu processo →
+            </span>
           </button>
         </motion.div>
       </div>
@@ -1216,10 +1256,20 @@ const FinalCTA = ({ onOpenModal }: { onOpenModal: () => void }) => {
           <div className="flex flex-col items-start gap-8">
             <button
               onClick={onOpenModal}
-              className="group relative flex h-[68px] w-full sm:w-auto items-center justify-center bg-gradient-to-r from-[#5B2E8A] to-[#3A1660] hover:from-[#6B3FA0] hover:to-[#4A2070] text-white text-[12px] md:text-[13px] font-bold tracking-[0.1em] rounded-xl uppercase transition-all shadow-[0_10px_40px_rgba(91,46,138,0.3)] px-12 font-manrope"
+              className="group relative flex h-[68px] w-full sm:w-auto items-center justify-center rounded-xl outline-none cursor-pointer transition-all active:scale-95 bg-white/5 border-none overflow-hidden px-12"
               type="button"
             >
-              Quero entender onde estou perdendo pacientes →
+              <div className="pointer-events-none absolute inset-0 opacity-100 transition-opacity duration-[1200ms] ease-in-out group-hover:opacity-0" style={{ background: 'radial-gradient(15% 50% at 50% 100%, #B988BF 0%, rgba(185, 136, 191, 0) 100%)', filter: 'blur(15px)' }}></div>
+              <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-[1200ms] ease-in-out group-hover:opacity-100" style={{ background: 'radial-gradient(60.6% 50% at 50% 100%, #B988BF 0%, rgba(185, 136, 191, 0) 100%)', filter: 'blur(18px)' }}></div>
+              <div className="pointer-events-none will-change-auto absolute inset-0 opacity-100 transition-opacity duration-[1200ms] ease-in-out group-hover:opacity-0" style={{ background: 'radial-gradient(10.7% 50% at 50% 100%, #B988BF 0%, rgba(185, 136, 191, 0) 100%)' }}></div>
+              <div className="pointer-events-none will-change-auto absolute inset-0 opacity-0 transition-opacity duration-[1200ms] ease-in-out group-hover:opacity-100" style={{ background: 'radial-gradient(60.1% 50% at 50% 100%, #B988BF 0%, rgba(185, 136, 191, 0) 100%)' }}></div>
+              <div className="pointer-events-none absolute inset-0 overflow-hidden">
+                <div className="absolute -inset-[300%] animate-[spin_4s_linear_infinite]" style={{ background: 'conic-gradient(from 90deg at 50% 50%, transparent 0%, transparent 90%, #B988BF 100%)' }}></div>
+              </div>
+              <div className="absolute inset-[1px] rounded-[11px] bg-gradient-to-r from-[#5B2E8A] to-[#3A1660] group-hover:from-[#6B3FA0] group-hover:to-[#4A2070] transition-colors shadow-[0_10px_40px_rgba(91,46,138,0.3)]"></div>
+              <span className="relative z-20 flex items-center justify-center text-white text-[12px] md:text-[13px] font-bold tracking-[0.1em] uppercase font-manrope">
+                Quero entender onde estou perdendo pacientes →
+              </span>
             </button>
             <p className="text-zinc-500 text-[11px] md:text-xs font-bold uppercase tracking-[0.2em] opacity-70">
               Análise estratégica personalizada. Sem compromisso.
@@ -1260,7 +1310,6 @@ const Footer = ({ onPrivacy, onTerms, onHome }: { onPrivacy: () => void, onTerms
             </p>
             <div className="flex gap-3">
               {[
-                { icon: Instagram, href: "https://www.instagram.com/eleveaii?igsh=c3FlZGZwcGp6cHc1", target: "_blank", color: "text-[#B988BF]" },
                 { icon: WhatsAppIcon, href: WHATSAPP_URL, target: "_blank", color: "text-[#4ADE80]" }
               ].map((btn, i) => (
                 <motion.a
