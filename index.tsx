@@ -44,14 +44,9 @@ import {
 } from 'lucide-react';
 
 // Configuration
-const WHATSAPP_URL = "https://wa.me/5519994671493?text=Ol%C3%A1%21+Gostaria+de+conhecer+o+atendimento+automatizado+da+EleveAI+e+elevar+meu+neg%C3%B3cio.";
+const WHATSAPP_URL = "https://wa.me/5519994671493?text=Ol%C3%A1%21+Gostaria+de+entender+como+a+EleveAI+pode+ajudar+minha+cl%C3%ADnica+a+atrair+leads+mais+qualificados+e+melhorar+a+convers%C3%A3o+dos+agendamentos.";
 
-const trackWhatsAppClick = () => {
-  if (typeof window !== 'undefined' && !(window as any).whatsAppLeadFired && (window as any).fbq) {
-    (window as any).fbq('track', 'Lead');
-    (window as any).whatsAppLeadFired = true;
-  }
-};
+
 
 const WhatsAppIcon = ({ size = 24, className = "" }: { size?: number, className?: string }) => (
   <svg
@@ -1742,26 +1737,17 @@ const App = () => {
     setTimeout(() => window.scrollTo(0, 0), 100);
   }, []);
 
-  useEffect(() => {
-    const hasSeenModal = sessionStorage.getItem('eleveai-modal-closed');
-    const hasSubmitted = sessionStorage.getItem('eleveai-modal-submitted');
-    if (hasSeenModal || hasSubmitted) return;
 
-    // 50-second timer trigger
-    const timer = setTimeout(() => {
-      setIsModalOpen(true);
-    }, 50000);
-
-    return () => {
-      clearTimeout(timer);
-    };
-  }, []);
 
   const handleOpenModal = () => {
-    if (typeof window !== 'undefined' && !(window as any).leadFired && (window as any).fbq) {
-      (window as any).fbq('track', 'Lead');
-      (window as any).leadFired = true;
+    if (typeof window !== 'undefined' && !(window as any).diagnosticoStartFired) {
+      (window as any).dataLayer = (window as any).dataLayer || [];
+      (window as any).dataLayer.push({
+        event: 'diagnostico_start'
+      });
+      (window as any).diagnosticoStartFired = true;
     }
+
     setIsModalOpen(true);
   };
 
