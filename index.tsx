@@ -1,6 +1,7 @@
 import './index.css';
 import React, { useState, useEffect, useRef } from 'react';
 import { createRoot } from 'react-dom/client';
+import { persistTrackingData, trackWhatsAppClick, startIntentTracking } from './src/utils/tracking';
 import {
   motion,
   AnimatePresence,
@@ -347,6 +348,7 @@ const Navbar = ({ onHome }: { onHome: () => void }) => {
               href={WHATSAPP_URL}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={trackWhatsAppClick}
               className="bg-zinc-800 hover:bg-black text-white px-8 py-3.5 rounded-full text-[10px] font-bold uppercase tracking-[0.15em] transition-all shadow-[0_4px_14px_0_rgba(0,0,0,0.12)] hover:shadow-[0_8px_25px_rgba(0,0,0,0.3)] hover:-translate-y-[1px]"
             >
               Agendar Avaliação
@@ -409,7 +411,7 @@ const Navbar = ({ onHome }: { onHome: () => void }) => {
                 href={WHATSAPP_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                onClick={closeMenu}
+                onClick={(e) => { trackWhatsAppClick(); closeMenu(); }}
                 className="mt-4 flex items-center gap-5 bg-[#B988BF] hover:bg-[#7a2cb3] text-white px-10 py-5 rounded-full font-bold text-xl transition-all shadow-[0_15px_35px_rgba(185, 136, 191,0.4)] hover:shadow-[0_20px_45px_rgba(185, 136, 191,0.5)]"
               >
                 Falar no WhatsApp
@@ -1313,6 +1315,7 @@ const Footer = ({ onPrivacy, onTerms, onHome }: { onPrivacy: () => void, onTerms
                   href={btn.href}
                   target={btn.target ? btn.target : undefined}
                   rel={btn.target === "_blank" ? "noopener noreferrer" : undefined}
+                  onClick={btn.href === WHATSAPP_URL ? trackWhatsAppClick : undefined}
                   className={`w-12 h-12 rounded-full bg-white/5 border border-zinc-800 flex items-center justify-center ${btn.color} hover:text-white hover:border-[#B988BF]/50 transition-all`}
                 >
                   <btn.icon size={20} className="group-hover:scale-110 transition-transform" />
@@ -1372,6 +1375,7 @@ const WhatsAppFloat = () => {
         href={WHATSAPP_URL}
         target="_blank"
         rel="noopener noreferrer"
+        onClick={trackWhatsAppClick}
         aria-label="Atendimento via WhatsApp"
         initial={{ scale: 0, rotate: -45 }}
         animate={{ scale: 1, rotate: 0 }}
@@ -1728,6 +1732,8 @@ const App = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
+    persistTrackingData();
+    startIntentTracking();
     // Prevent browser from restoring previous scroll position
     if ('scrollRestoration' in history) {
       history.scrollRestoration = 'manual';
