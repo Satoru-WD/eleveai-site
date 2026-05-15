@@ -1,3 +1,5 @@
+import { supabase } from '../lib/supabase';
+
 declare global {
   interface Window {
     dataLayer: any[];
@@ -40,6 +42,32 @@ export const persistTrackingData = () => {
     utm_campaign: localStorage.getItem('utm_campaign'),
     utm_content: localStorage.getItem('utm_content')
   });
+};
+
+const saveQualifiedLeadToSupabase = async () => {
+  const payload = {
+    utm_source: localStorage.getItem('utm_source') || null,
+    utm_campaign: localStorage.getItem('utm_campaign') || null,
+    utm_content: localStorage.getItem('utm_content') || null,
+    landing_page: localStorage.getItem('landing_page') || window.location.pathname,
+    current_page: window.location.pathname,
+    click_time: new Date().toISOString(),
+    qualification_rule: 'time_45_plus_whatsapp_click',
+    status: 'novo',
+    observacao: null,
+    valor: null
+  };
+
+  const { error } = await supabase
+    .from('leads')
+    .insert([payload]);
+
+  if (error) {
+    console.error('Failed to save qualified lead to Supabase:', error);
+    return;
+  }
+
+  console.log('Qualified lead saved to Supabase:', payload);
 };
 
 export const startIntentTracking = () => {
@@ -106,6 +134,8 @@ export const trackWhatsAppClick = () => {
       current_page: window.location.pathname,
       click_time: new Date().toISOString()
     });
+
+    saveQualifiedLeadToSupabase();
 
     console.log('Qualified lead tracked', {
       qualification_rule: 'time_45_plus_whatsapp_click',
