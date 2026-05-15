@@ -45,6 +45,13 @@ export const persistTrackingData = () => {
 };
 
 const saveQualifiedLeadToSupabase = async () => {
+  const alreadySaved = sessionStorage.getItem('eleveai_qualified_lead_saved') === 'true';
+
+  if (alreadySaved) {
+    console.log('Qualified lead already saved in this session');
+    return;
+  }
+
   const payload = {
     utm_source: localStorage.getItem('utm_source') || null,
     utm_campaign: localStorage.getItem('utm_campaign') || null,
@@ -67,6 +74,7 @@ const saveQualifiedLeadToSupabase = async () => {
     return;
   }
 
+  sessionStorage.setItem('eleveai_qualified_lead_saved', 'true');
   console.log('Qualified lead saved to Supabase:', payload);
 };
 
