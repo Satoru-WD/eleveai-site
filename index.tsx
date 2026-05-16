@@ -1,7 +1,10 @@
 import './index.css';
 import React, { useState, useEffect, useRef } from 'react';
 import { createRoot } from 'react-dom/client';
-import { persistTrackingData, trackWhatsAppClick, startIntentTracking } from './src/utils/tracking';
+import { persistTrackingData, trackWhatsAppClick, startIntentTracking, getCookie } from './src/utils/tracking';
+import { AcquisitionDashboard } from './src/pages/AcquisitionDashboard';
+import { supabase } from './src/lib/supabase';
+
 import {
   motion,
   AnimatePresence,
@@ -80,7 +83,7 @@ const DiagnosticModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => 
     setStep(prev => prev + 1);
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setStatus('submitting');
 
@@ -91,44 +94,68 @@ const DiagnosticModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => 
       formData.append(key, value as string);
     });
 
-    fetch('https://formsubmit.co/ajax/satorukubota01@gmail.com', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-      },
-      body: JSON.stringify(Object.fromEntries(formData))
-    })
-      .then(response => response.json())
-      .then(() => {
-        setStatus('success');
-        sessionStorage.setItem('eleveai-modal-submitted', 'true');
-      })
-      .catch(error => {
-        console.error(error);
-        setStatus('idle');
-        alert("Houve um erro ao enviar. Tente novamente ou chame no WhatsApp.");
-      });
+    const formDataObj = Object.fromEntries(formData);
+
+    const payload = {
+      lead_name: formDataObj['Nome'] || '',
+      lead_phone: formDataObj['WhatsApp'] || '',
+      lead_email: null,
+      service_interest: "Diagnóstico estratégico",
+      lead_type: "diagnostic_form",
+      status: "novo",
+      qualification_rule: "diagnostic_modal_completed",
+      observacao: `Clínica: ${formDataObj['Nome_Clinica'] || '-'}\nOrigem dos contatos: ${answers['Q1_Origem_Contatos'] || '-'}\nCampanhas/criativos: ${answers['Q2_Campanhas_Criativos'] || '-'}\nIntenção do lead: ${answers['Q3_Intencao_Lead'] || '-'}`,
+      utm_source: localStorage.getItem('utm_source') || null,
+      utm_campaign: localStorage.getItem('utm_campaign') || null,
+      utm_content: localStorage.getItem('utm_content') || null,
+      landing_page: localStorage.getItem('landing_page') || window.location.pathname,
+      current_page: window.location.pathname,
+      click_time: new Date().toISOString(),
+      valor: null,
+      gclid: localStorage.getItem('gclid') || null,
+      gbraid: localStorage.getItem('gbraid') || null,
+      wbraid: localStorage.getItem('wbraid') || null,
+      fbclid: localStorage.getItem('fbclid') || null,
+      fbp: getCookie('_fbp') || localStorage.getItem('fbp') || null,
+      fbc: getCookie('_fbc') || localStorage.getItem('fbc') || null,
+      user_agent: navigator.userAgent || null
+    };
+
+    // 1. Primeiro salvar no Supabase
+    try {
+      const { error } = await supabase.from('leads').insert([payload]);
+      if (error) throw error;
+      console.log('Diagnostic form saved to Supabase');
+    } catch (error) {
+      console.error('Supabase diagnostic insert failed', error);
+      setStatus('idle');
+      alert('Houve um erro ao enviar. Tente novamente ou chame no WhatsApp.');
+      return;
+    }
+
+    // 2. Se Supabase salvar com sucesso:
+    setStatus('success');
+    sessionStorage.setItem('eleveai-modal-submitted', 'true');
   };
 
   const questions = [
     {
-      id: "Q1_Rastreamento",
-      title: "Sua clínica já possui rastreamento configurado?",
-      options: ["Sim, já possuo", "Não, ainda não"],
-      tip: "Pixel, Analytics, Tag Manager e remarketing ajudam sua clínica a entender quem entrou no site e quem estava pronto para agendar."
+      id: "Q1_Origem_Contatos",
+      title: "Hoje sua clínica sabe de onde vêm os contatos que chegam pelo WhatsApp?",
+      options: ["Sim, com clareza", "Tenho uma noção", "Não sei com precisão"],
+      tip: "Entender a origem dos contatos mostra quais canais realmente geram oportunidades e evita investir no escuro."
     },
     {
-      id: "Q2_Precisao",
-      title: "Hoje sua clínica sabe exatamente quantos pacientes chegam pelo site ou WhatsApp?",
-      options: ["Sim", "Não", "Tenho uma noção, mas não com precisão"],
-      tip: "Saber a origem exata do paciente permite investir apenas nos canais que realmente trazem retorno financeiro para a clínica."
+      id: "Q2_Campanhas_Criativos",
+      title: "Vocês conseguem identificar quais campanhas, páginas ou criativos geram os melhores contatos?",
+      options: ["Sim", "Parcialmente", "Não"],
+      tip: "Quando a clínica sabe quais campanhas geram contatos melhores, fica mais fácil direcionar verba para o que realmente traz pacientes."
     },
     {
-      id: "Q3_Automacao",
-      title: "Sua clínica já envia lembretes e confirmações automáticas?",
-      options: ["Sim", "Não", "Parcialmente"],
-      tip: "Automações reduzem faltas em até 40% e liberam sua secretária para focar em atendimentos mais complexos."
+      id: "Q3_Intencao_Lead",
+      title: "Hoje vocês conseguem separar curiosos de pessoas com real intenção de agendar?",
+      options: ["Sim", "Parcialmente", "Não"],
+      tip: "Separar curiosos de contatos com intenção real ajuda a equipe a priorizar quem tem mais chance de virar agendamento."
     }
   ];
 
@@ -173,9 +200,10 @@ const DiagnosticModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => 
             </div>
           ) : step <= 3 ? (
             <div key={step}>
-              <div className="flex justify-between items-end mb-2">
+              <div className="flex justify-between items-end mb-1">
                 <h3 className="text-lg md:text-xl font-bold text-white max-w-xs leading-tight">Avalie a maturidade digital da sua clínica.</h3>
               </div>
+              <p className="text-[11px] text-gray-400 mb-2">São só 3 perguntas rápidas. Leva menos de 15 segundos.</p>
               <div className="flex justify-between items-end mb-2">
                 <span className="text-[10px] text-gray-500 font-bold uppercase tracking-wider">Passo {step} de {totalSteps}</span>
                 <span className="text-[10px] text-[#B988BF] font-bold uppercase tracking-wider">Diagnóstico Estratégico</span>
@@ -219,10 +247,6 @@ const DiagnosticModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => 
               </p>
 
               <form onSubmit={handleSubmit} className="space-y-4 text-left">
-                <input type="hidden" name="_subject" value="Novo Diagnóstico de Clínica - EleveAI" />
-                <input type="hidden" name="_captcha" value="false" />
-                <input type="hidden" name="_template" value="table" />
-
                 <div>
                   <label htmlFor="diag-nome" className="block text-[10px] font-bold uppercase tracking-wider text-gray-500 mb-1.5 ml-1">Seu Nome</label>
                   <input id="diag-nome" required type="text" name="Nome" className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#B988BF] transition-all" placeholder="Nome completo" />
@@ -290,7 +314,7 @@ const TypingEffect = ({ texts, className = "", cursorClassName = "" }: { texts: 
   );
 };
 
-const Navbar = ({ onHome }: { onHome: () => void }) => {
+const Navbar = ({ onHome, onWhatsApp }: { onHome: () => void, onWhatsApp: () => void }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const closeMenu = () => setIsMobileMenuOpen(false);
@@ -344,15 +368,12 @@ const Navbar = ({ onHome }: { onHome: () => void }) => {
                 <span className="absolute -bottom-1 left-0 w-0 h-[2px] bg-[#B988BF] transition-all group-hover:w-full"></span>
               </button>
             ))}
-            <a
-              href={WHATSAPP_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={trackWhatsAppClick}
+            <button
+              onClick={(e) => { e.preventDefault(); onWhatsApp(); }}
               className="bg-zinc-800 hover:bg-black text-white px-8 py-3.5 rounded-full text-[10px] font-bold uppercase tracking-[0.15em] transition-all shadow-[0_4px_14px_0_rgba(0,0,0,0.12)] hover:shadow-[0_8px_25px_rgba(0,0,0,0.3)] hover:-translate-y-[1px]"
             >
               Agendar Avaliação
-            </a>
+            </button>
           </div>
 
           {/* Mobile Menu Button */}
@@ -403,20 +424,17 @@ const Navbar = ({ onHome }: { onHome: () => void }) => {
               ))}
 
               {/* WhatsApp CTA */}
-              <motion.a
+              <motion.button
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0 }}
                 transition={{ delay: navLinks.length * 0.07 }}
-                href={WHATSAPP_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={(e) => { trackWhatsAppClick(); closeMenu(); }}
+                onClick={(e) => { onWhatsApp(); closeMenu(); }}
                 className="mt-4 flex items-center gap-5 bg-[#B988BF] hover:bg-[#7a2cb3] text-white px-10 py-5 rounded-full font-bold text-xl transition-all shadow-[0_15px_35px_rgba(185, 136, 191,0.4)] hover:shadow-[0_20px_45px_rgba(185, 136, 191,0.5)]"
               >
                 Falar no WhatsApp
                 <ArrowRight size={22} />
-              </motion.a>
+              </motion.button>
             </nav>
 
             {/* Decorative glow */}
@@ -1278,7 +1296,7 @@ const FinalCTA = ({ onOpenModal }: { onOpenModal: () => void }) => {
   );
 };
 
-const Footer = ({ onPrivacy, onTerms, onHome }: { onPrivacy: () => void, onTerms: () => void, onHome: () => void }) => {
+const Footer = ({ onPrivacy, onTerms, onHome, onWhatsApp }: { onPrivacy: () => void, onTerms: () => void, onHome: () => void, onWhatsApp: () => void }) => {
   return (
     <footer className="relative bg-graphite pt-32 pb-16 overflow-hidden border-t border-white/5">
       {/* Decorative Top Glow */}
@@ -1307,19 +1325,16 @@ const Footer = ({ onPrivacy, onTerms, onHome }: { onPrivacy: () => void, onTerms
             </p>
             <div className="flex gap-3">
               {[
-                { icon: WhatsAppIcon, href: WHATSAPP_URL, target: "_blank", color: "text-[#4ADE80]" }
+                { icon: WhatsAppIcon, isWhatsApp: true, color: "text-[#4ADE80]" }
               ].map((btn, i) => (
-                <motion.a
+                <motion.button
                   key={i}
                   whileHover={{ y: -3, backgroundColor: "rgba(185, 136, 191, 0.2)" }}
-                  href={btn.href}
-                  target={btn.target ? btn.target : undefined}
-                  rel={btn.target === "_blank" ? "noopener noreferrer" : undefined}
-                  onClick={btn.href === WHATSAPP_URL ? trackWhatsAppClick : undefined}
+                  onClick={btn.isWhatsApp ? onWhatsApp : undefined}
                   className={`w-12 h-12 rounded-full bg-white/5 border border-zinc-800 flex items-center justify-center ${btn.color} hover:text-white hover:border-[#B988BF]/50 transition-all`}
                 >
                   <btn.icon size={20} className="group-hover:scale-110 transition-transform" />
-                </motion.a>
+                </motion.button>
               ))}
             </div>
           </div>
@@ -1365,17 +1380,14 @@ const Footer = ({ onPrivacy, onTerms, onHome }: { onPrivacy: () => void, onTerms
   );
 };
 
-const WhatsAppFloat = () => {
+const WhatsAppFloat = ({ onWhatsApp }: { onWhatsApp: () => void }) => {
   return (
     <div className="fixed bottom-8 right-8 z-50 flex flex-col items-end gap-3">
 
 
       {/* WhatsApp Button */}
-      <motion.a
-        href={WHATSAPP_URL}
-        target="_blank"
-        rel="noopener noreferrer"
-        onClick={trackWhatsAppClick}
+      <motion.button
+        onClick={(e) => { e.preventDefault(); onWhatsApp(); }}
         aria-label="Atendimento via WhatsApp"
         initial={{ scale: 0, rotate: -45 }}
         animate={{ scale: 1, rotate: 0 }}
@@ -1388,7 +1400,7 @@ const WhatsAppFloat = () => {
 
         {/* Pulsing glow around the button */}
         <div className="absolute inset-0 rounded-full border-2 border-white/40 animate-ping opacity-20 pointer-events-none" />
-      </motion.a>
+      </motion.button>
     </div>
   );
 };
@@ -1727,11 +1739,155 @@ const RaioXSection = ({ onOpenModal }: { onOpenModal: () => void }) => {
   );
 };
 
+const WhatsAppQuickModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }) => {
+  const [status, setStatus] = useState<'idle' | 'submitting'>('idle');
+  const [formData, setFormData] = useState({
+    nome: '',
+    whatsapp: '',
+    service: 'Site + estrutura de conversão'
+  });
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setStatus('submitting');
+
+    const payload = {
+      lead_name: formData.nome,
+      lead_phone: formData.whatsapp,
+      lead_email: null,
+      service_interest: formData.service,
+      lead_type: "whatsapp_quick",
+      status: "novo",
+      qualification_rule: "whatsapp_quick_form",
+      utm_source: localStorage.getItem('utm_source') || null,
+      utm_campaign: localStorage.getItem('utm_campaign') || null,
+      utm_content: localStorage.getItem('utm_content') || null,
+      landing_page: localStorage.getItem('landing_page') || window.location.pathname,
+      current_page: window.location.pathname,
+      click_time: new Date().toISOString(),
+      valor: null,
+      observacao: "Lead capturado pelo formulário rápido antes do WhatsApp",
+      gclid: localStorage.getItem('gclid') || null,
+      gbraid: localStorage.getItem('gbraid') || null,
+      wbraid: localStorage.getItem('wbraid') || null,
+      fbclid: localStorage.getItem('fbclid') || null,
+      fbp: getCookie('_fbp') || localStorage.getItem('fbp') || null,
+      fbc: getCookie('_fbc') || localStorage.getItem('fbc') || null,
+      user_agent: navigator.userAgent || null
+    };
+
+    try {
+      const { error } = await supabase.from('leads').insert([payload]);
+      if (error) throw error;
+      
+      sessionStorage.setItem('eleveai_qualified_lead_saved', 'true');
+
+      if (typeof window !== 'undefined') {
+        (window as any).dataLayer = (window as any).dataLayer || [];
+        (window as any).dataLayer.push({
+          event: 'qualified_lead',
+          qualification_rule: 'whatsapp_quick_form',
+          utm_source: payload.utm_source,
+          utm_campaign: payload.utm_campaign,
+          utm_content: payload.utm_content,
+          landing_page: payload.landing_page,
+          current_page: payload.current_page,
+          click_time: payload.click_time
+        });
+      }
+    } catch (error) {
+      console.error('WhatsApp quick lead insert failed', error);
+    }
+
+    trackWhatsAppClick();
+    
+    const message = `Olá, vim pelo site da EleveAI.\nNome: ${formData.nome}\nServiço de interesse: ${formData.service}`;
+    const url = `https://wa.me/5519994671493?text=${encodeURIComponent(message)}`;
+    
+    window.open(url, '_blank');
+    onClose();
+    setStatus('idle');
+  };
+
+  return (
+    <AnimatePresence>
+      {isOpen && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+          <motion.div
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+            className="absolute inset-0 bg-[#0A0A0B]/80 backdrop-blur-sm"
+            onClick={onClose}
+          />
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.95, y: 20 }}
+            className="relative w-full max-w-md bg-black/70 backdrop-blur-xl border border-white/10 p-6 md:p-8 shadow-2xl z-10 rounded-[2rem]"
+            role="dialog"
+          >
+            <button
+              onClick={onClose}
+              className="absolute top-4 right-4 p-2 text-gray-400 hover:text-white transition-colors rounded-full hover:bg-white/5"
+            >
+              <X size={20} />
+            </button>
+
+            <div className="text-center mb-6">
+              <h3 className="text-xl md:text-2xl font-bold text-white mb-2">Antes de te direcionar</h3>
+              <p className="text-xs md:text-sm text-gray-400">Preencha rapidinho para começarmos com mais contexto. Leva menos de 10 segundos.</p>
+            </div>
+
+            <form onSubmit={handleSubmit} className="space-y-4 text-left">
+              <div>
+                <label className="block text-[10px] font-bold uppercase tracking-wider text-gray-500 mb-1.5 ml-1">Seu Nome</label>
+                <input required type="text" value={formData.nome} onChange={e => setFormData({...formData, nome: e.target.value})} className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#B988BF] transition-all" placeholder="Como podemos te chamar?" />
+              </div>
+
+              <div>
+                <label className="block text-[10px] font-bold uppercase tracking-wider text-gray-500 mb-1.5 ml-1">WhatsApp</label>
+                <input required type="tel" value={formData.whatsapp} onChange={e => setFormData({...formData, whatsapp: e.target.value})} className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#B988BF] transition-all" placeholder="(00) 00000-0000" />
+              </div>
+
+              <div>
+                <label className="block text-[10px] font-bold uppercase tracking-wider text-gray-500 mb-1.5 ml-1">Serviço de interesse</label>
+                <select required value={formData.service} onChange={e => setFormData({...formData, service: e.target.value})} className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#B988BF] transition-all appearance-none cursor-pointer">
+                  <option value="Site + estrutura de conversão" className="bg-[#1A1A1E]">Site + estrutura de conversão</option>
+                  <option value="Rastreamento e eventos" className="bg-[#1A1A1E]">Rastreamento e eventos</option>
+                  <option value="Campanhas com Google Ads" className="bg-[#1A1A1E]">Campanhas com Google Ads</option>
+                  <option value="CRM e gestão de leads" className="bg-[#1A1A1E]">CRM e gestão de leads</option>
+                  <option value="Diagnóstico estratégico" className="bg-[#1A1A1E]">Diagnóstico estratégico</option>
+                </select>
+              </div>
+
+              <button
+                type="submit"
+                disabled={status === 'submitting'}
+                className="group relative inline-flex w-full mt-6 h-[56px] px-8 items-center justify-center overflow-hidden rounded-xl outline-none cursor-pointer transition-all active:scale-95 bg-[#25D366] text-white font-bold tracking-[0.1em] uppercase text-[12px] hover:bg-[#1fae54] shadow-[0_10px_25px_rgba(37,211,102,0.25)]"
+              >
+                <span className="relative z-20 flex items-center justify-center gap-3">
+                  {status === 'submitting' ? 'Aguarde...' : 'Continuar no WhatsApp'}
+                  {status !== 'submitting' && <ArrowRight size={18} className="transition-transform duration-300 group-hover:translate-x-1" />}
+                </span>
+              </button>
+            </form>
+          </motion.div>
+        </div>
+      )}
+    </AnimatePresence>
+  );
+};
+
 const App = () => {
-  const [currentPage, setCurrentPage] = useState<'home' | 'privacy' | 'terms'>('home');
+  const [currentPage, setCurrentPage] = useState<'home' | 'privacy' | 'terms' | 'crm'>('home');
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isWhatsAppModalOpen, setIsWhatsAppModalOpen] = useState(false);
 
   useEffect(() => {
+    if (window.location.pathname === '/crm') {
+      setCurrentPage('crm');
+      return;
+    }
+
     persistTrackingData();
     startIntentTracking();
     // Prevent browser from restoring previous scroll position
@@ -1767,15 +1923,19 @@ const App = () => {
 
 
       <DiagnosticModal isOpen={isModalOpen} onClose={handleCloseModal} />
+      <WhatsAppQuickModal isOpen={isWhatsAppModalOpen} onClose={() => setIsWhatsAppModalOpen(false)} />
       <PrivacyPolicy isOpen={currentPage === 'privacy'} onClose={() => setCurrentPage('home')} />
       <TermsOfUse isOpen={currentPage === 'terms'} onClose={() => setCurrentPage('home')} />
 
-      <motion.div
+      {currentPage === 'crm' ? (
+        <AcquisitionDashboard />
+      ) : (
+        <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5 }}
       >
-        <Navbar onHome={() => setCurrentPage('home')} />
+        <Navbar onHome={() => setCurrentPage('home')} onWhatsApp={() => setIsWhatsAppModalOpen(true)} />
         <main>
           <>
             <Hero onOpenModal={handleOpenModal} />
@@ -1792,10 +1952,12 @@ const App = () => {
           onPrivacy={() => setCurrentPage('privacy')}
           onTerms={() => setCurrentPage('terms')}
           onHome={() => setCurrentPage('home')}
+          onWhatsApp={() => setIsWhatsAppModalOpen(true)}
         />
-        <WhatsAppFloat />
+        <WhatsAppFloat onWhatsApp={() => setIsWhatsAppModalOpen(true)} />
         <CookieConsent />
       </motion.div>
+      )}
     </div>
   );
 };

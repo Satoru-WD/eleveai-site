@@ -6,6 +6,14 @@ declare global {
   }
 }
 
+export const getCookie = (name: string) => {
+  if (typeof document === 'undefined') return null;
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+  if (parts.length === 2) return parts.pop()?.split(';').shift() || null;
+  return null;
+};
+
 export const persistTrackingData = () => {
   if (typeof window === 'undefined') return;
 
@@ -18,7 +26,9 @@ export const persistTrackingData = () => {
     'utm_content',
     'utm_term',
     'gclid',
-    'fbclid'
+    'fbclid',
+    'gbraid',
+    'wbraid'
   ];
 
   keys.forEach((key) => {
@@ -34,6 +44,19 @@ export const persistTrackingData = () => {
 
   if (!localStorage.getItem('first_visit')) {
     localStorage.setItem('first_visit', new Date().toISOString());
+  }
+
+  const fbp = getCookie('_fbp') || localStorage.getItem('fbp');
+  if (fbp && !localStorage.getItem('fbp')) {
+    localStorage.setItem('fbp', fbp);
+  }
+
+  let fbc = getCookie('_fbc') || localStorage.getItem('fbc');
+  if (!fbc && localStorage.getItem('fbclid')) {
+    fbc = `fb.1.${Date.now()}.${localStorage.getItem('fbclid')}`;
+  }
+  if (fbc && !localStorage.getItem('fbc')) {
+    localStorage.setItem('fbc', fbc);
   }
 
   console.log('Tracking persistence executed', {
@@ -62,7 +85,14 @@ const saveQualifiedLeadToSupabase = async () => {
     qualification_rule: 'time_45_plus_whatsapp_click',
     status: 'novo',
     observacao: null,
-    valor: null
+    valor: null,
+    gclid: localStorage.getItem('gclid') || null,
+    gbraid: localStorage.getItem('gbraid') || null,
+    wbraid: localStorage.getItem('wbraid') || null,
+    fbclid: localStorage.getItem('fbclid') || null,
+    fbp: getCookie('_fbp') || localStorage.getItem('fbp') || null,
+    fbc: getCookie('_fbc') || localStorage.getItem('fbc') || null,
+    user_agent: navigator.userAgent || null
   };
 
   const { error } = await supabase
