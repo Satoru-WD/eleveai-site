@@ -342,9 +342,9 @@ const Navbar = ({ onHome, onWhatsApp }: { onHome: () => void, onWhatsApp: () => 
 
   return (
     <>
-      <div className="fixed flex w-full z-50 pt-0 md:pt-4 pr-4 pl-4 top-0 left-0 justify-center" style={{ animation: 'fadeSlideIn 1s ease-out 0.2s both' }}>
+      <div className="fixed flex w-full z-50 pt-2 md:pt-3 px-3 md:px-4 top-0 left-0 justify-center" style={{ animation: 'fadeSlideIn 1s ease-out 0.2s both' }}>
         <nav
-          className="flex md:gap-12 md:w-auto bg-[#1A1A1E]/95 md:bg-[#1A1A1E]/80 w-full max-w-6xl rounded-2xl md:rounded-full py-1 px-5 md:px-8 shadow-2xl md:shadow-[0_10px_40px_rgba(0,0,0,0.2)] backdrop-blur-md border border-white/5 md:border-white/10 items-center justify-between"
+          className="flex md:gap-8 md:w-auto bg-[#1A1A1E]/90 md:bg-[#1A1A1E]/72 w-full max-w-5xl rounded-xl md:rounded-2xl py-0.5 px-3 md:px-5 shadow-lg md:shadow-[0_8px_24px_rgba(0,0,0,0.14)] backdrop-blur-sm border border-white/5 md:border-white/10 items-center justify-between"
         >
           {/* Logo */}
           <a href="#" aria-label="Voltar para o topo" className="flex items-center cursor-pointer" onClick={(e) => { e.preventDefault(); handleHomeClick(); }}>
@@ -353,17 +353,17 @@ const Navbar = ({ onHome, onWhatsApp }: { onHome: () => void, onWhatsApp: () => 
               alt="EleveAI - Máquinas de Crescimento"
               width="200"
               height="80"
-              className="h-[5.5rem] md:h-[4.5rem] w-auto object-contain transition-all hover:brightness-110 drop-shadow-md brightness-[500%] md:brightness-100"
+              className="h-[3.4rem] md:h-[3.25rem] w-auto object-contain transition-all hover:brightness-110 drop-shadow-sm brightness-[500%] md:brightness-100"
             />
           </a>
 
           {/* Desktop Nav Links */}
-          <div className="hidden md:flex items-center gap-8 pr-2">
+          <div className="hidden md:flex items-center gap-5 pr-1">
             {navLinks.map((link) => (
               <button
                 key={link.label}
                 onClick={link.action ?? (() => scrollToSection(link.id!))}
-                className="group hover:text-[#B988BF] transition-all text-[11px] uppercase tracking-[0.2em] font-bold text-zinc-300 font-manrope py-1 relative drop-shadow-sm"
+                className="group hover:text-[#B988BF] transition-all text-[10px] uppercase tracking-[0.16em] font-bold text-zinc-300 font-manrope py-1 relative"
               >
                 {link.label}
                 <span className="absolute -bottom-1 left-0 w-0 h-[2px] bg-[#B988BF] transition-all group-hover:w-full"></span>
@@ -371,7 +371,7 @@ const Navbar = ({ onHome, onWhatsApp }: { onHome: () => void, onWhatsApp: () => 
             ))}
             <button
               onClick={(e) => { e.preventDefault(); onWhatsApp(); }}
-              className="bg-zinc-800 hover:bg-black text-white px-8 py-3.5 rounded-full text-[10px] font-bold uppercase tracking-[0.15em] transition-all shadow-[0_4px_14px_0_rgba(0,0,0,0.12)] hover:shadow-[0_8px_25px_rgba(0,0,0,0.3)] hover:-translate-y-[1px]"
+              className="bg-zinc-800/90 hover:bg-black text-white px-5 py-2.5 rounded-xl text-[9px] font-bold uppercase tracking-[0.14em] transition-all shadow-[0_4px_12px_rgba(0,0,0,0.12)] hover:shadow-[0_8px_18px_rgba(0,0,0,0.22)] hover:-translate-y-[1px]"
             >
               Agendar Avaliação
             </button>
@@ -382,9 +382,9 @@ const Navbar = ({ onHome, onWhatsApp }: { onHome: () => void, onWhatsApp: () => 
             <button
               aria-label="Toggle menu"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="text-zinc-200 hover:text-white transition-colors p-4 -mr-2"
+              className="text-zinc-200 hover:text-white transition-colors p-3 -mr-1"
             >
-              {isMobileMenuOpen ? <X size={32} aria-hidden="true" /> : <Menu size={32} aria-hidden="true" />}
+              {isMobileMenuOpen ? <X size={24} aria-hidden="true" /> : <Menu size={24} aria-hidden="true" />}
             </button>
           </div>
         </nav>
@@ -398,18 +398,18 @@ const Navbar = ({ onHome, onWhatsApp }: { onHome: () => void, onWhatsApp: () => 
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-40 bg-[#0A0A0B]/95 backdrop-blur-2xl flex flex-col items-center justify-center md:hidden"
+            className="fixed inset-0 z-40 bg-[#0A0A0B]/94 backdrop-blur-xl flex flex-col items-center justify-center md:hidden"
           >
             {/* Close button */}
             <button
               aria-label="Fechar menu"
               onClick={closeMenu}
-              className="absolute top-6 right-6 text-gray-400 hover:text-white transition-colors p-2"
+              className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors p-2"
             >
-              <Plus className="rotate-45" size={32} aria-hidden="true" />
+              <Plus className="rotate-45" size={24} aria-hidden="true" />
             </button>
 
-            <nav className="flex flex-col items-center gap-8">
+            <nav className="flex flex-col items-center gap-6">
               {navLinks.map((link, i) => (
                 <motion.button
                   key={link.label}
@@ -418,7 +418,7 @@ const Navbar = ({ onHome, onWhatsApp }: { onHome: () => void, onWhatsApp: () => 
                   exit={{ opacity: 0, y: 20 }}
                   transition={{ delay: i * 0.07 }}
                   onClick={link.action ?? (() => scrollToSection(link.id!))}
-                  className="text-2xl font-extrabold text-white/60 hover:text-white transition-colors tracking-tight"
+                  className="text-xl font-extrabold text-white/65 hover:text-white transition-colors tracking-tight"
                 >
                   {link.label}
                 </motion.button>
@@ -431,10 +431,10 @@ const Navbar = ({ onHome, onWhatsApp }: { onHome: () => void, onWhatsApp: () => 
                 exit={{ opacity: 0 }}
                 transition={{ delay: navLinks.length * 0.07 }}
                 onClick={(e) => { onWhatsApp(); closeMenu(); }}
-                className="mt-4 flex items-center gap-5 bg-[#B988BF] hover:bg-[#7a2cb3] text-white px-10 py-5 rounded-full font-bold text-xl transition-all shadow-[0_15px_35px_rgba(185, 136, 191,0.4)] hover:shadow-[0_20px_45px_rgba(185, 136, 191,0.5)]"
+                className="mt-3 flex items-center gap-3 bg-[#B988BF] hover:bg-[#7a2cb3] text-white px-7 py-3.5 rounded-2xl font-bold text-base transition-all shadow-[0_10px_24px_rgba(185,136,191,0.28)] hover:shadow-[0_14px_30px_rgba(185,136,191,0.36)]"
               >
                 Falar no WhatsApp
-                <ArrowRight size={22} />
+                <ArrowRight size={18} />
               </motion.button>
             </nav>
 
@@ -872,6 +872,39 @@ const Hero = ({ onOpenModal }: { onOpenModal: () => void }) => {
   );
 }
 const GoogleAdsPremium = ({ onOpenModal }: { onOpenModal: () => void }) => {
+  const mockupFlowVariants = {
+    hidden: {},
+    visible: {
+      transition: {
+        delayChildren: 0.1,
+        staggerChildren: 0.28
+      }
+    }
+  };
+  const mockupCardVariants = {
+    hidden: { opacity: 0, scale: 0.92, y: 14 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      y: 0,
+      transition: {
+        duration: 0.55,
+        ease: "easeOut" as const
+      }
+    }
+  };
+  const mockupConnectorVariants = {
+    hidden: { opacity: 0, scaleY: 0 },
+    visible: {
+      opacity: 1,
+      scaleY: 1,
+      transition: {
+        duration: 0.45,
+        ease: "easeOut" as const
+      }
+    }
+  };
+
   return (
     <section className="py-24 lg:py-32 relative px-6 overflow-hidden bg-ice border-y border-black/5">
       <div className="absolute inset-0 pointer-events-none">
@@ -971,17 +1004,17 @@ const GoogleAdsPremium = ({ onOpenModal }: { onOpenModal: () => void }) => {
              </div>
 
              {/* Flow Container */}
-             <div className="flex-1 flex flex-col gap-3 relative z-10">
+             <motion.div
+               className="flex-1 flex flex-col gap-3 relative z-10"
+               variants={mockupFlowVariants}
+               initial="hidden"
+               whileInView="visible"
+               viewport={{ once: true, amount: 0.35 }}
+             >
                
                {/* 1. Origin Step */}
-               <motion.div 
-                 initial={{ opacity: 0, x: -10 }} 
-                 whileInView={{ opacity: 1, x: 0 }} 
-                 animate={{ 
-                   borderColor: ['#f3f4f6', '#d8b4e2', '#d8b4e2', '#f3f4f6'], 
-                   boxShadow: ['0 4px 20px rgba(0,0,0,0.03)', '0 4px 20px rgba(185,136,191,0.2)', '0 4px 20px rgba(185,136,191,0.2)', '0 4px 20px rgba(0,0,0,0.03)'] 
-                 }}
-                 transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", times: [0, 0.1, 0.9, 1] }}
+               <motion.div
+                 variants={mockupCardVariants}
                  className="bg-white rounded-2xl p-4 shadow-[0_4px_20px_rgba(0,0,0,0.03)] border border-gray-100 flex flex-col gap-2 relative"
                >
                  <div className="flex items-center gap-3 relative z-10 bg-white">
@@ -999,18 +1032,15 @@ const GoogleAdsPremium = ({ onOpenModal }: { onOpenModal: () => void }) => {
                    <span className="text-[8px] font-bold bg-green-500/10 text-green-600 px-2 py-0.5 rounded uppercase tracking-wider">WhatsApp</span>
                  </div>
                  {/* Connector line down */}
-                 <div className="absolute left-[31px] top-[40px] bottom-[-24px] w-[2px] bg-gradient-to-b from-gray-200 to-transparent z-0" />
+                 <motion.div
+                   variants={mockupConnectorVariants}
+                   className="absolute left-[31px] top-[40px] bottom-[-24px] w-[2px] origin-top bg-gradient-to-b from-gray-200 to-transparent z-0"
+                 />
                </motion.div>
 
                {/* 2. Lead Context Step */}
-               <motion.div 
-                 initial={{ opacity: 0, x: -10 }} 
-                 whileInView={{ opacity: 1, x: 0 }}
-                 animate={{ 
-                   borderColor: ['#f3f4f6', '#f3f4f6', '#bbf7d0', '#bbf7d0', '#f3f4f6'], 
-                   boxShadow: ['0 4px 20px rgba(0,0,0,0.03)', '0 4px 20px rgba(0,0,0,0.03)', '0 4px 20px rgba(74,222,128,0.2)', '0 4px 20px rgba(74,222,128,0.2)', '0 4px 20px rgba(0,0,0,0.03)'] 
-                 }}
-                 transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", times: [0, 0.15, 0.25, 0.9, 1] }}
+               <motion.div
+                 variants={mockupCardVariants}
                  className="bg-white rounded-2xl p-4 shadow-[0_4px_20px_rgba(0,0,0,0.03)] border border-gray-100 flex flex-col gap-2 relative z-10 ml-4"
                >
                  <div className="flex items-center gap-3 relative z-10 bg-white">
@@ -1029,18 +1059,15 @@ const GoogleAdsPremium = ({ onOpenModal }: { onOpenModal: () => void }) => {
                    </div>
                  </div>
                  {/* Connector line down */}
-                 <div className="absolute left-[31px] top-[40px] bottom-[-24px] w-[2px] bg-gradient-to-b from-gray-200 to-transparent z-0" />
+                 <motion.div
+                   variants={mockupConnectorVariants}
+                   className="absolute left-[31px] top-[40px] bottom-[-24px] w-[2px] origin-top bg-gradient-to-b from-gray-200 to-transparent z-0"
+                 />
                </motion.div>
 
                {/* 3. CRM Pipeline Step */}
-               <motion.div 
-                 initial={{ opacity: 0, x: -10 }} 
-                 whileInView={{ opacity: 1, x: 0 }}
-                 animate={{ 
-                   borderColor: ['#f3f4f6', '#f3f4f6', '#d8b4e2', '#d8b4e2', '#f3f4f6'], 
-                   boxShadow: ['0 4px 20px rgba(0,0,0,0.03)', '0 4px 20px rgba(0,0,0,0.03)', '0 4px 20px rgba(185,136,191,0.2)', '0 4px 20px rgba(185,136,191,0.2)', '0 4px 20px rgba(0,0,0,0.03)'] 
-                 }}
-                 transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", times: [0, 0.3, 0.4, 0.9, 1] }}
+               <motion.div
+                 variants={mockupCardVariants}
                  className="bg-white rounded-2xl p-4 shadow-[0_4px_20px_rgba(0,0,0,0.03)] border border-primary/20 flex flex-col gap-2 relative z-10 ml-8"
                >
                  <div className="flex items-center gap-3 relative z-10 bg-white">
@@ -1056,11 +1083,15 @@ const GoogleAdsPremium = ({ onOpenModal }: { onOpenModal: () => void }) => {
                    {/* Progress tracker */}
                    <div className="flex items-center justify-between relative mb-3 mx-2">
                      <div className="absolute left-0 right-0 top-1/2 -translate-y-1/2 h-[2px] bg-gray-100 -z-10" />
-                     <motion.div 
-                       className="absolute left-0 top-1/2 -translate-y-1/2 h-[2px] bg-primary -z-10" 
-                       initial={{ width: "0%" }}
-                       animate={{ width: ["0%", "0%", "100%", "100%", "0%"] }}
-                       transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", times: [0, 0.3, 0.4, 0.9, 1] }}
+                     <motion.div
+                       variants={{
+                         hidden: { width: "0%" },
+                         visible: {
+                           width: "66.666%",
+                           transition: { duration: 0.55, ease: "easeOut" as const }
+                         }
+                       }}
+                       className="absolute left-0 top-1/2 -translate-y-1/2 h-[2px] bg-primary -z-10"
                      />
                      
                      <div className="w-3 h-3 rounded-full bg-primary ring-2 ring-white" />
@@ -1076,18 +1107,15 @@ const GoogleAdsPremium = ({ onOpenModal }: { onOpenModal: () => void }) => {
                    </div>
                  </div>
                  {/* Connector line down */}
-                 <div className="absolute left-[31px] top-[40px] bottom-[-24px] w-[2px] bg-gradient-to-b from-gray-200 to-transparent z-0" />
+                 <motion.div
+                   variants={mockupConnectorVariants}
+                   className="absolute left-[31px] top-[40px] bottom-[-24px] w-[2px] origin-top bg-gradient-to-b from-gray-200 to-transparent z-0"
+                 />
                </motion.div>
 
                {/* 4. Next Step */}
-               <motion.div 
-                 initial={{ opacity: 0, x: -10 }} 
-                 whileInView={{ opacity: 1, x: 0 }}
-                 animate={{ 
-                   borderColor: ['#f3f4f6', '#f3f4f6', '#fed7aa', '#fed7aa', '#f3f4f6'], 
-                   boxShadow: ['0 4px 20px rgba(0,0,0,0.03)', '0 4px 20px rgba(0,0,0,0.03)', '0 4px 20px rgba(253,186,116,0.2)', '0 4px 20px rgba(253,186,116,0.2)', '0 4px 20px rgba(0,0,0,0.03)'] 
-                 }}
-                 transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", times: [0, 0.45, 0.5, 0.9, 1] }}
+               <motion.div
+                 variants={mockupCardVariants}
                  className="bg-white rounded-2xl p-4 shadow-[0_4px_20px_rgba(0,0,0,0.03)] border border-gray-100 flex flex-col gap-2 relative z-10 ml-12"
                >
                  <div className="flex items-center gap-3 relative z-10 bg-white">
@@ -1101,7 +1129,7 @@ const GoogleAdsPremium = ({ onOpenModal }: { onOpenModal: () => void }) => {
                  </p>
                </motion.div>
 
-             </div>
+             </motion.div>
            </div>
         </motion.div>
 
