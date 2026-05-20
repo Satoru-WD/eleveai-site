@@ -404,14 +404,21 @@
     }
 
     .reveal-grid,
-    .change-grid {
+    .change-grid,
+    .message-grid,
+    .compare-grid {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
       gap: 1rem;
+    }
+
+    .reveal-grid {
+      grid-template-columns: repeat(4, 1fr);
     }
 
     .reveal-card,
     .change-card,
+    .message-card,
+    .compare-card,
     .faq article {
       border: 1px solid var(--border);
       border-radius: 20px;
@@ -491,6 +498,50 @@
       grid-template-columns: repeat(3, 1fr);
     }
 
+    .message-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .message-card {
+      background: rgba(255, 255, 255, 0.032);
+    }
+
+    .message-card strong,
+    .compare-card strong {
+      display: block;
+      color: #fff;
+      font-family: Manrope, Inter, sans-serif;
+      font-size: 1.08rem;
+    }
+
+    .message-card p {
+      margin-top: 0.65rem;
+      font-size: 0.96rem;
+      line-height: 1.62;
+    }
+
+    .compare-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .compare-card {
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.025));
+    }
+
+    .compare-card ul {
+      display: grid;
+      gap: 0.6rem;
+      padding: 0;
+      margin: 1rem 0 0;
+      list-style: none;
+    }
+
+    .compare-card li {
+      color: var(--muted);
+      font-size: 0.98rem;
+      line-height: 1.5;
+    }
+
     .context-link {
       color: var(--primary);
       font-weight: 800;
@@ -535,6 +586,8 @@
 
       .reveal-grid,
       .change-grid,
+      .message-grid,
+      .compare-grid,
       .visible-list {
         grid-template-columns: 1fr;
       }
@@ -662,6 +715,77 @@
           <li>Se fechou ou foi perdido</li>
           <li>Qual canal gerou melhor oportunidade</li>
         </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Mensagem e oferta</span>
+          <h2>Por que sua comunicação pode estar atraindo o cliente errado</h2>
+          <p>
+            Muitas vezes o problema não está na falta de procura, mas na forma como a empresa se apresenta. Uma promessa
+            genérica, uma página confusa ou um anúncio sem filtro podem atrair curiosos, comparadores de preço e contatos
+            sem intenção real.
+          </p>
+        </div>
+        <div class="message-grid">
+          <article class="message-card">
+            <strong>Promessa genérica</strong>
+            <p>Quando tudo parece igual, o contato escolhe pelo menor preço.</p>
+          </article>
+          <article class="message-card">
+            <strong>Oferta pouco clara</strong>
+            <p>Se a pessoa não entende o valor, ela chama apenas para perguntar preço.</p>
+          </article>
+          <article class="message-card">
+            <strong>Canal sem filtro</strong>
+            <p>Nem todo canal traz pessoas prontas para comprar.</p>
+          </article>
+          <article class="message-card">
+            <strong>Página sem direção</strong>
+            <p>Quando a página não orienta o próximo passo, o atendimento começa sem contexto.</p>
+          </article>
+          <article class="message-card">
+            <strong>Anúncio amplo demais</strong>
+            <p>Campanhas muito abertas podem gerar volume, mas pouca intenção.</p>
+          </article>
+          <article class="message-card">
+            <strong>Atendimento sem contexto</strong>
+            <p>Sem saber de onde o contato veio, fica mais difícil conduzir a conversa.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container panel">
+        <div class="section-head">
+          <span class="eyebrow">Comparativo</span>
+          <h2>Contato curioso x cliente com intenção</h2>
+        </div>
+        <div class="compare-grid">
+          <article class="compare-card">
+            <strong>Contato curioso</strong>
+            <ul>
+              <li>pergunta só preço</li>
+              <li>não informa contexto</li>
+              <li>demora para responder</li>
+              <li>compara várias opções</li>
+              <li>não avança para proposta</li>
+            </ul>
+          </article>
+          <article class="compare-card">
+            <strong>Cliente com intenção</strong>
+            <ul>
+              <li>procura solução específica</li>
+              <li>explica necessidade</li>
+              <li>responde ao atendimento</li>
+              <li>aceita próximos passos</li>
+              <li>avança para proposta</li>
+            </ul>
+          </article>
+        </div>
       </div>
     </section>
 

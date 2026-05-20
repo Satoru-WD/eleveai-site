@@ -411,7 +411,8 @@
 
     .reveal-grid,
     .change-grid,
-    .reading-grid {
+    .reading-grid,
+    .classification-grid {
       display: grid;
       gap: 1rem;
     }
@@ -428,9 +429,14 @@
       grid-template-columns: repeat(2, 1fr);
     }
 
+    .classification-grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+
     .reveal-card,
     .change-card,
     .reading-card,
+    .classification-card,
     .faq article {
       border: 1px solid var(--border);
       border-radius: 20px;
@@ -468,11 +474,40 @@
     .reveal-card p,
     .change-card p,
     .reading-card p,
+    .classification-card p,
     .faq p {
       margin-top: 0.7rem;
       font-size: 0.98rem;
       line-height: 1.65;
       color: var(--muted);
+    }
+
+    .classification-card {
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.025));
+    }
+
+    .classification-card h3 {
+      color: #fff;
+      font-size: 1.2rem;
+    }
+
+    .classification-card dl {
+      margin: 1rem 0 0;
+    }
+
+    .classification-card dt {
+      color: var(--primary);
+      font-size: 0.68rem;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .classification-card dd {
+      margin: 0.35rem 0 1rem;
+      color: var(--muted);
+      font-size: 0.96rem;
+      line-height: 1.58;
     }
 
     .visible-list {
@@ -563,6 +598,7 @@
       .reveal-grid,
       .change-grid,
       .reading-grid,
+      .classification-grid,
       .visible-list {
         grid-template-columns: 1fr;
       }
@@ -627,6 +663,9 @@
           <p>
             Um lead qualificado não é apenas alguém que apareceu no WhatsApp. É um contato que demonstra interesse real,
             chega com contexto e avança no processo comercial.
+          </p>
+          <p>
+            Essa página é sobre identificar e priorizar contatos, não sobre atrair mais volume.
           </p>
           <a class="cta" href="/">Quero identificar contatos com mais intenção</a>
         </div>
@@ -709,6 +748,57 @@
           <li>Avança para negociação</li>
           <li>Demonstra urgência ou clareza no problema</li>
         </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Classificação prática</span>
+          <h2>Como classificar um contato na prática</h2>
+          <p>
+            A qualificação fica mais útil quando o atendimento sabe o que observar e qual ação tomar em cada tipo de
+            contato.
+          </p>
+        </div>
+        <div class="classification-grid">
+          <article class="classification-card">
+            <h3>Frio</h3>
+            <dl>
+              <dt>Sinais</dt>
+              <dd>Pergunta preço, não responde, não informa necessidade.</dd>
+              <dt>O que fazer</dt>
+              <dd>Nutrir, retomar depois ou não priorizar.</dd>
+            </dl>
+          </article>
+          <article class="classification-card">
+            <h3>Morno</h3>
+            <dl>
+              <dt>Sinais</dt>
+              <dd>Demonstra interesse, mas ainda sem urgência clara.</dd>
+              <dt>O que fazer</dt>
+              <dd>Entender necessidade e acompanhar.</dd>
+            </dl>
+          </article>
+          <article class="classification-card">
+            <h3>Qualificado</h3>
+            <dl>
+              <dt>Sinais</dt>
+              <dd>Informa necessidade, responde, pede orientação ou orçamento.</dd>
+              <dt>O que fazer</dt>
+              <dd>Priorizar atendimento e conduzir para proposta.</dd>
+            </dl>
+          </article>
+          <article class="classification-card">
+            <h3>Oportunidade real</h3>
+            <dl>
+              <dt>Sinais</dt>
+              <dd>Pede proposta, prazo, condições ou próximos passos.</dd>
+              <dt>O que fazer</dt>
+              <dd>Acompanhar de perto até fechamento ou perda.</dd>
+            </dl>
+          </article>
+        </div>
       </div>
     </section>
 
