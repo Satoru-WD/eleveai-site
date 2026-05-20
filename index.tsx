@@ -1475,7 +1475,7 @@ const SEOGuides = () => {
               </h2>
             </div>
 
-            <div className="grid gap-4 md:grid-cols-2">
+            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
               {[
                 {
                   title: "Como ter mais clientes entendendo o que realmente gera vendas",
@@ -1486,6 +1486,11 @@ const SEOGuides = () => {
                   title: "Como atrair o cliente certo e parar de depender de contatos sem intenção",
                   text: "Entenda como diferenciar contatos curiosos de pessoas com maior chance de avançar para proposta ou venda.",
                   href: "/atrair-cliente-certo/"
+                },
+                {
+                  title: "Lead qualificado: como identificar contatos com real intenção",
+                  text: "Entenda por que nem todo contato tem a mesma chance de virar proposta ou venda.",
+                  href: "/lead-qualificado/"
                 }
               ].map((guide) => (
                 <a
