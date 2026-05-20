@@ -4,7 +4,6 @@
         xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
 
-  <!-- Página principal -->
   <url>
     <loc>https://www.eleveai.com.br/</loc>
     <lastmod>2026-05-20</lastmod>
@@ -12,7 +11,6 @@
     <priority>1.0</priority>
   </url>
 
-  <!-- Página SEO: como ter mais clientes -->
   <url>
     <loc>https://www.eleveai.com.br/como-ter-mais-clientes/</loc>
     <lastmod>2026-05-20</lastmod>
@@ -20,7 +18,6 @@
     <priority>0.9</priority>
   </url>
 
-  <!-- Página SEO: atrair cliente certo -->
   <url>
     <loc>https://www.eleveai.com.br/atrair-cliente-certo/</loc>
     <lastmod>2026-05-20</lastmod>
@@ -28,47 +25,9 @@
     <priority>0.9</priority>
   </url>
 
-  <!-- Página SEO: lead qualificado -->
   <url>
     <loc>https://www.eleveai.com.br/lead-qualificado/</loc>
     <lastmod>2026-05-20</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-
-  <!-- Seções principais como âncoras -->
-  <url>
-    <loc>https://eleveai.com.br/#servicos</loc>
-    <lastmod>2026-03-24</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <url>
-    <loc>https://eleveai.com.br/#metodologia</loc>
-    <lastmod>2026-03-24</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <url>
-    <loc>https://eleveai.com.br/#resultados</loc>
-    <lastmod>2026-03-24</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-
-  <url>
-    <loc>https://eleveai.com.br/#contato</loc>
-    <lastmod>2026-03-24</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-
-  <!-- Página de diagnóstico / conversão -->
-  <url>
-    <loc>https://eleveai.com.br/porque-seu-site-nao-gera-clientes</loc>
-    <lastmod>2026-03-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>

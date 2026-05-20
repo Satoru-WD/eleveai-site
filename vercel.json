@@ -1,4 +1,16 @@
 {
+  "redirects": [
+    {
+      "source": "/porque-seu-site-nao-gera-clientes",
+      "destination": "/como-ter-mais-clientes/",
+      "permanent": true
+    },
+    {
+      "source": "/porque-seu-site-nao-gera-clientes/",
+      "destination": "/como-ter-mais-clientes/",
+      "permanent": true
+    }
+  ],
   "rewrites": [
     {
       "source": "/crm",
