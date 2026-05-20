@@ -63,16 +63,16 @@ const getStatusColor = (status: string) => {
 
 // --- Components ---
 const MetricCard = ({ title, value, icon: Icon, colorClass, sub }: any) => (
-  <div className="bg-[#141417] md:bg-[#111113] border border-white/[0.08] md:border-white/[0.06] rounded-xl p-3 md:p-4 flex flex-col justify-between hover:border-white/10 transition-all duration-200 group">
+  <div className="bg-[#17181F] border border-white/[0.08] rounded-2xl p-3.5 md:p-4 flex flex-col justify-between hover:border-white/[0.14] hover:bg-[#1B1D26] transition-all duration-200 group shadow-[0_14px_35px_rgba(0,0,0,0.18)]">
     <div className="flex items-center justify-between mb-2 md:mb-3">
-      <p className="text-[10px] md:text-[11px] font-bold text-zinc-400 md:text-zinc-500 uppercase tracking-widest">{title}</p>
-      <div className={`p-1.5 rounded-lg ${colorClass} opacity-70 group-hover:opacity-100 transition-opacity`}>
+      <p className="text-[10px] md:text-[11px] font-bold text-zinc-400 uppercase tracking-widest">{title}</p>
+      <div className={`p-1.5 rounded-lg ${colorClass} opacity-85 group-hover:opacity-100 transition-opacity`}>
         <Icon className="w-3.5 h-3.5" />
       </div>
     </div>
     <div>
       <span className="text-xl md:text-2xl font-bold text-white tracking-tight">{value}</span>
-      {sub && <p className="text-[10px] text-zinc-600 mt-1">{sub}</p>}
+      {sub && <p className="text-[10px] text-zinc-500 mt-1">{sub}</p>}
     </div>
   </div>
 );
@@ -378,10 +378,32 @@ const statusLabels: Record<string, string> = {
   fechado: 'Fechado', perdido: 'Perdido',
 };
 
+const getIntentLabel = (temp: string) => {
+  switch (temp) {
+    case 'Quente': return 'Intenção alta';
+    case 'Morno': return 'Intenção média';
+    case 'Frio': return 'Intenção baixa';
+    case 'Fechado': return 'Venda registrada';
+    default: return 'Intenção indefinida';
+  }
+};
+
+const getNextStepLabel = (status: string) => {
+  switch (status || 'novo') {
+    case 'novo': return 'Responder / qualificar';
+    case 'conversou': return 'Gerar proposta';
+    case 'proposta': return 'Acompanhar proposta';
+    case 'fechado': return 'Registrado como venda';
+    case 'perdido': return 'Revisar perda';
+    default: return 'Definir próximo passo';
+  }
+};
+
 const MobileLeadCard = ({ lead, onOpen, onQuickAction }: any) => {
   const temp = getTemperature(lead);
+  const nextStep = getNextStepLabel(lead.status || 'novo');
   return (
-    <div className="bg-[#141417] border border-white/[0.08] rounded-xl p-3.5 space-y-3 shadow-sm">
+    <div className="bg-[#17181F] border border-white/[0.08] rounded-2xl p-3.5 space-y-3 shadow-[0_14px_35px_rgba(0,0,0,0.18)]">
       {/* Top row */}
       <div className="flex items-start justify-between gap-3">
         <div className="flex-1 min-w-0">
@@ -389,22 +411,33 @@ const MobileLeadCard = ({ lead, onOpen, onQuickAction }: any) => {
           <p className="text-[11px] text-zinc-400 font-mono mt-1">{lead.lead_phone || '—'}</p>
         </div>
         <div className="flex flex-col items-end gap-1 shrink-0">
-          <span className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-widest border ${getStatusColor(lead.status || 'novo')}`}>
+          <span className={`px-2 py-1 rounded-lg text-[10px] font-bold uppercase tracking-widest border ${getStatusColor(lead.status || 'novo')}`}>
             {statusLabels[lead.status || 'novo'] || 'Novo'}
           </span>
-          <span className={`px-2 py-0.5 rounded text-[9px] font-semibold border ${getTempColor(temp)}`}>{temp}</span>
+          <span className={`px-2 py-0.5 rounded-md text-[9px] font-semibold border opacity-75 ${getTempColor(temp)}`}>{temp}</span>
         </div>
       </div>
 
       {/* Info row */}
-      <div className="grid grid-cols-2 gap-2 text-[11px] bg-[#0A0A0A] rounded-lg p-2.5 border border-white/[0.06]">
+      <div className="grid grid-cols-2 gap-2 text-[11px] bg-[#1E2028] rounded-xl p-2.5 border border-white/[0.07]">
         <div>
-          <p className="text-zinc-500 font-bold uppercase tracking-widest mb-0.5" style={{ fontSize: '9px' }}>Serviço</p>
+          <p className="text-zinc-500 font-bold uppercase tracking-widest mb-0.5" style={{ fontSize: '9px' }}>Interesse declarado</p>
           <p className="text-zinc-300 truncate">{lead.service_interest || '—'}</p>
         </div>
         <div>
-          <p className="text-zinc-500 font-bold uppercase tracking-widest mb-0.5" style={{ fontSize: '9px' }}>Origem / Campanha</p>
+          <p className="text-zinc-500 font-bold uppercase tracking-widest mb-0.5" style={{ fontSize: '9px' }}>Origem do contato</p>
           <p className="text-zinc-300 truncate capitalize">{lead.utm_source || 'Direto'} <span className="text-zinc-500">• {lead.utm_campaign || '—'}</span></p>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-2 gap-2 text-[11px]">
+        <div className="bg-[#1E2028] rounded-xl p-2.5 border border-white/[0.07]">
+          <p className="text-zinc-500 font-bold uppercase tracking-widest mb-1" style={{ fontSize: '9px' }}>Intenção</p>
+          <span className={`inline-flex px-2 py-1 rounded-lg text-[10px] font-semibold border ${getTempColor(temp)}`}>{getIntentLabel(temp)}</span>
+        </div>
+        <div className="bg-[#1E2028] rounded-xl p-2.5 border border-white/[0.07]">
+          <p className="text-zinc-500 font-bold uppercase tracking-widest mb-1" style={{ fontSize: '9px' }}>Próximo passo</p>
+          <p className="text-zinc-200 font-semibold truncate">{nextStep}</p>
         </div>
       </div>
 
@@ -683,6 +716,37 @@ export const AcquisitionDashboard = () => {
     return { total, novos, conversou, propostas, fechados, valorPotencial, valorFechado };
   }, [filteredLeads]);
 
+  const quickRead = useMemo(() => {
+    const strongOrigins = filteredLeads
+      .filter(l => l.status === 'proposta' || l.status === 'fechado')
+      .reduce((acc: Record<string, number>, lead) => {
+        const origin = lead.utm_source || 'Direto';
+        acc[origin] = (acc[origin] || 0) + 1;
+        return acc;
+      }, {});
+
+    const topOrigin = Object.entries(strongOrigins).sort((a, b) => b[1] - a[1])[0];
+    const hotPending = filteredLeads.filter(lead => {
+      const temp = getTemperature(lead);
+      return temp === 'Quente' && !['proposta', 'fechado'].includes(lead.status || 'novo');
+    }).length;
+
+    let nextFocus = 'Manter acompanhamento';
+    if (metrics.novos >= Math.max(metrics.conversou, metrics.propostas) && metrics.novos > 0) {
+      nextFocus = 'Avançar novos contatos';
+    } else if (metrics.conversou >= metrics.propostas && metrics.conversou > 0) {
+      nextFocus = 'Gerar próximas propostas';
+    } else if (metrics.propostas > 0) {
+      nextFocus = 'Acompanhar propostas abertas';
+    }
+
+    return {
+      topOrigin: topOrigin ? `${topOrigin[0]} (${topOrigin[1]})` : 'Dados em formação',
+      hotPending: hotPending > 0 ? `${hotPending} contato${hotPending !== 1 ? 's' : ''}` : 'Nenhuma urgência crítica',
+      nextFocus
+    };
+  }, [filteredLeads, metrics]);
+
   if (authLoading) {
     return (
       <div className="min-h-screen bg-[#0A0A0A] flex flex-col items-center justify-center text-white">
@@ -694,15 +758,15 @@ export const AcquisitionDashboard = () => {
 
   if (!session) {
     return (
-      <div className="min-h-screen bg-[#0A0A0A] flex flex-col items-center justify-center text-white p-6 relative">
-        <div className="bg-[#121214] border border-white/5 rounded-2xl p-8 md:p-10 max-w-sm w-full shadow-2xl relative z-10">
+      <div className="min-h-screen bg-[#0F1014] flex flex-col items-center justify-center text-white p-6 relative">
+        <div className="bg-[#17181F] border border-white/[0.08] rounded-2xl p-8 md:p-10 max-w-sm w-full shadow-2xl relative z-10">
           <div className="flex justify-center mb-6">
-            <div className="w-12 h-12 bg-white/5 border border-white/10 text-zinc-400 rounded-xl flex items-center justify-center">
+            <div className="w-12 h-12 bg-[#A855F7]/10 border border-[#A855F7]/20 text-[#C084FC] rounded-xl flex items-center justify-center">
               <Lock size={20} />
             </div>
           </div>
-          <h2 className="text-xl font-bold text-center mb-2">Central de Aquisição</h2>
-          <p className="text-zinc-500 text-center mb-8 text-xs">Acesso interno seguro</p>
+          <h2 className="text-xl font-bold text-center mb-2">Painel de Rastreamento</h2>
+          <p className="text-zinc-500 text-center mb-8 text-xs">Contato → proposta → venda</p>
           
           <form onSubmit={handleLogin} className="space-y-4">
             {loginError && (
@@ -717,7 +781,7 @@ export const AcquisitionDashboard = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="w-full bg-[#0A0A0A] border border-white/10 rounded-lg px-4 py-2.5 text-sm text-white focus:outline-none focus:border-zinc-400 transition-all"
+                className="w-full bg-[#1E2028] border border-white/10 rounded-lg px-4 py-2.5 text-sm text-white focus:outline-none focus:border-[#C084FC] transition-all"
                 placeholder="admin@empresa.com"
               />
             </div>
@@ -728,7 +792,7 @@ export const AcquisitionDashboard = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                className="w-full bg-[#0A0A0A] border border-white/10 rounded-lg px-4 py-2.5 text-sm text-white focus:outline-none focus:border-zinc-400 transition-all"
+                className="w-full bg-[#1E2028] border border-white/10 rounded-lg px-4 py-2.5 text-sm text-white focus:outline-none focus:border-[#C084FC] transition-all"
                 placeholder="••••••••"
               />
             </div>
@@ -765,7 +829,7 @@ export const AcquisitionDashboard = () => {
   }
 
   return (
-    <div className="min-h-screen bg-[#0A0A0A] text-zinc-300 font-sans">
+    <div className="min-h-screen bg-[#0F1014] text-zinc-300 font-sans">
       {/* Toast Feedback */}
       <AnimatePresence>
         {feedback && (
@@ -781,33 +845,32 @@ export const AcquisitionDashboard = () => {
       </AnimatePresence>
 
       {/* Header */}
-      <header className="sticky top-0 z-40 bg-[#0A0A0A]/90 backdrop-blur-xl border-b border-white/[0.06]">
+      <header className="sticky top-0 z-40 bg-[#111217]/88 backdrop-blur-xl border-b border-white/[0.08]">
         {/* Desktop header row */}
         <div className="max-w-[1400px] mx-auto px-4 md:px-6 h-14 md:h-16 flex items-center justify-between">
           <div className="flex items-center gap-2 md:gap-3">
-            <div className="w-7 h-7 md:w-8 md:h-8 rounded-lg bg-white/[0.04] border border-white/[0.06] flex items-center justify-center shrink-0">
-              <Activity size={12} className="text-zinc-400 md:hidden" />
-              <Activity size={14} className="text-zinc-400 hidden md:block" />
+            <div className="w-7 h-7 md:w-8 md:h-8 rounded-lg bg-[#A855F7]/10 border border-[#A855F7]/20 flex items-center justify-center shrink-0">
+              <Activity size={12} className="text-[#C084FC] md:hidden" />
+              <Activity size={14} className="text-[#C084FC] hidden md:block" />
             </div>
             <div className="min-w-0">
               <h1 className="text-sm md:text-[15px] font-bold text-white leading-tight truncate">
-                <span className="md:hidden">Central de Aquisição</span>
-                <span className="hidden md:inline">Central de Inteligência</span>
+                <span>Painel de Rastreamento</span>
               </h1>
-              <p className="text-[9px] text-zinc-600 hidden md:block uppercase tracking-wider font-bold mt-0.5">Aquisição</p>
+              <p className="text-[9px] text-zinc-500 hidden md:block uppercase tracking-wider font-bold mt-0.5">Contato → proposta → venda</p>
             </div>
           </div>
           <div className="flex items-center gap-3">
-            <div className="hidden md:flex bg-[#111113] border border-white/[0.06] rounded-lg p-1">
+            <div className="hidden md:flex bg-[#17181F] border border-white/[0.08] rounded-lg p-1">
               {['hoje', '7d', '30d', 'todos'].map(period => (
                 <button key={period} onClick={() => setDateFilter(period)}
-                  className={`px-3 py-1.5 text-[11px] font-bold uppercase tracking-wider rounded-md transition-all ${dateFilter === period ? 'bg-white/10 text-white shadow-sm' : 'text-zinc-500 hover:text-zinc-300'}`}>
+                  className={`px-3 py-1.5 text-[11px] font-bold uppercase tracking-wider rounded-md transition-all ${dateFilter === period ? 'bg-white/12 text-white shadow-sm' : 'text-zinc-500 hover:text-zinc-300'}`}>
                   {period === 'hoje' ? 'Hoje' : period === '7d' ? '7 dias' : period === '30d' ? '30 dias' : 'Todos'}
                 </button>
               ))}
             </div>
             <div className="w-px h-6 bg-white/[0.06] mx-1 hidden md:block" />
-            <button onClick={handleLogout} className="text-[10px] md:text-xs font-bold uppercase tracking-wider text-zinc-500 hover:text-white transition-colors flex items-center gap-1.5 bg-white/[0.04] md:bg-transparent px-3 py-1.5 md:p-0 rounded-lg">
+            <button onClick={handleLogout} className="text-[10px] md:text-xs font-bold uppercase tracking-wider text-zinc-500 hover:text-white transition-colors flex items-center gap-1.5 bg-white/[0.05] md:bg-white/[0.035] px-3 py-1.5 rounded-lg border border-white/[0.06]">
               <LogOut size={12} className="md:w-3.5 md:h-3.5" /> <span className="hidden md:inline">Sair</span>
             </button>
           </div>
@@ -817,7 +880,7 @@ export const AcquisitionDashboard = () => {
           {[['hoje', 'Hoje'], ['7d', '7 dias'], ['30d', '30 dias'], ['todos', 'Todos']].map(([v, l]) => (
             <button key={v} onClick={() => setDateFilter(v)}
               className={`shrink-0 px-3 h-7 rounded-md text-[10px] font-bold uppercase tracking-wider border transition-all ${
-                dateFilter === v ? 'bg-white text-black border-white' : 'bg-[#111113] text-zinc-400 border-white/[0.06]'
+                dateFilter === v ? 'bg-white text-black border-white' : 'bg-[#17181F] text-zinc-400 border-white/[0.08]'
               }`}>{l}
             </button>
           ))}
@@ -826,8 +889,8 @@ export const AcquisitionDashboard = () => {
 
       <main className="max-w-[1400px] mx-auto px-4 md:px-6 py-3 md:py-8">
          <div className="mb-4 md:mb-8 hidden md:block">
-           <h2 className="text-lg md:text-xl font-bold text-white mb-1">Visão Geral</h2>
-           <p className="text-xs md:text-sm text-zinc-500">Leads e oportunidades comerciais em tempo real.</p>
+           <h2 className="text-lg md:text-2xl font-bold text-white mb-1">Leitura Comercial</h2>
+           <p className="text-xs md:text-sm text-zinc-400">Origem, intenção, propostas e vendas em uma única visão.</p>
          </div>
 
          {/* Cards Superiores */}
@@ -835,36 +898,89 @@ export const AcquisitionDashboard = () => {
            {/* Linha 1 - Funil Operacional */}
            <div className="grid grid-cols-2 md:grid-cols-5 gap-2 md:gap-3">
              <MetricCard title="Total" value={metrics.total} icon={Activity} colorClass="bg-white/10 text-white" />
-             <MetricCard title="Novos" value={metrics.novos} icon={Users} colorClass="bg-blue-500/10 text-blue-400" />
-             <MetricCard title="Conversou" value={metrics.conversou} icon={MessageCircle} colorClass="bg-yellow-500/10 text-yellow-400" />
-             <MetricCard title="Propostas" value={metrics.propostas} icon={FileText} colorClass="bg-white/10 text-zinc-300" />
-             <MetricCard title="Fechados" value={metrics.fechados} icon={CheckCircle} colorClass="bg-white/10 text-zinc-300" />
+             <MetricCard title="Novos" value={metrics.novos} icon={Users} colorClass="bg-[#3B82F6]/10 text-[#3B82F6]" />
+             <MetricCard title="Conversou" value={metrics.conversou} icon={MessageCircle} colorClass="bg-[#F59E0B]/10 text-[#F59E0B]" />
+             <MetricCard title="Propostas" value={metrics.propostas} icon={FileText} colorClass="bg-[#A855F7]/10 text-[#C084FC]" />
+             <MetricCard title="Fechados" value={metrics.fechados} icon={CheckCircle} colorClass="bg-[#10B981]/10 text-[#10B981]" />
            </div>
            
            {/* Linha 2 - Financeiro */}
            <div className="pt-0.5 md:pt-0">
              <div className="md:hidden mb-1 px-1"><p className="text-[9px] font-bold uppercase tracking-widest text-zinc-500">Resumo Financeiro</p></div>
              <div className="grid grid-cols-2 md:grid-cols-2 gap-1.5 md:gap-3">
-               <MetricCard title="Em proposta" value={`R$ ${metrics.valorPotencial.toLocaleString('pt-BR')}`} icon={DollarSign} colorClass="bg-purple-500/10 text-purple-400" />
-               <MetricCard title="Fechado" value={`R$ ${metrics.valorFechado.toLocaleString('pt-BR')}`} icon={DollarSign} colorClass="bg-emerald-500/10 text-emerald-400" />
+               <MetricCard title="Em proposta" value={`R$ ${metrics.valorPotencial.toLocaleString('pt-BR')}`} icon={DollarSign} colorClass="bg-[#A855F7]/10 text-[#C084FC]" />
+               <MetricCard title="Valor fechado" value={`R$ ${metrics.valorFechado.toLocaleString('pt-BR')}`} icon={DollarSign} colorClass="bg-[#10B981]/10 text-[#10B981]" />
              </div>
            </div>
          </div>
 
+         {/* Leitura rápida */}
+         <section className="mb-4 md:mb-6 space-y-3">
+           <div className="flex items-center justify-between px-1">
+             <div>
+               <h3 className="text-sm md:text-base font-bold text-white">Leitura rápida</h3>
+               <p className="text-[11px] md:text-xs text-zinc-500">Sinais derivados do rastreamento atual.</p>
+             </div>
+           </div>
+
+           <div className="grid grid-cols-1 md:grid-cols-3 gap-2.5 md:gap-3">
+             <div className="rounded-2xl border border-white/[0.08] bg-[#17181F] p-4 shadow-[0_14px_35px_rgba(0,0,0,0.16)]">
+               <p className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 mb-2">Canal em destaque</p>
+               <p className="text-base font-bold text-white">{quickRead.topOrigin}</p>
+               <p className="mt-1 text-[11px] text-zinc-500">Origem com mais propostas ou vendas.</p>
+             </div>
+             <div className="rounded-2xl border border-white/[0.08] bg-[#17181F] p-4 shadow-[0_14px_35px_rgba(0,0,0,0.16)]">
+               <p className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 mb-2">Atenção agora</p>
+               <p className="text-base font-bold text-white">{quickRead.hotPending}</p>
+               <p className="mt-1 text-[11px] text-zinc-500">Intenção alta ainda fora de proposta.</p>
+             </div>
+             <div className="rounded-2xl border border-white/[0.08] bg-[#17181F] p-4 shadow-[0_14px_35px_rgba(0,0,0,0.16)]">
+               <p className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 mb-2">Próximo foco</p>
+               <p className="text-base font-bold text-white">{quickRead.nextFocus}</p>
+               <p className="mt-1 text-[11px] text-zinc-500">Sugestão baseada no avanço comercial.</p>
+             </div>
+           </div>
+
+           <div className="rounded-2xl border border-white/[0.08] bg-[#17181F] p-4 md:p-5 shadow-[0_14px_35px_rgba(0,0,0,0.16)]">
+             <div className="flex items-center justify-between gap-4 mb-4">
+               <div>
+                 <h3 className="text-sm md:text-base font-bold text-white">Caminho rastreado</h3>
+                 <p className="text-[11px] md:text-xs text-zinc-500">Novo → Conversou → Proposta → Fechado</p>
+               </div>
+             </div>
+             <div className="grid grid-cols-4 gap-2 md:gap-3">
+               {[
+                 { label: 'Novo', value: metrics.novos, dot: 'bg-[#3B82F6]' },
+                 { label: 'Conversou', value: metrics.conversou, dot: 'bg-[#F59E0B]' },
+                 { label: 'Proposta', value: metrics.propostas, dot: 'bg-[#A855F7]' },
+                 { label: 'Fechado', value: metrics.fechados, dot: 'bg-[#10B981]' }
+               ].map(step => (
+                 <div key={step.label} className="relative rounded-xl border border-white/[0.07] bg-[#1E2028] p-3">
+                   <div className="flex items-center gap-2 mb-2">
+                     <span className={`h-2 w-2 rounded-full ${step.dot}`} />
+                     <span className="text-[10px] md:text-[11px] font-bold uppercase tracking-widest text-zinc-400 truncate">{step.label}</span>
+                   </div>
+                   <p className="text-lg md:text-xl font-extrabold text-white">{step.value}</p>
+                 </div>
+               ))}
+             </div>
+           </div>
+         </section>
+
          {/* Filtros Rápidos */}
          {/* Desktop filter bar */}
-         <div className="hidden md:flex flex-row items-center gap-3 mb-5 bg-[#111113] border border-white/[0.06] rounded-xl overflow-hidden">
+         <div className="hidden md:flex flex-row items-center gap-3 mb-5 bg-[#17181F] border border-white/[0.08] rounded-2xl overflow-hidden shadow-[0_16px_40px_rgba(0,0,0,0.16)]">
            <div className="relative flex-1">
              <Search size={13} className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-600" />
              <input type="text" placeholder="Buscar por nome, telefone, serviço, campanha, observação..."
                value={searchFilter} onChange={(e) => setSearchFilter(e.target.value)}
-               className="w-full bg-transparent border-none pl-10 pr-4 py-3 text-sm text-white placeholder-zinc-700 focus:outline-none" />
+               className="w-full bg-transparent border-none pl-10 pr-4 py-3.5 text-sm text-white placeholder-zinc-500 focus:outline-none" />
            </div>
            <div className="w-px h-6 bg-white/[0.06] shrink-0" />
            <div className="flex items-center gap-2 pr-3">
              <div className="relative">
                <select value={statusFilter} onChange={e => setStatusFilter(e.target.value)}
-                 className={`h-8 bg-white/[0.04] hover:bg-white/[0.07] border border-white/[0.06] rounded-lg pl-3 pr-7 text-xs font-medium outline-none appearance-none cursor-pointer transition-colors ${
+                 className={`h-9 bg-[#1E2028] hover:bg-white/[0.07] border border-white/[0.08] rounded-lg pl-3 pr-7 text-xs font-medium outline-none appearance-none cursor-pointer transition-colors ${
                    statusFilter !== 'todos' ? 'text-white border-white/20' : 'text-zinc-500'
                  }`}>
                  <option value="todos" className="bg-[#111113]">Status</option>
@@ -878,7 +994,7 @@ export const AcquisitionDashboard = () => {
              </div>
              <div className="relative">
                <select value={typeFilter} onChange={e => setTypeFilter(e.target.value)}
-                 className={`h-8 bg-white/[0.04] hover:bg-white/[0.07] border border-white/[0.06] rounded-lg pl-3 pr-7 text-xs font-medium outline-none appearance-none cursor-pointer transition-colors ${
+                 className={`h-9 bg-[#1E2028] hover:bg-white/[0.07] border border-white/[0.08] rounded-lg pl-3 pr-7 text-xs font-medium outline-none appearance-none cursor-pointer transition-colors ${
                    typeFilter !== 'todos' ? 'text-white border-white/20' : 'text-zinc-500'
                  }`}>
                  <option value="todos" className="bg-[#111113]">Tipo</option>
@@ -891,7 +1007,7 @@ export const AcquisitionDashboard = () => {
              </div>
              <div className="relative">
                <select value={originFilter} onChange={e => setOriginFilter(e.target.value)}
-                 className={`h-8 bg-white/[0.04] hover:bg-white/[0.07] border border-white/[0.06] rounded-lg pl-3 pr-7 text-xs font-medium outline-none appearance-none cursor-pointer transition-colors ${
+                 className={`h-9 bg-[#1E2028] hover:bg-white/[0.07] border border-white/[0.08] rounded-lg pl-3 pr-7 text-xs font-medium outline-none appearance-none cursor-pointer transition-colors ${
                    originFilter !== 'todos' ? 'text-white border-white/20' : 'text-zinc-500'
                  }`}>
                  <option value="todos" className="bg-[#111113]">Origem</option>
@@ -927,14 +1043,16 @@ export const AcquisitionDashboard = () => {
          </div>
 
          {/* Desktop Inbox Lista */}
-         <div className="hidden md:block bg-[#111113] border border-white/[0.06] rounded-xl overflow-hidden">
+         <div className="hidden md:block bg-[#17181F] border border-white/[0.08] rounded-2xl overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.2)]">
            {/* Inbox header */}
-           <div className="grid grid-cols-[1fr_1fr_1fr_auto_auto] gap-4 px-6 py-3 border-b border-white/[0.06] bg-[#0D0D0F]">
-             <p className="text-[10px] font-bold uppercase tracking-widest text-zinc-600">Contato</p>
-             <p className="text-[10px] font-bold uppercase tracking-widest text-zinc-600">Serviço</p>
-             <p className="text-[10px] font-bold uppercase tracking-widest text-zinc-600">Origem</p>
-             <p className="text-[10px] font-bold uppercase tracking-widest text-zinc-600 w-[140px]">Status</p>
-             <p className="text-[10px] font-bold uppercase tracking-widest text-zinc-600 text-right w-[110px]">Entrada</p>
+           <div className="grid grid-cols-[1fr_1fr_1fr_130px_140px_160px_100px] gap-4 px-6 py-3.5 border-b border-white/[0.07] bg-[#1E2028]">
+             <p className="text-[10px] font-bold uppercase tracking-widest text-zinc-400">Contato</p>
+             <p className="text-[10px] font-bold uppercase tracking-widest text-zinc-400">Interesse declarado</p>
+             <p className="text-[10px] font-bold uppercase tracking-widest text-zinc-400">Origem do contato</p>
+             <p className="text-[10px] font-bold uppercase tracking-widest text-zinc-400">Intenção</p>
+             <p className="text-[10px] font-bold uppercase tracking-widest text-zinc-400 w-[140px]">Avanço</p>
+             <p className="text-[10px] font-bold uppercase tracking-widest text-zinc-400">Próximo passo</p>
+             <p className="text-[10px] font-bold uppercase tracking-widest text-zinc-400 text-right w-[110px]">Entrada</p>
            </div>
            <div className="divide-y divide-white/[0.04] max-h-[680px] overflow-y-auto scrollbar-hide">
              {filteredLeads.length === 0 ? (
@@ -947,7 +1065,7 @@ export const AcquisitionDashboard = () => {
                const temp = getTemperature(lead);
                return (
                  <div key={lead.id} onClick={() => { setSelectedLead(lead); setIsDrawerOpen(true); }}
-                   className="group grid grid-cols-[1fr_1fr_1fr_auto_auto] gap-4 items-center px-6 py-4 hover:bg-white/[0.02] cursor-pointer transition-colors border-l-2 border-transparent hover:border-l-white/10">
+                   className="group grid grid-cols-[1fr_1fr_1fr_130px_140px_160px_100px] gap-4 items-center px-6 py-5 hover:bg-white/[0.035] cursor-pointer transition-colors border-l-2 border-transparent hover:border-l-[#A855F7]/50">
                    {/* Contato */}
                    <div className="min-w-0">
                      <p className="text-sm font-semibold text-white truncate">{lead.lead_name || 'Sem nome'}</p>
@@ -956,12 +1074,18 @@ export const AcquisitionDashboard = () => {
                    {/* Serviço */}
                    <div className="min-w-0">
                      <p className="text-sm text-zinc-300 truncate">{lead.service_interest || '—'}</p>
-                     <p className="text-[10px] text-zinc-600 mt-0.5">{getLeadTypeTranslation(lead.lead_type)}</p>
+                     <p className="text-[10px] text-zinc-500 mt-0.5">{getLeadTypeTranslation(lead.lead_type)}</p>
                    </div>
                    {/* Origem */}
                    <div className="min-w-0">
                      <p className="text-sm text-zinc-300 capitalize truncate">{lead.utm_source || 'Direto'}</p>
                      <p className="text-[10px] text-zinc-600 truncate mt-0.5">{lead.utm_campaign || '—'}</p>
+                   </div>
+                   {/* Intenção */}
+                   <div className="w-[130px]">
+                     <span className={`inline-flex px-2.5 py-1 rounded-lg text-[10px] font-semibold border ${getTempColor(temp)}`}>
+                       {getIntentLabel(temp)}
+                     </span>
                    </div>
                    {/* Status */}
                    <div className="flex flex-col gap-1.5 w-[140px]">
@@ -974,10 +1098,14 @@ export const AcquisitionDashboard = () => {
                        <option value="fechado" className="bg-[#1A1A1E]">FECHADO</option>
                        <option value="perdido" className="bg-[#1A1A1E]">PERDIDO</option>
                      </select>
-                     <span className={`px-2 py-0.5 rounded text-[10px] font-semibold border ${getTempColor(temp)}`}>{temp}</span>
+                     <span className={`px-2 py-0.5 rounded-md text-[10px] font-semibold border opacity-70 ${getTempColor(temp)}`}>{temp}</span>
+                   </div>
+                   {/* Próximo passo */}
+                   <div className="w-[160px]">
+                     <p className="text-xs font-semibold text-zinc-200 leading-snug">{getNextStepLabel(lead.status || 'novo')}</p>
                    </div>
                    {/* Entrada + Ações */}
-                   <div className="flex flex-col items-end gap-1.5 w-[110px]">
+                   <div className="flex flex-col items-end gap-1.5 w-[100px]">
                      <span className="text-xs text-zinc-500">{formatBrazilDate(lead.created_at || lead.click_time)}</span>
                      <div className="flex items-center gap-0.5 opacity-0 group-hover:opacity-100 transition-all duration-150">
                        <button onClick={(e) => handleQuickAction(e, lead.id, 'whatsapp', lead)}
@@ -1003,8 +1131,8 @@ export const AcquisitionDashboard = () => {
            </div>
            {/* Footer count */}
            {filteredLeads.length > 0 && (
-             <div className="px-6 py-3 border-t border-white/[0.04] bg-[#0D0D0F]">
-               <p className="text-[10px] text-zinc-700">{filteredLeads.length} oportunidade{filteredLeads.length !== 1 ? 's' : ''}</p>
+             <div className="px-6 py-3 border-t border-white/[0.06] bg-[#1E2028]">
+               <p className="text-[10px] text-zinc-500">{filteredLeads.length} oportunidade{filteredLeads.length !== 1 ? 's' : ''}</p>
              </div>
            )}
          </div>
@@ -1041,4 +1169,3 @@ export const AcquisitionDashboard = () => {
     </div>
   );
 };
-
