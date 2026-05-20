@@ -5,7 +5,7 @@ import {
   Users, TrendingUp, Target, Search, Clock, 
   MessageCircle, FileText, CheckCircle, AlertCircle, 
   Loader2, Lock, LogOut, X, Archive, Edit2, 
-  DollarSign, ChevronDown, ChevronUp, Activity
+  DollarSign, ChevronDown, ChevronUp, Activity, Filter, Phone, SlidersHorizontal
 } from 'lucide-react';
 import { AnimatePresence, motion } from 'framer-motion';
 
@@ -13,9 +13,22 @@ import { AnimatePresence, motion } from 'framer-motion';
 const getLeadTypeTranslation = (type: string) => {
   switch (type) {
     case 'whatsapp_quick': return 'WhatsApp Rápido';
+    case 'whatsapp_quick_form': return 'Formulário WhatsApp';
     case 'diagnostic_form': return 'Diagnóstico';
+    case 'diagnostic_modal_completed': return 'Diagnóstico Concluído';
     case 'qualified_lead': return 'Lead Qualificado';
+    case 'time_45_plus_whatsapp_click': return 'Interesse Identificado';
     default: return type || 'Não identificado';
+  }
+};
+
+const getQualificationRuleLabel = (rule: string) => {
+  switch (rule) {
+    case 'whatsapp_quick': return 'Clique direto no WhatsApp';
+    case 'time_45_plus_whatsapp_click': return '45s+ no site + clique WhatsApp';
+    case 'diagnostic_form': return 'Formulário de diagnóstico';
+    case 'diagnostic_modal_completed': return 'Diagnóstico modal concluído';
+    default: return rule || '—';
   }
 };
 
@@ -49,17 +62,17 @@ const getStatusColor = (status: string) => {
 };
 
 // --- Components ---
-const MetricCard = ({ title, value, icon: Icon, colorClass, highlight }: any) => (
-  <div className="bg-[#121214] border border-white/5 rounded-2xl p-5 flex flex-col justify-between hover:border-white/10 transition-colors">
+const MetricCard = ({ title, value, icon: Icon, colorClass, sub }: any) => (
+  <div className="bg-[#111113] border border-white/[0.06] rounded-xl p-4 flex flex-col justify-between hover:border-white/10 transition-all duration-200 group">
     <div className="flex items-center justify-between mb-3">
-      <h3 className="text-sm font-medium text-zinc-400">{title}</h3>
-      <div className={`p-2 rounded-lg ${colorClass}`}>
-        <Icon size={16} />
+      <p className="text-[11px] font-semibold text-zinc-500 uppercase tracking-widest">{title}</p>
+      <div className={`p-1.5 rounded-lg ${colorClass} opacity-70 group-hover:opacity-100 transition-opacity`}>
+        <Icon size={14} />
       </div>
     </div>
-    <div className="flex items-baseline gap-2">
-      <span className="text-2xl font-bold text-white">{value}</span>
-      {highlight && <span className="text-xs font-medium text-emerald-400">{highlight}</span>}
+    <div>
+      <span className="text-2xl font-bold text-white tracking-tight">{value}</span>
+      {sub && <p className="text-[10px] text-zinc-600 mt-1">{sub}</p>}
     </div>
   </div>
 );
@@ -109,142 +122,235 @@ const LeadDrawer = ({ lead, isOpen, onClose, updateField }: any) => {
             className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[100]" 
             onClick={onClose} 
           />
+          {/* Desktop: slide from right */}
           <motion.div
             initial={{ x: '100%' }} animate={{ x: 0 }} exit={{ x: '100%' }}
             transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-            className="fixed top-0 right-0 h-full w-full max-w-md bg-[#121214] border-l border-white/5 shadow-2xl z-[110] flex flex-col overflow-hidden"
+            className="hidden md:flex fixed top-0 right-0 h-full w-full max-w-[420px] bg-[#111113] border-l border-white/[0.06] shadow-2xl z-[110] flex-col overflow-hidden"
           >
             {/* Header */}
-            <div className="flex items-center justify-between p-6 border-b border-white/5 bg-[#0A0A0A]">
+            <div className="flex items-center justify-between px-6 py-4 border-b border-white/[0.06] bg-[#0D0D0F] shrink-0">
               <div>
-                <h2 className="text-lg font-bold text-white">Detalhes da Oportunidade</h2>
-                <p className="text-[10px] text-zinc-500 uppercase tracking-widest mt-1">
-                  ID: {lead.id} • {formatBrazilDate(lead.created_at || lead.click_time)}
-                </p>
+                <h2 className="text-sm font-bold text-white">Oportunidade</h2>
+                <p className="text-[10px] text-zinc-600 mt-0.5">#{lead.id} · {formatBrazilDate(lead.created_at || lead.click_time)}</p>
               </div>
-              <button onClick={onClose} className="p-2 text-zinc-400 hover:text-white bg-white/5 hover:bg-white/10 rounded-full transition-colors"><X size={16} /></button>
+              <button onClick={onClose} className="p-1.5 text-zinc-500 hover:text-white bg-white/5 hover:bg-white/10 rounded-lg transition-colors"><X size={14} /></button>
             </div>
 
-            {/* Content */}
-            <div className="flex-1 overflow-y-auto p-6 space-y-8 scrollbar-hide">
-               {/* Contato Info */}
-               <section>
-                 <div className="flex items-center justify-between mb-4">
-                   <h3 className="text-xs font-bold uppercase tracking-wider text-zinc-500">Contato</h3>
-                   <span className={`px-2 py-0.5 rounded text-[10px] border font-bold ${getTempColor(temp)}`}>{temp}</span>
-                 </div>
-                 <div className="bg-[#0A0A0A] rounded-xl p-4 border border-white/5 space-y-4">
-                   <div>
-                     <p className="text-xs text-zinc-500 mb-1">Nome</p>
-                     <p className="text-sm text-white font-medium">{lead.lead_name || 'Sem nome'}</p>
-                   </div>
-                   <div>
-                     <p className="text-xs text-zinc-500 mb-1">Telefone</p>
-                     <div className="flex items-center justify-between">
-                       <p className="text-sm text-white">{lead.lead_phone || 'Sem telefone'}</p>
-                       {lead.lead_phone && (
-                         <a href={`https://wa.me/55${lead.lead_phone.replace(/\D/g, '')}`} target="_blank" rel="noreferrer" className="text-[#25D366] text-xs font-bold hover:underline flex items-center gap-1">
-                           <MessageCircle size={12} /> Abrir WA
-                         </a>
-                       )}
-                     </div>
-                   </div>
-                   <div>
-                     <p className="text-xs text-zinc-500 mb-1">Email</p>
-                     <p className="text-sm text-white">{lead.lead_email || '-'}</p>
-                   </div>
-                 </div>
-               </section>
+            <div className="flex-1 overflow-y-auto scrollbar-hide">
+              {/* Hero */}
+              <div className="px-6 py-5 border-b border-white/[0.06] bg-[#0D0D0F]">
+                <div className="flex items-start justify-between mb-4">
+                  <div className="flex-1 min-w-0 pr-3">
+                    <p className="text-lg font-bold text-white truncate">{lead.lead_name || 'Sem nome'}</p>
+                    <p className="text-sm text-zinc-500 font-mono mt-0.5">{lead.lead_phone || '—'}</p>
+                    {lead.service_interest && <p className="text-xs text-zinc-600 mt-1.5">{lead.service_interest}</p>}
+                  </div>
+                  <div className="flex flex-col items-end gap-1.5 shrink-0">
+                    <span className={`px-2.5 py-1 rounded-lg text-[10px] border font-bold uppercase tracking-widest ${getStatusColor(lead.status || 'novo')}`}>{lead.status || 'novo'}</span>
+                    <span className={`px-2.5 py-0.5 rounded text-[10px] border font-semibold ${getTempColor(temp)}`}>{temp}</span>
+                  </div>
+                </div>
+                <div className="flex gap-2">
+                  {lead.lead_phone && (
+                    <a href={`https://wa.me/55${lead.lead_phone.replace(/\D/g, '')}`} target="_blank" rel="noreferrer"
+                      className="flex-1 flex items-center justify-center gap-1.5 h-8 bg-[#25D366]/10 border border-[#25D366]/20 text-[#25D366] rounded-lg text-xs font-bold hover:bg-[#25D366]/15 transition-colors">
+                      <MessageCircle size={13} /> WhatsApp
+                    </a>
+                  )}
+                  {lead.valor && (
+                    <div className="flex-1 bg-emerald-500/5 border border-emerald-500/15 rounded-lg px-3 h-8 flex items-center justify-center">
+                      <span className="text-emerald-400 font-bold text-sm">R$ {Number(lead.valor).toLocaleString('pt-BR')}</span>
+                    </div>
+                  )}
+                </div>
+              </div>
 
-               {/* Oportunidade */}
-               <section>
-                 <h3 className="text-xs font-bold uppercase tracking-wider text-zinc-500 mb-4">Gestão da Oportunidade</h3>
-                 <div className="bg-[#0A0A0A] rounded-xl p-4 border border-white/5 space-y-5">
-                   <div>
-                     <p className="text-xs text-zinc-500 mb-1">Serviço de interesse</p>
-                     <p className="text-sm text-white">{lead.service_interest || '-'}</p>
-                   </div>
-                   <div>
-                     <p className="text-xs text-zinc-500 mb-2">Status do Lead</p>
-                     <div className="relative">
-                       <select 
-                         value={lead.status || 'novo'}
-                         onChange={(e) => updateField(lead.id, 'status', e.target.value)}
-                         className={`w-full px-4 py-2.5 rounded-lg text-xs font-bold border uppercase tracking-wider outline-none cursor-pointer appearance-none transition-all ${getStatusColor(lead.status || 'novo')}`}
-                       >
+              <div className="px-6 py-5 space-y-6">
+                {/* Gestão Comercial */}
+                <section>
+                  <p className="text-[10px] font-bold uppercase tracking-widest text-zinc-600 mb-3">Gestão Comercial</p>
+                  <div className="bg-[#0D0D0F] rounded-xl border border-white/[0.06] divide-y divide-white/[0.04]">
+                    <div className="p-4">
+                      <p className="text-[10px] text-zinc-600 mb-2">Status</p>
+                      <div className="relative">
+                        <select value={lead.status || 'novo'} onChange={(e) => updateField(lead.id, 'status', e.target.value)}
+                          className={`w-full px-3 py-2.5 rounded-lg text-xs font-bold border uppercase tracking-wider outline-none cursor-pointer appearance-none transition-all ${getStatusColor(lead.status || 'novo')}`}>
                           <option value="novo" className="bg-[#1A1A1E]">NOVO</option>
                           <option value="conversou" className="bg-[#1A1A1E]">CONVERSOU</option>
                           <option value="proposta" className="bg-[#1A1A1E]">PROPOSTA</option>
                           <option value="fechado" className="bg-[#1A1A1E]">FECHADO</option>
                           <option value="perdido" className="bg-[#1A1A1E]">PERDIDO</option>
-                       </select>
-                       <ChevronDown size={14} className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none opacity-50" />
-                     </div>
-                   </div>
-                   <div>
-                     <p className="text-xs text-zinc-500 mb-1 flex items-center justify-between">
-                       Valor Potencial
-                       <button onClick={() => {
-                         const newValStr = window.prompt('Novo valor potencial (apenas números):', lead.valor || '');
-                         if (newValStr !== null) {
-                           const newVal = parseFloat(newValStr.replace(/[^0-9,.-]/g, '').replace(',', '.'));
-                           if (!isNaN(newVal)) updateField(lead.id, 'valor', newVal);
-                         }
-                       }} className="text-zinc-400 hover:text-white transition-colors bg-white/5 p-1.5 rounded"><Edit2 size={12} /></button>
-                     </p>
-                     <p className="text-xl font-bold text-emerald-400">{lead.valor ? `R$ ${lead.valor.toLocaleString('pt-BR')}` : '-'}</p>
-                   </div>
-                   <div>
-                     <p className="text-xs text-zinc-500 mb-1 flex items-center justify-between">
-                       Observação Comercial
-                       <button onClick={() => {
-                         const newObs = window.prompt('Nova observação:', lead.observacao || '');
-                         if (newObs !== null) updateField(lead.id, 'observacao', newObs);
-                       }} className="text-zinc-400 hover:text-white transition-colors bg-white/5 p-1.5 rounded"><Edit2 size={12} /></button>
-                     </p>
-                     <div className="bg-white/5 p-3 rounded-lg border border-white/5 min-h-[80px]">
-                       <p className="text-sm text-zinc-300 whitespace-pre-wrap">{lead.observacao || '-'}</p>
-                     </div>
-                   </div>
-                 </div>
-               </section>
+                        </select>
+                        <ChevronDown size={12} className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none opacity-40" />
+                      </div>
+                    </div>
+                    <div className="p-4">
+                      <div className="flex items-center justify-between mb-1">
+                        <p className="text-[10px] text-zinc-600">Valor Potencial</p>
+                        <button onClick={() => {
+                          const v = window.prompt('Novo valor potencial (apenas números):', lead.valor || '');
+                          if (v !== null) { const n = parseFloat(v.replace(/[^0-9,.-]/g, '').replace(',', '.')); if (!isNaN(n)) updateField(lead.id, 'valor', n); }
+                        }} className="text-zinc-600 hover:text-white bg-white/5 p-1 rounded-md transition-colors"><Edit2 size={11} /></button>
+                      </div>
+                      <p className="text-xl font-bold text-emerald-400 mt-1">
+                        {lead.valor ? `R$ ${Number(lead.valor).toLocaleString('pt-BR')}` : <span className="text-zinc-700 text-sm font-medium">Não definido</span>}
+                      </p>
+                    </div>
+                    <div className="p-4">
+                      <div className="flex items-center justify-between mb-2">
+                        <p className="text-[10px] text-zinc-600">Observação Comercial</p>
+                        <button onClick={() => {
+                          const o = window.prompt('Nova observação:', lead.observacao || '');
+                          if (o !== null) updateField(lead.id, 'observacao', o);
+                        }} className="text-zinc-600 hover:text-white bg-white/5 p-1 rounded-md transition-colors"><Edit2 size={11} /></button>
+                      </div>
+                      <p className="text-sm text-zinc-400 whitespace-pre-wrap min-h-[36px]">
+                        {lead.observacao || <span className="text-zinc-700 text-xs">Nenhuma observação</span>}
+                      </p>
+                    </div>
+                  </div>
+                </section>
 
-               {/* Aquisição */}
-               <section>
-                 <h3 className="text-xs font-bold uppercase tracking-wider text-zinc-500 mb-4">Origem e Performance</h3>
-                 <div className="bg-[#0A0A0A] rounded-xl p-4 border border-white/5 space-y-4">
-                   <div className="grid grid-cols-2 gap-4">
-                     <div>
-                       <p className="text-xs text-zinc-500 mb-1">Origem</p>
-                       <p className="text-sm text-white capitalize">{lead.utm_source || 'Direto'}</p>
-                     </div>
-                     <div>
-                       <p className="text-xs text-zinc-500 mb-1">Campanha</p>
-                       <p className="text-sm text-white">{lead.utm_campaign || '-'}</p>
-                     </div>
-                   </div>
-                   <div className="grid grid-cols-2 gap-4">
-                     <div>
-                       <p className="text-xs text-zinc-500 mb-1">Criativo</p>
-                       <p className="text-sm text-zinc-300 truncate" title={lead.utm_content}>{lead.utm_content || '-'}</p>
-                     </div>
-                     <div>
-                       <p className="text-xs text-zinc-500 mb-1">Tipo de Lead</p>
-                       <p className="text-xs font-medium text-[#B988BF]">{getLeadTypeTranslation(lead.lead_type)}</p>
-                     </div>
-                   </div>
-                   <div>
-                     <p className="text-xs text-zinc-500 mb-1">Página de Entrada</p>
-                     <p className="text-xs text-zinc-400 truncate break-all">{lead.landing_page || '-'}</p>
-                   </div>
-                   <div>
-                     <p className="text-xs text-zinc-500 mb-1">Regra de Qualificação</p>
-                     <p className="text-xs text-zinc-400">{lead.qualification_rule || '-'}</p>
-                   </div>
-                 </div>
-               </section>
+                {/* Contato */}
+                <section>
+                  <p className="text-[10px] font-bold uppercase tracking-widest text-zinc-600 mb-3">Contato</p>
+                  <div className="bg-[#0D0D0F] rounded-xl border border-white/[0.06] p-4 space-y-2.5">
+                    <div className="flex justify-between items-center"><span className="text-[11px] text-zinc-600">Nome</span><span className="text-xs text-zinc-200 font-medium">{lead.lead_name || '—'}</span></div>
+                    <div className="flex justify-between items-center"><span className="text-[11px] text-zinc-600">Telefone</span><span className="text-xs text-zinc-200 font-mono">{lead.lead_phone || '—'}</span></div>
+                    {lead.lead_email && <div className="flex justify-between items-center"><span className="text-[11px] text-zinc-600">Email</span><span className="text-xs text-zinc-400 truncate max-w-[220px]">{lead.lead_email}</span></div>}
+                  </div>
+                </section>
 
-               <AdvancedTracking lead={lead} />
+                {/* Origem */}
+                <section>
+                  <p className="text-[10px] font-bold uppercase tracking-widest text-zinc-600 mb-3">Origem e Campanha</p>
+                  <div className="bg-[#0D0D0F] rounded-xl border border-white/[0.06] p-4 space-y-2.5">
+                    <div className="grid grid-cols-2 gap-x-4 gap-y-2.5">
+                      <div><p className="text-[10px] text-zinc-600 mb-0.5">Origem</p><p className="text-xs text-zinc-300 capitalize">{lead.utm_source || 'Direto'}</p></div>
+                      <div><p className="text-[10px] text-zinc-600 mb-0.5">Tipo de Lead</p><p className="text-xs text-[#B988BF] font-medium">{getLeadTypeTranslation(lead.lead_type)}</p></div>
+                      <div className="col-span-2"><p className="text-[10px] text-zinc-600 mb-0.5">Campanha</p><p className="text-xs text-zinc-300 truncate">{lead.utm_campaign || '—'}</p></div>
+                      {lead.utm_content && <div className="col-span-2"><p className="text-[10px] text-zinc-600 mb-0.5">Criativo</p><p className="text-xs text-zinc-400 truncate">{lead.utm_content}</p></div>}
+                      {lead.landing_page && <div className="col-span-2"><p className="text-[10px] text-zinc-600 mb-0.5">Página de Entrada</p><p className="text-[10px] text-zinc-500 truncate break-all">{lead.landing_page}</p></div>}
+                      {lead.qualification_rule && <div className="col-span-2"><p className="text-[10px] text-zinc-600 mb-0.5">Regra de Qualificação</p><p className="text-xs text-zinc-400">{getQualificationRuleLabel(lead.qualification_rule)}</p></div>}
+                    </div>
+                  </div>
+                </section>
+
+                {/* Conversão — preparação Google/Meta */}
+                {(lead.conversion_value != null || lead.closed_at || lead.conversion_sent_google != null || lead.conversion_sent_meta != null || lead.conversion_error) && (
+                  <section>
+                    <p className="text-[10px] font-bold uppercase tracking-widest text-zinc-600 mb-3">Conversão</p>
+                    <div className="bg-[#0D0D0F] rounded-xl border border-white/[0.06] p-4 space-y-2.5">
+                      {lead.conversion_value != null && <div className="flex justify-between items-center"><span className="text-[11px] text-zinc-600">Valor de Conversão</span><span className="text-xs text-emerald-400 font-bold">R$ {Number(lead.conversion_value).toLocaleString('pt-BR')}</span></div>}
+                      {lead.closed_at && <div className="flex justify-between items-center"><span className="text-[11px] text-zinc-600">Fechado em</span><span className="text-xs text-zinc-300">{formatBrazilDate(lead.closed_at)}</span></div>}
+                      {lead.conversion_sent_google != null && (
+                        <div className="flex justify-between items-center">
+                          <span className="text-[11px] text-zinc-600">Google Ads</span>
+                          <span className={`text-[10px] font-bold px-2 py-0.5 rounded border ${lead.conversion_sent_google ? 'text-emerald-400 border-emerald-500/20 bg-emerald-500/5' : 'text-zinc-600 border-zinc-700/30 bg-zinc-800/20'}`}>{lead.conversion_sent_google ? 'Enviado' : 'Pendente'}</span>
+                        </div>
+                      )}
+                      {lead.conversion_sent_meta != null && (
+                        <div className="flex justify-between items-center">
+                          <span className="text-[11px] text-zinc-600">Meta Ads</span>
+                          <span className={`text-[10px] font-bold px-2 py-0.5 rounded border ${lead.conversion_sent_meta ? 'text-emerald-400 border-emerald-500/20 bg-emerald-500/5' : 'text-zinc-600 border-zinc-700/30 bg-zinc-800/20'}`}>{lead.conversion_sent_meta ? 'Enviado' : 'Pendente'}</span>
+                        </div>
+                      )}
+                      {lead.conversion_error && <div><p className="text-[10px] text-red-500 mb-0.5">Erro de Conversão</p><p className="text-[10px] text-red-400/80 break-all">{lead.conversion_error}</p></div>}
+                    </div>
+                  </section>
+                )}
+
+                <AdvancedTracking lead={lead} />
+              </div>
+            </div>
+          </motion.div>
+          {/* Mobile: slide from bottom */}
+          <motion.div
+            initial={{ y: '100%' }} animate={{ y: 0 }} exit={{ y: '100%' }}
+            transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+            className="md:hidden fixed bottom-0 left-0 right-0 h-[90vh] bg-[#121214] border-t border-white/10 rounded-t-3xl shadow-2xl z-[110] flex flex-col overflow-hidden"
+          >
+            <div className="flex justify-center pt-3 pb-1 shrink-0">
+              <div className="w-10 h-1 bg-white/20 rounded-full" />
+            </div>
+            {/* Header */}
+            <div className="flex items-center justify-between px-5 py-3 border-b border-white/5 bg-[#0A0A0A] shrink-0">
+              <div>
+                <h2 className="text-base font-bold text-white">Detalhes da Oportunidade</h2>
+                <p className="text-[10px] text-zinc-500 uppercase tracking-widest mt-0.5">ID: {lead.id}</p>
+              </div>
+              <button onClick={onClose} className="p-2 text-zinc-400 hover:text-white bg-white/5 rounded-full"><X size={16} /></button>
+            </div>
+            {/* Content */}
+            <div className="flex-1 overflow-y-auto px-5 py-5 space-y-6 scrollbar-hide">
+              <section>
+                <div className="flex items-center justify-between mb-3">
+                  <h3 className="text-[10px] font-bold uppercase tracking-widest text-zinc-500">Contato</h3>
+                  <span className={`px-2 py-0.5 rounded text-[10px] border font-bold ${getTempColor(temp)}`}>{temp}</span>
+                </div>
+                <div className="bg-[#0A0A0A] rounded-xl p-4 border border-white/5 space-y-3">
+                  <div><p className="text-[10px] text-zinc-500 mb-0.5">Nome</p><p className="text-sm text-white font-semibold">{lead.lead_name || 'Sem nome'}</p></div>
+                  <div>
+                    <p className="text-[10px] text-zinc-500 mb-0.5">Telefone</p>
+                    <div className="flex items-center justify-between">
+                      <p className="text-sm text-white font-mono">{lead.lead_phone || '—'}</p>
+                      {lead.lead_phone && (
+                        <a href={`https://wa.me/55${lead.lead_phone.replace(/\D/g,'')}`} target="_blank" rel="noreferrer"
+                          className="flex items-center gap-1 px-3 h-8 bg-[#25D366]/10 border border-[#25D366]/20 text-[#25D366] rounded-lg text-xs font-bold">
+                          <MessageCircle size={12} /> WA
+                        </a>
+                      )}
+                    </div>
+                  </div>
+                  {lead.lead_email && <div><p className="text-[10px] text-zinc-500 mb-0.5">Email</p><p className="text-sm text-white">{lead.lead_email}</p></div>}
+                </div>
+              </section>
+              <section>
+                <h3 className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 mb-3">Gestão</h3>
+                <div className="bg-[#0A0A0A] rounded-xl p-4 border border-white/5 space-y-4">
+                  {lead.service_interest && <div><p className="text-[10px] text-zinc-500 mb-0.5">Serviço</p><p className="text-sm text-white">{lead.service_interest}</p></div>}
+                  <div>
+                    <p className="text-[10px] text-zinc-500 mb-1.5">Status</p>
+                    <div className="relative">
+                      <select value={lead.status || 'novo'} onChange={(e) => updateField(lead.id, 'status', e.target.value)}
+                        className={`w-full px-4 py-3 rounded-xl text-xs font-bold border uppercase tracking-wider outline-none cursor-pointer appearance-none transition-all ${getStatusColor(lead.status || 'novo')}`}>
+                        <option value="novo" className="bg-[#1A1A1E]">NOVO</option>
+                        <option value="conversou" className="bg-[#1A1A1E]">CONVERSOU</option>
+                        <option value="proposta" className="bg-[#1A1A1E]">PROPOSTA</option>
+                        <option value="fechado" className="bg-[#1A1A1E]">FECHADO</option>
+                        <option value="perdido" className="bg-[#1A1A1E]">PERDIDO</option>
+                      </select>
+                      <ChevronDown size={14} className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none opacity-50" />
+                    </div>
+                  </div>
+                  <div>
+                    <div className="flex items-center justify-between mb-1">
+                      <p className="text-[10px] text-zinc-500">Valor Potencial</p>
+                      <button onClick={() => { const v = window.prompt('Novo valor:', lead.valor || ''); if(v !== null){ const n = parseFloat(v.replace(/[^0-9,.-]/g,'').replace(',','.')); if(!isNaN(n)) updateField(lead.id,'valor',n); }}} className="p-1.5 bg-white/5 text-zinc-400 rounded-lg"><Edit2 size={11} /></button>
+                    </div>
+                    <p className="text-xl font-bold text-emerald-400">{lead.valor ? `R$ ${Number(lead.valor).toLocaleString('pt-BR')}` : '—'}</p>
+                  </div>
+                  <div>
+                    <div className="flex items-center justify-between mb-1">
+                      <p className="text-[10px] text-zinc-500">Observação</p>
+                      <button onClick={() => { const o = window.prompt('Observação:', lead.observacao||''); if(o!==null) updateField(lead.id,'observacao',o); }} className="p-1.5 bg-white/5 text-zinc-400 rounded-lg"><Edit2 size={11} /></button>
+                    </div>
+                    <div className="bg-white/5 p-3 rounded-lg border border-white/5 min-h-[60px]"><p className="text-sm text-zinc-300 whitespace-pre-wrap">{lead.observacao || '—'}</p></div>
+                  </div>
+                </div>
+              </section>
+              <section>
+                <h3 className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 mb-3">Origem</h3>
+                <div className="bg-[#0A0A0A] rounded-xl p-4 border border-white/5">
+                  <div className="grid grid-cols-2 gap-3">
+                    <div><p className="text-[10px] text-zinc-500 mb-0.5">Fonte</p><p className="text-sm text-white capitalize">{lead.utm_source || 'Direto'}</p></div>
+                    <div><p className="text-[10px] text-zinc-500 mb-0.5">Tipo</p><p className="text-xs text-[#B988BF] font-medium">{getLeadTypeTranslation(lead.lead_type)}</p></div>
+                    <div className="col-span-2"><p className="text-[10px] text-zinc-500 mb-0.5">Campanha</p><p className="text-xs text-zinc-300 truncate">{lead.utm_campaign || '—'}</p></div>
+                  </div>
+                </div>
+              </section>
+              <AdvancedTracking lead={lead} />
             </div>
           </motion.div>
         </>
@@ -253,7 +359,162 @@ const LeadDrawer = ({ lead, isOpen, onClose, updateField }: any) => {
   );
 };
 
+const statusLabels: Record<string, string> = {
+  novo: 'Novo', conversou: 'Conversou', proposta: 'Proposta',
+  fechado: 'Fechado', perdido: 'Perdido',
+};
+
+const MobileLeadCard = ({ lead, onOpen, onQuickAction }: any) => {
+  const temp = getTemperature(lead);
+  return (
+    <div className="bg-[#121214] border border-white/5 rounded-2xl p-4 space-y-3">
+      {/* Top row */}
+      <div className="flex items-start justify-between gap-2">
+        <div className="flex-1 min-w-0">
+          <p className="text-base font-bold text-white truncate">{lead.lead_name || 'Sem nome'}</p>
+          <p className="text-sm text-zinc-400 font-mono mt-0.5">{lead.lead_phone || '—'}</p>
+        </div>
+        <div className="flex flex-col items-end gap-1.5 shrink-0">
+          <span className={`px-2 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider border ${getStatusColor(lead.status || 'novo')}`}>
+            {statusLabels[lead.status || 'novo'] || 'Novo'}
+          </span>
+          <span className={`px-2 py-0.5 rounded text-[10px] font-bold border ${getTempColor(temp)}`}>{temp}</span>
+        </div>
+      </div>
+
+      {/* Info row */}
+      <div className="grid grid-cols-2 gap-x-4 gap-y-1.5 text-xs">
+        <div>
+          <p className="text-zinc-600 text-[10px] uppercase tracking-wider mb-0.5">Serviço</p>
+          <p className="text-zinc-300 truncate">{lead.service_interest || '—'}</p>
+        </div>
+        <div>
+          <p className="text-zinc-600 text-[10px] uppercase tracking-wider mb-0.5">Origem</p>
+          <p className="text-zinc-300 capitalize truncate">{lead.utm_source || 'Direto'}</p>
+        </div>
+        <div>
+          <p className="text-zinc-600 text-[10px] uppercase tracking-wider mb-0.5">Campanha</p>
+          <p className="text-zinc-400 truncate">{lead.utm_campaign || '—'}</p>
+        </div>
+        <div>
+          <p className="text-zinc-600 text-[10px] uppercase tracking-wider mb-0.5">Entrada</p>
+          <p className="text-zinc-400">{formatBrazilDate(lead.created_at || lead.click_time)}</p>
+        </div>
+      </div>
+
+      {lead.valor && (
+        <div className="bg-emerald-500/5 border border-emerald-500/15 rounded-lg px-3 py-2">
+          <p className="text-[10px] text-emerald-600 uppercase tracking-wider mb-0.5">Valor potencial</p>
+          <p className="text-emerald-400 font-bold text-sm">R$ {Number(lead.valor).toLocaleString('pt-BR')}</p>
+        </div>
+      )}
+
+      {/* Action buttons */}
+      <div className="flex items-center gap-2 pt-1 border-t border-white/5">
+        <button
+          onClick={(e) => onQuickAction(e, lead.id, 'whatsapp', lead)}
+          className="flex-1 flex items-center justify-center gap-1.5 h-11 bg-[#25D366]/10 border border-[#25D366]/20 text-[#25D366] rounded-xl text-xs font-bold"
+        >
+          <MessageCircle size={14} /> WhatsApp
+        </button>
+        <button
+          onClick={(e) => onQuickAction(e, lead.id, 'obs', lead)}
+          className="flex items-center justify-center h-11 w-11 bg-white/5 border border-white/5 text-zinc-400 rounded-xl"
+          title="Observação"
+        >
+          <Edit2 size={14} />
+        </button>
+        <button
+          onClick={(e) => onQuickAction(e, lead.id, 'valor', lead)}
+          className="flex items-center justify-center h-11 w-11 bg-white/5 border border-white/5 text-zinc-400 rounded-xl"
+          title="Valor"
+        >
+          <DollarSign size={14} />
+        </button>
+        <button
+          onClick={() => onOpen(lead)}
+          className="flex items-center justify-center h-11 w-11 bg-white/5 border border-white/5 text-zinc-400 rounded-xl"
+          title="Detalhes"
+        >
+          <ChevronDown size={14} />
+        </button>
+      </div>
+    </div>
+  );
+};
+
+const MobileFilterSheet = ({ open, onClose, statusFilter, setStatusFilter, typeFilter, setTypeFilter, originFilter, setOriginFilter, uniqueOrigins, onReset }: any) => (
+  <AnimatePresence>
+    {open && (
+      <>
+        <motion.div
+          initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+          className="fixed inset-0 bg-black/70 backdrop-blur-sm z-[90]"
+          onClick={onClose}
+        />
+        <motion.div
+          initial={{ y: '100%' }} animate={{ y: 0 }} exit={{ y: '100%' }}
+          transition={{ type: 'spring', damping: 28, stiffness: 220 }}
+          className="fixed bottom-0 left-0 right-0 bg-[#121214] border-t border-white/10 rounded-t-3xl z-[100] pb-safe"
+        >
+          <div className="flex justify-center pt-3 pb-1">
+            <div className="w-10 h-1 bg-white/20 rounded-full" />
+          </div>
+          <div className="px-5 py-4 space-y-5">
+            <div className="flex items-center justify-between">
+              <h3 className="text-sm font-bold text-white">Filtros</h3>
+              <button onClick={onClose} className="p-2 text-zinc-500 hover:text-white bg-white/5 rounded-full"><X size={14} /></button>
+            </div>
+
+            <div>
+              <p className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 mb-2">Status</p>
+              <div className="flex flex-wrap gap-2">
+                {['todos', 'novo', 'conversou', 'proposta', 'fechado', 'perdido'].map(s => (
+                  <button key={s} onClick={() => setStatusFilter(s)}
+                    className={`px-3 h-9 rounded-lg text-xs font-bold border capitalize transition-all ${statusFilter === s ? 'bg-white/15 border-white/20 text-white' : 'bg-white/5 border-white/5 text-zinc-400'}`}>
+                    {s === 'todos' ? 'Todos' : statusLabels[s] || s}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div>
+              <p className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 mb-2">Tipo</p>
+              <div className="flex flex-wrap gap-2">
+                {[['todos', 'Todos'], ['whatsapp_quick', 'WhatsApp'], ['diagnostic_form', 'Diagnóstico'], ['qualified_lead', 'Qualificado']].map(([v, l]) => (
+                  <button key={v} onClick={() => setTypeFilter(v)}
+                    className={`px-3 h-9 rounded-lg text-xs font-bold border transition-all ${typeFilter === v ? 'bg-white/15 border-white/20 text-white' : 'bg-white/5 border-white/5 text-zinc-400'}`}>
+                    {l}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div>
+              <p className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 mb-2">Origem</p>
+              <div className="flex flex-wrap gap-2">
+                {(['todos', ...uniqueOrigins] as string[]).map(org => (
+                  <button key={org} onClick={() => setOriginFilter(org)}
+                    className={`px-3 h-9 rounded-lg text-xs font-bold border capitalize transition-all ${originFilter === org ? 'bg-white/15 border-white/20 text-white' : 'bg-white/5 border-white/5 text-zinc-400'}`}>
+                    {org === 'todos' ? 'Todas' : org}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div className="flex gap-3 pt-1 pb-4">
+              <button onClick={onReset} className="flex-1 h-12 border border-white/10 rounded-xl text-sm text-zinc-400 font-bold">Limpar</button>
+              <button onClick={onClose} className="flex-1 h-12 bg-white rounded-xl text-sm text-black font-bold">Aplicar</button>
+            </div>
+          </div>
+        </motion.div>
+      </>
+    )}
+  </AnimatePresence>
+);
+
 // --- Main Page Component ---
+
 export const AcquisitionDashboard = () => {
   const [session, setSession] = useState<any>(null);
   const [authLoading, setAuthLoading] = useState(true);
@@ -276,6 +537,7 @@ export const AcquisitionDashboard = () => {
   const [statusFilter, setStatusFilter] = useState('todos');
   const [typeFilter, setTypeFilter] = useState('todos');
   const [originFilter, setOriginFilter] = useState('todos');
+  const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
@@ -523,182 +785,247 @@ export const AcquisitionDashboard = () => {
       </AnimatePresence>
 
       {/* Header */}
-      <header className="sticky top-0 z-40 bg-[#0A0A0A]/80 backdrop-blur-xl border-b border-white/5">
+      <header className="sticky top-0 z-40 bg-[#0A0A0A]/90 backdrop-blur-xl border-b border-white/5">
+        {/* Desktop header row */}
         <div className="max-w-[1400px] mx-auto px-6 h-16 flex items-center justify-between">
-           <div className="flex items-center gap-3">
-             <div className="w-8 h-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center">
-               <Activity size={14} className="text-zinc-400" />
-             </div>
-             <div>
-               <h1 className="text-sm font-bold text-white leading-tight">Central de Inteligência de Aquisição</h1>
-             </div>
-           </div>
-           
-           <div className="flex items-center gap-4">
-             <div className="hidden md:flex bg-[#121214] border border-white/5 rounded-lg p-1">
-               {['hoje', '7d', '30d', 'todos'].map(period => (
-                 <button
-                   key={period}
-                   onClick={() => setDateFilter(period)}
-                   className={`px-3 py-1.5 text-[11px] font-bold uppercase tracking-wider rounded-md transition-all ${dateFilter === period ? 'bg-white/10 text-white shadow-sm' : 'text-zinc-500 hover:text-zinc-300'}`}
-                 >
-                   {period === 'hoje' ? 'Hoje' : period === '7d' ? '7 dias' : period === '30d' ? '30 dias' : 'Todos'}
-                 </button>
-               ))}
-             </div>
-             
-             <div className="w-px h-6 bg-white/5 mx-2 hidden md:block" />
-             
-             <button onClick={handleLogout} className="text-xs font-bold uppercase tracking-wider text-zinc-500 hover:text-white transition-colors flex items-center gap-2">
-               <LogOut size={14} /> Sair
-             </button>
-           </div>
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center shrink-0">
+              <Activity size={14} className="text-zinc-400" />
+            </div>
+            <div className="min-w-0">
+              <h1 className="text-sm font-bold text-white leading-tight truncate">Central de Inteligência de Aquisição</h1>
+              <p className="text-[10px] text-zinc-600 md:hidden">Leads e oportunidades</p>
+            </div>
+          </div>
+          <div className="flex items-center gap-3">
+            <div className="hidden md:flex bg-[#121214] border border-white/5 rounded-lg p-1">
+              {['hoje', '7d', '30d', 'todos'].map(period => (
+                <button key={period} onClick={() => setDateFilter(period)}
+                  className={`px-3 py-1.5 text-[11px] font-bold uppercase tracking-wider rounded-md transition-all ${dateFilter === period ? 'bg-white/10 text-white shadow-sm' : 'text-zinc-500 hover:text-zinc-300'}`}>
+                  {period === 'hoje' ? 'Hoje' : period === '7d' ? '7 dias' : period === '30d' ? '30 dias' : 'Todos'}
+                </button>
+              ))}
+            </div>
+            <div className="w-px h-6 bg-white/5 mx-1 hidden md:block" />
+            <button onClick={handleLogout} className="text-xs font-bold uppercase tracking-wider text-zinc-500 hover:text-white transition-colors flex items-center gap-1.5">
+              <LogOut size={14} /> <span className="hidden md:inline">Sair</span>
+            </button>
+          </div>
+        </div>
+        {/* Mobile period pills */}
+        <div className="md:hidden px-4 pb-3 flex gap-2 overflow-x-auto scrollbar-hide">
+          {[['hoje', 'Hoje'], ['7d', '7 dias'], ['30d', '30 dias'], ['todos', 'Todos']].map(([v, l]) => (
+            <button key={v} onClick={() => setDateFilter(v)}
+              className={`shrink-0 px-4 h-8 rounded-full text-xs font-bold border transition-all ${
+                dateFilter === v ? 'bg-white text-black border-white' : 'bg-white/5 text-zinc-400 border-white/10'
+              }`}>{l}
+            </button>
+          ))}
         </div>
       </header>
 
-      <main className="max-w-[1400px] mx-auto px-6 py-8">
-         <div className="mb-8">
-           <h2 className="text-xl font-bold text-white mb-2">Visão Geral</h2>
-           <p className="text-sm text-zinc-500">Leads, origem das campanhas e oportunidades comerciais em uma única visão.</p>
+      <main className="max-w-[1400px] mx-auto px-4 md:px-6 py-4 md:py-8">
+         <div className="mb-4 md:mb-8">
+           <h2 className="text-lg md:text-xl font-bold text-white mb-1">Visão Geral</h2>
+           <p className="text-xs md:text-sm text-zinc-500">Leads e oportunidades comerciais em tempo real.</p>
          </div>
 
          {/* Cards Superiores */}
-         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 mb-8">
-           <MetricCard title="Total de leads" value={metrics.total} icon={Activity} colorClass="bg-white/10 text-white" />
+         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-2 md:gap-3 mb-4 md:mb-8">
            <MetricCard title="Novos" value={metrics.novos} icon={Users} colorClass="bg-blue-500/10 text-blue-400" />
            <MetricCard title="Conversou" value={metrics.conversou} icon={MessageCircle} colorClass="bg-yellow-500/10 text-yellow-400" />
            <MetricCard title="Propostas" value={metrics.propostas} icon={FileText} colorClass="bg-purple-500/10 text-purple-400" />
            <MetricCard title="Fechados" value={metrics.fechados} icon={CheckCircle} colorClass="bg-emerald-500/10 text-emerald-400" />
+           <MetricCard title="Total" value={metrics.total} icon={Activity} colorClass="bg-white/10 text-white" />
            <MetricCard title="Valor potencial" value={`R$ ${metrics.valorPotencial.toLocaleString('pt-BR')}`} icon={DollarSign} colorClass="bg-zinc-800 text-white" />
          </div>
 
          {/* Filtros Rápidos */}
-         <div className="flex flex-col md:flex-row items-center gap-3 mb-6 bg-[#121214] p-2 rounded-xl border border-white/5">
-           <div className="relative flex-1 w-full">
-             <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500" />
-             <input 
-               type="text" 
-               placeholder="Buscar por nome, telefone, serviço, campanha..." 
-               value={searchFilter}
-               onChange={(e) => setSearchFilter(e.target.value)}
-               className="w-full bg-transparent border-none pl-9 pr-4 py-2 text-sm text-white placeholder-zinc-600 focus:outline-none rounded-lg transition-all"
-             />
+         {/* Desktop filter bar */}
+         <div className="hidden md:flex flex-row items-center gap-3 mb-5 bg-[#111113] border border-white/[0.06] rounded-xl overflow-hidden">
+           <div className="relative flex-1">
+             <Search size={13} className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-600" />
+             <input type="text" placeholder="Buscar por nome, telefone, serviço, campanha, observação..."
+               value={searchFilter} onChange={(e) => setSearchFilter(e.target.value)}
+               className="w-full bg-transparent border-none pl-10 pr-4 py-3 text-sm text-white placeholder-zinc-700 focus:outline-none" />
            </div>
-           
-           <div className="w-full md:w-px h-px md:h-6 bg-white/5 mx-2" />
-           
-           <div className="flex items-center gap-3 w-full md:w-auto overflow-x-auto pb-2 md:pb-0 scrollbar-hide">
+           <div className="w-px h-6 bg-white/[0.06] shrink-0" />
+           <div className="flex items-center gap-2 pr-3">
              <div className="relative">
-               <select value={statusFilter} onChange={e => setStatusFilter(e.target.value)} className="bg-white/5 hover:bg-white/10 border border-white/5 rounded-lg pl-3 pr-8 py-1.5 text-xs font-medium text-zinc-300 outline-none appearance-none min-w-[130px] transition-colors cursor-pointer">
-                 <option value="todos" className="bg-[#121214]">Todos os Status</option>
-                 <option value="novo" className="bg-[#121214]">Novo</option>
-                 <option value="conversou" className="bg-[#121214]">Conversou</option>
-                 <option value="proposta" className="bg-[#121214]">Proposta</option>
-                 <option value="fechado" className="bg-[#121214]">Fechado</option>
-                 <option value="perdido" className="bg-[#121214]">Perdido</option>
+               <select value={statusFilter} onChange={e => setStatusFilter(e.target.value)}
+                 className={`h-8 bg-white/[0.04] hover:bg-white/[0.07] border border-white/[0.06] rounded-lg pl-3 pr-7 text-xs font-medium outline-none appearance-none cursor-pointer transition-colors ${
+                   statusFilter !== 'todos' ? 'text-white border-white/20' : 'text-zinc-500'
+                 }`}>
+                 <option value="todos" className="bg-[#111113]">Status</option>
+                 <option value="novo" className="bg-[#111113]">Novo</option>
+                 <option value="conversou" className="bg-[#111113]">Conversou</option>
+                 <option value="proposta" className="bg-[#111113]">Proposta</option>
+                 <option value="fechado" className="bg-[#111113]">Fechado</option>
+                 <option value="perdido" className="bg-[#111113]">Perdido</option>
                </select>
-               <ChevronDown size={12} className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-zinc-500" />
+               <ChevronDown size={10} className="absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none text-zinc-600" />
              </div>
-
              <div className="relative">
-               <select value={typeFilter} onChange={e => setTypeFilter(e.target.value)} className="bg-white/5 hover:bg-white/10 border border-white/5 rounded-lg pl-3 pr-8 py-1.5 text-xs font-medium text-zinc-300 outline-none appearance-none min-w-[140px] transition-colors cursor-pointer">
-                 <option value="todos" className="bg-[#121214]">Todos os Tipos</option>
-                 <option value="whatsapp_quick" className="bg-[#121214]">WhatsApp Rápido</option>
-                 <option value="diagnostic_form" className="bg-[#121214]">Diagnóstico</option>
-                 <option value="qualified_lead" className="bg-[#121214]">Qualificado</option>
+               <select value={typeFilter} onChange={e => setTypeFilter(e.target.value)}
+                 className={`h-8 bg-white/[0.04] hover:bg-white/[0.07] border border-white/[0.06] rounded-lg pl-3 pr-7 text-xs font-medium outline-none appearance-none cursor-pointer transition-colors ${
+                   typeFilter !== 'todos' ? 'text-white border-white/20' : 'text-zinc-500'
+                 }`}>
+                 <option value="todos" className="bg-[#111113]">Tipo</option>
+                 <option value="whatsapp_quick" className="bg-[#111113]">WhatsApp Rápido</option>
+                 <option value="whatsapp_quick_form" className="bg-[#111113]">Formulário WhatsApp</option>
+                 <option value="diagnostic_form" className="bg-[#111113]">Diagnóstico</option>
+                 <option value="qualified_lead" className="bg-[#111113]">Qualificado</option>
                </select>
-               <ChevronDown size={12} className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-zinc-500" />
+               <ChevronDown size={10} className="absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none text-zinc-600" />
              </div>
-
              <div className="relative">
-               <select value={originFilter} onChange={e => setOriginFilter(e.target.value)} className="bg-white/5 hover:bg-white/10 border border-white/5 rounded-lg pl-3 pr-8 py-1.5 text-xs font-medium text-zinc-300 outline-none appearance-none min-w-[130px] transition-colors cursor-pointer">
-                 <option value="todos" className="bg-[#121214]">Todas as Origens</option>
-                 {uniqueOrigins.map(org => (
-                   <option key={org} value={org} className="bg-[#121214] capitalize">{org}</option>
-                 ))}
+               <select value={originFilter} onChange={e => setOriginFilter(e.target.value)}
+                 className={`h-8 bg-white/[0.04] hover:bg-white/[0.07] border border-white/[0.06] rounded-lg pl-3 pr-7 text-xs font-medium outline-none appearance-none cursor-pointer transition-colors ${
+                   originFilter !== 'todos' ? 'text-white border-white/20' : 'text-zinc-500'
+                 }`}>
+                 <option value="todos" className="bg-[#111113]">Origem</option>
+                 {uniqueOrigins.map(org => (<option key={org} value={org} className="bg-[#111113] capitalize">{org}</option>))}
                </select>
-               <ChevronDown size={12} className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-zinc-500" />
+               <ChevronDown size={10} className="absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none text-zinc-600" />
              </div>
-           </div>
-         </div>
-
-         {/* Inbox Lista */}
-         <div className="bg-[#121214] border border-white/5 rounded-2xl overflow-hidden flex flex-col shadow-2xl">
-           <div className="hidden md:grid grid-cols-5 gap-4 px-6 py-4 border-b border-white/5 bg-[#17171A] text-[10px] font-bold uppercase tracking-widest text-zinc-500">
-             <div>Oportunidade / Contato</div>
-             <div>Serviço / Tipo</div>
-             <div>Origem / Campanha</div>
-             <div>Status / Temp</div>
-             <div className="text-right">Entrada</div>
-           </div>
-           
-           <div className="divide-y divide-white/5 max-h-[700px] overflow-y-auto scrollbar-hide">
-             {filteredLeads.length === 0 ? (
-               <div className="p-16 text-center flex flex-col items-center justify-center">
-                 <div className="w-12 h-12 bg-white/5 rounded-full flex items-center justify-center text-zinc-600 mb-4"><Search size={20} /></div>
-                 <p className="text-zinc-400 text-sm">Nenhuma oportunidade encontrada.</p>
-               </div>
-             ) : (
-               filteredLeads.map(lead => {
-                 const temp = getTemperature(lead);
-                 return (
-                   <div 
-                     key={lead.id} 
-                     onClick={() => { setSelectedLead(lead); setIsDrawerOpen(true); }}
-                     className="group flex flex-col md:flex-row items-start md:items-center justify-between p-4 px-6 hover:bg-white/[0.03] cursor-pointer transition-colors"
-                   >
-                      <div className="flex-1 grid grid-cols-1 md:grid-cols-5 gap-4 w-full items-center">
-                         <div className="flex flex-col">
-                           <span className="text-sm font-medium text-white truncate pr-4">{lead.lead_name || 'Sem nome'}</span>
-                           <span className="text-xs text-zinc-500 font-mono mt-0.5">{lead.lead_phone || 'Sem telefone'}</span>
-                         </div>
-                         
-                         <div className="flex flex-col">
-                           <span className="text-sm text-zinc-300 truncate max-w-[200px]">{lead.service_interest || '-'}</span>
-                           <span className="text-[10px] text-zinc-500 uppercase tracking-widest mt-0.5">{getLeadTypeTranslation(lead.lead_type)}</span>
-                         </div>
-
-                         <div className="flex flex-col">
-                           <span className="text-sm text-zinc-300 capitalize truncate">{lead.utm_source || 'Direto'}</span>
-                           <span className="text-[10px] text-zinc-500 truncate max-w-[180px] mt-0.5" title={lead.utm_campaign}>{lead.utm_campaign || '-'}</span>
-                         </div>
-
-                         <div className="flex flex-row md:flex-col items-center md:items-start gap-2 md:gap-1.5 mt-3 md:mt-0">
-                            <select 
-                              onClick={(e) => e.stopPropagation()}
-                              value={lead.status || 'novo'}
-                              onChange={(e) => updateLeadField(lead.id, 'status', e.target.value)}
-                              className={`px-2.5 py-1 rounded text-[9px] font-bold uppercase tracking-widest border outline-none cursor-pointer appearance-none transition-all ${getStatusColor(lead.status || 'novo')}`}
-                            >
-                               <option value="novo" className="bg-[#1A1A1E]">NOVO</option>
-                               <option value="conversou" className="bg-[#1A1A1E]">CONVERSOU</option>
-                               <option value="proposta" className="bg-[#1A1A1E]">PROPOSTA</option>
-                               <option value="fechado" className="bg-[#1A1A1E]">FECHADO</option>
-                               <option value="perdido" className="bg-[#1A1A1E]">PERDIDO</option>
-                            </select>
-                            <span className={`px-2 py-0.5 rounded text-[9px] font-bold uppercase tracking-widest border border-transparent ${getTempColor(temp)}`}>
-                              {temp}
-                           </span>
-                         </div>
-
-                         <div className="hidden md:flex flex-col items-end justify-center text-right">
-                            <span className="text-xs text-zinc-400">{formatBrazilDate(lead.created_at || lead.click_time)}</span>
-                         </div>
-                      </div>
-
-                      <div className="hidden md:flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity ml-4 pl-4 border-l border-white/5">
-                        <button onClick={(e) => handleQuickAction(e, lead.id, 'whatsapp', lead)} className="p-2 text-zinc-500 hover:text-[#25D366] hover:bg-[#25D366]/10 rounded-lg transition-colors" title="Abrir WhatsApp"><MessageCircle size={14} /></button>
-                        <button onClick={(e) => handleQuickAction(e, lead.id, 'obs', lead)} className="p-2 text-zinc-500 hover:text-white hover:bg-white/10 rounded-lg transition-colors" title="Editar Observação Comercial"><Edit2 size={14} /></button>
-                        <button onClick={(e) => handleQuickAction(e, lead.id, 'valor', lead)} className="p-2 text-zinc-500 hover:text-emerald-400 hover:bg-emerald-400/10 rounded-lg transition-colors" title="Editar Valor Potencial"><DollarSign size={14} /></button>
-                        <button onClick={(e) => handleQuickAction(e, lead.id, 'archive', lead)} className="p-2 text-zinc-500 hover:text-red-400 hover:bg-red-400/10 rounded-lg transition-colors" title="Arquivar Lead"><Archive size={14} /></button>
-                      </div>
-                   </div>
-                 )
-               })
+             {(statusFilter !== 'todos' || typeFilter !== 'todos' || originFilter !== 'todos') && (
+               <button onClick={() => { setStatusFilter('todos'); setTypeFilter('todos'); setOriginFilter('todos'); }}
+                 className="h-8 px-3 text-[10px] font-bold text-zinc-500 hover:text-red-400 border border-white/[0.06] rounded-lg transition-colors">
+                 Limpar
+               </button>
              )}
            </div>
          </div>
+         {/* Mobile search + filter trigger */}
+         <div className="md:hidden flex items-center gap-2 mb-4">
+           <div className="relative flex-1">
+             <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500" />
+             <input type="text" placeholder="Buscar lead..."
+               value={searchFilter} onChange={(e) => setSearchFilter(e.target.value)}
+               className="w-full bg-[#121214] border border-white/5 rounded-xl pl-9 pr-4 h-11 text-sm text-white placeholder-zinc-600 focus:outline-none focus:border-white/20 transition-all" />
+           </div>
+           <button onClick={() => setMobileFiltersOpen(true)}
+             className="relative flex items-center gap-2 h-11 px-4 bg-[#121214] border border-white/5 rounded-xl text-zinc-400 text-sm font-bold shrink-0">
+             <SlidersHorizontal size={14} />
+             <span className="text-xs">Filtros</span>
+             {(statusFilter !== 'todos' || typeFilter !== 'todos' || originFilter !== 'todos') && (
+               <span className="absolute -top-1 -right-1 w-4 h-4 bg-white text-black text-[9px] font-black rounded-full flex items-center justify-center">
+                 {[statusFilter, typeFilter, originFilter].filter(f => f !== 'todos').length}
+               </span>
+             )}
+           </button>
+         </div>
+
+         {/* Desktop Inbox Lista */}
+         <div className="hidden md:block bg-[#111113] border border-white/[0.06] rounded-xl overflow-hidden">
+           {/* Inbox header */}
+           <div className="grid grid-cols-[1fr_1fr_1fr_auto_auto] gap-4 px-6 py-3 border-b border-white/[0.06] bg-[#0D0D0F]">
+             <p className="text-[10px] font-bold uppercase tracking-widest text-zinc-600">Contato</p>
+             <p className="text-[10px] font-bold uppercase tracking-widest text-zinc-600">Serviço</p>
+             <p className="text-[10px] font-bold uppercase tracking-widest text-zinc-600">Origem</p>
+             <p className="text-[10px] font-bold uppercase tracking-widest text-zinc-600 w-[140px]">Status</p>
+             <p className="text-[10px] font-bold uppercase tracking-widest text-zinc-600 text-right w-[110px]">Entrada</p>
+           </div>
+           <div className="divide-y divide-white/[0.04] max-h-[680px] overflow-y-auto scrollbar-hide">
+             {filteredLeads.length === 0 ? (
+               <div className="py-20 text-center flex flex-col items-center justify-center">
+                 <div className="w-10 h-10 bg-white/[0.03] border border-white/[0.06] rounded-xl flex items-center justify-center text-zinc-600 mb-4"><Search size={16} /></div>
+                 <p className="text-zinc-600 text-sm">Nenhuma oportunidade encontrada.</p>
+                 <p className="text-zinc-700 text-xs mt-1">Ajuste os filtros ou busca.</p>
+               </div>
+             ) : filteredLeads.map(lead => {
+               const temp = getTemperature(lead);
+               return (
+                 <div key={lead.id} onClick={() => { setSelectedLead(lead); setIsDrawerOpen(true); }}
+                   className="group grid grid-cols-[1fr_1fr_1fr_auto_auto] gap-4 items-center px-6 py-4 hover:bg-white/[0.02] cursor-pointer transition-colors border-l-2 border-transparent hover:border-l-white/10">
+                   {/* Contato */}
+                   <div className="min-w-0">
+                     <p className="text-sm font-semibold text-white truncate">{lead.lead_name || 'Sem nome'}</p>
+                     <p className="text-xs text-zinc-600 font-mono mt-0.5 truncate">{lead.lead_phone || '—'}</p>
+                   </div>
+                   {/* Serviço */}
+                   <div className="min-w-0">
+                     <p className="text-sm text-zinc-300 truncate">{lead.service_interest || '—'}</p>
+                     <p className="text-[10px] text-zinc-600 mt-0.5">{getLeadTypeTranslation(lead.lead_type)}</p>
+                   </div>
+                   {/* Origem */}
+                   <div className="min-w-0">
+                     <p className="text-sm text-zinc-300 capitalize truncate">{lead.utm_source || 'Direto'}</p>
+                     <p className="text-[10px] text-zinc-600 truncate mt-0.5">{lead.utm_campaign || '—'}</p>
+                   </div>
+                   {/* Status */}
+                   <div className="flex flex-col gap-1.5 w-[140px]">
+                     <select onClick={(e) => e.stopPropagation()} value={lead.status || 'novo'}
+                       onChange={(e) => updateLeadField(lead.id, 'status', e.target.value)}
+                       className={`px-2.5 py-1 rounded-md text-[10px] font-bold uppercase tracking-widest border outline-none cursor-pointer appearance-none transition-all ${getStatusColor(lead.status || 'novo')}`}>
+                       <option value="novo" className="bg-[#1A1A1E]">NOVO</option>
+                       <option value="conversou" className="bg-[#1A1A1E]">CONVERSOU</option>
+                       <option value="proposta" className="bg-[#1A1A1E]">PROPOSTA</option>
+                       <option value="fechado" className="bg-[#1A1A1E]">FECHADO</option>
+                       <option value="perdido" className="bg-[#1A1A1E]">PERDIDO</option>
+                     </select>
+                     <span className={`px-2 py-0.5 rounded text-[10px] font-semibold border ${getTempColor(temp)}`}>{temp}</span>
+                   </div>
+                   {/* Entrada + Ações */}
+                   <div className="flex flex-col items-end gap-1.5 w-[110px]">
+                     <span className="text-xs text-zinc-500">{formatBrazilDate(lead.created_at || lead.click_time)}</span>
+                     <div className="flex items-center gap-0.5 opacity-0 group-hover:opacity-100 transition-all duration-150">
+                       <button onClick={(e) => handleQuickAction(e, lead.id, 'whatsapp', lead)}
+                         title="Abrir WhatsApp"
+                         className="p-1.5 text-zinc-600 hover:text-[#25D366] hover:bg-[#25D366]/10 rounded-md transition-colors">
+                         <MessageCircle size={12} />
+                       </button>
+                       <button onClick={(e) => handleQuickAction(e, lead.id, 'obs', lead)}
+                         title="Editar observação"
+                         className="p-1.5 text-zinc-600 hover:text-white hover:bg-white/10 rounded-md transition-colors">
+                         <Edit2 size={12} />
+                       </button>
+                       <button onClick={(e) => handleQuickAction(e, lead.id, 'valor', lead)}
+                         title="Editar valor"
+                         className="p-1.5 text-zinc-600 hover:text-emerald-400 hover:bg-emerald-400/10 rounded-md transition-colors">
+                         <DollarSign size={12} />
+                       </button>
+                     </div>
+                   </div>
+                 </div>
+               );
+             })}
+           </div>
+           {/* Footer count */}
+           {filteredLeads.length > 0 && (
+             <div className="px-6 py-3 border-t border-white/[0.04] bg-[#0D0D0F]">
+               <p className="text-[10px] text-zinc-700">{filteredLeads.length} oportunidade{filteredLeads.length !== 1 ? 's' : ''}</p>
+             </div>
+           )}
+         </div>
+
+         {/* Mobile Lead Cards */}
+         <div className="md:hidden space-y-3">
+           {filteredLeads.length === 0 ? (
+             <div className="py-16 text-center flex flex-col items-center justify-center">
+               <div className="w-12 h-12 bg-white/5 rounded-full flex items-center justify-center text-zinc-600 mb-4"><Search size={20} /></div>
+               <p className="text-zinc-400 text-sm">Nenhuma oportunidade encontrada.</p>
+             </div>
+           ) : filteredLeads.map(lead => (
+             <MobileLeadCard
+               key={lead.id}
+               lead={lead}
+               onOpen={(l: any) => { setSelectedLead(l); setIsDrawerOpen(true); }}
+               onQuickAction={handleQuickAction}
+             />
+           ))}
+         </div>
       </main>
+
+      <MobileFilterSheet
+        open={mobileFiltersOpen}
+        onClose={() => setMobileFiltersOpen(false)}
+        statusFilter={statusFilter} setStatusFilter={setStatusFilter}
+        typeFilter={typeFilter} setTypeFilter={setTypeFilter}
+        originFilter={originFilter} setOriginFilter={setOriginFilter}
+        uniqueOrigins={uniqueOrigins}
+        onReset={() => { setStatusFilter('todos'); setTypeFilter('todos'); setOriginFilter('todos'); }}
+      />
 
       <LeadDrawer lead={selectedLead} isOpen={isDrawerOpen} onClose={() => setIsDrawerOpen(false)} updateField={updateLeadField} />
     </div>
