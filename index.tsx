@@ -978,34 +978,34 @@ const GoogleAdsPremium = ({ onOpenModal }: { onOpenModal: () => void }) => {
           className="flex justify-center lg:justify-end w-full mt-10 lg:mt-0"
         >
            {/* Structure Mockup container */}
-           <div className="relative w-full max-w-[500px] bg-white rounded-[2rem] border border-black/5 shadow-[0_20px_60px_rgba(0,0,0,0.06)] overflow-hidden flex flex-col p-6 sm:p-8">
+           <div className="relative w-full max-w-[540px] bg-white rounded-[2rem] border border-black/[0.08] shadow-[0_24px_70px_rgba(15,15,18,0.09)] overflow-hidden flex flex-col p-5 sm:p-8 lg:p-9">
              
              {/* Background accents */}
              <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-[50px] pointer-events-none" />
              <div className="absolute bottom-0 left-0 w-64 h-64 bg-green-400/5 rounded-full blur-[50px] pointer-events-none" />
 
              {/* Header */}
-             <div className="mb-6 relative z-10">
-               <div className="flex items-center justify-between mb-2">
-                 <div className="flex items-center gap-2.5">
+             <div className="mb-7 sm:mb-8 relative z-10">
+               <div className="flex items-start justify-between gap-4 mb-3">
+                 <div className="flex items-center gap-3">
                    <span className="relative flex h-2 w-2">
                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-60"></span>
                      <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
                    </span>
-                   <p className="text-[13px] sm:text-sm font-extrabold text-graphite tracking-tight uppercase">O que um rastreamento correto revela</p>
+                   <p className="text-[15px] sm:text-base lg:text-[17px] font-extrabold text-graphite tracking-tight uppercase leading-snug">O que um rastreamento correto revela</p>
                  </div>
-                 <div className="w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center text-primary shrink-0 ml-2">
-                   <Target size={12} />
+                 <div className="w-8 h-8 rounded-xl bg-primary/10 border border-primary/15 flex items-center justify-center text-primary shrink-0">
+                   <Target size={15} />
                  </div>
                </div>
-               <p className="text-[11px] sm:text-[12px] text-gray-500 leading-relaxed font-medium">
+               <p className="text-sm sm:text-[15px] text-gray-700 leading-relaxed font-medium max-w-[440px]">
                  O painel é apenas a forma visual de enxergar origem, intenção, proposta, venda e canais que geram clientes.
                </p>
              </div>
 
              {/* Flow Container */}
              <motion.div
-               className="flex-1 flex flex-col gap-3 relative z-10"
+               className="flex-1 flex flex-col gap-4 sm:gap-5 relative z-10"
                variants={mockupFlowVariants}
                initial="hidden"
                whileInView="visible"
@@ -1015,74 +1015,74 @@ const GoogleAdsPremium = ({ onOpenModal }: { onOpenModal: () => void }) => {
                {/* 1. Origin Step */}
                <motion.div
                  variants={mockupCardVariants}
-                 className="bg-white rounded-2xl p-4 shadow-[0_4px_20px_rgba(0,0,0,0.03)] border border-gray-100 flex flex-col gap-2 relative"
+                 className="bg-white rounded-2xl p-5 sm:p-6 shadow-[0_10px_30px_rgba(15,15,18,0.06)] border border-gray-200/80 flex flex-col gap-3 relative"
                >
-                 <div className="flex items-center gap-3 relative z-10 bg-white">
-                   <div className="w-8 h-8 rounded-lg bg-gray-50 flex items-center justify-center shrink-0 border border-gray-100">
-                     <Filter size={14} className="text-gray-500" />
+                 <div className="flex items-center gap-3.5 relative z-10 bg-white">
+                   <div className="w-10 h-10 rounded-xl bg-gray-50 flex items-center justify-center shrink-0 border border-gray-200 text-gray-700">
+                     <Filter size={17} />
                    </div>
-                   <p className="text-xs font-bold text-graphite">1. Origem do contato</p>
+                   <p className="text-[18px] sm:text-xl font-extrabold text-graphite leading-tight">1. Origem do contato</p>
                  </div>
-                 <p className="text-[10px] text-gray-500 leading-relaxed pl-11 pr-2 relative z-10">
+                 <p className="text-[15px] sm:text-base text-gray-700 leading-relaxed pl-[3.35rem] pr-1 relative z-10">
                    Você sabe se o contato veio do Google, Instagram, anúncio, orgânico ou indicação.
                  </p>
-                 <div className="flex flex-wrap gap-1.5 pl-11 mt-1 relative z-10">
-                   <span className="text-[8px] font-bold bg-primary/10 text-primary px-2 py-0.5 rounded uppercase tracking-wider">Google Ads</span>
-                   <span className="text-[8px] font-bold bg-blue-500/10 text-blue-500 px-2 py-0.5 rounded uppercase tracking-wider">Instagram</span>
-                   <span className="text-[8px] font-bold bg-green-500/10 text-green-600 px-2 py-0.5 rounded uppercase tracking-wider">WhatsApp</span>
+                 <div className="flex flex-wrap gap-2 pl-[3.35rem] mt-1 relative z-10">
+                   <span className="text-[10px] sm:text-[11px] font-extrabold bg-primary/10 text-primary px-2.5 py-1 rounded-md uppercase tracking-wider border border-primary/10">Google Ads</span>
+                   <span className="text-[10px] sm:text-[11px] font-extrabold bg-blue-500/10 text-blue-700 px-2.5 py-1 rounded-md uppercase tracking-wider border border-blue-500/10">Instagram</span>
+                   <span className="text-[10px] sm:text-[11px] font-extrabold bg-green-500/10 text-green-700 px-2.5 py-1 rounded-md uppercase tracking-wider border border-green-500/10">WhatsApp</span>
                  </div>
                  {/* Connector line down */}
                  <motion.div
                    variants={mockupConnectorVariants}
-                   className="absolute left-[31px] top-[40px] bottom-[-24px] w-[2px] origin-top bg-gradient-to-b from-gray-200 to-transparent z-0"
+                   className="absolute left-[38px] top-[52px] bottom-[-28px] w-[3px] origin-top bg-gradient-to-b from-gray-300 to-transparent z-0"
                  />
                </motion.div>
 
                {/* 2. Lead Context Step */}
                <motion.div
                  variants={mockupCardVariants}
-                 className="bg-white rounded-2xl p-4 shadow-[0_4px_20px_rgba(0,0,0,0.03)] border border-gray-100 flex flex-col gap-2 relative z-10 ml-4"
+                 className="bg-white rounded-2xl p-5 sm:p-6 shadow-[0_10px_30px_rgba(15,15,18,0.06)] border border-gray-200/80 flex flex-col gap-3 relative z-10 sm:ml-4"
                >
-                 <div className="flex items-center gap-3 relative z-10 bg-white">
-                   <div className="w-8 h-8 rounded-lg bg-green-50 flex items-center justify-center shrink-0 border border-green-100">
-                     <WhatsAppIcon size={14} className="text-green-500" />
+                 <div className="flex items-center gap-3.5 relative z-10 bg-white">
+                   <div className="w-10 h-10 rounded-xl bg-green-50 flex items-center justify-center shrink-0 border border-green-200">
+                     <WhatsAppIcon size={17} className="text-green-600" />
                    </div>
-                   <p className="text-xs font-bold text-graphite">2. Intenção real</p>
+                   <p className="text-[18px] sm:text-xl font-extrabold text-graphite leading-tight">2. Intenção real</p>
                  </div>
-                 <p className="text-[10px] text-gray-500 leading-relaxed pl-11 pr-2 relative z-10">
+                 <p className="text-[15px] sm:text-base text-gray-700 leading-relaxed pl-[3.35rem] pr-1 relative z-10">
                    Você identifica quem apenas clicou e quem demonstrou interesse suficiente para virar oportunidade.
                  </p>
-                 <div className="pl-11 mt-1 relative z-10">
-                   <div className="bg-gray-50 border border-gray-100 rounded-lg p-2.5">
-                     <p className="text-[10px] font-bold text-graphite mb-0.5">Marcos Albuquerque</p>
-                     <p className="text-[9px] text-gray-500 italic">"Quero entender melhor antes de pedir uma proposta."</p>
+                 <div className="pl-[3.35rem] mt-1 relative z-10">
+                   <div className="bg-gray-50 border border-gray-200 rounded-xl p-3.5">
+                     <p className="text-sm font-extrabold text-graphite mb-1">Marcos Albuquerque</p>
+                     <p className="text-xs sm:text-sm text-gray-700 italic leading-relaxed">"Quero entender melhor antes de pedir uma proposta."</p>
                    </div>
                  </div>
                  {/* Connector line down */}
                  <motion.div
                    variants={mockupConnectorVariants}
-                   className="absolute left-[31px] top-[40px] bottom-[-24px] w-[2px] origin-top bg-gradient-to-b from-gray-200 to-transparent z-0"
+                   className="absolute left-[38px] top-[52px] bottom-[-28px] w-[3px] origin-top bg-gradient-to-b from-gray-300 to-transparent z-0"
                  />
                </motion.div>
 
                {/* 3. Commercial Progress Step */}
                <motion.div
                  variants={mockupCardVariants}
-                 className="bg-white rounded-2xl p-4 shadow-[0_4px_20px_rgba(0,0,0,0.03)] border border-primary/20 flex flex-col gap-2 relative z-10 ml-8"
+                 className="bg-white rounded-2xl p-5 sm:p-6 shadow-[0_12px_34px_rgba(104,37,154,0.08)] border border-primary/25 flex flex-col gap-3 relative z-10 sm:ml-8"
                >
-                 <div className="flex items-center gap-3 relative z-10 bg-white">
-                   <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
-                     <BarChart3 size={14} className="text-primary" />
+                 <div className="flex items-center gap-3.5 relative z-10 bg-white">
+                   <div className="w-10 h-10 rounded-xl bg-primary/10 border border-primary/15 flex items-center justify-center shrink-0">
+                     <BarChart3 size={17} className="text-primary" />
                    </div>
-                   <p className="text-xs font-bold text-graphite">3. Avanço comercial</p>
+                   <p className="text-[18px] sm:text-xl font-extrabold text-graphite leading-tight">3. Avanço comercial</p>
                  </div>
-                 <p className="text-[10px] text-gray-500 leading-relaxed pl-11 pr-2 relative z-10">
+                 <p className="text-[15px] sm:text-base text-gray-700 leading-relaxed pl-[3.35rem] pr-1 relative z-10">
                    Você acompanha se o contato virou conversa, proposta, venda ou perda.
                  </p>
-                 <div className="pl-11 mt-2 relative z-10">
+                 <div className="pl-[3.35rem] mt-3 relative z-10">
                    {/* Progress tracker */}
-                   <div className="flex items-center justify-between relative mb-3 mx-2">
-                     <div className="absolute left-0 right-0 top-1/2 -translate-y-1/2 h-[2px] bg-gray-100 -z-10" />
+                   <div className="flex items-center justify-between relative mb-4 mx-1 sm:mx-2">
+                     <div className="absolute left-0 right-0 top-1/2 -translate-y-1/2 h-[3px] bg-gray-200 -z-10 rounded-full" />
                      <motion.div
                        variants={{
                          hidden: { width: "0%" },
@@ -1091,40 +1091,40 @@ const GoogleAdsPremium = ({ onOpenModal }: { onOpenModal: () => void }) => {
                            transition: { duration: 0.55, ease: "easeOut" as const }
                          }
                        }}
-                       className="absolute left-0 top-1/2 -translate-y-1/2 h-[2px] bg-primary -z-10"
+                       className="absolute left-0 top-1/2 -translate-y-1/2 h-[3px] bg-primary -z-10 rounded-full"
                      />
                      
-                     <div className="w-3 h-3 rounded-full bg-primary ring-2 ring-white" />
-                     <div className="w-3 h-3 rounded-full bg-primary ring-2 ring-white" />
-                     <div className="w-3 h-3 rounded-full bg-primary ring-2 ring-white" />
-                     <div className="w-3 h-3 rounded-full bg-gray-200 ring-2 ring-white" />
+                     <div className="w-4 h-4 rounded-full bg-primary ring-[3px] ring-white shadow-sm" />
+                     <div className="w-4 h-4 rounded-full bg-primary ring-[3px] ring-white shadow-sm" />
+                     <div className="w-4 h-4 rounded-full bg-primary ring-[3px] ring-white shadow-sm" />
+                     <div className="w-4 h-4 rounded-full bg-gray-300 ring-[3px] ring-white shadow-sm" />
                    </div>
-                   <div className="flex justify-between text-[7px] sm:text-[8px] font-bold uppercase tracking-wider text-gray-400">
+                   <div className="grid grid-cols-4 gap-1 text-[9px] sm:text-[10px] font-extrabold uppercase tracking-wide text-gray-600">
                      <span className="text-primary">Novo</span>
-                     <span className="text-primary">Conversa</span>
-                     <span className="text-primary">Proposta</span>
-                     <span>Fechado</span>
+                     <span className="text-primary text-center">Conversa</span>
+                     <span className="text-primary text-center">Proposta</span>
+                     <span className="text-right">Fechado</span>
                    </div>
                  </div>
                  {/* Connector line down */}
                  <motion.div
                    variants={mockupConnectorVariants}
-                   className="absolute left-[31px] top-[40px] bottom-[-24px] w-[2px] origin-top bg-gradient-to-b from-gray-200 to-transparent z-0"
+                   className="absolute left-[38px] top-[52px] bottom-[-28px] w-[3px] origin-top bg-gradient-to-b from-gray-300 to-transparent z-0"
                  />
                </motion.div>
 
                {/* 4. Next Step */}
                <motion.div
                  variants={mockupCardVariants}
-                 className="bg-white rounded-2xl p-4 shadow-[0_4px_20px_rgba(0,0,0,0.03)] border border-gray-100 flex flex-col gap-2 relative z-10 ml-12"
+                 className="bg-white rounded-2xl p-5 sm:p-6 shadow-[0_10px_30px_rgba(15,15,18,0.06)] border border-gray-200/80 flex flex-col gap-3 relative z-10 sm:ml-12"
                >
-                 <div className="flex items-center gap-3 relative z-10 bg-white">
-                   <div className="w-8 h-8 rounded-lg bg-orange-50 flex items-center justify-center shrink-0 border border-orange-100">
-                     <Clock size={14} className="text-orange-500" />
+                 <div className="flex items-center gap-3.5 relative z-10 bg-white">
+                   <div className="w-10 h-10 rounded-xl bg-orange-50 flex items-center justify-center shrink-0 border border-orange-200">
+                     <Clock size={17} className="text-orange-600" />
                    </div>
-                   <p className="text-xs font-bold text-graphite">4. Decisão com dados</p>
+                   <p className="text-[18px] sm:text-xl font-extrabold text-graphite leading-tight">4. Decisão com dados</p>
                  </div>
-                 <p className="text-[10px] text-gray-500 leading-relaxed pl-11 pr-2 relative z-10">
+                 <p className="text-[15px] sm:text-base text-gray-700 leading-relaxed pl-[3.35rem] pr-1 relative z-10">
                    Você entende quais canais trazem clientes melhores e onde vale investir mais.
                  </p>
                </motion.div>
