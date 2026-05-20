@@ -20,6 +20,14 @@
     <priority>0.9</priority>
   </url>
 
+  <!-- Página SEO: atrair cliente certo -->
+  <url>
+    <loc>https://www.eleveai.com.br/atrair-cliente-certo/</loc>
+    <lastmod>2026-05-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
   <!-- Seções principais como âncoras -->
   <url>
     <loc>https://eleveai.com.br/#servicos</loc>

@@ -1465,7 +1465,7 @@ const SEOGuides = () => {
           transition={{ duration: 0.55, ease: "easeOut" }}
           className="rounded-2xl border border-white/[0.08] bg-white/[0.025] p-6 md:p-8"
         >
-          <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8">
+          <div className="flex flex-col gap-8">
             <div className="max-w-2xl">
               <span className="inline-flex mb-4 rounded-full border border-white/10 bg-white/[0.03] px-3.5 py-1.5 text-[10px] font-bold uppercase tracking-[0.2em] text-primary">
                 Guias EleveAI
@@ -1475,21 +1475,37 @@ const SEOGuides = () => {
               </h2>
             </div>
 
-            <a
-              href="/como-ter-mais-clientes/"
-              className="group block rounded-xl border border-white/[0.08] bg-black/20 p-5 md:p-6 transition-all duration-300 hover:border-primary/40 hover:bg-white/[0.045] lg:max-w-md"
-            >
-              <h3 className="font-manrope text-lg md:text-xl font-bold text-white leading-snug">
-                Como ter mais clientes entendendo o que realmente gera vendas
-              </h3>
-              <p className="mt-3 text-sm md:text-base leading-relaxed text-zinc-400">
-                Entenda por que mais contatos não bastam se você não sabe de onde vêm, quais têm intenção real e quais viram venda.
-              </p>
-              <span className="mt-5 inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.16em] text-primary transition-colors group-hover:text-white">
-                Ler guia
-                <ArrowRight size={15} className="transition-transform duration-300 group-hover:translate-x-1" />
-              </span>
-            </a>
+            <div className="grid gap-4 md:grid-cols-2">
+              {[
+                {
+                  title: "Como ter mais clientes entendendo o que realmente gera vendas",
+                  text: "Entenda por que mais contatos não bastam se você não sabe de onde vêm, quais têm intenção real e quais viram venda.",
+                  href: "/como-ter-mais-clientes/"
+                },
+                {
+                  title: "Como atrair o cliente certo e parar de depender de contatos sem intenção",
+                  text: "Entenda como diferenciar contatos curiosos de pessoas com maior chance de avançar para proposta ou venda.",
+                  href: "/atrair-cliente-certo/"
+                }
+              ].map((guide) => (
+                <a
+                  key={guide.href}
+                  href={guide.href}
+                  className="group block rounded-xl border border-white/[0.08] bg-black/20 p-5 md:p-6 transition-all duration-300 hover:border-primary/40 hover:bg-white/[0.045]"
+                >
+                  <h3 className="font-manrope text-lg md:text-xl font-bold text-white leading-snug">
+                    {guide.title}
+                  </h3>
+                  <p className="mt-3 text-sm md:text-base leading-relaxed text-zinc-400">
+                    {guide.text}
+                  </p>
+                  <span className="mt-5 inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.16em] text-primary transition-colors group-hover:text-white">
+                    Ler guia
+                    <ArrowRight size={15} className="transition-transform duration-300 group-hover:translate-x-1" />
+                  </span>
+                </a>
+              ))}
+            </div>
           </div>
         </motion.div>
       </div>
