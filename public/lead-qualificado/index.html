@@ -447,7 +447,9 @@
     .reveal-card {
       min-height: 230px;
       display: flex;
-      align-items: flex-end;
+      align-items: flex-start;
+      flex-direction: column;
+      justify-content: flex-start;
       background:
         linear-gradient(180deg, rgba(185, 136, 191, 0.1), rgba(255, 255, 255, 0.035)),
         rgba(255, 255, 255, 0.035);
@@ -461,7 +463,15 @@
       letter-spacing: 0.14em;
     }
 
-    .reveal-card h3,
+    .reveal-card h3 {
+      display: block;
+      margin: 0.7rem 0 0;
+      color: #fff;
+      font-size: 1.15rem;
+      font-family: Manrope, Inter, sans-serif;
+      min-height: 1.45em;
+    }
+
     .change-card strong,
     .reading-card strong {
       display: block;
@@ -471,7 +481,13 @@
       font-family: Manrope, Inter, sans-serif;
     }
 
-    .reveal-card p,
+    .reveal-card p {
+      margin: 0.75rem 0 0;
+      font-size: 0.98rem;
+      line-height: 1.65;
+      color: var(--muted);
+    }
+
     .change-card p,
     .reading-card p,
     .classification-card p,
