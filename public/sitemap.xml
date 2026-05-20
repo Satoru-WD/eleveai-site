@@ -6,10 +6,18 @@
 
   <!-- Página principal -->
   <url>
-    <loc>https://eleveai.com.br/</loc>
-    <lastmod>2026-03-24</lastmod>
+    <loc>https://www.eleveai.com.br/</loc>
+    <lastmod>2026-05-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
+  </url>
+
+  <!-- Página SEO: como ter mais clientes -->
+  <url>
+    <loc>https://www.eleveai.com.br/como-ter-mais-clientes/</loc>
+    <lastmod>2026-05-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
   </url>
 
   <!-- Seções principais como âncoras -->

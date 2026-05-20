@@ -191,7 +191,7 @@ const DiagnosticModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => 
                 <CheckCircle2 size={32} />
               </div>
               <h3 className="text-2xl font-bold text-white mb-2">Análise Solicitada</h3>
-              <p className="text-gray-400">Nossa equipe analisará a estrutura de aquisição do seu negócio e entrará em contato em breve.</p>
+              <p className="text-gray-400">Nossa equipe analisará o rastreamento dos contatos do seu negócio e entrará em contato em breve.</p>
               <button
                 onClick={onClose}
                 className="mt-8 w-full py-4 bg-white/5 hover:bg-white/10 text-white rounded-2xl font-bold uppercase tracking-[0.2em] text-[10px] transition-all border border-zinc-800"
@@ -202,7 +202,7 @@ const DiagnosticModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => 
           ) : step <= 3 ? (
             <div key={step}>
               <div className="flex justify-between items-end mb-1">
-                <h3 className="text-lg md:text-xl font-bold text-white max-w-xs leading-tight">Avalie a estrutura de aquisição do seu negócio.</h3>
+                <h3 className="text-lg md:text-xl font-bold text-white max-w-xs leading-tight">Avalie o rastreamento dos contatos do seu negócio.</h3>
               </div>
               <p className="text-[11px] text-gray-400 mb-2">São só 3 perguntas rápidas. Leva menos de 15 segundos.</p>
               <div className="flex justify-between items-end mb-2">
@@ -244,7 +244,7 @@ const DiagnosticModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => 
               </div>
               <h3 className="text-xl md:text-2xl font-bold text-white mb-4">Seu negócio está pronto para crescer de forma previsível?</h3>
               <p className="text-gray-400 text-sm md:text-base mb-8 leading-relaxed">
-                Receba uma análise estratégica sobre rastreamento, estrutura de aquisição, CRM e automação para escalar suas vendas de forma previsível.
+                Receba uma análise estratégica sobre rastreamento, origem dos contatos, intenção real e dados para escalar suas vendas de forma previsível.
               </p>
 
               <form onSubmit={handleSubmit} className="space-y-4 text-left">
@@ -490,12 +490,12 @@ const Hero = ({ onOpenModal }: { onOpenModal: () => void }) => {
                >
                  {/* Desktop headline */}
                  <span className="hidden lg:inline">
-                   Transforme contatos soltos em{' '}
-                   <span className="text-[#B988BF]">oportunidades prontas para venda.</span>
+                    Rastreie o caminho do{' '}
+                    <span className="text-[#B988BF]">contato até a venda.</span>
                  </span>
                  {/* Mobile headline — kept as was */}
                  <span className="lg:hidden">
-                   Transforme contatos soltos em oportunidades organizadas para vender com mais previsibilidade.<span className="text-[#B988BF]"></span>
+                    Rastreie o caminho do contato até a venda.<span className="text-[#B988BF]"></span>
                  </span>
                </motion.h1>
 
@@ -508,11 +508,11 @@ const Hero = ({ onOpenModal }: { onOpenModal: () => void }) => {
                >
                  {/* Desktop subtitle */}
                  <span className="hidden lg:inline">
-                   Estruturamos o caminho entre página, WhatsApp, rastreamento e CRM para mostrar de onde vêm seus contatos, quais têm intenção real e quais avançam para proposta ou venda.
+                    Conectamos página, WhatsApp, campanhas e acompanhamento comercial para mostrar de onde vêm seus contatos, quais têm intenção real e quais avançam para proposta ou venda.
                  </span>
                  {/* Mobile subtitle */}
                  <span className="lg:hidden">
-                   Uma estrutura de aquisição que conecta página, WhatsApp, rastreamento e CRM para mostrar de onde vêm seus contatos, quais têm intenção real e quais viram proposta ou venda.
+                    Conectamos página, WhatsApp, campanhas e acompanhamento comercial para mostrar de onde vêm seus contatos, quais têm intenção real e quais avançam para proposta ou venda.
                  </span>
                </motion.p>
 
@@ -544,7 +544,7 @@ const Hero = ({ onOpenModal }: { onOpenModal: () => void }) => {
                    <Star size={16} className="text-[#A678CB]" />
                  </div>
                  <p className="text-[13px] text-zinc-400 leading-snug">
-                   <strong className="text-white font-semibold">Metodologia exclusiva.</strong> Estratégia e tecnologia para converter contatos em propostas e vendas.
+                    <strong className="text-white font-semibold">Metodologia exclusiva.</strong> Rastreamento estratégico para decidir com dados, não no escuro.
                  </p>
                </motion.div>
 
@@ -560,7 +560,7 @@ const Hero = ({ onOpenModal }: { onOpenModal: () => void }) => {
                  </div>
                  <div className="text-left">
                    <p className="text-[13px] md:text-[14px] text-zinc-300 leading-relaxed">
-                     <strong className="text-white">Metodologia exclusiva.</strong> Estratégia e tecnologia para atrair, converter contatos em propostas e vendas.
+                      <strong className="text-white">Metodologia exclusiva.</strong> Rastreamento estratégico para entender origem, intenção, proposta e venda.
                    </p>
                  </div>
                </motion.div>
@@ -589,7 +589,7 @@ const Hero = ({ onOpenModal }: { onOpenModal: () => void }) => {
                    </div>
                    <div className="absolute inset-[1px] rounded-2xl bg-gradient-to-r from-[#5B2E8A] to-[#3A1660] group-hover:from-[#6B3FA0] group-hover:to-[#4A2070] transition-colors"></div>
                    <span className="relative z-20 flex items-center justify-center gap-3 font-bold text-[13px] tracking-[0.06em] uppercase text-white font-manrope">
-                     Quero estruturar minha aquisição
+                      Quero rastrear melhor meus contatos
                      <ArrowRight size={17} className="transition-transform group-hover:translate-x-1" />
                    </span>
                  </button>
@@ -636,7 +636,7 @@ const Hero = ({ onOpenModal }: { onOpenModal: () => void }) => {
                   <div className="flex items-center justify-between px-5 py-3.5 border-b border-white/[0.07] bg-black/30">
                     <div className="flex items-center gap-2.5">
                       <div className="w-2 h-2 rounded-full bg-[#B988BF]" />
-                      <span className="text-[11px] font-bold text-white/70 uppercase tracking-[0.18em]">Central de Aquisição</span>
+                       <span className="text-[11px] font-bold text-white/70 uppercase tracking-[0.18em]">Painel de rastreamento</span>
                     </div>
                     <div className="flex items-center gap-1.5">
                       <span className="relative flex h-2 w-2">
@@ -688,9 +688,9 @@ const Hero = ({ onOpenModal }: { onOpenModal: () => void }) => {
                   <div className="divide-y divide-white/[0.05]">
                     {[
                       { name: 'Marcos Oliveira', origem: 'google', campanha: 'search-brand', service: 'Estrutura completa', status: 'proposta', statusColor: 'bg-[#B988BF]/20 text-[#B988BF]', valor: 'R$ 4.800' },
-                      { name: 'Juliana Ramos', origem: 'instagram', campanha: 'stories-maio', service: 'CRM + rastreamento', status: 'novo', statusColor: 'bg-blue-500/15 text-blue-400', valor: '—' },
-                      { name: 'Ricardo Alves', origem: 'whatsapp', campanha: 'direto', service: 'Landing + ads', status: 'fechado', statusColor: 'bg-green-500/15 text-green-400', valor: 'R$ 3.200' },
-                      { name: 'Camila Souza', origem: 'google', campanha: 'pmax-sp', service: 'Diagnóstico', status: 'conversou', statusColor: 'bg-amber-500/15 text-amber-400', valor: '—' },
+                      { name: 'Juliana Ramos', origem: 'instagram', campanha: 'stories-maio', service: 'Intenção real', status: 'novo', statusColor: 'bg-blue-500/15 text-blue-400', valor: '—' },
+                      { name: 'Ricardo Alves', origem: 'whatsapp', campanha: 'direto', service: 'Venda rastreada', status: 'fechado', statusColor: 'bg-green-500/15 text-green-400', valor: 'R$ 3.200' },
+                      { name: 'Camila Souza', origem: 'google', campanha: 'pmax-sp', service: 'Origem clara', status: 'conversou', statusColor: 'bg-amber-500/15 text-amber-400', valor: '—' },
                     ].map((lead, i) => (
                       <div key={i} className="flex items-center gap-3 px-4 py-3 hover:bg-white/[0.02] transition-colors">
                         {/* Avatar */}
@@ -838,7 +838,7 @@ const Hero = ({ onOpenModal }: { onOpenModal: () => void }) => {
             </div>
             <div className="absolute inset-[1px] rounded-2xl bg-gradient-to-r from-[#5B2E8A] to-[#3A1660] group-hover:from-[#6B3FA0] group-hover:to-[#4A2070] transition-colors"></div>
             <span className="relative z-20 flex items-center justify-center gap-3 font-bold text-[13px] tracking-[0.05em] uppercase text-white font-manrope">
-              Quero estruturar minha aquisição
+              Quero rastrear melhor meus contatos
               <ArrowRight size={18} className="transition-transform group-hover:translate-x-1" />
             </span>
           </motion.button>
@@ -932,24 +932,24 @@ const GoogleAdsPremium = ({ onOpenModal }: { onOpenModal: () => void }) => {
           {/* Title - Refined for desktop */}
           <h2 className="text-3xl sm:text-4xl lg:text-[2.75rem] font-extrabold text-graphite mb-6 lg:mb-8 leading-[1.15] lg:leading-[1.2] tracking-tight font-manrope max-w-[600px]">
             O problema não é receber contatos. <br className="hidden lg:block" />
-            <span className="text-primary">É não saber o que acontece depois que eles chegam.</span>
+            <span className="text-primary">É operar no escuro depois que eles chegam.</span>
           </h2>
 
           {/* Body copy - Improved hierarchy and line-height */}
           <div className="space-y-4 lg:space-y-5 text-gray-500 max-w-[500px]">
             <p className="text-graphite font-semibold text-lg lg:text-[1.15rem] leading-[1.4]">
               Seu negócio recebe contatos todos os dias. <br className="hidden sm:block" />
-              Mas ninguém sabe quem realmente tem intenção de comprar.
+              Mas precisa saber origem, intenção, proposta e venda.
             </p>
             <p className="text-base lg:text-[1.05rem] leading-[1.7] font-light">
-              Sem estrutura, cada contato depende da memória e da boa vontade do time. Quem chegou hoje? Qual campanha trouxe? Onde está a proposta? O que virou venda?
+              Sem rastreamento adequado, cada contato vira uma conversa solta. Você perde clareza sobre quais canais geram clientes melhores e onde vale investir mais.
             </p>
           </div>
 
           {/* Highlight - Lighter visual weight */}
           <div className="mt-8 lg:mt-10 border-l-[3px] border-primary/30 pl-5 py-1">
             <p className="text-[11px] lg:text-[12px] uppercase font-bold text-primary/80 tracking-[0.15em]">
-              Você recebe contatos, mas não enxerga o funil.
+              Você recebe contatos, mas não enxerga o caminho até a venda.
             </p>
           </div>
 
@@ -963,7 +963,7 @@ const GoogleAdsPremium = ({ onOpenModal }: { onOpenModal: () => void }) => {
             <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-[1200ms] ease-in-out group-hover:opacity-100" style={{ background: 'radial-gradient(60.6% 50% at 50% 100%, #B988BF 0%, rgba(185, 136, 191, 0) 100%)', filter: 'blur(18px)' }}></div>
             <div className="absolute inset-[1px] rounded-2xl bg-[#0F0F12] hover:bg-[#1A1A1E] transition-colors"></div>
             <span className="relative z-20 flex items-center justify-center text-white text-[11px] font-bold tracking-[0.15em] uppercase font-manrope">
-              Quero estruturar minha aquisição
+              Quero rastrear melhor meus contatos
               <ArrowRight size={18} className="ml-4 transition-transform duration-300 group-hover:translate-x-1" />
             </span>
           </button>
@@ -992,14 +992,14 @@ const GoogleAdsPremium = ({ onOpenModal }: { onOpenModal: () => void }) => {
                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-60"></span>
                      <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
                    </span>
-                   <p className="text-[13px] sm:text-sm font-extrabold text-graphite tracking-tight uppercase">Acompanhamento em tempo real</p>
+                   <p className="text-[13px] sm:text-sm font-extrabold text-graphite tracking-tight uppercase">O que um rastreamento correto revela</p>
                  </div>
                  <div className="w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center text-primary shrink-0 ml-2">
                    <Target size={12} />
                  </div>
                </div>
                <p className="text-[11px] sm:text-[12px] text-gray-500 leading-relaxed font-medium">
-                 Cada novo contato entra com origem identificada, contexto comercial e avanço visível no funil.
+                 O painel é apenas a forma visual de enxergar origem, intenção, proposta, venda e canais que geram clientes.
                </p>
              </div>
 
@@ -1021,10 +1021,10 @@ const GoogleAdsPremium = ({ onOpenModal }: { onOpenModal: () => void }) => {
                    <div className="w-8 h-8 rounded-lg bg-gray-50 flex items-center justify-center shrink-0 border border-gray-100">
                      <Filter size={14} className="text-gray-500" />
                    </div>
-                   <p className="text-xs font-bold text-graphite">1. Origem identificada</p>
+                   <p className="text-xs font-bold text-graphite">1. Origem do contato</p>
                  </div>
                  <p className="text-[10px] text-gray-500 leading-relaxed pl-11 pr-2 relative z-10">
-                   Cada contato entra com a origem registrada automaticamente, para você saber qual campanha, canal ou ação realmente gerou oportunidade.
+                   Você sabe se o contato veio do Google, Instagram, anúncio, orgânico ou indicação.
                  </p>
                  <div className="flex flex-wrap gap-1.5 pl-11 mt-1 relative z-10">
                    <span className="text-[8px] font-bold bg-primary/10 text-primary px-2 py-0.5 rounded uppercase tracking-wider">Google Ads</span>
@@ -1047,15 +1047,15 @@ const GoogleAdsPremium = ({ onOpenModal }: { onOpenModal: () => void }) => {
                    <div className="w-8 h-8 rounded-lg bg-green-50 flex items-center justify-center shrink-0 border border-green-100">
                      <WhatsAppIcon size={14} className="text-green-500" />
                    </div>
-                   <p className="text-xs font-bold text-graphite">2. Contato registrado com contexto</p>
+                   <p className="text-xs font-bold text-graphite">2. Intenção real</p>
                  </div>
                  <p className="text-[10px] text-gray-500 leading-relaxed pl-11 pr-2 relative z-10">
-                   O lead não chega solto. Ele entra com nome, telefone, interesse e observações iniciais, facilitando o atendimento e acelerando a resposta.
+                   Você identifica quem apenas clicou e quem demonstrou interesse suficiente para virar oportunidade.
                  </p>
                  <div className="pl-11 mt-1 relative z-10">
                    <div className="bg-gray-50 border border-gray-100 rounded-lg p-2.5">
                      <p className="text-[10px] font-bold text-graphite mb-0.5">Marcos Albuquerque</p>
-                     <p className="text-[9px] text-gray-500 italic">"Quero entender melhor como organizar meus contatos e propostas."</p>
+                     <p className="text-[9px] text-gray-500 italic">"Quero entender melhor antes de pedir uma proposta."</p>
                    </div>
                  </div>
                  {/* Connector line down */}
@@ -1065,7 +1065,7 @@ const GoogleAdsPremium = ({ onOpenModal }: { onOpenModal: () => void }) => {
                  />
                </motion.div>
 
-               {/* 3. CRM Pipeline Step */}
+               {/* 3. Commercial Progress Step */}
                <motion.div
                  variants={mockupCardVariants}
                  className="bg-white rounded-2xl p-4 shadow-[0_4px_20px_rgba(0,0,0,0.03)] border border-primary/20 flex flex-col gap-2 relative z-10 ml-8"
@@ -1074,10 +1074,10 @@ const GoogleAdsPremium = ({ onOpenModal }: { onOpenModal: () => void }) => {
                    <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
                      <BarChart3 size={14} className="text-primary" />
                    </div>
-                   <p className="text-xs font-bold text-graphite">3. Avanço comercial visível</p>
+                   <p className="text-xs font-bold text-graphite">3. Avanço comercial</p>
                  </div>
                  <p className="text-[10px] text-gray-500 leading-relaxed pl-11 pr-2 relative z-10">
-                   Sem depender da memória da equipe. Cada oportunidade avança de forma clara entre novo contato, conversa, proposta e fechamento.
+                   Você acompanha se o contato virou conversa, proposta, venda ou perda.
                  </p>
                  <div className="pl-11 mt-2 relative z-10">
                    {/* Progress tracker */}
@@ -1122,10 +1122,10 @@ const GoogleAdsPremium = ({ onOpenModal }: { onOpenModal: () => void }) => {
                    <div className="w-8 h-8 rounded-lg bg-orange-50 flex items-center justify-center shrink-0 border border-orange-100">
                      <Clock size={14} className="text-orange-500" />
                    </div>
-                   <p className="text-xs font-bold text-graphite">4. Próximo passo definido</p>
+                   <p className="text-xs font-bold text-graphite">4. Decisão com dados</p>
                  </div>
                  <p className="text-[10px] text-gray-500 leading-relaxed pl-11 pr-2 relative z-10">
-                   A estrutura mostra o que precisa acontecer depois: responder, acompanhar, enviar proposta ou retomar contato antes que a oportunidade esfrie.
+                   Você entende quais canais trazem clientes melhores e onde vale investir mais.
                  </p>
                </motion.div>
 
@@ -1145,10 +1145,10 @@ const GoogleAdsPremium = ({ onOpenModal }: { onOpenModal: () => void }) => {
 
 const PacientesQualificados = ({ onOpenModal }: { onOpenModal: () => void }) => {
   const steps = [
-    { tag: "1", icon: Target, title: "Origem identificada", desc: "Cada contato chega com a fonte registrada: Google, Instagram, WhatsApp direto ou indicação." },
-    { tag: "2", icon: MessageCircle, title: "Contato com contexto", desc: "A equipe sabe o interesse e a origem antes de abrir o WhatsApp." },
-    { tag: "3", icon: UserCheck, title: "Intenção avaliada", desc: "Quem tem perfil real avança para proposta. Quem não tem, não consome o tempo do time." },
-    { tag: "4", icon: Calendar, title: "Proposta e fechamento", desc: "O funil comercial é visível para toda a equipe: conversou, proposta, fechado." }
+    { tag: "1", icon: Target, title: "Origem rastreada", desc: "Cada contato chega com a fonte registrada: Google, Instagram, anúncio, orgânico ou indicação." },
+    { tag: "2", icon: MessageCircle, title: "Intenção real", desc: "A equipe entende quem apenas clicou e quem demonstrou interesse suficiente para virar oportunidade." },
+    { tag: "3", icon: UserCheck, title: "Proposta e venda", desc: "Você acompanha se o contato virou conversa, proposta, venda ou perda." },
+    { tag: "4", icon: Calendar, title: "Decisão com dados", desc: "Os canais que geram clientes melhores ficam claros para orientar próximos investimentos." }
   ];
 
   return (
@@ -1161,7 +1161,7 @@ const PacientesQualificados = ({ onOpenModal }: { onOpenModal: () => void }) => 
             viewport={{ once: true }}
             className="text-[2.2rem] sm:text-4xl md:text-5xl lg:text-[4rem] font-extrabold text-graphite mb-8 font-manrope tracking-tight leading-[1.05] max-w-5xl mx-auto"
           >
-            Uma estrutura simples para controlar <br className="hidden md:block" />
+            Rastreamento claro para entender <br className="hidden md:block" />
             <span className="text-primary font-manrope">o caminho do contato até a venda.</span>
           </motion.h2>
           <motion.p
@@ -1171,7 +1171,7 @@ const PacientesQualificados = ({ onOpenModal }: { onOpenModal: () => void }) => 
             transition={{ delay: 0.1 }}
             className="text-gray-500 max-w-2xl mx-auto text-lg md:text-xl font-sans leading-relaxed"
           >
-            Do primeiro contato ao fechamento, cada etapa precisa de clareza para a equipe agir no momento certo.
+            Da origem ao fechamento, cada etapa precisa de dados claros para a equipe agir no momento certo.
           </motion.p>
         </div>
 
@@ -1230,7 +1230,7 @@ const PacientesQualificados = ({ onOpenModal }: { onOpenModal: () => void }) => 
             </div>
             <div className="absolute inset-[1px] rounded-[11px] bg-[#68259A] hover:bg-[#7a32b3] transition-colors shadow-[0_10px_30px_rgba(104,37,154,0.3)]"></div>
             <span className="relative z-20 flex items-center justify-center text-white text-[11px] md:text-[12px] font-bold tracking-[0.15em] uppercase font-manrope">
-              Quero estruturar minha aquisição →
+              Quero rastrear melhor meus contatos →
             </span>
           </button>
         </motion.div>
@@ -1264,7 +1264,7 @@ const AutomacaoClinica = () => {
             { icon: MessageCircle, title: "Atendimento priorizado", desc: "A equipe sabe quem tem intenção real antes de ligar ou responder, evitando desperdício de tempo com curiosos." },
             { icon: Target, title: "Histórico da origem", desc: "De onde veio o contato, qual criativo gerou interesse e qual era a expectativa. Tudo visível antes do primeiro contato." },
             { icon: Zap, title: "Próxima ação clara", desc: "Status comercial visível para toda a equipe: novo, conversou, proposta, fechado. Sem depënder de memória." },
-            { icon: TrendingUp, title: "Propostas acompanhadas", desc: "Nenhuma proposta fica sem follow-up. O CRM sinaliza quem está esperando uma resposta." },
+            { icon: TrendingUp, title: "Propostas acompanhadas", desc: "Nenhuma proposta fica sem follow-up. O painel mostra quem está esperando uma resposta." },
             { icon: BarChart3, title: "Resultado mensurável", desc: "Você sabe quais canais geram vendas reais, não só contatos. Dados para decidir onde investir mais." },
           ].map((item, idx) => (
             <motion.div key={idx} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: idx * 0.1 }} viewport={{ once: true }} className="bg-white p-8 rounded-3xl shadow-[0_12px_40px_rgba(0,0,0,0.03)] border border-black/[0.04] hover:shadow-xl hover:-translate-y-1 transition-all">
@@ -1285,15 +1285,22 @@ const AutomacaoClinica = () => {
 
 
 
-const FAQItem = ({ question, answer, isOpen, toggle }: any) => {
+const FAQItem = ({ question, answer, isOpen, toggle, index }: any) => {
   return (
-    <div className="bg-white/5 border border-white/10 overflow-hidden relative group transition-all duration-300">
+    <div className="bg-white/[0.035] border border-white/[0.08] rounded-2xl overflow-hidden relative group transition-all duration-300 hover:border-white/[0.16] hover:bg-white/[0.055]">
       <button
-        className="w-full p-6 md:p-8 text-left flex justify-between items-center transition-colors group-hover:bg-white/[0.02]"
+        className="w-full p-5 md:p-6 text-left flex justify-between items-center gap-5 transition-colors"
         onClick={toggle}
       >
-        <span className="text-base md:text-xl font-bold text-white pr-8 font-manrope">{question}</span>
-        {isOpen ? <Minus className="text-primary shrink-0" size={20} /> : <Plus className="text-primary shrink-0" size={20} />}
+        <span className="flex items-start gap-4">
+          <span className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-[10px] font-extrabold text-primary">
+            {String(index + 1).padStart(2, '0')}
+          </span>
+          <span className="text-base md:text-lg font-bold text-white font-manrope leading-snug">{question}</span>
+        </span>
+        <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-white/10 bg-white/[0.03] text-primary">
+          {isOpen ? <Minus size={16} /> : <Plus size={16} />}
+        </span>
       </button>
       <AnimatePresence>
         {isOpen && (
@@ -1301,9 +1308,10 @@ const FAQItem = ({ question, answer, isOpen, toggle }: any) => {
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.24, ease: "easeOut" }}
             className="overflow-hidden"
           >
-            <div className="p-6 text-gray-400 leading-relaxed text-sm">
+            <div className="px-5 pb-6 md:px-6 md:pb-7 md:pl-[4.75rem] text-zinc-400 leading-relaxed text-sm md:text-[15px]">
               {answer}
             </div>
           </motion.div>
@@ -1351,53 +1359,139 @@ const InfiniteTicker = () => {
   );
 };
 
-const FAQ = () => {
+const FAQ = ({ onOpenModal }: { onOpenModal: () => void }) => {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   const faqs = [
     {
-      question: "Isso serve para qual tipo de negócio?",
-      answer: "Para qualquer negócio local que recebe contatos pelo WhatsApp, Instagram ou Google e precisa organizar esse fluxo: prestação de serviços, comércio, saúde, beleza, construção, education, entre outros. O que importa é ter interesse em entender de onde vêm os contatos e o que vira venda."
+      question: "Isso é gestão de tráfego?",
+      answer: "Não. A EleveAI não começa pelo anúncio. Começamos pela estrutura que mostra o que acontece depois que o contato chega: origem, intenção, atendimento, proposta e venda. O tráfego pode entrar depois, com dados mais claros para tomar decisão."
     },
     {
-      question: "Preciso já anunciar para usar?",
-      answer: "Não. A estrutura funciona mesmo que você ainda não invista em tráfego pago. Começamos organizando o que já chega, seja pelo WhatsApp, indicações ou busca orgânica. Quando os anúncios começarem, a estrutura já estará pronta para rastrear."
+      question: "Isso é só um CRM?",
+      answer: "Não. O painel é apenas a forma visual de acompanhar os dados. A entrega principal é o rastreamento estruturado do caminho do contato até a venda, conectando página, WhatsApp, campanhas e status comercial."
     },
     {
-      question: "Isso substitui meu WhatsApp?",
-      answer: "Não. O WhatsApp continua sendo o canal principal de atendimento. A estrutura adiciona rastreamento, qualificação e organização ao que já chega por lá. Sua equipe continua atendendo normalmente, mas com mais contexto e controle."
+      question: "Preciso investir em anúncios?",
+      answer: "Sim, para crescer com previsibilidade, em algum momento o investimento em anúncios se torna importante. A diferença é que a EleveAI ajuda a fazer isso com mais clareza: antes de simplesmente colocar dinheiro em campanha, estruturamos o rastreamento para entender quais contatos chegam, quais têm intenção real e quais avançam para proposta ou venda. Assim, o investimento em mídia passa a ser guiado por dados, não por tentativa e erro."
+    },
+    {
+      question: "O que exatamente vou conseguir enxergar?",
+      answer: "Você passa a ver de onde veio cada contato, qual serviço ou solução ele procura, se virou conversa, proposta, fechamento ou perda, além dos valores em proposta e valores fechados."
     },
     {
       question: "Minha equipe precisa preencher tudo manualmente?",
-      answer: "Não. A maior parte das informações (origem, campanha, página de entrada, serviço de interesse) é capturada automaticamente. A equipe apenas acompanha o status e atualiza o avanço comercial."
+      answer: "Não. A ideia é reduzir trabalho manual. Parte das informações entra automaticamente, como origem, campanha, página e tipo de contato. A equipe só precisa atualizar o avanço comercial: conversou, proposta, fechado ou perdido."
     },
     {
-      question: "Dá para saber quais campanhas geram vendas?",
-      answer: "Sim. Esse é exatamente o objetivo principal da estrutura. Cada lead é registrado com a origem e campanha que o trouxe. Quando o contato vira venda, você sabe exatamente qual canal gerou aquele resultado."
+      question: "Isso ajuda Google e Meta a trazerem clientes melhores?",
+      answer: "Sim, essa é uma das próximas camadas da estrutura. Quando proposta e fechamento são registrados corretamente, esses dados podem ser preparados para alimentar Google e Meta com sinais mais úteis do que apenas cliques ou visitas."
     },
     {
-      question: "Isso prepara meu negócio para Google e Meta aprenderem com vendas reais?",
-      answer: "Sim. Com o rastreamento correto e os eventos de conversão configurados, Google e Meta aprendem com quem realmente comprou ou contratou, não só com quem clicou. Isso melhora progressivamente a qualidade dos leads dos seus anúncios."
+      question: "Para quais empresas essa estrutura serve?",
+      answer: "Serve para empresas que dependem de atendimento, proposta e acompanhamento comercial para vender: clínicas, estética automotiva, energia solar, serviços de urgência, dedetizadoras, consultorias, prestadores especializados e operações que recebem contatos pelo WhatsApp antes da venda acontecer."
+    },
+    {
+      question: "Em quanto tempo dá para começar?",
+      answer: "A primeira estrutura pode ser montada em etapas. O foco inicial é criar visibilidade: entender de onde vêm os contatos e como eles avançam até proposta ou venda. Depois, a estrutura pode evoluir para otimização de campanhas e integrações mais avançadas."
+    },
+    {
+      question: "Qual é o primeiro passo?",
+      answer: "O primeiro passo é um diagnóstico simples da sua estrutura atual: como os contatos chegam, onde eles se perdem, quais canais você usa e como sua equipe acompanha propostas e fechamentos."
     }
   ];
 
   return (
-    <section id="faq" className="py-32 px-6 scroll-mt-32 bg-graphite">
-      <div className="max-w-3xl mx-auto">
-        <div className="text-center mb-24">
-          <h2 className="text-4xl md:text-5xl lg:text-7xl font-extrabold text-white mb-8 tracking-tight font-manrope leading-tight">Dúvidas Frequentes</h2>
-          <p className="text-gray-400 text-lg leading-relaxed font-sans max-w-2xl mx-auto">Tudo o que você precisa saber sobre a estruturação do seu crescimento digital.</p>
+    <section id="faq" className="py-24 md:py-32 px-6 scroll-mt-32 bg-graphite relative overflow-hidden">
+      <div className="absolute top-0 right-0 w-[520px] h-[520px] bg-primary/[0.06] blur-[140px] rounded-full pointer-events-none" />
+      <div className="max-w-5xl mx-auto relative z-10">
+        <div className="text-center mb-14 md:mb-16">
+          <span className="inline-flex mb-5 rounded-full border border-white/10 bg-white/[0.03] px-4 py-1.5 text-[10px] font-bold uppercase tracking-[0.2em] text-primary">
+            Perguntas frequentes
+          </span>
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white mb-6 tracking-tight font-manrope leading-tight">
+            Antes de rastrear melhor seus contatos
+          </h2>
+          <p className="text-zinc-400 text-base md:text-lg leading-relaxed font-sans max-w-2xl mx-auto">
+            Respostas diretas sobre origem dos contatos, intenção real, propostas, vendas e dados para decidir com mais clareza.
+          </p>
         </div>
-        <div className="space-y-6">
+        <div className="grid gap-3 md:gap-4">
           {faqs.map((f, i) => (
             <FAQItem
               key={i}
               {...f}
+              index={i}
               isOpen={openIndex === i}
               toggle={() => setOpenIndex(openIndex === i ? null : i)}
             />
           ))}
         </div>
+        <div className="mt-12 md:mt-14 rounded-2xl border border-white/[0.08] bg-white/[0.035] p-6 md:p-8 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+          <div>
+            <p className="text-white font-bold text-xl md:text-2xl font-manrope tracking-tight">
+              Entenda onde seus contatos entram, travam e se perdem antes da venda.
+            </p>
+            <p className="mt-2 text-sm md:text-base text-zinc-400">
+              Um diagnóstico simples mostra o que precisa ser rastreado primeiro.
+            </p>
+          </div>
+          <button
+            onClick={onOpenModal}
+            className="group relative flex h-[54px] w-full md:w-auto md:min-w-[280px] items-center justify-center rounded-xl px-7 outline-none cursor-pointer transition-all active:scale-95 bg-white/5 border-none overflow-hidden"
+            type="button"
+          >
+            <div className="absolute inset-[1px] rounded-[11px] bg-[#68259A] group-hover:bg-[#7a32b3] transition-colors shadow-[0_10px_28px_rgba(104,37,154,0.26)]"></div>
+            <span className="relative z-20 flex items-center justify-center gap-3 text-white text-[11px] md:text-[12px] font-bold tracking-[0.12em] uppercase font-manrope">
+              Quero diagnosticar minha estrutura
+              <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
+            </span>
+          </button>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const SEOGuides = () => {
+  return (
+    <section className="py-16 md:py-20 px-6 bg-graphite relative overflow-hidden">
+      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+      <div className="max-w-5xl mx-auto relative z-10">
+        <motion.div
+          initial={{ opacity: 0, y: 18 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 0.55, ease: "easeOut" }}
+          className="rounded-2xl border border-white/[0.08] bg-white/[0.025] p-6 md:p-8"
+        >
+          <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8">
+            <div className="max-w-2xl">
+              <span className="inline-flex mb-4 rounded-full border border-white/10 bg-white/[0.03] px-3.5 py-1.5 text-[10px] font-bold uppercase tracking-[0.2em] text-primary">
+                Guias EleveAI
+              </span>
+              <h2 className="text-2xl md:text-3xl font-extrabold text-white tracking-tight font-manrope">
+                Guias para vender com mais clareza
+              </h2>
+            </div>
+
+            <a
+              href="/como-ter-mais-clientes/"
+              className="group block rounded-xl border border-white/[0.08] bg-black/20 p-5 md:p-6 transition-all duration-300 hover:border-primary/40 hover:bg-white/[0.045] lg:max-w-md"
+            >
+              <h3 className="font-manrope text-lg md:text-xl font-bold text-white leading-snug">
+                Como ter mais clientes entendendo o que realmente gera vendas
+              </h3>
+              <p className="mt-3 text-sm md:text-base leading-relaxed text-zinc-400">
+                Entenda por que mais contatos não bastam se você não sabe de onde vêm, quais têm intenção real e quais viram venda.
+              </p>
+              <span className="mt-5 inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.16em] text-primary transition-colors group-hover:text-white">
+                Ler guia
+                <ArrowRight size={15} className="transition-transform duration-300 group-hover:translate-x-1" />
+              </span>
+            </a>
+          </div>
+        </motion.div>
       </div>
     </section>
   );
@@ -1418,11 +1512,11 @@ const FinalCTA = ({ onOpenModal }: { onOpenModal: () => void }) => {
         >
           <h2 className="text-[2.2rem] sm:text-[3rem] md:text-[4.5rem] font-extrabold text-white mb-10 tracking-tight font-manrope leading-[1.05]">
             Você já recebe contatos. <br className="hidden md:block" />
-            <span className="text-[#B988BF]">Agora precisa de uma estrutura para transformar isso em venda.</span>
+            <span className="text-[#B988BF]">Agora precisa rastrear o que vira proposta e venda.</span>
           </h2>
 
           <p className="text-zinc-400 text-lg md:text-2xl leading-relaxed font-manrope max-w-2xl mb-14 font-light">
-            Organize a entrada dos leads, acompanhe oportunidades e entenda quais canais realmente geram resultado.
+            Entenda a origem dos contatos, acompanhe proposta e venda, e descubra quais canais realmente geram clientes melhores.
           </p>
 
           <div className="flex flex-col items-start gap-8">
@@ -1440,7 +1534,7 @@ const FinalCTA = ({ onOpenModal }: { onOpenModal: () => void }) => {
               </div>
               <div className="absolute inset-[1px] rounded-[11px] bg-gradient-to-r from-[#5B2E8A] to-[#3A1660] group-hover:from-[#6B3FA0] group-hover:to-[#4A2070] transition-colors shadow-[0_10px_40px_rgba(91,46,138,0.3)]"></div>
               <span className="relative z-20 flex items-center justify-center text-white text-[12px] md:text-[13px] font-bold tracking-[0.1em] uppercase font-manrope">
-                Quero estruturar minha aquisição →
+                Quero rastrear melhor meus contatos →
               </span>
             </button>
             <p className="text-zinc-500 text-[11px] md:text-xs font-bold uppercase tracking-[0.2em] opacity-70">
@@ -1513,13 +1607,6 @@ const Footer = ({ onPrivacy, onTerms, onHome, onWhatsApp }: { onPrivacy: () => v
               </li>
               <li className="flex justify-between border-b border-zinc-800 pb-2">
                 <span>Sábados</span> <span className="text-gray-300">09h - 12h</span>
-              </li>
-              <li className="flex items-center gap-2 text-[#EEC6A2] font-semibold pt-2 justify-start">
-                <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
-                </span>
-                Agente AI: 24h / 7 dias
               </li>
             </ul>
           </div>
@@ -1826,10 +1913,10 @@ const RaioXSection = ({ onOpenModal }: { onOpenModal: () => void }) => {
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-medium text-white mb-6 tracking-tighter font-manrope leading-[1.1]">
-            Raio-X da sua <span className="text-gradient hover-glow">estrutura de aquisição</span>
+            Raio-X do seu <span className="text-gradient hover-glow">rastreamento comercial</span>
           </h2>
           <p className="text-zinc-400 text-lg leading-relaxed font-sans max-w-3xl mx-auto">
-            O problema não é só atrair contatos. É criar uma estrutura que permita rastrear, atender com contexto, acompanhar propostas e escalar.
+            O problema não é só atrair contatos. É rastrear origem, intenção, proposta e venda para decidir com dados.
           </p>
         </div>
 
@@ -1886,7 +1973,7 @@ const RaioXSection = ({ onOpenModal }: { onOpenModal: () => void }) => {
             </div>
             <div className="absolute inset-[1px] rounded-2xl bg-black"></div>
             <span className="relative z-20 flex items-center justify-center gap-4 text-base md:text-lg font-bold text-white tracking-wide uppercase font-manrope">
-              Quero ver onde estou perdendo pacientes →
+              Quero ver onde meus contatos se perdem →
               <ArrowRight size={22} className="transition-transform duration-300 group-hover:translate-x-1" />
             </span>
           </button>
@@ -2101,7 +2188,8 @@ const App = () => {
             <AutomacaoClinica />
             <RaioXSection onOpenModal={handleOpenModal} />
 
-            <FAQ />
+            <FAQ onOpenModal={handleOpenModal} />
+            <SEOGuides />
             <FinalCTA onOpenModal={handleOpenModal} />
           </>
         </main>
