@@ -63,15 +63,15 @@ const getStatusColor = (status: string) => {
 
 // --- Components ---
 const MetricCard = ({ title, value, icon: Icon, colorClass, sub }: any) => (
-  <div className="bg-[#111113] border border-white/[0.06] rounded-xl p-4 flex flex-col justify-between hover:border-white/10 transition-all duration-200 group">
-    <div className="flex items-center justify-between mb-3">
-      <p className="text-[11px] font-semibold text-zinc-500 uppercase tracking-widest">{title}</p>
+  <div className="bg-[#141417] md:bg-[#111113] border border-white/[0.08] md:border-white/[0.06] rounded-xl p-3 md:p-4 flex flex-col justify-between hover:border-white/10 transition-all duration-200 group">
+    <div className="flex items-center justify-between mb-2 md:mb-3">
+      <p className="text-[10px] md:text-[11px] font-bold text-zinc-400 md:text-zinc-500 uppercase tracking-widest">{title}</p>
       <div className={`p-1.5 rounded-lg ${colorClass} opacity-70 group-hover:opacity-100 transition-opacity`}>
-        <Icon size={14} />
+        <Icon className="w-3.5 h-3.5" />
       </div>
     </div>
     <div>
-      <span className="text-2xl font-bold text-white tracking-tight">{value}</span>
+      <span className="text-xl md:text-2xl font-bold text-white tracking-tight">{value}</span>
       {sub && <p className="text-[10px] text-zinc-600 mt-1">{sub}</p>}
     </div>
   </div>
@@ -282,34 +282,48 @@ const LeadDrawer = ({ lead, isOpen, onClose, updateField }: any) => {
               </div>
               <button onClick={onClose} className="p-2 text-zinc-400 hover:text-white bg-white/5 rounded-full"><X size={16} /></button>
             </div>
+            {/* Mobile Hero Summary */}
+            <div className="px-5 py-4 border-b border-white/[0.06] bg-[#0D0D0F] shrink-0">
+              <div className="flex items-start justify-between mb-3">
+                <div className="flex-1 min-w-0 pr-3">
+                  <p className="text-lg font-bold text-white truncate leading-none">{lead.lead_name || 'Sem nome'}</p>
+                  <p className="text-xs text-zinc-400 font-mono mt-1">{lead.lead_phone || '—'}</p>
+                  {lead.service_interest && <p className="text-[11px] text-zinc-500 mt-1">{lead.service_interest}</p>}
+                </div>
+                <div className="flex flex-col items-end gap-1.5 shrink-0">
+                  <span className={`px-2 py-1 rounded text-[10px] border font-bold uppercase tracking-widest ${getStatusColor(lead.status || 'novo')}`}>{statusLabels[lead.status || 'novo'] || lead.status || 'novo'}</span>
+                  <span className={`px-2 py-0.5 rounded text-[9px] border font-semibold ${getTempColor(temp)}`}>{temp}</span>
+                </div>
+              </div>
+              <div className="flex gap-2">
+                {lead.lead_phone && (
+                  <a href={`https://wa.me/55${lead.lead_phone.replace(/\D/g, '')}`} target="_blank" rel="noreferrer"
+                    className="flex-1 flex items-center justify-center gap-1.5 h-9 bg-[#25D366]/10 border border-[#25D366]/20 text-[#25D366] rounded-lg text-xs font-bold transition-colors">
+                    <MessageCircle size={14} /> WhatsApp
+                  </a>
+                )}
+                {lead.valor && (
+                  <div className="flex-1 bg-emerald-500/5 border border-emerald-500/15 rounded-lg px-3 h-9 flex items-center justify-center">
+                    <span className="text-emerald-400 font-bold text-sm">R$ {Number(lead.valor).toLocaleString('pt-BR')}</span>
+                  </div>
+                )}
+              </div>
+            </div>
+
             {/* Content */}
             <div className="flex-1 overflow-y-auto px-5 py-5 space-y-6 scrollbar-hide">
-              <section>
-                <div className="flex items-center justify-between mb-3">
-                  <h3 className="text-[10px] font-bold uppercase tracking-widest text-zinc-500">Contato</h3>
-                  <span className={`px-2 py-0.5 rounded text-[10px] border font-bold ${getTempColor(temp)}`}>{temp}</span>
-                </div>
-                <div className="bg-[#0A0A0A] rounded-xl p-4 border border-white/5 space-y-3">
-                  <div><p className="text-[10px] text-zinc-500 mb-0.5">Nome</p><p className="text-sm text-white font-semibold">{lead.lead_name || 'Sem nome'}</p></div>
-                  <div>
-                    <p className="text-[10px] text-zinc-500 mb-0.5">Telefone</p>
-                    <div className="flex items-center justify-between">
-                      <p className="text-sm text-white font-mono">{lead.lead_phone || '—'}</p>
-                      {lead.lead_phone && (
-                        <a href={`https://wa.me/55${lead.lead_phone.replace(/\D/g,'')}`} target="_blank" rel="noreferrer"
-                          className="flex items-center gap-1 px-3 h-8 bg-[#25D366]/10 border border-[#25D366]/20 text-[#25D366] rounded-lg text-xs font-bold">
-                          <MessageCircle size={12} /> WA
-                        </a>
-                      )}
-                    </div>
+              {lead.lead_email && (
+                <section>
+                  <h3 className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 mb-2">Email</h3>
+                  <div className="bg-[#0A0A0A] rounded-xl p-3 border border-white/[0.06]">
+                    <p className="text-sm text-white break-all">{lead.lead_email}</p>
                   </div>
-                  {lead.lead_email && <div><p className="text-[10px] text-zinc-500 mb-0.5">Email</p><p className="text-sm text-white">{lead.lead_email}</p></div>}
-                </div>
-              </section>
+                </section>
+              )}
+              
               <section>
                 <h3 className="text-[10px] font-bold uppercase tracking-widest text-zinc-500 mb-3">Gestão</h3>
-                <div className="bg-[#0A0A0A] rounded-xl p-4 border border-white/5 space-y-4">
-                  {lead.service_interest && <div><p className="text-[10px] text-zinc-500 mb-0.5">Serviço</p><p className="text-sm text-white">{lead.service_interest}</p></div>}
+                <div className="bg-[#0A0A0A] rounded-xl p-4 border border-white/[0.06] space-y-4">
                   <div>
                     <p className="text-[10px] text-zinc-500 mb-1.5">Status</p>
                     <div className="relative">
@@ -367,77 +381,53 @@ const statusLabels: Record<string, string> = {
 const MobileLeadCard = ({ lead, onOpen, onQuickAction }: any) => {
   const temp = getTemperature(lead);
   return (
-    <div className="bg-[#121214] border border-white/5 rounded-2xl p-4 space-y-3">
+    <div className="bg-[#141417] border border-white/[0.08] rounded-xl p-3.5 space-y-3 shadow-sm">
       {/* Top row */}
-      <div className="flex items-start justify-between gap-2">
+      <div className="flex items-start justify-between gap-3">
         <div className="flex-1 min-w-0">
-          <p className="text-base font-bold text-white truncate">{lead.lead_name || 'Sem nome'}</p>
-          <p className="text-sm text-zinc-400 font-mono mt-0.5">{lead.lead_phone || '—'}</p>
+          <p className="text-base font-bold text-white truncate leading-none">{lead.lead_name || 'Sem nome'}</p>
+          <p className="text-[11px] text-zinc-400 font-mono mt-1">{lead.lead_phone || '—'}</p>
         </div>
-        <div className="flex flex-col items-end gap-1.5 shrink-0">
-          <span className={`px-2 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider border ${getStatusColor(lead.status || 'novo')}`}>
+        <div className="flex flex-col items-end gap-1 shrink-0">
+          <span className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-widest border ${getStatusColor(lead.status || 'novo')}`}>
             {statusLabels[lead.status || 'novo'] || 'Novo'}
           </span>
-          <span className={`px-2 py-0.5 rounded text-[10px] font-bold border ${getTempColor(temp)}`}>{temp}</span>
+          <span className={`px-2 py-0.5 rounded text-[9px] font-semibold border ${getTempColor(temp)}`}>{temp}</span>
         </div>
       </div>
 
       {/* Info row */}
-      <div className="grid grid-cols-2 gap-x-4 gap-y-1.5 text-xs">
+      <div className="grid grid-cols-2 gap-2 text-[11px] bg-[#0A0A0A] rounded-lg p-2.5 border border-white/[0.06]">
         <div>
-          <p className="text-zinc-600 text-[10px] uppercase tracking-wider mb-0.5">Serviço</p>
+          <p className="text-zinc-500 font-bold uppercase tracking-widest mb-0.5" style={{ fontSize: '9px' }}>Serviço</p>
           <p className="text-zinc-300 truncate">{lead.service_interest || '—'}</p>
         </div>
         <div>
-          <p className="text-zinc-600 text-[10px] uppercase tracking-wider mb-0.5">Origem</p>
-          <p className="text-zinc-300 capitalize truncate">{lead.utm_source || 'Direto'}</p>
-        </div>
-        <div>
-          <p className="text-zinc-600 text-[10px] uppercase tracking-wider mb-0.5">Campanha</p>
-          <p className="text-zinc-400 truncate">{lead.utm_campaign || '—'}</p>
-        </div>
-        <div>
-          <p className="text-zinc-600 text-[10px] uppercase tracking-wider mb-0.5">Entrada</p>
-          <p className="text-zinc-400">{formatBrazilDate(lead.created_at || lead.click_time)}</p>
+          <p className="text-zinc-500 font-bold uppercase tracking-widest mb-0.5" style={{ fontSize: '9px' }}>Origem / Campanha</p>
+          <p className="text-zinc-300 truncate capitalize">{lead.utm_source || 'Direto'} <span className="text-zinc-500">• {lead.utm_campaign || '—'}</span></p>
         </div>
       </div>
 
-      {lead.valor && (
-        <div className="bg-emerald-500/5 border border-emerald-500/15 rounded-lg px-3 py-2">
-          <p className="text-[10px] text-emerald-600 uppercase tracking-wider mb-0.5">Valor potencial</p>
-          <p className="text-emerald-400 font-bold text-sm">R$ {Number(lead.valor).toLocaleString('pt-BR')}</p>
-        </div>
-      )}
+      <div className="flex items-center justify-between">
+        {lead.valor ? (
+          <p className="text-[11px] font-bold text-emerald-400">R$ {Number(lead.valor).toLocaleString('pt-BR')}</p>
+        ) : (
+          <p className="text-[10px] text-zinc-600 italic">Sem valor</p>
+        )}
+        <p className="text-[9px] text-zinc-500">{formatBrazilDate(lead.created_at || lead.click_time)}</p>
+      </div>
 
       {/* Action buttons */}
-      <div className="flex items-center gap-2 pt-1 border-t border-white/5">
+      <div className="flex items-center gap-2 pt-2 border-t border-white/[0.04]">
         <button
           onClick={(e) => onQuickAction(e, lead.id, 'whatsapp', lead)}
-          className="flex-1 flex items-center justify-center gap-1.5 h-11 bg-[#25D366]/10 border border-[#25D366]/20 text-[#25D366] rounded-xl text-xs font-bold"
+          className="flex-1 flex items-center justify-center gap-1.5 h-10 bg-[#25D366]/10 hover:bg-[#25D366]/20 border border-[#25D366]/20 text-[#25D366] rounded-lg text-[11px] font-bold transition-colors"
         >
           <MessageCircle size={14} /> WhatsApp
         </button>
-        <button
-          onClick={(e) => onQuickAction(e, lead.id, 'obs', lead)}
-          className="flex items-center justify-center h-11 w-11 bg-white/5 border border-white/5 text-zinc-400 rounded-xl"
-          title="Observação"
-        >
-          <Edit2 size={14} />
-        </button>
-        <button
-          onClick={(e) => onQuickAction(e, lead.id, 'valor', lead)}
-          className="flex items-center justify-center h-11 w-11 bg-white/5 border border-white/5 text-zinc-400 rounded-xl"
-          title="Valor"
-        >
-          <DollarSign size={14} />
-        </button>
-        <button
-          onClick={() => onOpen(lead)}
-          className="flex items-center justify-center h-11 w-11 bg-white/5 border border-white/5 text-zinc-400 rounded-xl"
-          title="Detalhes"
-        >
-          <ChevronDown size={14} />
-        </button>
+        <button onClick={(e) => onQuickAction(e, lead.id, 'obs', lead)} className="flex items-center justify-center h-10 w-10 bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.06] text-zinc-400 rounded-lg transition-colors" title="Observação"><Edit2 size={13} /></button>
+        <button onClick={(e) => onQuickAction(e, lead.id, 'valor', lead)} className="flex items-center justify-center h-10 w-10 bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.06] text-zinc-400 rounded-lg transition-colors" title="Valor"><DollarSign size={13} /></button>
+        <button onClick={() => onOpen(lead)} className="flex items-center justify-center h-10 w-10 bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.06] text-white rounded-lg transition-colors" title="Detalhes"><Search size={13} /></button>
       </div>
     </div>
   );
@@ -681,10 +671,16 @@ export const AcquisitionDashboard = () => {
     const propostas = filteredLeads.filter(l => l.status === 'proposta').length;
     const fechados = filteredLeads.filter(l => l.status === 'fechado').length;
     const valorPotencial = filteredLeads
-      .filter(l => l.status !== 'perdido' && l.status !== 'arquivado')
+      .filter(l => l.status === 'proposta')
       .reduce((sum, l) => sum + (Number(l.valor) || 0), 0);
+    const valorFechado = filteredLeads
+      .filter(l => l.status === 'fechado')
+      .reduce((sum, l) => {
+        const val = l.conversion_value != null && l.conversion_value !== '' ? Number(l.conversion_value) : Number(l.valor);
+        return sum + (val || 0);
+      }, 0);
 
-    return { total, novos, conversou, propostas, fechados, valorPotencial };
+    return { total, novos, conversou, propostas, fechados, valorPotencial, valorFechado };
   }, [filteredLeads]);
 
   if (authLoading) {
@@ -785,20 +781,24 @@ export const AcquisitionDashboard = () => {
       </AnimatePresence>
 
       {/* Header */}
-      <header className="sticky top-0 z-40 bg-[#0A0A0A]/90 backdrop-blur-xl border-b border-white/5">
+      <header className="sticky top-0 z-40 bg-[#0A0A0A]/90 backdrop-blur-xl border-b border-white/[0.06]">
         {/* Desktop header row */}
-        <div className="max-w-[1400px] mx-auto px-6 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center shrink-0">
-              <Activity size={14} className="text-zinc-400" />
+        <div className="max-w-[1400px] mx-auto px-4 md:px-6 h-14 md:h-16 flex items-center justify-between">
+          <div className="flex items-center gap-2 md:gap-3">
+            <div className="w-7 h-7 md:w-8 md:h-8 rounded-lg bg-white/[0.04] border border-white/[0.06] flex items-center justify-center shrink-0">
+              <Activity size={12} className="text-zinc-400 md:hidden" />
+              <Activity size={14} className="text-zinc-400 hidden md:block" />
             </div>
             <div className="min-w-0">
-              <h1 className="text-sm font-bold text-white leading-tight truncate">Central de Inteligência de Aquisição</h1>
-              <p className="text-[10px] text-zinc-600 md:hidden">Leads e oportunidades</p>
+              <h1 className="text-sm md:text-[15px] font-bold text-white leading-tight truncate">
+                <span className="md:hidden">Central de Aquisição</span>
+                <span className="hidden md:inline">Central de Inteligência</span>
+              </h1>
+              <p className="text-[9px] text-zinc-600 hidden md:block uppercase tracking-wider font-bold mt-0.5">Aquisição</p>
             </div>
           </div>
           <div className="flex items-center gap-3">
-            <div className="hidden md:flex bg-[#121214] border border-white/5 rounded-lg p-1">
+            <div className="hidden md:flex bg-[#111113] border border-white/[0.06] rounded-lg p-1">
               {['hoje', '7d', '30d', 'todos'].map(period => (
                 <button key={period} onClick={() => setDateFilter(period)}
                   className={`px-3 py-1.5 text-[11px] font-bold uppercase tracking-wider rounded-md transition-all ${dateFilter === period ? 'bg-white/10 text-white shadow-sm' : 'text-zinc-500 hover:text-zinc-300'}`}>
@@ -806,38 +806,49 @@ export const AcquisitionDashboard = () => {
                 </button>
               ))}
             </div>
-            <div className="w-px h-6 bg-white/5 mx-1 hidden md:block" />
-            <button onClick={handleLogout} className="text-xs font-bold uppercase tracking-wider text-zinc-500 hover:text-white transition-colors flex items-center gap-1.5">
-              <LogOut size={14} /> <span className="hidden md:inline">Sair</span>
+            <div className="w-px h-6 bg-white/[0.06] mx-1 hidden md:block" />
+            <button onClick={handleLogout} className="text-[10px] md:text-xs font-bold uppercase tracking-wider text-zinc-500 hover:text-white transition-colors flex items-center gap-1.5 bg-white/[0.04] md:bg-transparent px-3 py-1.5 md:p-0 rounded-lg">
+              <LogOut size={12} className="md:w-3.5 md:h-3.5" /> <span className="hidden md:inline">Sair</span>
             </button>
           </div>
         </div>
         {/* Mobile period pills */}
-        <div className="md:hidden px-4 pb-3 flex gap-2 overflow-x-auto scrollbar-hide">
+        <div className="md:hidden px-4 pb-2 flex gap-2 overflow-x-auto scrollbar-hide">
           {[['hoje', 'Hoje'], ['7d', '7 dias'], ['30d', '30 dias'], ['todos', 'Todos']].map(([v, l]) => (
             <button key={v} onClick={() => setDateFilter(v)}
-              className={`shrink-0 px-4 h-8 rounded-full text-xs font-bold border transition-all ${
-                dateFilter === v ? 'bg-white text-black border-white' : 'bg-white/5 text-zinc-400 border-white/10'
+              className={`shrink-0 px-3 h-7 rounded-md text-[10px] font-bold uppercase tracking-wider border transition-all ${
+                dateFilter === v ? 'bg-white text-black border-white' : 'bg-[#111113] text-zinc-400 border-white/[0.06]'
               }`}>{l}
             </button>
           ))}
         </div>
       </header>
 
-      <main className="max-w-[1400px] mx-auto px-4 md:px-6 py-4 md:py-8">
-         <div className="mb-4 md:mb-8">
+      <main className="max-w-[1400px] mx-auto px-4 md:px-6 py-3 md:py-8">
+         <div className="mb-4 md:mb-8 hidden md:block">
            <h2 className="text-lg md:text-xl font-bold text-white mb-1">Visão Geral</h2>
            <p className="text-xs md:text-sm text-zinc-500">Leads e oportunidades comerciais em tempo real.</p>
          </div>
 
          {/* Cards Superiores */}
-         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-2 md:gap-3 mb-4 md:mb-8">
-           <MetricCard title="Novos" value={metrics.novos} icon={Users} colorClass="bg-blue-500/10 text-blue-400" />
-           <MetricCard title="Conversou" value={metrics.conversou} icon={MessageCircle} colorClass="bg-yellow-500/10 text-yellow-400" />
-           <MetricCard title="Propostas" value={metrics.propostas} icon={FileText} colorClass="bg-purple-500/10 text-purple-400" />
-           <MetricCard title="Fechados" value={metrics.fechados} icon={CheckCircle} colorClass="bg-emerald-500/10 text-emerald-400" />
-           <MetricCard title="Total" value={metrics.total} icon={Activity} colorClass="bg-white/10 text-white" />
-           <MetricCard title="Valor potencial" value={`R$ ${metrics.valorPotencial.toLocaleString('pt-BR')}`} icon={DollarSign} colorClass="bg-zinc-800 text-white" />
+         <div className="flex flex-col gap-2.5 md:gap-4 mb-3 md:mb-8">
+           {/* Linha 1 - Funil Operacional */}
+           <div className="grid grid-cols-2 md:grid-cols-5 gap-2 md:gap-3">
+             <MetricCard title="Total" value={metrics.total} icon={Activity} colorClass="bg-white/10 text-white" />
+             <MetricCard title="Novos" value={metrics.novos} icon={Users} colorClass="bg-blue-500/10 text-blue-400" />
+             <MetricCard title="Conversou" value={metrics.conversou} icon={MessageCircle} colorClass="bg-yellow-500/10 text-yellow-400" />
+             <MetricCard title="Propostas" value={metrics.propostas} icon={FileText} colorClass="bg-white/10 text-zinc-300" />
+             <MetricCard title="Fechados" value={metrics.fechados} icon={CheckCircle} colorClass="bg-white/10 text-zinc-300" />
+           </div>
+           
+           {/* Linha 2 - Financeiro */}
+           <div className="pt-0.5 md:pt-0">
+             <div className="md:hidden mb-1 px-1"><p className="text-[9px] font-bold uppercase tracking-widest text-zinc-500">Resumo Financeiro</p></div>
+             <div className="grid grid-cols-2 md:grid-cols-2 gap-1.5 md:gap-3">
+               <MetricCard title="Em proposta" value={`R$ ${metrics.valorPotencial.toLocaleString('pt-BR')}`} icon={DollarSign} colorClass="bg-purple-500/10 text-purple-400" />
+               <MetricCard title="Fechado" value={`R$ ${metrics.valorFechado.toLocaleString('pt-BR')}`} icon={DollarSign} colorClass="bg-emerald-500/10 text-emerald-400" />
+             </div>
+           </div>
          </div>
 
          {/* Filtros Rápidos */}
@@ -897,19 +908,18 @@ export const AcquisitionDashboard = () => {
            </div>
          </div>
          {/* Mobile search + filter trigger */}
-         <div className="md:hidden flex items-center gap-2 mb-4">
+         <div className="md:hidden flex gap-2 mb-2">
            <div className="relative flex-1">
              <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500" />
-             <input type="text" placeholder="Buscar lead..."
+             <input type="text" placeholder="Buscar oportunidade..."
                value={searchFilter} onChange={(e) => setSearchFilter(e.target.value)}
-               className="w-full bg-[#121214] border border-white/5 rounded-xl pl-9 pr-4 h-11 text-sm text-white placeholder-zinc-600 focus:outline-none focus:border-white/20 transition-all" />
+               className="w-full h-10 bg-[#111113] border border-white/[0.06] rounded-xl pl-9 pr-4 text-xs text-white focus:outline-none focus:border-white/20" />
            </div>
            <button onClick={() => setMobileFiltersOpen(true)}
-             className="relative flex items-center gap-2 h-11 px-4 bg-[#121214] border border-white/5 rounded-xl text-zinc-400 text-sm font-bold shrink-0">
+             className="relative w-10 h-10 shrink-0 bg-[#111113] border border-white/[0.06] rounded-xl flex items-center justify-center text-zinc-400 transition-colors active:bg-white/[0.04]">
              <SlidersHorizontal size={14} />
-             <span className="text-xs">Filtros</span>
              {(statusFilter !== 'todos' || typeFilter !== 'todos' || originFilter !== 'todos') && (
-               <span className="absolute -top-1 -right-1 w-4 h-4 bg-white text-black text-[9px] font-black rounded-full flex items-center justify-center">
+               <span className="absolute -top-1 -right-1 w-3.5 h-3.5 bg-white text-black text-[9px] font-black rounded-full flex items-center justify-center">
                  {[statusFilter, typeFilter, originFilter].filter(f => f !== 'todos').length}
                </span>
              )}

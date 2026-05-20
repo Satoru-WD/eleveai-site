@@ -44,11 +44,12 @@ import {
   ChevronRight,
   ChevronLeft,
   Quote,
-  ShieldCheck
+  ShieldCheck,
+  Filter
 } from 'lucide-react';
 
 // Configuration
-const WHATSAPP_URL = "https://wa.me/5519994671493?text=Ol%C3%A1%21+Gostaria+de+entender+como+a+EleveAI+pode+ajudar+minha+cl%C3%ADnica+a+atrair+leads+mais+qualificados+e+melhorar+a+convers%C3%A3o+dos+agendamentos.";
+const WHATSAPP_URL = "https://wa.me/5519994671493?text=Ol%C3%A1%21+Gostaria+de+entender+como+a+EleveAI+pode+ajudar+meu+neg%C3%B3cio+a+estruturar+a+aquisi%C3%A7%C3%A3o+de+leads+e+converter+mais+oportunidades+em+vendas.";
 
 
 
@@ -104,7 +105,7 @@ const DiagnosticModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => 
       lead_type: "diagnostic_form",
       status: "novo",
       qualification_rule: "diagnostic_modal_completed",
-      observacao: `Clínica: ${formDataObj['Nome_Clinica'] || '-'}\nOrigem dos contatos: ${answers['Q1_Origem_Contatos'] || '-'}\nCampanhas/criativos: ${answers['Q2_Campanhas_Criativos'] || '-'}\nIntenção do lead: ${answers['Q3_Intencao_Lead'] || '-'}`,
+      observacao: `Negócio: ${formDataObj['Nome_Negocio'] || '-'}\nOrigem dos contatos: ${answers['Q1_Origem_Contatos'] || '-'}\nCampanhas/canais: ${answers['Q2_Campanhas_Criativos'] || '-'}\nIntenção do lead: ${answers['Q3_Intencao_Lead'] || '-'}`,
       utm_source: localStorage.getItem('utm_source') || null,
       utm_campaign: localStorage.getItem('utm_campaign') || null,
       utm_content: localStorage.getItem('utm_content') || null,
@@ -141,21 +142,21 @@ const DiagnosticModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => 
   const questions = [
     {
       id: "Q1_Origem_Contatos",
-      title: "Hoje sua clínica sabe de onde vêm os contatos que chegam pelo WhatsApp?",
+      title: "Hoje seu negócio sabe de onde vêm os contatos que chegam pelo WhatsApp?",
       options: ["Sim, com clareza", "Tenho uma noção", "Não sei com precisão"],
       tip: "Entender a origem dos contatos mostra quais canais realmente geram oportunidades e evita investir no escuro."
     },
     {
       id: "Q2_Campanhas_Criativos",
-      title: "Vocês conseguem identificar quais campanhas, páginas ou criativos geram os melhores contatos?",
+      title: "Vocês conseguem identificar quais campanhas ou canais geram os melhores contatos?",
       options: ["Sim", "Parcialmente", "Não"],
-      tip: "Quando a clínica sabe quais campanhas geram contatos melhores, fica mais fácil direcionar verba para o que realmente traz pacientes."
+      tip: "Quando o negócio sabe quais campanhas geram contatos melhores, fica mais fácil direcionar verba para o que realmente traz clientes."
     },
     {
       id: "Q3_Intencao_Lead",
-      title: "Hoje vocês conseguem separar curiosos de pessoas com real intenção de agendar?",
+      title: "Hoje vocês conseguem separar curiosos de pessoas com real intenção de compra ou contratação?",
       options: ["Sim", "Parcialmente", "Não"],
-      tip: "Separar curiosos de contatos com intenção real ajuda a equipe a priorizar quem tem mais chance de virar agendamento."
+      tip: "Separar curiosos de contatos com intenção real ajuda a equipe a priorizar quem tem mais chance de virar proposta ou venda."
     }
   ];
 
@@ -190,7 +191,7 @@ const DiagnosticModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => 
                 <CheckCircle2 size={32} />
               </div>
               <h3 className="text-2xl font-bold text-white mb-2">Análise Solicitada</h3>
-              <p className="text-gray-400">Nossa equipe estratégica analisará os dados da sua clínica e entrará em contato em breve.</p>
+              <p className="text-gray-400">Nossa equipe analisará a estrutura de aquisição do seu negócio e entrará em contato em breve.</p>
               <button
                 onClick={onClose}
                 className="mt-8 w-full py-4 bg-white/5 hover:bg-white/10 text-white rounded-2xl font-bold uppercase tracking-[0.2em] text-[10px] transition-all border border-zinc-800"
@@ -201,7 +202,7 @@ const DiagnosticModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => 
           ) : step <= 3 ? (
             <div key={step}>
               <div className="flex justify-between items-end mb-1">
-                <h3 className="text-lg md:text-xl font-bold text-white max-w-xs leading-tight">Avalie a maturidade digital da sua clínica.</h3>
+                <h3 className="text-lg md:text-xl font-bold text-white max-w-xs leading-tight">Avalie a estrutura de aquisição do seu negócio.</h3>
               </div>
               <p className="text-[11px] text-gray-400 mb-2">São só 3 perguntas rápidas. Leva menos de 15 segundos.</p>
               <div className="flex justify-between items-end mb-2">
@@ -241,9 +242,9 @@ const DiagnosticModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => 
               <div className="w-16 h-16 bg-[#B988BF]/10 text-[#B988BF] rounded-full flex items-center justify-center mx-auto mb-6 shadow-glow">
                 <Sparkles size={32} />
               </div>
-              <h3 className="text-xl md:text-2xl font-bold text-white mb-4">Sua clínica está preparada para crescer?</h3>
+              <h3 className="text-xl md:text-2xl font-bold text-white mb-4">Seu negócio está pronto para crescer de forma previsível?</h3>
               <p className="text-gray-400 text-sm md:text-base mb-8 leading-relaxed">
-                Receba uma análise estratégica sobre site, rastreamento, anúncios e automação para escalar seus agendamentos de forma previsível.
+                Receba uma análise estratégica sobre rastreamento, estrutura de aquisição, CRM e automação para escalar suas vendas de forma previsível.
               </p>
 
               <form onSubmit={handleSubmit} className="space-y-4 text-left">
@@ -253,8 +254,8 @@ const DiagnosticModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => 
                 </div>
 
                 <div>
-                  <label htmlFor="diag-clinica" className="block text-[10px] font-bold uppercase tracking-wider text-gray-500 mb-1.5 ml-1">Nome da Clínica</label>
-                  <input id="diag-clinica" required type="text" name="Nome_Clinica" className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#B988BF] transition-all" placeholder="Como se chama sua clínica?" />
+                  <label htmlFor="diag-negocio" className="block text-[10px] font-bold uppercase tracking-wider text-gray-500 mb-1.5 ml-1">Nome do Negócio</label>
+                  <input id="diag-negocio" required type="text" name="Nome_Negocio" className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#B988BF] transition-all" placeholder="Como se chama seu negócio?" />
                 </div>
 
                 <div>
@@ -461,7 +462,7 @@ const Hero = ({ onOpenModal }: { onOpenModal: () => void }) => {
         
         {/* Main container */}
         <div className="max-w-[1200px] mx-auto px-5 sm:px-6 relative z-10">
-          <div className="flex flex-col lg:flex-row lg:items-center text-center lg:text-left gap-8 lg:gap-20">
+          <div className="flex flex-col lg:flex-row lg:items-center text-center lg:text-left gap-8 lg:gap-16">
 
              {/* Immersive Background Image (Mobile Only) */}
              <div className="absolute inset-0 z-0 lg:hidden overflow-hidden">
@@ -475,154 +476,297 @@ const Hero = ({ onOpenModal }: { onOpenModal: () => void }) => {
                <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-[#0A0A0B] via-[#0A0A0B] to-transparent" />
              </div>
 
-             {/* ========== CONTENT OVERLAY ========== */}
-             <div className="w-full lg:w-[48%] flex flex-col items-center lg:items-start pt-2 lg:pt-0 relative z-20">
+             {/* ========== LEFT COLUMN ========== */}
+             <div className="w-full lg:w-[46%] flex flex-col items-center lg:items-start pt-2 lg:pt-0 relative z-20">
                
-               {/* Headline - Maximized Top Position */}
+
+               {/* Headline */}
                <motion.h1 
                  initial={{ opacity: 0, y: 20 }}
                  whileInView={{ opacity: 1, y: 0 }}
                  viewport={{ once: true }}
                  transition={{ duration: 0.7, delay: 0.1 }}
-                 className="text-[1.85rem] sm:text-[2.4rem] md:text-[3.8rem] lg:text-[4rem] font-extrabold leading-[1.05] tracking-tight text-white font-manrope text-center lg:text-left mb-5 lg:mb-6 mt-0 w-[95%] max-w-[500px] lg:max-w-none lg:w-full"
+                 className="text-[1.85rem] sm:text-[2.4rem] md:text-[3.8rem] lg:text-[3.6rem] font-extrabold leading-[1.05] tracking-tight text-white font-manrope text-center lg:text-left mb-5 lg:mb-6 mt-0 w-[95%] max-w-[500px] lg:max-w-none lg:w-full"
                >
-                 Sem um processo claro, sua clínica gera interesse mas <span className="text-[#B988BF]">não transforma em agendamentos.</span>
+                 {/* Desktop headline */}
+                 <span className="hidden lg:inline">
+                   Transforme contatos soltos em{' '}
+                   <span className="text-[#B988BF]">oportunidades prontas para venda.</span>
+                 </span>
+                 {/* Mobile headline — kept as was */}
+                 <span className="lg:hidden">
+                   Transforme contatos soltos em oportunidades organizadas para vender com mais previsibilidade.<span className="text-[#B988BF]"></span>
+                 </span>
                </motion.h1>
 
-               {/* Desktop only image - removed from mobile flow here to avoid duplication */}
-               <div className="hidden lg:block w-full mb-8">
-                 {/* ... content stays the same for desktop ... */}
-               </div>
+               {/* Subtitle */}
+               <motion.p 
+                 initial={{ opacity: 0, y: 15 }}
+                 animate={{ opacity: 1, y: 0 }}
+                 transition={{ duration: 0.5, delay: 0.3 }}
+                 className="text-[14px] sm:text-[15px] md:text-lg text-zinc-400 max-w-[480px] lg:max-w-[440px] mb-8 lg:mb-8 leading-relaxed font-light relative z-10 text-center lg:text-left"
+               >
+                 {/* Desktop subtitle */}
+                 <span className="hidden lg:inline">
+                   Estruturamos o caminho entre página, WhatsApp, rastreamento e CRM para mostrar de onde vêm seus contatos, quais têm intenção real e quais avançam para proposta ou venda.
+                 </span>
+                 {/* Mobile subtitle */}
+                 <span className="lg:hidden">
+                   Uma estrutura de aquisição que conecta página, WhatsApp, rastreamento e CRM para mostrar de onde vêm seus contatos, quais têm intenção real e quais viram proposta ou venda.
+                 </span>
+               </motion.p>
 
-              {/* 2. Authority Strategy Line */}
-              <motion.p 
-                initial={{ opacity: 0, y: 15 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.3 }}
-                className="text-[14px] sm:text-[15px] md:text-lg text-zinc-400 max-w-[480px] lg:max-w-xl mb-8 lg:mb-8 leading-relaxed font-light relative z-10"
-              >
-                Estratégia construída com base em mais de 10 anos em vendas e conversão.
-              </motion.p>
+               {/* Trust Blocks - Mobile only */}
+               <motion.div 
+                 initial={{ opacity: 0, y: 15 }}
+                 animate={{ opacity: 1, y: 0 }}
+                 transition={{ duration: 0.5, delay: 0.4 }}
+                 className="lg:hidden w-full mb-8"
+               >
+                 <div className="flex items-center justify-center gap-3">
+                   <div className="w-8 h-8 rounded-full flex items-center justify-center">
+                     <Target size={14} className="text-[#A678CB]" />
+                   </div>
+                   <div className="text-left">
+                     <p className="text-white font-bold text-sm leading-none">Foco total em performance</p>
+                   </div>
+                 </div>
+               </motion.div>
 
-              {/* Trust Blocks - Single Focused Block (Reduced) */}
-              <motion.div 
-                initial={{ opacity: 0, y: 15 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.4 }}
-                className="lg:hidden w-full mb-8"
+               {/* Methodology strip — desktop only */}
+               <motion.div 
+                 initial={{ opacity: 0, y: 10 }}
+                 animate={{ opacity: 1, y: 0 }}
+                 transition={{ delay: 0.45 }}
+                 className="hidden lg:flex items-center gap-3 w-full max-w-md mb-8 bg-white/[0.03] border border-white/[0.07] rounded-xl px-4 py-3"
+               >
+                 <div className="w-8 h-8 flex items-center justify-center shrink-0">
+                   <Star size={16} className="text-[#A678CB]" />
+                 </div>
+                 <p className="text-[13px] text-zinc-400 leading-snug">
+                   <strong className="text-white font-semibold">Metodologia exclusiva.</strong> Estratégia e tecnologia para converter contatos em propostas e vendas.
+                 </p>
+               </motion.div>
+
+               {/* Methodology Card - Mobile */}
+               <motion.div 
+                 initial={{ opacity: 0, y: 10 }}
+                 animate={{ opacity: 1, y: 0 }}
+                 transition={{ delay: 0.5 }}
+                 className="flex lg:hidden items-center gap-4 w-full max-w-md mt-6 mb-8"
+               >
+                 <div className="w-10 h-10 flex items-center justify-center shrink-0">
+                   <Star size={20} className="text-[#A678CB]" />
+                 </div>
+                 <div className="text-left">
+                   <p className="text-[13px] md:text-[14px] text-zinc-300 leading-relaxed">
+                     <strong className="text-white">Metodologia exclusiva.</strong> Estratégia e tecnologia para atrair, converter contatos em propostas e vendas.
+                   </p>
+                 </div>
+               </motion.div>
+
+               {/* Spacer for mobile to reveal background image */}
+               <div className="lg:hidden w-full min-h-[160px] sm:min-h-[200px]"></div>
+
+               {/* Main CTA + secondary — Desktop Only */}
+               <motion.div
+                 initial={{ opacity: 0, scale: 0.98 }}
+                 animate={{ opacity: 1, scale: 1 }}
+                 transition={{ duration: 0.4, delay: 0.6 }}
+                 className="hidden lg:flex flex-col gap-3 w-full mb-6"
+               >
+                 {/* Primary CTA */}
+                 <button
+                   onClick={onOpenModal}
+                   className="group relative h-[60px] w-full sm:w-auto sm:min-w-[300px] flex items-center justify-center rounded-2xl px-10 outline-none cursor-pointer transition-all active:scale-95 bg-white/5 border-none overflow-hidden z-10 shadow-[0_8px_30px_rgba(91,46,138,0.3)]"
+                 >
+                   <div className="pointer-events-none absolute inset-0 opacity-100 transition-opacity duration-[1200ms] ease-in-out group-hover:opacity-0" style={{ background: 'radial-gradient(15% 50% at 50% 100%, #B988BF 0%, rgba(185, 136, 191, 0) 100%)', filter: 'blur(15px)' }}></div>
+                   <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-[1200ms] ease-in-out group-hover:opacity-100" style={{ background: 'radial-gradient(60.6% 50% at 50% 100%, #B988BF 0%, rgba(185, 136, 191, 0) 100%)', filter: 'blur(18px)' }}></div>
+                   <div className="pointer-events-none will-change-auto absolute inset-0 opacity-100 transition-opacity duration-[1200ms] ease-in-out group-hover:opacity-0" style={{ background: 'radial-gradient(10.7% 50% at 50% 100%, #B988BF 0%, rgba(185, 136, 191, 0) 100%)' }}></div>
+                   <div className="pointer-events-none will-change-auto absolute inset-0 opacity-0 transition-opacity duration-[1200ms] ease-in-out group-hover:opacity-100" style={{ background: 'radial-gradient(60.1% 50% at 50% 100%, #B988BF 0%, rgba(185, 136, 191, 0) 100%)' }}></div>
+                   <div className="pointer-events-none absolute inset-0 overflow-hidden">
+                     <div className="absolute -inset-[300%] animate-[spin_4s_linear_infinite]" style={{ background: 'conic-gradient(from 90deg at 50% 50%, transparent 0%, transparent 90%, #B988BF 100%)' }}></div>
+                   </div>
+                   <div className="absolute inset-[1px] rounded-2xl bg-gradient-to-r from-[#5B2E8A] to-[#3A1660] group-hover:from-[#6B3FA0] group-hover:to-[#4A2070] transition-colors"></div>
+                   <span className="relative z-20 flex items-center justify-center gap-3 font-bold text-[13px] tracking-[0.06em] uppercase text-white font-manrope">
+                     Quero estruturar minha aquisição
+                     <ArrowRight size={17} className="transition-transform group-hover:translate-x-1" />
+                   </span>
+                 </button>
+
+                 {/* Secondary CTA */}
+                 <button
+                   onClick={() => document.getElementById('sistema')?.scrollIntoView({ behavior: 'smooth' })}
+                   className="group h-[48px] w-full sm:w-auto sm:min-w-[300px] flex items-center justify-center gap-2 rounded-2xl border border-white/10 hover:border-white/20 bg-transparent text-zinc-400 hover:text-white transition-all text-[12px] font-semibold tracking-[0.06em] uppercase"
+                 >
+                   Ver como funciona
+                   <ChevronDown size={14} className="transition-transform group-hover:translate-y-0.5" />
+                 </button>
+               </motion.div>
+
+               {/* Trust Footer Row - Desktop Only */}
+               <motion.div 
+                 initial={{ opacity: 0 }}
+                 animate={{ opacity: 1 }}
+                 transition={{ duration: 0.6, delay: 0.7 }}
+                 className="hidden lg:flex flex-wrap justify-start gap-5 text-zinc-500 text-[10px] font-medium"
+               >
+                 <span className="flex items-center gap-1.5"><ShieldCheck size={13} className="text-zinc-600" /> Sem compromisso</span>
+                 <span className="flex items-center gap-1.5"><BarChart3 size={13} className="text-zinc-600" /> Análise personalizada</span>
+                 <span className="flex items-center gap-1.5"><Clock size={13} className="text-zinc-600" /> Resposta em 24h</span>
+               </motion.div>
+
+             </div>
+
+            {/* ========== RIGHT COLUMN — Desktop Dashboard Visual ========== */}
+            <div className="hidden lg:flex w-full lg:w-[54%] relative flex-col items-end justify-center">
+              <motion.div
+                initial={{ opacity: 0, x: 30 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.8, delay: 0.35 }}
+                className="relative w-full max-w-[580px] flex flex-col"
               >
-                <div className="flex items-center justify-center gap-3">
-                  <div className="w-8 h-8 rounded-full flex items-center justify-center">
-                    <Target size={14} className="text-[#A678CB]" />
+                {/* Glow behind the card */}
+                <div className="absolute -inset-6 bg-[#6B3FA0]/15 blur-[60px] rounded-3xl pointer-events-none" />
+
+                {/* Main Dashboard Card */}
+                <div className="relative bg-[#0F0F12]/90 border border-white/10 rounded-2xl overflow-hidden shadow-[0_32px_80px_rgba(0,0,0,0.5)] backdrop-blur-sm">
+
+                  {/* Card header bar */}
+                  <div className="flex items-center justify-between px-5 py-3.5 border-b border-white/[0.07] bg-black/30">
+                    <div className="flex items-center gap-2.5">
+                      <div className="w-2 h-2 rounded-full bg-[#B988BF]" />
+                      <span className="text-[11px] font-bold text-white/70 uppercase tracking-[0.18em]">Central de Aquisição</span>
+                    </div>
+                    <div className="flex items-center gap-1.5">
+                      <span className="relative flex h-2 w-2">
+                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-60"></span>
+                        <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+                      </span>
+                      <span className="text-[10px] text-green-400 font-semibold">ao vivo</span>
+                    </div>
                   </div>
-                  <div className="text-left">
-                    <p className="text-white font-bold text-sm leading-none">Foco total em performance</p>
+
+                  {/* Metric pills row */}
+                  <div className="grid grid-cols-4 gap-px bg-white/[0.05] border-b border-white/[0.07]">
+                    {[
+                      { label: 'Total', value: '24', color: 'text-white' },
+                      { label: 'Novos', value: '8', color: 'text-blue-400' },
+                      { label: 'Propostas', value: '6', color: 'text-[#B988BF]' },
+                      { label: 'Fechados', value: '4', color: 'text-green-400' },
+                    ].map((m) => (
+                      <div key={m.label} className="bg-[#0F0F12] px-3 py-3 flex flex-col items-center gap-0.5">
+                        <span className={`text-lg font-extrabold ${m.color} font-manrope`}>{m.value}</span>
+                        <span className="text-[9px] font-bold uppercase tracking-widest text-zinc-500">{m.label}</span>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Financial row */}
+                  <div className="grid grid-cols-2 gap-px bg-white/[0.05] border-b border-white/[0.07]">
+                    <div className="bg-[#0F0F12] px-4 py-3 flex items-center gap-3">
+                      <div className="w-7 h-7 rounded-lg bg-[#B988BF]/10 flex items-center justify-center shrink-0">
+                        <TrendingUp size={13} className="text-[#B988BF]" />
+                      </div>
+                      <div>
+                        <p className="text-[10px] text-zinc-500 font-bold uppercase tracking-wider">Em proposta</p>
+                        <p className="text-sm font-extrabold text-[#B988BF] font-manrope">R$ 22.400</p>
+                      </div>
+                    </div>
+                    <div className="bg-[#0F0F12] px-4 py-3 flex items-center gap-3">
+                      <div className="w-7 h-7 rounded-lg bg-green-500/10 flex items-center justify-center shrink-0">
+                        <BarChart3 size={13} className="text-green-400" />
+                      </div>
+                      <div>
+                        <p className="text-[10px] text-zinc-500 font-bold uppercase tracking-wider">Valor fechado</p>
+                        <p className="text-sm font-extrabold text-green-400 font-manrope">R$ 9.800</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Lead list */}
+                  <div className="divide-y divide-white/[0.05]">
+                    {[
+                      { name: 'Marcos Oliveira', origem: 'google', campanha: 'search-brand', service: 'Estrutura completa', status: 'proposta', statusColor: 'bg-[#B988BF]/20 text-[#B988BF]', valor: 'R$ 4.800' },
+                      { name: 'Juliana Ramos', origem: 'instagram', campanha: 'stories-maio', service: 'CRM + rastreamento', status: 'novo', statusColor: 'bg-blue-500/15 text-blue-400', valor: '—' },
+                      { name: 'Ricardo Alves', origem: 'whatsapp', campanha: 'direto', service: 'Landing + ads', status: 'fechado', statusColor: 'bg-green-500/15 text-green-400', valor: 'R$ 3.200' },
+                      { name: 'Camila Souza', origem: 'google', campanha: 'pmax-sp', service: 'Diagnóstico', status: 'conversou', statusColor: 'bg-amber-500/15 text-amber-400', valor: '—' },
+                    ].map((lead, i) => (
+                      <div key={i} className="flex items-center gap-3 px-4 py-3 hover:bg-white/[0.02] transition-colors">
+                        {/* Avatar */}
+                        <div className="w-7 h-7 rounded-full bg-[#B988BF]/10 border border-white/10 flex items-center justify-center shrink-0">
+                          <span className="text-[10px] font-bold text-[#B988BF]">{lead.name.charAt(0)}</span>
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center gap-2 mb-0.5">
+                            <p className="text-[12px] font-semibold text-white truncate">{lead.name}</p>
+                            <span className={`text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-full shrink-0 ${lead.statusColor}`}>{lead.status}</span>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <span className="text-[10px] text-zinc-500 font-mono bg-white/5 px-1.5 py-0.5 rounded">{lead.origem}</span>
+                            <span className="text-[10px] text-zinc-600 truncate">{lead.campanha}</span>
+                          </div>
+                        </div>
+                        <div className="text-right shrink-0">
+                          <p className="text-[11px] font-bold text-zinc-300">{lead.valor}</p>
+                          <p className="text-[9px] text-zinc-600 truncate max-w-[80px]">{lead.service}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Footer */}
+                  <div className="px-4 py-2.5 border-t border-white/[0.07] flex items-center justify-between bg-black/20">
+                    <span className="text-[10px] text-zinc-600">Atualizado agora mesmo</span>
+                    <span className="text-[10px] text-[#B988BF] font-semibold cursor-pointer hover:underline">Ver todas →</span>
                   </div>
                 </div>
+
+                {/* Horizontal Origin breakdown — Positioned BELOW the dashboard, FULL WIDTH */}
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 0.9 }}
+                  className="mt-4 w-full bg-[#0F0F12]/95 border border-white/10 rounded-xl p-4 shadow-2xl backdrop-blur-md flex items-center justify-between gap-6"
+                >
+                  <p className="text-[9px] font-bold uppercase tracking-widest text-zinc-500 whitespace-nowrap">Origem dos contatos</p>
+                  <div className="flex-1 flex items-center gap-5">
+                    {[
+                      { label: 'Google Ads', pct: 54, color: 'bg-[#B988BF]' },
+                      { label: 'Instagram', pct: 29, color: 'bg-blue-400' },
+                      { label: 'WhatsApp', pct: 17, color: 'bg-green-400' },
+                    ].map((o) => (
+                      <div key={o.label} className="flex-1">
+                        <div className="flex justify-between mb-1">
+                          <span className="text-[10px] text-zinc-400">{o.label}</span>
+                          <span className="text-[10px] text-white font-bold">{o.pct}%</span>
+                        </div>
+                        <div className="h-1 bg-white/5 rounded-full overflow-hidden">
+                          <div className={`h-full ${o.color} rounded-full`} style={{ width: `${o.pct}%` }} />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </motion.div>
+
+                {/* Floating card — WhatsApp quick action */}
+                <motion.div
+                  initial={{ opacity: 0, y: 10, x: 10 }}
+                  animate={{ opacity: 1, y: 0, x: 0 }}
+                  transition={{ duration: 0.6, delay: 1.0 }}
+                  className="absolute -right-6 top-[55%] bg-[#0F0F12]/95 border border-white/10 rounded-xl p-3 shadow-2xl backdrop-blur-md flex items-center gap-2.5 w-[168px]"
+                >
+                  <div className="w-8 h-8 rounded-xl bg-green-500/15 flex items-center justify-center shrink-0">
+                    <WhatsAppIcon size={16} className="text-green-400" />
+                  </div>
+                  <div>
+                    <p className="text-[10px] font-bold text-white leading-tight">Marcos Oliveira</p>
+                    <p className="text-[9px] text-zinc-500 leading-tight">Proposta enviada · aguardando</p>
+                  </div>
+                </motion.div>
               </motion.div>
-
-              {/* 5. Methodology Card - Identical to Print */}
-              <motion.div 
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.5 }}
-                className="flex items-center gap-4 w-full max-w-md mt-6 lg:mt-6 mb-8 lg:mb-8"
-              >
-                <div className="w-10 h-10 flex items-center justify-center shrink-0">
-                  <Star size={20} className="text-[#A678CB]" />
-                </div>
-                <div className="text-left">
-                  <p className="text-[13px] md:text-[14px] text-zinc-300 leading-relaxed">
-                    <strong className="text-white">Metodologia exclusiva.</strong> Estratégia e tecnologia para atrair, converter e fidelizar pacientes.
-                  </p>
-                </div>
-              </motion.div>
-
-              {/* Spacer for mobile to reveal background image */}
-              <div className="lg:hidden w-full min-h-[160px] sm:min-h-[200px]"></div>
-
-              {/* Main CTA - Desktop Only (Mobile version is below testimonials) */}
-              <motion.button 
-                initial={{ opacity: 0, scale: 0.98 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.4, delay: 0.6 }}
-                onClick={onOpenModal}
-                className="group hidden lg:flex relative h-[64px] w-full sm:w-auto items-center justify-center rounded-2xl px-6 lg:px-12 outline-none cursor-pointer transition-all active:scale-95 bg-white/5 border-none overflow-hidden mb-6 z-10 shadow-[0_8px_30px_rgba(91,46,138,0.3)]"
-              >
-                <div className="pointer-events-none absolute inset-0 opacity-100 transition-opacity duration-[1200ms] ease-in-out group-hover:opacity-0" style={{ background: 'radial-gradient(15% 50% at 50% 100%, #B988BF 0%, rgba(185, 136, 191, 0) 100%)', filter: 'blur(15px)' }}></div>
-                <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-[1200ms] ease-in-out group-hover:opacity-100" style={{ background: 'radial-gradient(60.6% 50% at 50% 100%, #B988BF 0%, rgba(185, 136, 191, 0) 100%)', filter: 'blur(18px)' }}></div>
-                <div className="pointer-events-none will-change-auto absolute inset-0 opacity-100 transition-opacity duration-[1200ms] ease-in-out group-hover:opacity-0" style={{ background: 'radial-gradient(10.7% 50% at 50% 100%, #B988BF 0%, rgba(185, 136, 191, 0) 100%)' }}></div>
-                <div className="pointer-events-none will-change-auto absolute inset-0 opacity-0 transition-opacity duration-[1200ms] ease-in-out group-hover:opacity-100" style={{ background: 'radial-gradient(60.1% 50% at 50% 100%, #B988BF 0%, rgba(185, 136, 191, 0) 100%)' }}></div>
-                <div className="pointer-events-none absolute inset-0 overflow-hidden">
-                  <div className="absolute -inset-[300%] animate-[spin_4s_linear_infinite]" style={{ background: 'conic-gradient(from 90deg at 50% 50%, transparent 0%, transparent 90%, #B988BF 100%)' }}></div>
-                </div>
-                <div className="absolute inset-[1px] rounded-2xl bg-gradient-to-r from-[#5B2E8A] to-[#3A1660] group-hover:from-[#6B3FA0] group-hover:to-[#4A2070] transition-colors"></div>
-                <span className="relative z-20 flex items-center justify-center gap-3 font-bold text-[13px] md:text-[14px] tracking-[0.05em] uppercase text-white font-manrope">
-                  Quero um diagnóstico da minha clínica
-                  <ArrowRight size={18} className="transition-transform group-hover:translate-x-1" />
-                </span>
-              </motion.button>
-
-              {/* Trust Footer Row - Desktop Only */}
-              <motion.div 
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.6, delay: 0.7 }}
-                className="hidden lg:flex flex-wrap justify-center lg:justify-start gap-4 text-zinc-500 text-[10px] font-medium"
-              >
-                <span className="flex items-center gap-1.5"><ShieldCheck size={13} className="text-zinc-600" /> Sem compromisso</span>
-                <span className="flex items-center gap-1.5"><BarChart3 size={13} className="text-zinc-600" /> Análise personalizada</span>
-                <span className="flex items-center gap-1.5"><Clock size={13} className="text-zinc-600" /> Resposta em 24h</span>
-              </motion.div>
-
-
             </div>
 
-            {/* ========== RIGHT COLUMN ========== */}
-            <div className="hidden lg:flex w-full lg:w-[55%] relative -mt-16 lg:-mt-12 flex-col items-center lg:items-start lg:translate-x-10">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.4 }}
-                className="relative w-full max-w-[600px] lg:max-w-[780px] mb-8 lg:mb-0 scale-[1.2] lg:scale-125 origin-top lg:origin-right"
-              >
-                <div className="relative" style={{
-                  maskImage: 'linear-gradient(to right, transparent 5%, black 45%)',
-                  WebkitMaskImage: 'linear-gradient(to right, transparent 5%, black 45%)'
-                }}>
-                  {/* Subtle purple tint for harmony */}
-                  <div className="absolute inset-0 bg-[#68259A]/5 mix-blend-soft-light z-20 pointer-events-none" />
-
-                  <img
-                    src="/hero.img.mobile.png"
-                    alt="Marketing Estratégico"
-                    className="relative z-10 w-full h-auto object-contain brightness-[0.95] contrast-[1.1]"
-                  />
-
-                  {/* Minimal bottom fade for blending */}
-                  <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[#0A0A0B] to-transparent z-20 pointer-events-none" />
-                </div>
-              </motion.div>
-
-
-
-              {/* 7. Prova Social Mobile (abaixo da imagem e depoimentos) */}
-              <motion.div
-                initial={{ opacity: 0, y: 15 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.6 }}
-                className="flex lg:hidden items-center justify-center gap-3 mt-2 w-full"
-              >
-                <div className="w-10 h-10 rounded-xl bg-[#1a1028] flex items-center justify-center">
-                  <BarChart3 size={16} className="text-[#9b6bbd]" />
-                </div>
-                <div className="text-left">
-                  <p className="text-white font-bold text-base leading-none font-manrope">+R$ 500 mil</p>
-                  <p className="text-zinc-500 text-[9px] font-bold uppercase tracking-wider mt-0.5">gerados para clínicas</p>
-                </div>
-              </motion.div>
-
-            </div>
           </div>
         </div>
 
@@ -635,7 +779,7 @@ const Hero = ({ onOpenModal }: { onOpenModal: () => void }) => {
           className="w-full lg:hidden flex flex-col items-center -mt-20 mb-8 overflow-hidden relative z-20"
         >
           <p className="text-[11px] text-[#A678CB] font-bold uppercase tracking-[0.2em] mb-6 px-5 text-center">
-            O QUE CLÍNICAS PERCEBEM APÓS ESTRUTURAR O MARKETING
+            O QUE NEGÓCIOS PERCEBEM APÓS ESTRUTURAR A AQUISIÇÃO
           </p>
 
           <div className="w-full relative py-2 overflow-hidden">
@@ -654,9 +798,9 @@ const Hero = ({ onOpenModal }: { onOpenModal: () => void }) => {
               {[...Array(2)].map((_, setIdx) => (
                 <div key={setIdx} className="flex gap-4 px-2">
                   {[
-                    { quote: "A gente investia em anúncios, mas não sabia o que estava funcionando. Depois da estrutura, ficou claro de onde vinham os pacientes.", author: "Dra. Mariana", info: "clínica estética – SP" },
-                    { quote: "Percebemos que o problema não era só tráfego, e sim o atendimento. Ajustando isso, começamos a converter muito mais.", author: "Dr. Rafael", info: "odontologia – interior de SP" },
-                    { quote: "Começamos a ter mais consistência nos agendamentos, não só picos. Hoje entendemos melhor o processo todo.", author: "Dr. Felipe", info: "clínica médica – capital" }
+                    { quote: "A gente investia em anúncios, mas não sabia quais canais realmente geravam clientes. Depois da estrutura, ficou claro de onde vinham os contatos.", author: "Rafael M.", info: "prestação de serviços – SP" },
+                    { quote: "Percebemos que o problema não era só tráfego, e sim o atendimento sem contexto. Ajustando isso, começamos a converter muito mais.", author: "Ana C.", info: "comércio local – interior de SP" },
+                    { quote: "Começamos a ter mais consistência nas vendas, não só picos. Hoje entendemos melhor qual campanha traz o lead certo.", author: "Felipe S.", info: "serviços B2C – capital" }
                   ].map((testi, i) => (
                     <div key={i} className="w-[280px] p-4 flex flex-col shrink-0">
                       <Quote size={16} className="text-[#6B3FA0] mb-4" />
@@ -694,7 +838,7 @@ const Hero = ({ onOpenModal }: { onOpenModal: () => void }) => {
             </div>
             <div className="absolute inset-[1px] rounded-2xl bg-gradient-to-r from-[#5B2E8A] to-[#3A1660] group-hover:from-[#6B3FA0] group-hover:to-[#4A2070] transition-colors"></div>
             <span className="relative z-20 flex items-center justify-center gap-3 font-bold text-[13px] tracking-[0.05em] uppercase text-white font-manrope">
-              Quero um diagnóstico da minha clínica
+              Quero estruturar minha aquisição
               <ArrowRight size={18} className="transition-transform group-hover:translate-x-1" />
             </span>
           </motion.button>
@@ -726,75 +870,16 @@ const Hero = ({ onOpenModal }: { onOpenModal: () => void }) => {
       `}} />
     </>
   );
-};
-
-
-
-
-
+}
 const GoogleAdsPremium = ({ onOpenModal }: { onOpenModal: () => void }) => {
-  const searches = [
-    {
-      query: "clínica de estética em campinas",
-      results: [
-        {
-          url: "esteticacampinas.com.br",
-          title: "Clínica de Estética em Campinas | Avaliação Gratuita",
-          desc: "Especialistas em harmonização facial, botox e rejuvenescimento.",
-          chips: ["Avaliação Gratuita", "Tecnologia Avançada", "Protocolos Exclusivos"],
-        },
-        {
-          url: "harmonizacaofacialcps.com.br",
-          title: "Botox e Harmonização Facial | Agende Sua Consulta",
-          desc: "Resultados naturais, atendimento personalizado e tecnologia avançada.",
-          chips: ["Botox", "Preenchimento", "Especialistas"],
-        },
-      ],
-    },
-  ];
-
-  const [searchIndex, setSearchIndex] = useState(0);
-  const [displayText, setDisplayText] = useState('');
-  const [phase, setPhase] = useState<'typing' | 'showing' | 'clearing'>('typing');
-
-  const currentSearch = searches[searchIndex];
-
-  useEffect(() => {
-    let timeout: NodeJS.Timeout;
-    const fullQuery = currentSearch.query;
-
-    if (phase === 'typing') {
-      if (displayText.length < fullQuery.length) {
-        timeout = setTimeout(() => {
-          setDisplayText(fullQuery.slice(0, displayText.length + 1));
-        }, 75);
-      } else {
-        timeout = setTimeout(() => setPhase('showing'), 700);
-      }
-    } else if (phase === 'showing') {
-      timeout = setTimeout(() => setPhase('clearing'), 4500);
-    } else if (phase === 'clearing') {
-      if (displayText.length > 0) {
-        timeout = setTimeout(() => {
-          setDisplayText(displayText.slice(0, -1));
-        }, 30);
-      } else {
-        setSearchIndex((prev) => (prev + 1) % searches.length);
-        setPhase('typing');
-      }
-    }
-
-    return () => clearTimeout(timeout);
-  }, [displayText, phase, searchIndex]);
-
   return (
-    <section className="py-32 relative px-6 overflow-hidden bg-ice border-y border-black/5">
+    <section className="py-24 lg:py-32 relative px-6 overflow-hidden bg-ice border-y border-black/5">
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-primary/[0.03] rounded-full blur-[120px]" />
         <div className="absolute bottom-0 right-1/4 w-[400px] h-[400px] bg-secondary/[0.02] rounded-full blur-[100px]" />
       </div>
 
-      <div className="max-w-7xl mx-auto relative z-10 grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
+      <div className="max-w-7xl mx-auto relative z-10 grid lg:grid-cols-2 gap-16 lg:gap-20 items-center">
 
         {/* ── Left Column ── */}
         <motion.div
@@ -804,194 +889,238 @@ const GoogleAdsPremium = ({ onOpenModal }: { onOpenModal: () => void }) => {
           transition={{ duration: 0.8 }}
           className="flex flex-col items-start"
         >
-          {/* Badges */}
+          {/* Badge */}
           <div className="flex gap-2 mb-8">
-            <span className="px-4 py-1.5 rounded-none bg-primary/5 border border-primary/20 text-primary text-[10px] font-bold uppercase tracking-widest">
-              Tráfego Pago
-            </span>
-            <span className="px-4 py-1.5 rounded-none bg-secondary/5 border border-secondary/20 text-secondary text-[10px] font-bold uppercase tracking-widest">
-              Google Ads
+            <span className="px-4 py-1.5 rounded-full bg-primary/5 border border-primary/10 text-primary text-[10px] font-bold uppercase tracking-[0.15em]">
+              Estruturação Comercial
             </span>
           </div>
 
-          {/* Title */}
-          <h2 className="text-3xl sm:text-4xl md:text-6xl font-extrabold text-graphite mb-6 leading-[1.1] tracking-tight font-manrope">
-            Anunciar sem rastreamento é <span className="text-primary">investir no escuro.</span>
+          {/* Title - Refined for desktop */}
+          <h2 className="text-3xl sm:text-4xl lg:text-[2.75rem] font-extrabold text-graphite mb-6 lg:mb-8 leading-[1.15] lg:leading-[1.2] tracking-tight font-manrope max-w-[600px]">
+            O problema não é receber contatos. <br className="hidden lg:block" />
+            <span className="text-primary">É não saber o que acontece depois que eles chegam.</span>
           </h2>
 
-          {/* Body copy */}
-          <div className="space-y-6 text-gray-500 text-lg md:text-xl leading-relaxed max-w-xl">
-            <p className="text-graphite font-medium">
-              Sua clínica gera interesse todos os dias. <br />
-              Mas você não sabe quem realmente quer agendar.
+          {/* Body copy - Improved hierarchy and line-height */}
+          <div className="space-y-4 lg:space-y-5 text-gray-500 max-w-[500px]">
+            <p className="text-graphite font-semibold text-lg lg:text-[1.15rem] leading-[1.4]">
+              Seu negócio recebe contatos todos os dias. <br className="hidden sm:block" />
+              Mas ninguém sabe quem realmente tem intenção de comprar.
             </p>
-            <p>
-              Sem o rastreamento correto, você atrai pessoas mas não entende o comportamento delas. Quem clicou no botão? Quem viu o preço? Quem está pronto para a consulta?
+            <p className="text-base lg:text-[1.05rem] leading-[1.7] font-light">
+              Sem estrutura, cada contato depende da memória e da boa vontade do time. Quem chegou hoje? Qual campanha trouxe? Onde está a proposta? O que virou venda?
             </p>
           </div>
 
-          {/* Highlight */}
-          <div className="mt-10 border-l-4 border-primary pl-6 py-2">
-            <p className="text-[14px] uppercase font-bold text-primary tracking-widest">Você está investindo no escuro.</p>
+          {/* Highlight - Lighter visual weight */}
+          <div className="mt-8 lg:mt-10 border-l-[3px] border-primary/30 pl-5 py-1">
+            <p className="text-[11px] lg:text-[12px] uppercase font-bold text-primary/80 tracking-[0.15em]">
+              Você recebe contatos, mas não enxerga o funil.
+            </p>
           </div>
 
           {/* CTA */}
           <button
             onClick={onOpenModal}
-            className="group relative flex h-[60px] w-full sm:min-w-[320px] sm:w-auto mt-10 px-12 items-center justify-center rounded-2xl outline-none cursor-pointer transition-all active:scale-95 hover:scale-105 bg-[#0A0A0B] border-none overflow-hidden shadow-[0_15px_40px_rgba(10,10,11,0.15)]"
+            className="group relative flex h-[56px] lg:h-[60px] w-full sm:min-w-[300px] sm:w-auto mt-10 px-10 items-center justify-center rounded-2xl outline-none cursor-pointer transition-all active:scale-95 hover:scale-[1.02] bg-[#0A0A0B] border-none overflow-hidden shadow-[0_15px_40px_rgba(10,10,11,0.12)]"
             type="button"
           >
             <div className="pointer-events-none absolute inset-0 opacity-100 transition-opacity duration-[1200ms] ease-in-out group-hover:opacity-0" style={{ background: 'radial-gradient(15% 50% at 50% 100%, #B988BF 0%, rgba(185, 136, 191, 0) 100%)', filter: 'blur(15px)' }}></div>
             <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-[1200ms] ease-in-out group-hover:opacity-100" style={{ background: 'radial-gradient(60.6% 50% at 50% 100%, #B988BF 0%, rgba(185, 136, 191, 0) 100%)', filter: 'blur(18px)' }}></div>
-            <div className="pointer-events-none will-change-auto absolute inset-0 opacity-100 transition-opacity duration-[1200ms] ease-in-out group-hover:opacity-0" style={{ background: 'radial-gradient(10.7% 50% at 50% 100%, #B988BF 0%, rgba(185, 136, 191, 0) 100%)' }}></div>
-            <div className="pointer-events-none will-change-auto absolute inset-0 opacity-0 transition-opacity duration-[1200ms] ease-in-out group-hover:opacity-100" style={{ background: 'radial-gradient(60.1% 50% at 50% 100%, #B988BF 0%, rgba(185, 136, 191, 0) 100%)' }}></div>
-            <div className="pointer-events-none absolute inset-0 overflow-hidden">
-              <div className="absolute -inset-[300%] animate-[spin_4s_linear_infinite]" style={{ background: 'conic-gradient(from 90deg at 50% 50%, transparent 0%, transparent 90%, #B988BF 100%)' }}></div>
-            </div>
-            <div className="absolute inset-[1px] rounded-[15px] bg-[#68259A] hover:bg-[#7a32b3] transition-colors shadow-[0_15px_35px_rgba(185,136,191,0.3)]"></div>
-            <span className="relative z-20 flex items-center justify-center text-white text-[11px] font-bold tracking-[0.2em] uppercase font-manrope">
-              Quero anunciar com rastreamento
-              <ArrowRight size={20} className="ml-5 transition-transform duration-300 group-hover:translate-x-1" />
+            <div className="absolute inset-[1px] rounded-2xl bg-[#0F0F12] hover:bg-[#1A1A1E] transition-colors"></div>
+            <span className="relative z-20 flex items-center justify-center text-white text-[11px] font-bold tracking-[0.15em] uppercase font-manrope">
+              Quero estruturar minha aquisição
+              <ArrowRight size={18} className="ml-4 transition-transform duration-300 group-hover:translate-x-1" />
             </span>
           </button>
         </motion.div>
 
-        {/* ── Right Column: Search Card ── */}
+        {/* ── Right Column: Commercial Structure Mockup ── */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.9 }}
-          className="flex justify-center lg:justify-end"
+          className="flex justify-center lg:justify-end w-full mt-10 lg:mt-0"
         >
-          {/* Card */}
-          <div className="w-full max-w-[480px] bg-white rounded-none shadow-[0_24px_80px_rgba(0,0,0,0.22)] overflow-hidden">
+           {/* Structure Mockup container */}
+           <div className="relative w-full max-w-[500px] bg-white rounded-[2rem] border border-black/5 shadow-[0_20px_60px_rgba(0,0,0,0.06)] overflow-hidden flex flex-col p-6 sm:p-8">
+             
+             {/* Background accents */}
+             <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-[50px] pointer-events-none" />
+             <div className="absolute bottom-0 left-0 w-64 h-64 bg-green-400/5 rounded-full blur-[50px] pointer-events-none" />
 
-            {/* Card Header */}
-            <div className="px-6 pt-6 pb-4 flex items-center justify-between border-b border-gray-100">
-              {/* Google-like logo */}
-              <div className="flex items-center gap-[3px]">
-                <span className="font-extrabold text-[22px] leading-none" style={{ color: '#4285F4' }}>G</span>
-                <span className="font-extrabold text-[22px] leading-none" style={{ color: '#EA4335' }}>o</span>
-                <span className="font-extrabold text-[22px] leading-none" style={{ color: '#FBBC05' }}>o</span>
-                <span className="font-extrabold text-[22px] leading-none" style={{ color: '#4285F4' }}>g</span>
-                <span className="font-extrabold text-[22px] leading-none" style={{ color: '#34A853' }}>l</span>
-                <span className="font-extrabold text-[22px] leading-none" style={{ color: '#EA4335' }}>e</span>
-              </div>
-              {/* Purple button */}
-              <div className="w-8 h-8 rounded-full bg-[#B988BF] flex items-center justify-center shadow-[0_4px_12px_rgba(185, 136, 191,0.35)]">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
-                  <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" fill="white" />
-                </svg>
-              </div>
-            </div>
+             {/* Header */}
+             <div className="mb-6 relative z-10">
+               <div className="flex items-center justify-between mb-2">
+                 <div className="flex items-center gap-2.5">
+                   <span className="relative flex h-2 w-2">
+                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-60"></span>
+                     <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+                   </span>
+                   <p className="text-[13px] sm:text-sm font-extrabold text-graphite tracking-tight uppercase">Acompanhamento em tempo real</p>
+                 </div>
+                 <div className="w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center text-primary shrink-0 ml-2">
+                   <Target size={12} />
+                 </div>
+               </div>
+               <p className="text-[11px] sm:text-[12px] text-gray-500 leading-relaxed font-medium">
+                 Cada novo contato entra com origem identificada, contexto comercial e avanço visível no funil.
+               </p>
+             </div>
 
-            {/* Search Bar */}
-            <div className="px-6 py-4">
-              <div className="flex items-center gap-3 bg-gray-50 border border-gray-200 rounded-full px-5 py-3 shadow-sm">
-                <span className="flex-1 text-sm text-gray-700 font-normal min-h-[20px] flex items-center gap-[2px]">
-                  {displayText}
-                  <span
-                    className="inline-block w-[2px] h-[15px] bg-[#4285F4] ml-[1px]"
-                    style={{ animation: 'blink 1s step-end infinite' }}
-                  />
-                </span>
-                <svg className="text-gray-400 flex-shrink-0" width="17" height="17" viewBox="0 0 24 24" fill="none">
-                  <path d="M15.5 14H14.71L14.43 13.73C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3 5.91 3 3 5.91 3 9.5 3 13.09 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.27V15.5l5 4.99L20.49 19l-5-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" fill="currentColor" />
-                </svg>
-              </div>
-            </div>
+             {/* Flow Container */}
+             <div className="flex-1 flex flex-col gap-3 relative z-10">
+               
+               {/* 1. Origin Step */}
+               <motion.div 
+                 initial={{ opacity: 0, x: -10 }} 
+                 whileInView={{ opacity: 1, x: 0 }} 
+                 animate={{ 
+                   borderColor: ['#f3f4f6', '#d8b4e2', '#d8b4e2', '#f3f4f6'], 
+                   boxShadow: ['0 4px 20px rgba(0,0,0,0.03)', '0 4px 20px rgba(185,136,191,0.2)', '0 4px 20px rgba(185,136,191,0.2)', '0 4px 20px rgba(0,0,0,0.03)'] 
+                 }}
+                 transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", times: [0, 0.1, 0.9, 1] }}
+                 className="bg-white rounded-2xl p-4 shadow-[0_4px_20px_rgba(0,0,0,0.03)] border border-gray-100 flex flex-col gap-2 relative"
+               >
+                 <div className="flex items-center gap-3 relative z-10 bg-white">
+                   <div className="w-8 h-8 rounded-lg bg-gray-50 flex items-center justify-center shrink-0 border border-gray-100">
+                     <Filter size={14} className="text-gray-500" />
+                   </div>
+                   <p className="text-xs font-bold text-graphite">1. Origem identificada</p>
+                 </div>
+                 <p className="text-[10px] text-gray-500 leading-relaxed pl-11 pr-2 relative z-10">
+                   Cada contato entra com a origem registrada automaticamente, para você saber qual campanha, canal ou ação realmente gerou oportunidade.
+                 </p>
+                 <div className="flex flex-wrap gap-1.5 pl-11 mt-1 relative z-10">
+                   <span className="text-[8px] font-bold bg-primary/10 text-primary px-2 py-0.5 rounded uppercase tracking-wider">Google Ads</span>
+                   <span className="text-[8px] font-bold bg-blue-500/10 text-blue-500 px-2 py-0.5 rounded uppercase tracking-wider">Instagram</span>
+                   <span className="text-[8px] font-bold bg-green-500/10 text-green-600 px-2 py-0.5 rounded uppercase tracking-wider">WhatsApp</span>
+                 </div>
+                 {/* Connector line down */}
+                 <div className="absolute left-[31px] top-[40px] bottom-[-24px] w-[2px] bg-gradient-to-b from-gray-200 to-transparent z-0" />
+               </motion.div>
 
-            {/* Results Area */}
-            <div className="px-6 pb-6 min-h-[300px]">
-              <AnimatePresence mode="wait">
-                {phase === 'showing' ? (
-                  <motion.div
-                    key={`results-${searchIndex}`}
-                    initial={{ opacity: 0, y: 8 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -8 }}
-                    transition={{ duration: 0.45, ease: 'easeOut' }}
-                    className="space-y-5"
-                  >
-                    {currentSearch.results.map((result, i) => (
-                      <motion.div
-                        key={i}
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: i * 0.12, duration: 0.4 }}
-                        className={`${i < currentSearch.results.length - 1 ? 'pb-5 border-b border-gray-100' : ''}`}
-                      >
-                        {/* Ad label + URL */}
-                        <div className="flex items-center gap-2 mb-1">
-                          <span className="text-[10px] font-semibold text-gray-500 border border-gray-300 rounded px-1.5 py-0.5 leading-none">Anúncio</span>
-                          <span className="text-[11px] text-gray-400 truncate">{result.url}</span>
-                        </div>
-                        {/* Title */}
-                        <p className="text-[#1a0dab] text-[15px] font-medium leading-snug mb-1.5 hover:underline cursor-pointer">
-                          {result.title}
-                        </p>
-                        {/* Description */}
-                        <p className="text-[#4d5156] text-[13px] leading-relaxed mb-3">
-                          {result.desc}
-                        </p>
-                        {/* Chips */}
-                        <div className="flex flex-wrap gap-1.5">
-                          {result.chips.map((chip, ci) => (
-                            <span
-                              key={ci}
-                              className="px-3 py-1 bg-gray-100 text-gray-600 text-[11px] font-medium rounded-full hover:bg-gray-200 transition-colors cursor-pointer"
-                            >
-                              {chip}
-                            </span>
-                          ))}
-                        </div>
-                      </motion.div>
-                    ))}
-                  </motion.div>
-                ) : (
-                  <motion.div
-                    key="idle"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.3 }}
-                    className="h-full flex flex-col justify-center items-center gap-4 py-16"
-                  >
-                    <div className="w-10 h-10 rounded-full border-[3px] border-gray-100 border-t-[#B988BF] animate-spin" />
-                    <div className="text-center">
-                      <p className="text-xs text-gray-400 mb-1">Buscando por</p>
-                      <p className="text-sm font-semibold text-[#B988BF] max-w-[220px] leading-snug">
-                        "{displayText || currentSearch.query}"
-                      </p>
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
+               {/* 2. Lead Context Step */}
+               <motion.div 
+                 initial={{ opacity: 0, x: -10 }} 
+                 whileInView={{ opacity: 1, x: 0 }}
+                 animate={{ 
+                   borderColor: ['#f3f4f6', '#f3f4f6', '#bbf7d0', '#bbf7d0', '#f3f4f6'], 
+                   boxShadow: ['0 4px 20px rgba(0,0,0,0.03)', '0 4px 20px rgba(0,0,0,0.03)', '0 4px 20px rgba(74,222,128,0.2)', '0 4px 20px rgba(74,222,128,0.2)', '0 4px 20px rgba(0,0,0,0.03)'] 
+                 }}
+                 transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", times: [0, 0.15, 0.25, 0.9, 1] }}
+                 className="bg-white rounded-2xl p-4 shadow-[0_4px_20px_rgba(0,0,0,0.03)] border border-gray-100 flex flex-col gap-2 relative z-10 ml-4"
+               >
+                 <div className="flex items-center gap-3 relative z-10 bg-white">
+                   <div className="w-8 h-8 rounded-lg bg-green-50 flex items-center justify-center shrink-0 border border-green-100">
+                     <WhatsAppIcon size={14} className="text-green-500" />
+                   </div>
+                   <p className="text-xs font-bold text-graphite">2. Contato registrado com contexto</p>
+                 </div>
+                 <p className="text-[10px] text-gray-500 leading-relaxed pl-11 pr-2 relative z-10">
+                   O lead não chega solto. Ele entra com nome, telefone, interesse e observações iniciais, facilitando o atendimento e acelerando a resposta.
+                 </p>
+                 <div className="pl-11 mt-1 relative z-10">
+                   <div className="bg-gray-50 border border-gray-100 rounded-lg p-2.5">
+                     <p className="text-[10px] font-bold text-graphite mb-0.5">Marcos Albuquerque</p>
+                     <p className="text-[9px] text-gray-500 italic">"Quero entender melhor como organizar meus contatos e propostas."</p>
+                   </div>
+                 </div>
+                 {/* Connector line down */}
+                 <div className="absolute left-[31px] top-[40px] bottom-[-24px] w-[2px] bg-gradient-to-b from-gray-200 to-transparent z-0" />
+               </motion.div>
 
-          </div>
+               {/* 3. CRM Pipeline Step */}
+               <motion.div 
+                 initial={{ opacity: 0, x: -10 }} 
+                 whileInView={{ opacity: 1, x: 0 }}
+                 animate={{ 
+                   borderColor: ['#f3f4f6', '#f3f4f6', '#d8b4e2', '#d8b4e2', '#f3f4f6'], 
+                   boxShadow: ['0 4px 20px rgba(0,0,0,0.03)', '0 4px 20px rgba(0,0,0,0.03)', '0 4px 20px rgba(185,136,191,0.2)', '0 4px 20px rgba(185,136,191,0.2)', '0 4px 20px rgba(0,0,0,0.03)'] 
+                 }}
+                 transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", times: [0, 0.3, 0.4, 0.9, 1] }}
+                 className="bg-white rounded-2xl p-4 shadow-[0_4px_20px_rgba(0,0,0,0.03)] border border-primary/20 flex flex-col gap-2 relative z-10 ml-8"
+               >
+                 <div className="flex items-center gap-3 relative z-10 bg-white">
+                   <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
+                     <BarChart3 size={14} className="text-primary" />
+                   </div>
+                   <p className="text-xs font-bold text-graphite">3. Avanço comercial visível</p>
+                 </div>
+                 <p className="text-[10px] text-gray-500 leading-relaxed pl-11 pr-2 relative z-10">
+                   Sem depender da memória da equipe. Cada oportunidade avança de forma clara entre novo contato, conversa, proposta e fechamento.
+                 </p>
+                 <div className="pl-11 mt-2 relative z-10">
+                   {/* Progress tracker */}
+                   <div className="flex items-center justify-between relative mb-3 mx-2">
+                     <div className="absolute left-0 right-0 top-1/2 -translate-y-1/2 h-[2px] bg-gray-100 -z-10" />
+                     <motion.div 
+                       className="absolute left-0 top-1/2 -translate-y-1/2 h-[2px] bg-primary -z-10" 
+                       initial={{ width: "0%" }}
+                       animate={{ width: ["0%", "0%", "100%", "100%", "0%"] }}
+                       transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", times: [0, 0.3, 0.4, 0.9, 1] }}
+                     />
+                     
+                     <div className="w-3 h-3 rounded-full bg-primary ring-2 ring-white" />
+                     <div className="w-3 h-3 rounded-full bg-primary ring-2 ring-white" />
+                     <div className="w-3 h-3 rounded-full bg-primary ring-2 ring-white" />
+                     <div className="w-3 h-3 rounded-full bg-gray-200 ring-2 ring-white" />
+                   </div>
+                   <div className="flex justify-between text-[7px] sm:text-[8px] font-bold uppercase tracking-wider text-gray-400">
+                     <span className="text-primary">Novo</span>
+                     <span className="text-primary">Conversa</span>
+                     <span className="text-primary">Proposta</span>
+                     <span>Fechado</span>
+                   </div>
+                 </div>
+                 {/* Connector line down */}
+                 <div className="absolute left-[31px] top-[40px] bottom-[-24px] w-[2px] bg-gradient-to-b from-gray-200 to-transparent z-0" />
+               </motion.div>
+
+               {/* 4. Next Step */}
+               <motion.div 
+                 initial={{ opacity: 0, x: -10 }} 
+                 whileInView={{ opacity: 1, x: 0 }}
+                 animate={{ 
+                   borderColor: ['#f3f4f6', '#f3f4f6', '#fed7aa', '#fed7aa', '#f3f4f6'], 
+                   boxShadow: ['0 4px 20px rgba(0,0,0,0.03)', '0 4px 20px rgba(0,0,0,0.03)', '0 4px 20px rgba(253,186,116,0.2)', '0 4px 20px rgba(253,186,116,0.2)', '0 4px 20px rgba(0,0,0,0.03)'] 
+                 }}
+                 transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", times: [0, 0.45, 0.5, 0.9, 1] }}
+                 className="bg-white rounded-2xl p-4 shadow-[0_4px_20px_rgba(0,0,0,0.03)] border border-gray-100 flex flex-col gap-2 relative z-10 ml-12"
+               >
+                 <div className="flex items-center gap-3 relative z-10 bg-white">
+                   <div className="w-8 h-8 rounded-lg bg-orange-50 flex items-center justify-center shrink-0 border border-orange-100">
+                     <Clock size={14} className="text-orange-500" />
+                   </div>
+                   <p className="text-xs font-bold text-graphite">4. Próximo passo definido</p>
+                 </div>
+                 <p className="text-[10px] text-gray-500 leading-relaxed pl-11 pr-2 relative z-10">
+                   A estrutura mostra o que precisa acontecer depois: responder, acompanhar, enviar proposta ou retomar contato antes que a oportunidade esfrie.
+                 </p>
+               </motion.div>
+
+             </div>
+           </div>
         </motion.div>
 
       </div>
-
-      <style>{`
-        @keyframes blink {
-          0%, 100% { opacity: 1; }
-          50% { opacity: 0; }
-        }
-      `}</style>
     </section>
+
+
+
+
+
   );
 };
 
-
 const PacientesQualificados = ({ onOpenModal }: { onOpenModal: () => void }) => {
   const steps = [
-    { tag: "1", icon: Target, title: "Atrai o público certo", desc: "A comunicação filtra quem realmente tem interesse." },
-    { tag: "2", icon: MessageCircle, title: "Organiza o primeiro contato", desc: "A conversa começa com direção." },
-    { tag: "3", icon: UserCheck, title: "Identifica quem está pronto", desc: "Você entende quem tem perfil para avançar." },
-    { tag: "4", icon: Calendar, title: "Conduz até o agendamento", desc: "Só os pacientes certos chegam à consulta." }
+    { tag: "1", icon: Target, title: "Origem identificada", desc: "Cada contato chega com a fonte registrada: Google, Instagram, WhatsApp direto ou indicação." },
+    { tag: "2", icon: MessageCircle, title: "Contato com contexto", desc: "A equipe sabe o interesse e a origem antes de abrir o WhatsApp." },
+    { tag: "3", icon: UserCheck, title: "Intenção avaliada", desc: "Quem tem perfil real avança para proposta. Quem não tem, não consome o tempo do time." },
+    { tag: "4", icon: Calendar, title: "Proposta e fechamento", desc: "O funil comercial é visível para toda a equipe: conversou, proposta, fechado." }
   ];
 
   return (
@@ -1004,8 +1133,8 @@ const PacientesQualificados = ({ onOpenModal }: { onOpenModal: () => void }) => 
             viewport={{ once: true }}
             className="text-[2.2rem] sm:text-4xl md:text-5xl lg:text-[4rem] font-extrabold text-graphite mb-8 font-manrope tracking-tight leading-[1.05] max-w-5xl mx-auto"
           >
-            Você não precisa de mais leads. <br className="hidden md:block" />
-            <span className="text-primary font-manrope">Precisa parar de falar com quem não vai fechar.</span>
+            Uma estrutura simples para controlar <br className="hidden md:block" />
+            <span className="text-primary font-manrope">o caminho do contato até a venda.</span>
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -1014,7 +1143,7 @@ const PacientesQualificados = ({ onOpenModal }: { onOpenModal: () => void }) => 
             transition={{ delay: 0.1 }}
             className="text-gray-500 max-w-2xl mx-auto text-lg md:text-xl font-sans leading-relaxed"
           >
-            Sua clínica já gera interesse. O problema é o desperdício de tempo com contatos desqualificados.
+            Do primeiro contato ao fechamento, cada etapa precisa de clareza para a equipe agir no momento certo.
           </motion.p>
         </div>
 
@@ -1055,7 +1184,7 @@ const PacientesQualificados = ({ onOpenModal }: { onOpenModal: () => void }) => 
           <div className="inline-block bg-white shadow-xl border border-black/5 rounded-2xl p-6 md:p-8 max-w-3xl relative overflow-hidden text-left sm:text-center mb-10">
             <div className="absolute top-0 left-0 w-1 sm:w-full sm:h-1 h-full bg-primary"></div>
             <p className="text-graphite font-bold text-[16px] md:text-xl font-manrope tracking-tight leading-snug">
-              "Você não precisa de mais leads. Precisa de mais clareza sobre quem realmente vale a pena atender."
+              "Você não precisa de mais contatos. Precisa de mais clareza sobre quem realmente vale atender e o que acontece até o fechamento."
             </p>
           </div>
 
@@ -1073,7 +1202,7 @@ const PacientesQualificados = ({ onOpenModal }: { onOpenModal: () => void }) => 
             </div>
             <div className="absolute inset-[1px] rounded-[11px] bg-[#68259A] hover:bg-[#7a32b3] transition-colors shadow-[0_10px_30px_rgba(104,37,154,0.3)]"></div>
             <span className="relative z-20 flex items-center justify-center text-white text-[11px] md:text-[12px] font-bold tracking-[0.15em] uppercase font-manrope">
-              Analisar meu processo →
+              Quero estruturar minha aquisição →
             </span>
           </button>
         </motion.div>
@@ -1094,21 +1223,21 @@ const AutomacaoClinica = () => {
             viewport={{ once: true }}
             className="text-3xl sm:text-4xl md:text-5xl font-bold text-graphite mb-6 font-manrope tracking-tight max-w-4xl mx-auto leading-[1.1]"
           >
-            Sua clínica perde pacientes no <span className="text-primary font-manrope">tempo de resposta.</span>
+            Oportunidades esfriam quando chegam <span className="text-primary font-manrope">sem contexto.</span>
           </motion.h2>
           <p className="text-gray-600 max-w-2xl mx-auto text-lg md:text-xl font-sans leading-relaxed">
-            Cada minuto de demora no WhatsApp diminui drasticamente a chance de agendamento. Automatizamos para que você nunca mais perca um lead por lentidão.
+            Cada contato que chega sem contexto exige mais tempo do time. Com a estrutura certa, a equipe já sabe o que fazer antes de abrir o WhatsApp.
           </p>
         </div>
 
         <div className="grid md:grid-cols-3 gap-6">
           {[
-            { icon: CheckCircle2, title: "Resposta Instantânea", desc: "Triagem 24/7 de todos os contatos. O paciente é atendido no segundo que demonstra interesse." },
-            { icon: MessageCircle, title: "Follow-up Ativo", desc: "O sistema retoma o contato com quem não agendou, garantindo que nenhum lead seja esquecido." },
-            { icon: Clock, title: "Lembretes Inteligentes", desc: "Redução drástica de faltas com notificações automáticas antes da consulta." },
-            { icon: Calendar, title: "Reagendamento Fluido", desc: "Processo simplificado para horários desmarcados, mantendo sua agenda sempre otimizada." },
-            { icon: Smartphone, title: "Triagem Estratégica", desc: "O bot identifica quem tem perfil para agendamento imediato e encaminha para a recepção." },
-            { icon: TrendingUp, title: "Máxima Conversão", desc: "Transformamos o fluxo de mensagens em uma máquina previsível de novos pacientes." },
+            { icon: CheckCircle2, title: "Resposta com contexto", desc: "Cada lead chega com origem, campanha e serviço de interesse já registrados. Seu time atende sabendo o que veio buscar." },
+            { icon: MessageCircle, title: "Atendimento priorizado", desc: "A equipe sabe quem tem intenção real antes de ligar ou responder, evitando desperdício de tempo com curiosos." },
+            { icon: Target, title: "Histórico da origem", desc: "De onde veio o contato, qual criativo gerou interesse e qual era a expectativa. Tudo visível antes do primeiro contato." },
+            { icon: Zap, title: "Próxima ação clara", desc: "Status comercial visível para toda a equipe: novo, conversou, proposta, fechado. Sem depënder de memória." },
+            { icon: TrendingUp, title: "Propostas acompanhadas", desc: "Nenhuma proposta fica sem follow-up. O CRM sinaliza quem está esperando uma resposta." },
+            { icon: BarChart3, title: "Resultado mensurável", desc: "Você sabe quais canais geram vendas reais, não só contatos. Dados para decidir onde investir mais." },
           ].map((item, idx) => (
             <motion.div key={idx} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: idx * 0.1 }} viewport={{ once: true }} className="bg-white p-8 rounded-3xl shadow-[0_12px_40px_rgba(0,0,0,0.03)] border border-black/[0.04] hover:shadow-xl hover:-translate-y-1 transition-all">
               <div className="w-14 h-14 rounded-full bg-primary/10 text-primary flex items-center justify-center mb-6">
@@ -1158,10 +1287,10 @@ const FAQItem = ({ question, answer, isOpen, toggle }: any) => {
 
 const InfiniteTicker = () => {
   const words = [
-    "AGÊNCIA DIGITAL ESTRATÉGICA",
+    "ESTRUTURA COMERCIAL",
     "INTELIGÊNCIA ARTIFICIAL",
-    "PERFORMANCE CLÍNICA",
-    "AUTOMAÇÃO DE LEADS",
+    "AQUISIÇÃO DE LEADS",
+    "AUTOMAÇÃO DE VENDAS",
     "DESIGN PREMIUM",
     "RESULTADOS EXPONENCIAIS",
     "ESTRATÉGIA DATA-DRIVEN",
@@ -1199,28 +1328,28 @@ const FAQ = () => {
 
   const faqs = [
     {
-      question: "Quanto tempo leva para estruturar esse sistema?",
-      answer: "A implantação do sistema primário costuma levar entre 7 e 15 dias, podendo ser mais rápido ou prolongar até 20 dias, dependendo do estágio atual do seu negócio. Nesse período, já criamos as fundações para que sua empresa comece a ser encontrada."
+      question: "Isso serve para qual tipo de negócio?",
+      answer: "Para qualquer negócio local que recebe contatos pelo WhatsApp, Instagram ou Google e precisa organizar esse fluxo: prestação de serviços, comércio, saúde, beleza, construção, education, entre outros. O que importa é ter interesse em entender de onde vêm os contatos e o que vira venda."
     },
     {
-      question: "Preciso já investir em anúncios?",
-      answer: "Recomendamos um orçamento inicial para acelerar a aquisição de clientes. Porém, durante o diagnóstico, orientaremos o montante ideal, sempre focando no retorno sobre o investimento (ROI) e na previsibilidade."
+      question: "Preciso já anunciar para usar?",
+      answer: "Não. A estrutura funciona mesmo que você ainda não invista em tráfego pago. Começamos organizando o que já chega, seja pelo WhatsApp, indicações ou busca orgânica. Quando os anúncios começarem, a estrutura já estará pronta para rastrear."
     },
     {
-      question: "Isso serve para empresas pequenas?",
-      answer: "Com certeza. Nossos sistemas são desenhados para dar escala a negócios de todos os tamanhos, permitindo que as pequenas empresas se posicionem com o mesmo profissionalismo de líderes de mercado."
+      question: "Isso substitui meu WhatsApp?",
+      answer: "Não. O WhatsApp continua sendo o canal principal de atendimento. A estrutura adiciona rastreamento, qualificação e organização ao que já chega por lá. Sua equipe continua atendendo normalmente, mas com mais contexto e controle."
     },
     {
-      question: "Preciso ter equipe interna?",
-      answer: "Não. Nós estruturamos a automação e o funil de aquisição de forma que você time consiga lidar apenas com os fechamentos de alto valor."
+      question: "Minha equipe precisa preencher tudo manualmente?",
+      answer: "Não. A maior parte das informações (origem, campanha, página de entrada, serviço de interesse) é capturada automaticamente. A equipe apenas acompanha o status e atualiza o avanço comercial."
     },
     {
-      question: "Como funciona a implantação?",
-      answer: "Mapeamos seu cenário no Raio-X inicial, desenhamos a arquitetura ideal e em seguida nossa equipe técnica assume a construção da estrutura de atração, conversão e automação."
+      question: "Dá para saber quais campanhas geram vendas?",
+      answer: "Sim. Esse é exatamente o objetivo principal da estrutura. Cada lead é registrado com a origem e campanha que o trouxe. Quando o contato vira venda, você sabe exatamente qual canal gerou aquele resultado."
     },
     {
-      question: "O contato é sem compromisso?",
-      answer: "Sim. O diagnóstico inicial é isento de custos e focado em apresentar os gargalos do seu crescimento estrutural."
+      question: "Isso prepara meu negócio para Google e Meta aprenderem com vendas reais?",
+      answer: "Sim. Com o rastreamento correto e os eventos de conversão configurados, Google e Meta aprendem com quem realmente comprou ou contratou, não só com quem clicou. Isso melhora progressivamente a qualidade dos leads dos seus anúncios."
     }
   ];
 
@@ -1260,12 +1389,12 @@ const FinalCTA = ({ onOpenModal }: { onOpenModal: () => void }) => {
           transition={{ duration: 0.6 }}
         >
           <h2 className="text-[2.2rem] sm:text-[3rem] md:text-[4.5rem] font-extrabold text-white mb-10 tracking-tight font-manrope leading-[1.05]">
-            Você já está atraindo pacientes. <br className="hidden md:block" />
-            <span className="text-[#B988BF]">Só não está convertendo.</span>
+            Você já recebe contatos. <br className="hidden md:block" />
+            <span className="text-[#B988BF]">Agora precisa de uma estrutura para transformar isso em venda.</span>
           </h2>
 
           <p className="text-zinc-400 text-lg md:text-2xl leading-relaxed font-manrope max-w-2xl mb-14 font-light">
-            Sua clínica gera interesse. O problema está no que acontece depois.
+            Organize a entrada dos leads, acompanhe oportunidades e entenda quais canais realmente geram resultado.
           </p>
 
           <div className="flex flex-col items-start gap-8">
@@ -1283,7 +1412,7 @@ const FinalCTA = ({ onOpenModal }: { onOpenModal: () => void }) => {
               </div>
               <div className="absolute inset-[1px] rounded-[11px] bg-gradient-to-r from-[#5B2E8A] to-[#3A1660] group-hover:from-[#6B3FA0] group-hover:to-[#4A2070] transition-colors shadow-[0_10px_40px_rgba(91,46,138,0.3)]"></div>
               <span className="relative z-20 flex items-center justify-center text-white text-[12px] md:text-[13px] font-bold tracking-[0.1em] uppercase font-manrope">
-                Quero entender onde estou perdendo pacientes →
+                Quero estruturar minha aquisição →
               </span>
             </button>
             <p className="text-zinc-500 text-[11px] md:text-xs font-bold uppercase tracking-[0.2em] opacity-70">
@@ -1669,48 +1798,48 @@ const RaioXSection = ({ onOpenModal }: { onOpenModal: () => void }) => {
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-medium text-white mb-6 tracking-tighter font-manrope leading-[1.1]">
-            Raio-X Estratégico da <span className="text-gradient hover-glow">Sua Clínica</span>
+            Raio-X da sua <span className="text-gradient hover-glow">estrutura de aquisição</span>
           </h2>
           <p className="text-zinc-400 text-lg leading-relaxed font-sans max-w-3xl mx-auto">
-            O problema não é apenas atrair pacientes. É criar uma estrutura que permita rastrear, responder, confirmar e escalar.
+            O problema não é só atrair contatos. É criar uma estrutura que permita rastrear, atender com contexto, acompanhar propostas e escalar.
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
-          <motion.div whileHover={{ y: -10 }} className="bg-black/60 backdrop-blur-md p-8 rounded-[2rem] border border-white/10 hover:border-[#B988BF]/50 transition-all flex flex-col items-center text-center relative overflow-hidden group">
-            <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#B988BF] transform -translate-x-full group-hover:translate-x-0 transition-transform duration-200"></div>
-            <div className="w-14 h-14 rounded-full bg-[#B988BF]/10 flex items-center justify-center mb-6 text-[#B988BF] group-hover:scale-110 transition-transform duration-300">
-              <Target size={28} />
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4 mb-16">
+          <motion.div whileHover={{ y: -6 }} className="bg-black/60 backdrop-blur-md p-6 rounded-2xl border border-white/10 hover:border-[#B988BF]/40 transition-all flex flex-col items-start text-left relative overflow-hidden group">
+            <div className="absolute left-0 top-0 bottom-0 w-[3px] bg-[#B988BF] transform -translate-x-full group-hover:translate-x-0 transition-transform duration-200"></div>
+            <div className="w-11 h-11 rounded-xl bg-[#B988BF]/10 flex items-center justify-center mb-5 text-[#B988BF] group-hover:scale-110 transition-transform duration-300">
+              <Target size={22} />
             </div>
-            <h3 className="text-white font-manrope text-xl md:text-2xl font-semibold tracking-tight uppercase mb-4">1. Visibilidade</h3>
-            <p className="text-sm text-zinc-300 leading-relaxed font-sans">Clínicas sem Pixel, Analytics e Tag Manager não sabem quais anúncios realmente geram pacientes.</p>
+            <h3 className="text-white font-manrope text-base font-bold tracking-tight uppercase mb-3">1. Visibilidade</h3>
+            <p className="text-sm text-zinc-400 leading-relaxed font-sans">Sem clareza de origem, o negócio não sabe quais canais realmente geram boas oportunidades.</p>
           </motion.div>
 
-          <motion.div whileHover={{ y: -10 }} className="bg-black/60 backdrop-blur-md p-8 rounded-[2rem] border border-white/10 hover:border-[#EEC6A2]/50 transition-all flex flex-col items-center text-center relative overflow-hidden group">
-            <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#EEC6A2] transform -translate-x-full group-hover:translate-x-0 transition-transform duration-200"></div>
-            <div className="w-14 h-14 rounded-full bg-[#EEC6A2]/10 flex items-center justify-center mb-6 text-[#EEC6A2] group-hover:scale-110 transition-transform duration-300">
-              <TrendingUp size={28} />
+          <motion.div whileHover={{ y: -6 }} className="bg-black/60 backdrop-blur-md p-6 rounded-2xl border border-white/10 hover:border-[#EEC6A2]/40 transition-all flex flex-col items-start text-left relative overflow-hidden group">
+            <div className="absolute left-0 top-0 bottom-0 w-[3px] bg-[#EEC6A2] transform -translate-x-full group-hover:translate-x-0 transition-transform duration-200"></div>
+            <div className="w-11 h-11 rounded-xl bg-[#EEC6A2]/10 flex items-center justify-center mb-5 text-[#EEC6A2] group-hover:scale-110 transition-transform duration-300">
+              <TrendingUp size={22} />
             </div>
-            <h3 className="text-white font-manrope text-xl md:text-2xl font-semibold tracking-tight uppercase mb-4">2. Atendimento</h3>
-            <p className="text-sm text-zinc-300 leading-relaxed font-sans">Quando o WhatsApp demora para responder, muitos pacientes desistem e procuram outra clínica.</p>
+            <h3 className="text-white font-manrope text-base font-bold tracking-tight uppercase mb-3">2. Atendimento</h3>
+            <p className="text-sm text-zinc-400 leading-relaxed font-sans">Quando o contato chega sem contexto, a equipe demora mais para responder e a oportunidade esfria.</p>
           </motion.div>
 
-          <motion.div whileHover={{ y: -10 }} className="bg-black/60 backdrop-blur-md p-8 rounded-[2rem] border border-white/10 hover:border-[#B988BF]/50 transition-all flex flex-col items-center text-center relative overflow-hidden group">
-            <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#B988BF] transform -translate-x-full group-hover:translate-x-0 transition-transform duration-200"></div>
-            <div className="w-14 h-14 rounded-full bg-[#B988BF]/10 flex items-center justify-center mb-6 text-[#B988BF] group-hover:scale-110 transition-transform duration-300">
-              <MessageCircle size={28} />
+          <motion.div whileHover={{ y: -6 }} className="bg-black/60 backdrop-blur-md p-6 rounded-2xl border border-white/10 hover:border-[#B988BF]/40 transition-all flex flex-col items-start text-left relative overflow-hidden group">
+            <div className="absolute left-0 top-0 bottom-0 w-[3px] bg-[#B988BF] transform -translate-x-full group-hover:translate-x-0 transition-transform duration-200"></div>
+            <div className="w-11 h-11 rounded-xl bg-[#B988BF]/10 flex items-center justify-center mb-5 text-[#B988BF] group-hover:scale-110 transition-transform duration-300">
+              <MessageCircle size={22} />
             </div>
-            <h3 className="text-white font-manrope text-xl md:text-2xl font-semibold tracking-tight uppercase mb-4">3. Confirmação</h3>
-            <p className="text-sm text-zinc-300 leading-relaxed font-sans">Sem lembretes e confirmações automáticas, faltas e cancelamentos se tornam frequentes.</p>
+            <h3 className="text-white font-manrope text-base font-bold tracking-tight uppercase mb-3">3. Acompanhamento</h3>
+            <p className="text-sm text-zinc-400 leading-relaxed font-sans">Sem um funil simples, contatos viram conversas soltas e propostas deixam de ser acompanhadas.</p>
           </motion.div>
 
-          <motion.div whileHover={{ y: -10 }} className="bg-black/60 backdrop-blur-md p-8 rounded-[2rem] border border-white/10 hover:border-[#EEC6A2]/50 transition-all flex flex-col items-center text-center relative overflow-hidden group">
-            <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#EEC6A2] transform -translate-x-full group-hover:translate-x-0 transition-transform duration-200"></div>
-            <div className="w-14 h-14 rounded-full bg-[#EEC6A2]/10 flex items-center justify-center mb-6 text-[#EEC6A2] group-hover:scale-110 transition-transform duration-300">
-              <BarChart3 size={28} />
+          <motion.div whileHover={{ y: -6 }} className="bg-black/60 backdrop-blur-md p-6 rounded-2xl border border-white/10 hover:border-[#EEC6A2]/40 transition-all flex flex-col items-start text-left relative overflow-hidden group">
+            <div className="absolute left-0 top-0 bottom-0 w-[3px] bg-[#EEC6A2] transform -translate-x-full group-hover:translate-x-0 transition-transform duration-200"></div>
+            <div className="w-11 h-11 rounded-xl bg-[#EEC6A2]/10 flex items-center justify-center mb-5 text-[#EEC6A2] group-hover:scale-110 transition-transform duration-300">
+              <BarChart3 size={22} />
             </div>
-            <h3 className="text-white font-manrope text-xl md:text-2xl font-semibold tracking-tight uppercase mb-4">4. Previsibilidade</h3>
-            <p className="text-sm text-zinc-300 leading-relaxed font-sans">Sem rastreamento e automação, a clínica cresce sem saber exatamente o que está funcionando.</p>
+            <h3 className="text-white font-manrope text-base font-bold tracking-tight uppercase mb-3">4. Previsibilidade</h3>
+            <p className="text-sm text-zinc-400 leading-relaxed font-sans">Sem acompanhar origem, proposta e fechamento, o negócio não sabe o que repetir para vender mais.</p>
           </motion.div>
         </div>
 
