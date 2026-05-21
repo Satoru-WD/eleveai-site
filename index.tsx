@@ -447,6 +447,152 @@ const Navbar = ({ onHome, onWhatsApp }: { onHome: () => void, onWhatsApp: () => 
   );
 };
 
+const HeroDashboardMockup = ({ compact = false }: { compact?: boolean }) => {
+  const metrics = [
+    { label: 'Total', value: '24', color: 'text-white' },
+    { label: 'Intenção real', value: '8', color: 'text-blue-300' },
+    { label: 'Propostas', value: '6', color: 'text-[#D6A8DD]' },
+    { label: 'Vendas', value: '4', color: 'text-green-300' },
+  ];
+
+  const opportunities = [
+    { name: 'Marcos Oliveira', origin: 'Google Ads', status: 'Proposta', detail: 'R$ 4.800', statusClass: 'bg-[#B988BF]/15 text-[#E1B7E6] border-[#B988BF]/20' },
+    { name: 'Juliana Ramos', origin: 'Instagram', status: 'Novo', detail: 'intenção real', statusClass: 'bg-blue-400/10 text-blue-200 border-blue-300/15' },
+    { name: 'Ricardo Alves', origin: 'WhatsApp', status: 'Fechado', detail: 'R$ 3.200', statusClass: 'bg-green-400/10 text-green-200 border-green-300/15' },
+  ];
+
+  const origins = [
+    { label: 'Google Ads', pct: 54, color: 'bg-[#B988BF]' },
+    { label: 'Instagram', pct: 29, color: 'bg-blue-300' },
+    { label: 'WhatsApp', pct: 17, color: 'bg-green-300' },
+  ];
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: compact ? 18 : 0, x: compact ? 0 : 30 }}
+      animate={{ opacity: 1, y: 0, x: 0 }}
+      transition={{ duration: 0.8, delay: compact ? 0.55 : 0.35 }}
+      className={`${compact ? 'relative w-full max-w-[420px] mx-auto' : 'relative w-full max-w-[590px] flex flex-col'}`}
+    >
+      <div className="absolute -inset-6 bg-[#6B3FA0]/15 blur-[70px] rounded-3xl pointer-events-none" />
+      <div className="relative overflow-hidden rounded-[1.6rem] border border-white/[0.09] bg-[#101016]/72 shadow-[0_34px_90px_rgba(0,0,0,0.42)] backdrop-blur-xl">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(185,136,191,0.16),transparent_42%)] pointer-events-none" />
+        <div className={`${compact ? 'p-4' : 'p-5'} relative z-10`}>
+          <div className="flex items-center justify-between gap-4 mb-5">
+            <div>
+              <div className="flex items-center gap-2 mb-1.5">
+                <span className="h-2 w-2 rounded-full bg-[#B988BF] shadow-[0_0_18px_rgba(185,136,191,0.9)]" />
+                <span className="text-[11px] font-bold uppercase tracking-[0.18em] text-white/55">Painel de Rastreamento</span>
+              </div>
+              <p className={`${compact ? 'text-base' : 'text-lg'} font-extrabold text-white tracking-tight font-manrope`}>
+                Contatos, propostas e vendas em uma leitura.
+              </p>
+            </div>
+            <div className="flex items-center gap-2 rounded-full border border-green-300/15 bg-green-300/10 px-3 py-1.5">
+              <span className="relative flex h-2 w-2">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-300 opacity-60" />
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-green-300" />
+              </span>
+              <span className="text-[11px] font-bold text-green-200">ao vivo</span>
+            </div>
+          </div>
+
+          <div className={`grid ${compact ? 'grid-cols-2' : 'grid-cols-4'} gap-2.5 mb-4`}>
+            {metrics.map((metric) => (
+              <div key={metric.label} className="rounded-2xl border border-white/[0.07] bg-white/[0.035] px-2.5 py-3 text-center">
+                <p className={`${compact ? 'text-lg' : 'text-2xl'} font-extrabold ${metric.color} font-manrope leading-none`}>{metric.value}</p>
+                <p className="mt-1.5 text-[11px] font-semibold leading-tight text-zinc-400">{metric.label}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className={`grid ${compact ? 'grid-cols-1' : 'grid-cols-[0.9fr_1.1fr]'} gap-3 mb-4`}>
+            <div className="grid grid-cols-2 gap-3">
+              <div className="rounded-2xl border border-[#B988BF]/15 bg-[#B988BF]/[0.07] p-4">
+                <p className="text-[11px] font-bold uppercase tracking-[0.12em] text-[#D6A8DD]/80">Em proposta</p>
+                <p className="mt-2 text-xl font-extrabold text-white font-manrope">R$ 22.400</p>
+              </div>
+              <div className="rounded-2xl border border-green-300/15 bg-green-300/[0.06] p-4">
+                <p className="text-[11px] font-bold uppercase tracking-[0.12em] text-green-200/80">Valor fechado</p>
+                <p className="mt-2 text-xl font-extrabold text-white font-manrope">R$ 9.800</p>
+              </div>
+            </div>
+            {!compact && (
+              <div className="rounded-2xl border border-white/[0.08] bg-black/20 p-4 flex gap-3">
+                <div className="h-10 w-10 rounded-xl bg-[#B988BF]/12 text-[#D6A8DD] flex items-center justify-center shrink-0">
+                  <Sparkles size={18} />
+                </div>
+                <div>
+                  <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-[#D6A8DD]">Insight inteligente</p>
+                  <p className="mt-1 text-sm leading-relaxed text-zinc-300">Google Ads gerou mais propostas esta semana.</p>
+                </div>
+              </div>
+            )}
+          </div>
+
+          <div className="rounded-2xl border border-white/[0.07] bg-black/20 p-3.5 mb-4">
+            <div className="mb-3 flex items-center justify-between">
+              <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-zinc-500">Oportunidades</p>
+              {!compact && <p className="text-[11px] font-semibold text-[#D6A8DD]">3 sinais ativos</p>}
+            </div>
+            <div className="space-y-2.5">
+              {opportunities.map((lead) => (
+                <div key={lead.name} className="flex items-center gap-3 rounded-xl border border-white/[0.05] bg-white/[0.035] p-3">
+                  <div className="h-9 w-9 rounded-xl bg-white/[0.055] border border-white/[0.06] flex items-center justify-center shrink-0">
+                    <span className="text-sm font-extrabold text-[#D6A8DD]">{lead.name.charAt(0)}</span>
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <p className="text-sm font-bold text-white leading-tight truncate">{lead.name}</p>
+                    <p className="mt-1 text-xs text-zinc-400">Origem: {lead.origin}</p>
+                  </div>
+                  <div className="text-right shrink-0">
+                    <span className={`inline-flex rounded-full border px-2.5 py-1 text-[11px] font-bold ${lead.statusClass}`}>{lead.status}</span>
+                    <p className="mt-1 text-xs font-semibold text-zinc-300">{lead.detail}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="rounded-2xl border border-white/[0.07] bg-white/[0.03] p-4">
+            <div className="mb-3 flex items-center justify-between">
+              <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-zinc-500">Origem dos contatos</p>
+              <p className="text-[11px] font-semibold text-zinc-400">semana atual</p>
+            </div>
+            <div className="space-y-3">
+              {origins.map((origin) => (
+                <div key={origin.label}>
+                  <div className="mb-1.5 flex items-center justify-between text-xs">
+                    <span className="font-semibold text-zinc-300">{origin.label}</span>
+                    <span className="font-bold text-white">{origin.pct}%</span>
+                  </div>
+                  <div className="h-1.5 overflow-hidden rounded-full bg-white/[0.06]">
+                    <div className={`h-full rounded-full ${origin.color}`} style={{ width: `${origin.pct}%` }} />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {!compact && (
+        <div className="absolute -right-5 top-[47%] rounded-2xl border border-white/[0.08] bg-[#101016]/90 p-3.5 shadow-2xl backdrop-blur-xl w-[185px]">
+          <div className="flex items-center gap-2.5">
+            <div className="h-9 w-9 rounded-xl bg-green-400/10 flex items-center justify-center shrink-0">
+              <WhatsAppIcon size={17} className="text-green-300" />
+            </div>
+            <div>
+              <p className="text-xs font-bold text-white leading-tight">Proposta enviada</p>
+              <p className="mt-0.5 text-[11px] text-zinc-400 leading-tight">Marcos Oliveira</p>
+            </div>
+          </div>
+        </div>
+      )}
+    </motion.div>
+  );
+};
+
 const Hero = ({ onOpenModal }: { onOpenModal: () => void }) => {
   const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -568,6 +714,10 @@ const Hero = ({ onOpenModal }: { onOpenModal: () => void }) => {
                {/* Spacer for mobile to reveal background image */}
                <div className="lg:hidden w-full min-h-[160px] sm:min-h-[200px]"></div>
 
+               <div className="lg:hidden w-full mb-10">
+                 <HeroDashboardMockup compact />
+               </div>
+
                {/* Main CTA + secondary — Desktop Only */}
                <motion.div
                  initial={{ opacity: 0, scale: 0.98 }}
@@ -620,152 +770,10 @@ const Hero = ({ onOpenModal }: { onOpenModal: () => void }) => {
 
             {/* ========== RIGHT COLUMN — Desktop Dashboard Visual ========== */}
             <div className="hidden lg:flex w-full lg:w-[54%] relative flex-col items-end justify-center">
-              <motion.div
-                initial={{ opacity: 0, x: 30 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8, delay: 0.35 }}
-                className="relative w-full max-w-[580px] flex flex-col"
-              >
-                {/* Glow behind the card */}
-                <div className="absolute -inset-6 bg-[#6B3FA0]/15 blur-[60px] rounded-3xl pointer-events-none" />
-
-                {/* Main Dashboard Card */}
-                <div className="relative bg-[#0F0F12]/90 border border-white/10 rounded-2xl overflow-hidden shadow-[0_32px_80px_rgba(0,0,0,0.5)] backdrop-blur-sm">
-
-                  {/* Card header bar */}
-                  <div className="flex items-center justify-between px-5 py-3.5 border-b border-white/[0.07] bg-black/30">
-                    <div className="flex items-center gap-2.5">
-                      <div className="w-2 h-2 rounded-full bg-[#B988BF]" />
-                       <span className="text-[11px] font-bold text-white/70 uppercase tracking-[0.18em]">Painel de rastreamento</span>
-                    </div>
-                    <div className="flex items-center gap-1.5">
-                      <span className="relative flex h-2 w-2">
-                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-60"></span>
-                        <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
-                      </span>
-                      <span className="text-[10px] text-green-400 font-semibold">ao vivo</span>
-                    </div>
-                  </div>
-
-                  {/* Metric pills row */}
-                  <div className="grid grid-cols-4 gap-px bg-white/[0.05] border-b border-white/[0.07]">
-                    {[
-                      { label: 'Total', value: '24', color: 'text-white' },
-                      { label: 'Novos', value: '8', color: 'text-blue-400' },
-                      { label: 'Propostas', value: '6', color: 'text-[#B988BF]' },
-                      { label: 'Fechados', value: '4', color: 'text-green-400' },
-                    ].map((m) => (
-                      <div key={m.label} className="bg-[#0F0F12] px-3 py-3 flex flex-col items-center gap-0.5">
-                        <span className={`text-lg font-extrabold ${m.color} font-manrope`}>{m.value}</span>
-                        <span className="text-[9px] font-bold uppercase tracking-widest text-zinc-500">{m.label}</span>
-                      </div>
-                    ))}
-                  </div>
-
-                  {/* Financial row */}
-                  <div className="grid grid-cols-2 gap-px bg-white/[0.05] border-b border-white/[0.07]">
-                    <div className="bg-[#0F0F12] px-4 py-3 flex items-center gap-3">
-                      <div className="w-7 h-7 rounded-lg bg-[#B988BF]/10 flex items-center justify-center shrink-0">
-                        <TrendingUp size={13} className="text-[#B988BF]" />
-                      </div>
-                      <div>
-                        <p className="text-[10px] text-zinc-500 font-bold uppercase tracking-wider">Em proposta</p>
-                        <p className="text-sm font-extrabold text-[#B988BF] font-manrope">R$ 22.400</p>
-                      </div>
-                    </div>
-                    <div className="bg-[#0F0F12] px-4 py-3 flex items-center gap-3">
-                      <div className="w-7 h-7 rounded-lg bg-green-500/10 flex items-center justify-center shrink-0">
-                        <BarChart3 size={13} className="text-green-400" />
-                      </div>
-                      <div>
-                        <p className="text-[10px] text-zinc-500 font-bold uppercase tracking-wider">Valor fechado</p>
-                        <p className="text-sm font-extrabold text-green-400 font-manrope">R$ 9.800</p>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Lead list */}
-                  <div className="divide-y divide-white/[0.05]">
-                    {[
-                      { name: 'Marcos Oliveira', origem: 'google', campanha: 'search-brand', service: 'Estrutura completa', status: 'proposta', statusColor: 'bg-[#B988BF]/20 text-[#B988BF]', valor: 'R$ 4.800' },
-                      { name: 'Juliana Ramos', origem: 'instagram', campanha: 'stories-maio', service: 'Intenção real', status: 'novo', statusColor: 'bg-blue-500/15 text-blue-400', valor: '—' },
-                      { name: 'Ricardo Alves', origem: 'whatsapp', campanha: 'direto', service: 'Venda rastreada', status: 'fechado', statusColor: 'bg-green-500/15 text-green-400', valor: 'R$ 3.200' },
-                      { name: 'Camila Souza', origem: 'google', campanha: 'pmax-sp', service: 'Origem clara', status: 'conversou', statusColor: 'bg-amber-500/15 text-amber-400', valor: '—' },
-                    ].map((lead, i) => (
-                      <div key={i} className="flex items-center gap-3 px-4 py-3 hover:bg-white/[0.02] transition-colors">
-                        {/* Avatar */}
-                        <div className="w-7 h-7 rounded-full bg-[#B988BF]/10 border border-white/10 flex items-center justify-center shrink-0">
-                          <span className="text-[10px] font-bold text-[#B988BF]">{lead.name.charAt(0)}</span>
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <div className="flex items-center gap-2 mb-0.5">
-                            <p className="text-[12px] font-semibold text-white truncate">{lead.name}</p>
-                            <span className={`text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-full shrink-0 ${lead.statusColor}`}>{lead.status}</span>
-                          </div>
-                          <div className="flex items-center gap-2">
-                            <span className="text-[10px] text-zinc-500 font-mono bg-white/5 px-1.5 py-0.5 rounded">{lead.origem}</span>
-                            <span className="text-[10px] text-zinc-600 truncate">{lead.campanha}</span>
-                          </div>
-                        </div>
-                        <div className="text-right shrink-0">
-                          <p className="text-[11px] font-bold text-zinc-300">{lead.valor}</p>
-                          <p className="text-[9px] text-zinc-600 truncate max-w-[80px]">{lead.service}</p>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-
-                  {/* Footer */}
-                  <div className="px-4 py-2.5 border-t border-white/[0.07] flex items-center justify-between bg-black/20">
-                    <span className="text-[10px] text-zinc-600">Atualizado agora mesmo</span>
-                    <span className="text-[10px] text-[#B988BF] font-semibold cursor-pointer hover:underline">Ver todas →</span>
-                  </div>
-                </div>
-
-                {/* Horizontal Origin breakdown — Positioned BELOW the dashboard, FULL WIDTH */}
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.9 }}
-                  className="mt-4 w-full bg-[#0F0F12]/95 border border-white/10 rounded-xl p-4 shadow-2xl backdrop-blur-md flex items-center justify-between gap-6"
-                >
-                  <p className="text-[9px] font-bold uppercase tracking-widest text-zinc-500 whitespace-nowrap">Origem dos contatos</p>
-                  <div className="flex-1 flex items-center gap-5">
-                    {[
-                      { label: 'Google Ads', pct: 54, color: 'bg-[#B988BF]' },
-                      { label: 'Instagram', pct: 29, color: 'bg-blue-400' },
-                      { label: 'WhatsApp', pct: 17, color: 'bg-green-400' },
-                    ].map((o) => (
-                      <div key={o.label} className="flex-1">
-                        <div className="flex justify-between mb-1">
-                          <span className="text-[10px] text-zinc-400">{o.label}</span>
-                          <span className="text-[10px] text-white font-bold">{o.pct}%</span>
-                        </div>
-                        <div className="h-1 bg-white/5 rounded-full overflow-hidden">
-                          <div className={`h-full ${o.color} rounded-full`} style={{ width: `${o.pct}%` }} />
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </motion.div>
-
-                {/* Floating card — WhatsApp quick action */}
-                <motion.div
-                  initial={{ opacity: 0, y: 10, x: 10 }}
-                  animate={{ opacity: 1, y: 0, x: 0 }}
-                  transition={{ duration: 0.6, delay: 1.0 }}
-                  className="absolute -right-6 top-[55%] bg-[#0F0F12]/95 border border-white/10 rounded-xl p-3 shadow-2xl backdrop-blur-md flex items-center gap-2.5 w-[168px]"
-                >
-                  <div className="w-8 h-8 rounded-xl bg-green-500/15 flex items-center justify-center shrink-0">
-                    <WhatsAppIcon size={16} className="text-green-400" />
-                  </div>
-                  <div>
-                    <p className="text-[10px] font-bold text-white leading-tight">Marcos Oliveira</p>
-                    <p className="text-[9px] text-zinc-500 leading-tight">Proposta enviada · aguardando</p>
-                  </div>
-                </motion.div>
-              </motion.div>
+              <HeroDashboardMockup />
             </div>
+
+
 
           </div>
         </div>
@@ -776,7 +784,7 @@ const Hero = ({ onOpenModal }: { onOpenModal: () => void }) => {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="w-full lg:hidden flex flex-col items-center -mt-20 mb-8 overflow-hidden relative z-20"
+          className="w-full lg:hidden flex flex-col items-center mt-0 mb-8 overflow-hidden relative z-20"
         >
           <p className="text-[11px] text-[#A678CB] font-bold uppercase tracking-[0.2em] mb-6 px-5 text-center">
             O QUE NEGÓCIOS PERCEBEM APÓS ESTRUTURAR A AQUISIÇÃO
