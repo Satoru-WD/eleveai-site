@@ -589,7 +589,7 @@ const Hero = ({ onOpenModal }: { onOpenModal: () => void }) => {
                    </div>
                    <div className="absolute inset-[1px] rounded-2xl bg-gradient-to-r from-[#5B2E8A] to-[#3A1660] group-hover:from-[#6B3FA0] group-hover:to-[#4A2070] transition-colors"></div>
                    <span className="relative z-20 flex items-center justify-center gap-3 font-bold text-[13px] tracking-[0.06em] uppercase text-white font-manrope">
-                      Quero rastrear melhor meus contatos
+                      Quero rastrear meus contatos
                      <ArrowRight size={17} className="transition-transform group-hover:translate-x-1" />
                    </span>
                  </button>
@@ -838,7 +838,7 @@ const Hero = ({ onOpenModal }: { onOpenModal: () => void }) => {
             </div>
             <div className="absolute inset-[1px] rounded-2xl bg-gradient-to-r from-[#5B2E8A] to-[#3A1660] group-hover:from-[#6B3FA0] group-hover:to-[#4A2070] transition-colors"></div>
             <span className="relative z-20 flex items-center justify-center gap-3 font-bold text-[13px] tracking-[0.05em] uppercase text-white font-manrope">
-              Quero rastrear melhor meus contatos
+              Quero rastrear meus contatos
               <ArrowRight size={18} className="transition-transform group-hover:translate-x-1" />
             </span>
           </motion.button>
@@ -938,18 +938,17 @@ const GoogleAdsPremium = ({ onOpenModal }: { onOpenModal: () => void }) => {
           {/* Body copy - Improved hierarchy and line-height */}
           <div className="space-y-4 lg:space-y-5 text-gray-500 max-w-[500px]">
             <p className="text-graphite font-semibold text-lg lg:text-[1.15rem] leading-[1.4]">
-              Seu negócio recebe contatos todos os dias. <br className="hidden sm:block" />
-              Mas precisa saber origem, intenção, proposta e venda.
+              Muitas empresas recebem mensagens todos os dias, mas não sabem quais canais trazem bons contatos, quais conversas viram proposta e quais vendas poderiam ser repetidas.
             </p>
             <p className="text-base lg:text-[1.05rem] leading-[1.7] font-light">
-              Sem rastreamento adequado, cada contato vira uma conversa solta. Você perde clareza sobre quais canais geram clientes melhores e onde vale investir mais.
+              Sem contexto comercial, o atendimento depende de memória, percepção e tentativa. A decisão sobre investimento fica presa em volume de mensagens, não em qualidade de oportunidade.
             </p>
           </div>
 
           {/* Highlight - Lighter visual weight */}
           <div className="mt-8 lg:mt-10 border-l-[3px] border-primary/30 pl-5 py-1">
             <p className="text-[11px] lg:text-[12px] uppercase font-bold text-primary/80 tracking-[0.15em]">
-              Você recebe contatos, mas não enxerga o caminho até a venda.
+              O volume aparece. A qualidade, o avanço e o aprendizado ficam invisíveis.
             </p>
           </div>
 
@@ -963,7 +962,7 @@ const GoogleAdsPremium = ({ onOpenModal }: { onOpenModal: () => void }) => {
             <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-[1200ms] ease-in-out group-hover:opacity-100" style={{ background: 'radial-gradient(60.6% 50% at 50% 100%, #B988BF 0%, rgba(185, 136, 191, 0) 100%)', filter: 'blur(18px)' }}></div>
             <div className="absolute inset-[1px] rounded-2xl bg-[#0F0F12] hover:bg-[#1A1A1E] transition-colors"></div>
             <span className="relative z-20 flex items-center justify-center text-white text-[11px] font-bold tracking-[0.15em] uppercase font-manrope">
-              Quero rastrear melhor meus contatos
+              Quero rastrear meus contatos
               <ArrowRight size={18} className="ml-4 transition-transform duration-300 group-hover:translate-x-1" />
             </span>
           </button>
@@ -999,7 +998,7 @@ const GoogleAdsPremium = ({ onOpenModal }: { onOpenModal: () => void }) => {
                  </div>
                </div>
                <p className="text-sm sm:text-[15px] text-gray-700 leading-relaxed font-medium max-w-[440px]">
-                 O painel é apenas a forma visual de enxergar origem, intenção, proposta, venda e canais que geram clientes.
+                 O painel é apenas a forma visual de conectar os sinais que mostram qualidade comercial.
                </p>
              </div>
 
@@ -1145,10 +1144,11 @@ const GoogleAdsPremium = ({ onOpenModal }: { onOpenModal: () => void }) => {
 
 const PacientesQualificados = ({ onOpenModal }: { onOpenModal: () => void }) => {
   const steps = [
-    { tag: "1", icon: Target, title: "Origem rastreada", desc: "Cada contato chega com a fonte registrada: Google, Instagram, anúncio, orgânico ou indicação." },
-    { tag: "2", icon: MessageCircle, title: "Intenção real", desc: "A equipe entende quem apenas clicou e quem demonstrou interesse suficiente para virar oportunidade." },
-    { tag: "3", icon: UserCheck, title: "Proposta e venda", desc: "Você acompanha se o contato virou conversa, proposta, venda ou perda." },
-    { tag: "4", icon: Calendar, title: "Decisão com dados", desc: "Os canais que geram clientes melhores ficam claros para orientar próximos investimentos." }
+    { tag: "1", icon: Target, title: "Sinal de origem", desc: "Mostra de qual canal, campanha, página ou busca o contato veio." },
+    { tag: "2", icon: MessageCircle, title: "Sinal de intenção", desc: "Ajuda a separar curiosidade de procura real por solução, prazo ou orçamento." },
+    { tag: "3", icon: UserCheck, title: "Sinal comercial", desc: "Indica se houve conversa, prioridade, follow-up e proposta em andamento." },
+    { tag: "4", icon: CheckCircle2, title: "Sinal de resultado", desc: "Registra o que virou venda, perda ou oportunidade ainda aberta." },
+    { tag: "5", icon: BarChart3, title: "Sinal para otimização", desc: "Mostra o que deve receber mais verba, ajuste ou atenção comercial." }
   ];
 
   return (
@@ -1161,8 +1161,7 @@ const PacientesQualificados = ({ onOpenModal }: { onOpenModal: () => void }) => 
             viewport={{ once: true }}
             className="text-[2.2rem] sm:text-4xl md:text-5xl lg:text-[4rem] font-extrabold text-graphite mb-8 font-manrope tracking-tight leading-[1.05] max-w-5xl mx-auto"
           >
-            Rastreamento claro para entender <br className="hidden md:block" />
-            <span className="text-primary font-manrope">o caminho do contato até a venda.</span>
+            Antes de escalar campanhas, organize os sinais que mostram qualidade.
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -1171,12 +1170,12 @@ const PacientesQualificados = ({ onOpenModal }: { onOpenModal: () => void }) => 
             transition={{ delay: 0.1 }}
             className="text-gray-500 max-w-2xl mx-auto text-lg md:text-xl font-sans leading-relaxed"
           >
-            Da origem ao fechamento, cada etapa precisa de dados claros para a equipe agir no momento certo.
+            Cliques, visitas e mensagens não contam a história inteira. Para melhorar campanhas, você precisa saber quais contatos têm intenção real, quais avançam para proposta e quais realmente viram venda.
           </motion.p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 relative">
-          <div className="hidden lg:block absolute top-[4.5rem] left-[10%] right-[10%] h-[2px] bg-primary/10 -z-10" />
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 md:gap-5 relative">
+          <div className="hidden lg:block absolute top-[4.5rem] left-[7%] right-[7%] h-[2px] bg-primary/10 -z-10" />
 
           {steps.map((item, idx) => (
             <motion.div
@@ -1186,7 +1185,7 @@ const PacientesQualificados = ({ onOpenModal }: { onOpenModal: () => void }) => 
               transition={{ delay: idx * 0.1 }}
               viewport={{ once: true }}
               whileHover={{ y: -5 }}
-              className="bg-white p-8 rounded-[2rem] shadow-[0_12px_40px_rgba(0,0,0,0.04)] border border-black/[0.04] flex flex-col items-center text-center relative group"
+              className="bg-white p-7 rounded-[2rem] shadow-[0_12px_40px_rgba(0,0,0,0.04)] border border-black/[0.04] flex flex-col items-center text-center relative group"
             >
               <div className="absolute -top-4 -right-4 w-10 h-10 rounded-full bg-primary text-white font-bold flex items-center justify-center text-[15px] shadow-[0_4px_15px_rgba(104,37,154,0.3)]">{item.tag}</div>
               <div className="w-20 h-20 rounded-full bg-primary/5 text-primary flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-primary group-hover:text-white transition-all duration-300">
@@ -1212,7 +1211,7 @@ const PacientesQualificados = ({ onOpenModal }: { onOpenModal: () => void }) => 
           <div className="inline-block bg-white shadow-xl border border-black/5 rounded-2xl p-6 md:p-8 max-w-3xl relative overflow-hidden text-left sm:text-center mb-10">
             <div className="absolute top-0 left-0 w-1 sm:w-full sm:h-1 h-full bg-primary"></div>
             <p className="text-graphite font-bold text-[16px] md:text-xl font-manrope tracking-tight leading-snug">
-              "Você não precisa de mais contatos. Precisa de mais clareza sobre quem realmente vale atender e o que acontece até o fechamento."
+              "Campanhas só melhoram de verdade quando o negócio sabe o que vira oportunidade e venda."
             </p>
           </div>
 
@@ -1230,10 +1229,63 @@ const PacientesQualificados = ({ onOpenModal }: { onOpenModal: () => void }) => 
             </div>
             <div className="absolute inset-[1px] rounded-[11px] bg-[#68259A] hover:bg-[#7a32b3] transition-colors shadow-[0_10px_30px_rgba(104,37,154,0.3)]"></div>
             <span className="relative z-20 flex items-center justify-center text-white text-[11px] md:text-[12px] font-bold tracking-[0.15em] uppercase font-manrope">
-              Quero rastrear melhor meus contatos →
+              Quero rastrear meus contatos →
             </span>
           </button>
         </motion.div>
+      </div>
+    </section>
+  );
+};
+
+const WhatsAppFunnel = () => {
+  const cards = [
+    { icon: Target, title: "Entrada com contexto", desc: "O contato chega com origem, campanha, página e interesse associados à conversa." },
+    { icon: Zap, title: "Atendimento com prioridade", desc: "A equipe identifica quem merece resposta mais rápida e abordagem mais consultiva." },
+    { icon: TrendingUp, title: "Proposta acompanhada", desc: "Oportunidades em negociação ficam visíveis para follow-up e próxima ação." },
+    { icon: CheckCircle2, title: "Venda registrada", desc: "Fechamentos e perdas voltam para a leitura comercial e ajudam a melhorar decisões." },
+  ];
+
+  return (
+    <section className="py-24 md:py-32 relative px-6 overflow-hidden bg-graphite border-y border-white/5">
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[560px] h-[560px] bg-green-500/[0.05] blur-[140px] rounded-full pointer-events-none" />
+      <div className="max-w-6xl mx-auto relative z-10">
+        <div className="grid lg:grid-cols-[0.95fr_1.05fr] gap-12 lg:gap-16 items-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            <span className="inline-flex mb-6 rounded-full border border-green-400/15 bg-green-400/[0.06] px-4 py-1.5 text-[10px] font-bold uppercase tracking-[0.2em] text-green-300">
+              WhatsApp no funil
+            </span>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white mb-6 font-manrope tracking-tight leading-[1.08]">
+              Se o WhatsApp é onde a venda começa, ele precisa fazer parte do rastreamento.
+            </h2>
+            <p className="text-zinc-400 max-w-2xl text-lg md:text-xl font-sans leading-relaxed">
+              Sem origem, intenção e avanço comercial, o WhatsApp vira apenas uma caixa de mensagens - não uma fonte de aprendizado para vendas.
+            </p>
+          </motion.div>
+
+          <div className="grid sm:grid-cols-2 gap-5">
+            {cards.map((item, idx) => (
+              <motion.div
+                key={item.title}
+                initial={{ opacity: 0, y: 18 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: idx * 0.08 }}
+                viewport={{ once: true }}
+                className="bg-white/[0.035] border border-white/[0.08] rounded-2xl p-6 hover:border-green-400/25 transition-all"
+              >
+                <div className="w-12 h-12 rounded-xl bg-green-400/10 text-green-300 flex items-center justify-center mb-5">
+                  <item.icon size={22} />
+                </div>
+                <h3 className="text-white font-manrope text-lg font-bold mb-3 leading-snug">{item.title}</h3>
+                <p className="text-zinc-400 text-sm leading-relaxed">{item.desc}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
       </div>
     </section>
   );
@@ -1254,18 +1306,18 @@ const AutomacaoClinica = () => {
             Oportunidades esfriam quando chegam <span className="text-primary font-manrope">sem contexto.</span>
           </motion.h2>
           <p className="text-gray-600 max-w-2xl mx-auto text-lg md:text-xl font-sans leading-relaxed">
-            Cada contato que chega sem contexto exige mais tempo do time. Com a estrutura certa, a equipe já sabe o que fazer antes de abrir o WhatsApp.
+            A perda nem sempre acontece por falta de interesse. Muitas vezes ela nasce de pequenos vazamentos na rotina comercial.
           </p>
         </div>
 
         <div className="grid md:grid-cols-3 gap-6">
           {[
-            { icon: CheckCircle2, title: "Resposta com contexto", desc: "Cada lead chega com origem, campanha e serviço de interesse já registrados. Seu time atende sabendo o que veio buscar." },
-            { icon: MessageCircle, title: "Atendimento priorizado", desc: "A equipe sabe quem tem intenção real antes de ligar ou responder, evitando desperdício de tempo com curiosos." },
-            { icon: Target, title: "Histórico da origem", desc: "De onde veio o contato, qual criativo gerou interesse e qual era a expectativa. Tudo visível antes do primeiro contato." },
-            { icon: Zap, title: "Próxima ação clara", desc: "Status comercial visível para toda a equipe: novo, conversou, proposta, fechado. Sem depënder de memória." },
-            { icon: TrendingUp, title: "Propostas acompanhadas", desc: "Nenhuma proposta fica sem follow-up. O painel mostra quem está esperando uma resposta." },
-            { icon: BarChart3, title: "Resultado mensurável", desc: "Você sabe quais canais geram vendas reais, não só contatos. Dados para decidir onde investir mais." },
+            { icon: CheckCircle2, title: "Resposta sem prioridade", desc: "Todos parecem iguais quando a equipe não sabe origem, urgência ou nível de intenção." },
+            { icon: MessageCircle, title: "Conversa sem histórico", desc: "O atendimento recomeça do zero e perde contexto sobre campanha, busca ou necessidade." },
+            { icon: TrendingUp, title: "Proposta sem acompanhamento", desc: "Negociações abertas dependem de lembrança individual e podem esfriar sem follow-up." },
+            { icon: BarChart3, title: "Venda sem registro", desc: "O negócio fecha clientes, mas não transforma o resultado em aprendizado para decidir melhor." },
+            { icon: Target, title: "Canal sem leitura", desc: "Google, Instagram, indicação e orgânico são comparados por volume, não por qualidade." },
+            { icon: Zap, title: "Equipe dependente da memória", desc: "Quando o processo vive na cabeça do time, a operação perde consistência e leitura." },
           ].map((item, idx) => (
             <motion.div key={idx} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: idx * 0.1 }} viewport={{ once: true }} className="bg-white p-8 rounded-3xl shadow-[0_12px_40px_rgba(0,0,0,0.03)] border border-black/[0.04] hover:shadow-xl hover:-translate-y-1 transition-all">
               <div className="w-14 h-14 rounded-full bg-primary/10 text-primary flex items-center justify-center mb-6">
@@ -1365,35 +1417,31 @@ const FAQ = ({ onOpenModal }: { onOpenModal: () => void }) => {
   const faqs = [
     {
       question: "Isso é gestão de tráfego?",
-      answer: "Não. A EleveAI não começa pelo anúncio. Começamos pela estrutura que mostra o que acontece depois que o contato chega: origem, intenção, atendimento, proposta e venda. O tráfego pode entrar depois, com dados mais claros para tomar decisão."
+      answer: "Não. A gestão de tráfego pode usar os dados depois, mas a entrega principal é organizar a leitura comercial: origem, intenção, atendimento, proposta e venda."
     },
     {
       question: "Isso é só um CRM?",
-      answer: "Não. O painel é apenas a forma visual de acompanhar os dados. A entrega principal é o rastreamento estruturado do caminho do contato até a venda, conectando página, WhatsApp, campanhas e status comercial."
+      answer: "Não. O CRM é uma parte da operação. O foco é criar rastreamento estratégico para entender qualidade de contato, avanço comercial e resultado."
     },
     {
       question: "Preciso investir em anúncios?",
-      answer: "Sim, para crescer com previsibilidade, em algum momento o investimento em anúncios se torna importante. A diferença é que a EleveAI ajuda a fazer isso com mais clareza: antes de simplesmente colocar dinheiro em campanha, estruturamos o rastreamento para entender quais contatos chegam, quais têm intenção real e quais avançam para proposta ou venda. Assim, o investimento em mídia passa a ser guiado por dados, não por tentativa e erro."
+      answer: "Não necessariamente. A estrutura também ajuda negócios que recebem contatos por orgânico, indicação, Google, Instagram ou WhatsApp direto. Anúncios entram melhor quando os sinais de qualidade já estão claros."
     },
     {
-      question: "O que exatamente vou conseguir enxergar?",
-      answer: "Você passa a ver de onde veio cada contato, qual serviço ou solução ele procura, se virou conversa, proposta, fechamento ou perda, além dos valores em proposta e valores fechados."
+      question: "O que vou conseguir enxergar?",
+      answer: "Você enxerga de onde veio cada contato, qual intenção apareceu, se houve atendimento, proposta, fechamento ou perda, e quais canais geram oportunidades com mais qualidade."
     },
     {
       question: "Minha equipe precisa preencher tudo manualmente?",
-      answer: "Não. A ideia é reduzir trabalho manual. Parte das informações entra automaticamente, como origem, campanha, página e tipo de contato. A equipe só precisa atualizar o avanço comercial: conversou, proposta, fechado ou perdido."
+      answer: "Não. Parte dos dados de origem e contexto entra automaticamente. O preenchimento humano fica concentrado no avanço comercial, como proposta, venda ou perda."
     },
     {
-      question: "Isso ajuda Google e Meta a trazerem clientes melhores?",
-      answer: "Sim, essa é uma das próximas camadas da estrutura. Quando proposta e fechamento são registrados corretamente, esses dados podem ser preparados para alimentar Google e Meta com sinais mais úteis do que apenas cliques ou visitas."
+      question: "Isso ajuda Google e Meta?",
+      answer: "Ajuda a criar sinais mais úteis para otimização. Em vez de olhar só clique ou lead, a operação passa a separar quais contatos viraram oportunidade, proposta ou venda."
     },
     {
-      question: "Para quais empresas essa estrutura serve?",
-      answer: "Serve para empresas que dependem de atendimento, proposta e acompanhamento comercial para vender: clínicas, estética automotiva, energia solar, serviços de urgência, dedetizadoras, consultorias, prestadores especializados e operações que recebem contatos pelo WhatsApp antes da venda acontecer."
-    },
-    {
-      question: "Em quanto tempo dá para começar?",
-      answer: "A primeira estrutura pode ser montada em etapas. O foco inicial é criar visibilidade: entender de onde vêm os contatos e como eles avançam até proposta ou venda. Depois, a estrutura pode evoluir para otimização de campanhas e integrações mais avançadas."
+      question: "Para quais empresas serve?",
+      answer: "Serve para negócios que vendem por atendimento, orçamento, proposta ou conversa consultiva, especialmente quando o WhatsApp é parte importante da jornada comercial."
     },
     {
       question: "Qual é o primeiro passo?",
@@ -1410,10 +1458,10 @@ const FAQ = ({ onOpenModal }: { onOpenModal: () => void }) => {
             Perguntas frequentes
           </span>
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white mb-6 tracking-tight font-manrope leading-tight">
-            Antes de rastrear melhor seus contatos
+            Dúvidas antes de estruturar o rastreamento
           </h2>
           <p className="text-zinc-400 text-base md:text-lg leading-relaxed font-sans max-w-2xl mx-auto">
-            Respostas diretas sobre origem dos contatos, intenção real, propostas, vendas e dados para decidir com mais clareza.
+            Respostas diretas para entender o que é, o que não é e como a estrutura ajuda a operação comercial.
           </p>
         </div>
         <div className="grid gap-3 md:gap-4">
@@ -1430,10 +1478,10 @@ const FAQ = ({ onOpenModal }: { onOpenModal: () => void }) => {
         <div className="mt-12 md:mt-14 rounded-2xl border border-white/[0.08] bg-white/[0.035] p-6 md:p-8 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
           <div>
             <p className="text-white font-bold text-xl md:text-2xl font-manrope tracking-tight">
-              Entenda onde seus contatos entram, travam e se perdem antes da venda.
+              Veja quais perguntas sua operação ainda não consegue responder.
             </p>
             <p className="mt-2 text-sm md:text-base text-zinc-400">
-              Um diagnóstico simples mostra o que precisa ser rastreado primeiro.
+              O diagnóstico indica quais sinais precisam ser organizados primeiro.
             </p>
           </div>
           <button
@@ -1443,7 +1491,7 @@ const FAQ = ({ onOpenModal }: { onOpenModal: () => void }) => {
           >
             <div className="absolute inset-[1px] rounded-[11px] bg-[#68259A] group-hover:bg-[#7a32b3] transition-colors shadow-[0_10px_28px_rgba(104,37,154,0.26)]"></div>
             <span className="relative z-20 flex items-center justify-center gap-3 text-white text-[11px] md:text-[12px] font-bold tracking-[0.12em] uppercase font-manrope">
-              Quero diagnosticar minha estrutura
+              Quero rastrear meus contatos
               <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
             </span>
           </button>
@@ -1537,7 +1585,7 @@ const FinalCTA = ({ onOpenModal }: { onOpenModal: () => void }) => {
           </h2>
 
           <p className="text-zinc-400 text-lg md:text-2xl leading-relaxed font-manrope max-w-2xl mb-14 font-light">
-            Entenda a origem dos contatos, acompanhe proposta e venda, e descubra quais canais realmente geram clientes melhores.
+            Organize a leitura entre origem, intenção, atendimento e resultado para decidir com mais clareza onde investir e o que melhorar.
           </p>
 
           <div className="flex flex-col items-start gap-8">
@@ -1555,7 +1603,7 @@ const FinalCTA = ({ onOpenModal }: { onOpenModal: () => void }) => {
               </div>
               <div className="absolute inset-[1px] rounded-[11px] bg-gradient-to-r from-[#5B2E8A] to-[#3A1660] group-hover:from-[#6B3FA0] group-hover:to-[#4A2070] transition-colors shadow-[0_10px_40px_rgba(91,46,138,0.3)]"></div>
               <span className="relative z-20 flex items-center justify-center text-white text-[12px] md:text-[13px] font-bold tracking-[0.1em] uppercase font-manrope">
-                Quero rastrear melhor meus contatos →
+                Quero rastrear meus contatos →
               </span>
             </button>
             <p className="text-zinc-500 text-[11px] md:text-xs font-bold uppercase tracking-[0.2em] opacity-70">
@@ -1934,10 +1982,10 @@ const RaioXSection = ({ onOpenModal }: { onOpenModal: () => void }) => {
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-medium text-white mb-6 tracking-tighter font-manrope leading-[1.1]">
-            Raio-X do seu <span className="text-gradient hover-glow">rastreamento comercial</span>
+            Raio-X do seu rastreamento comercial
           </h2>
           <p className="text-zinc-400 text-lg leading-relaxed font-sans max-w-3xl mx-auto">
-            O problema não é só atrair contatos. É rastrear origem, intenção, proposta e venda para decidir com dados.
+            Antes de investir mais, veja se sua operação consegue responder às perguntas certas.
           </p>
         </div>
 
@@ -1956,8 +2004,8 @@ const RaioXSection = ({ onOpenModal }: { onOpenModal: () => void }) => {
             <div className="w-11 h-11 rounded-xl bg-[#EEC6A2]/10 flex items-center justify-center mb-5 text-[#EEC6A2] group-hover:scale-110 transition-transform duration-300">
               <TrendingUp size={22} />
             </div>
-            <h3 className="text-white font-manrope text-base font-bold tracking-tight uppercase mb-3">2. Atendimento</h3>
-            <p className="text-sm text-zinc-400 leading-relaxed font-sans">Quando o contato chega sem contexto, a equipe demora mais para responder e a oportunidade esfria.</p>
+            <h3 className="text-white font-manrope text-base font-bold tracking-tight uppercase mb-3">2. Intenção</h3>
+            <p className="text-sm text-zinc-400 leading-relaxed font-sans">A operação consegue diferenciar interesse real de curiosidade antes de tratar todos da mesma forma?</p>
           </motion.div>
 
           <motion.div whileHover={{ y: -6 }} className="bg-black/60 backdrop-blur-md p-6 rounded-2xl border border-white/10 hover:border-[#B988BF]/40 transition-all flex flex-col items-start text-left relative overflow-hidden group">
@@ -1974,8 +2022,8 @@ const RaioXSection = ({ onOpenModal }: { onOpenModal: () => void }) => {
             <div className="w-11 h-11 rounded-xl bg-[#EEC6A2]/10 flex items-center justify-center mb-5 text-[#EEC6A2] group-hover:scale-110 transition-transform duration-300">
               <BarChart3 size={22} />
             </div>
-            <h3 className="text-white font-manrope text-base font-bold tracking-tight uppercase mb-3">4. Previsibilidade</h3>
-            <p className="text-sm text-zinc-400 leading-relaxed font-sans">Sem acompanhar origem, proposta e fechamento, o negócio não sabe o que repetir para vender mais.</p>
+            <h3 className="text-white font-manrope text-base font-bold tracking-tight uppercase mb-3">4. Aprendizado</h3>
+            <p className="text-sm text-zinc-400 leading-relaxed font-sans">Vendas e perdas voltam para a estratégia ou ficam isoladas no histórico de atendimento?</p>
           </motion.div>
         </div>
 
@@ -1994,7 +2042,7 @@ const RaioXSection = ({ onOpenModal }: { onOpenModal: () => void }) => {
             </div>
             <div className="absolute inset-[1px] rounded-2xl bg-black"></div>
             <span className="relative z-20 flex items-center justify-center gap-4 text-base md:text-lg font-bold text-white tracking-wide uppercase font-manrope">
-              Quero ver onde meus contatos se perdem →
+              Quero rastrear meus contatos →
               <ArrowRight size={22} className="transition-transform duration-300 group-hover:translate-x-1" />
             </span>
           </button>
@@ -2206,6 +2254,7 @@ const App = () => {
             <Hero onOpenModal={handleOpenModal} />
             <GoogleAdsPremium onOpenModal={handleOpenModal} />
             <PacientesQualificados onOpenModal={handleOpenModal} />
+            <WhatsAppFunnel />
             <AutomacaoClinica />
             <RaioXSection onOpenModal={handleOpenModal} />
 
